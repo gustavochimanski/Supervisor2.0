@@ -1,0 +1,19 @@
+/* styles/Components/Button.module.css */
+.buttonGeral {
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: var(--borderRadius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 40px;
+    height: 35px;
+    background-color: var(--corPrincipal);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .buttonGeral:hover {
+    background-color: #00557A;
+    transform: scale(1.05);
+  }
+  

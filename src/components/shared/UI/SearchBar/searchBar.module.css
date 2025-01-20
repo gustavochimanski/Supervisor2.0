@@ -1,0 +1,47 @@
+.searchBar {
+  display: flex;         
+  align-items: center;  
+  gap: 15px;
+  border-radius: var(--borderRadius);
+  padding: 15px;
+  flex-wrap: wrap;
+  box-sizing: border-box; 
+}
+
+.searchBar label{
+  padding-bottom: 5px;
+}
+
+.customInput {
+  background-color: #fff7e6;
+  color: #333;
+  font-size: 18px;
+}
+
+.customButton {
+     white-space: nowrap;
+     margin-top: 30px;
+     background-color: var(--corPrincipal);
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .searchBar {
+    gap: 10px; /* Reduz o espaço entre os elementos */
+    padding: 5px; /* Ajusta o padding */
+    align-content: center;
+    flex-wrap: nowrap;
+  }
+  
+  .customInput {
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    padding: 8px 10px; /* Ajusta o espaçamento interno */
+  }
+
+  .customButton {
+    font-size: 12px; /* Botão menor para telas menores */
+    margin: 30 15 0 0px;
+
+  }
+}
