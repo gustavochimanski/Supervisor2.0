@@ -36,7 +36,7 @@ const data = {
   pages: [
     {
       name: "Home",
-      url: "/home",
+      url: "#",
       icon: Home,
     },
     {
@@ -60,7 +60,7 @@ const data = {
   navMain: [
     {
       title: "Vendas",
-      url: "/vendas",
+      url: "#",
       icon: ShoppingCart,
       isActive: false,
       items: [
