@@ -56,7 +56,7 @@ import SubMenuEmpresas from "./submenu-empresas";
     const { open } = useSidebar(); 
     
     return (
-      <Sidebar variant="sidebar"  collapsible="icon">
+      <Sidebar variant="sidebar"  collapsible="icon" className="dark">
         <SidebarHeader>
             <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
         </SidebarHeader>

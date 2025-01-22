@@ -52,10 +52,11 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --tootip-text-color: #00BFFF;
+    --tabs-background-color: #C0C0FF;
   }
   .dark {
     --background: 20 14.3% 4.1%;
-    --foreground: 60 9.1% 97.8%;
+    --foreground: 195, 100%, 50%;
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;
     --popover: 20 14.3% 4.1%;
@@ -83,9 +84,11 @@
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240, 100%, 50%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --tootip-text-color: #00BFFF;
+    --tabs-background-color: #C0C0FF;
   }
 }
 
