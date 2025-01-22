@@ -1,279 +1,90 @@
 "use client"
 
-import * as React from "react"
 import {
-  GalleryVerticalEnd,
-  UserPlus,
-  Home,
-  BarChart,
-  ShoppingCart,
-  ShoppingBag,
-  Package,
-  DollarSign,
-  Settings,
-  Sliders,
-  MonitorUp,
-  CalendarCheck2
+    Sidebar,
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarSeparator,
+    useSidebar,
+  } from "@/components/ui/sidebar"
+  import {
+    Home,
+    ShoppingCart,
+    UserPlus,
+    Package,
+    DollarSign,
+    Sliders,
+    Calendar,
+    Settings,
+    BarChart,
+    ShoppingBag,
+    MonitorUpIcon
+  } from "lucide-react";
 
-} from "lucide-react"
+import SubMenuEmpresas from "./submenu-empresas";
 
-import { NavMain } from "@/components/nav-main"
-import { NavFavorites } from "@/components/nav-favorites"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
-import { pages } from "next/dist/build/templates/app-page"
+  // Menu items.
+  const items = [
+    { title: "Home", url: "#", icon: Home },
+    { title: "Dashboard", url: "#", icon: BarChart },
+    { title: "Vendas", url: "#", icon: ShoppingCart },
+    { title: "Cadastros", url: "#", icon: UserPlus },
+    { title: "Compras", url: "#", icon: ShoppingBag },
+    { title: "Estoque", url: "#", icon: Package },
+    { title: "Financeiro", url: "#", icon: DollarSign },
+    { title: "Automação", url: "#", icon: Sliders },
+    { title: "Frente Caixa", url: "/frenteCaixa", icon: MonitorUpIcon },
+    { title: "Calendário", url: "#", icon: Calendar },
+    { title: "Configuração", url: "#", icon: Settings },
+  ];
 
-// This is sample data.
-const data = {
+  const empresas = [
+    { nome_empresa: "Ponto Certo - Campo Limpo" },
+    { nome_empresa: "Ponto Certo - Novo Líder" },
+    { nome_empresa: "Ponto Certo - Embu" },
+  ];
+
   
-  pages: [
-    {
-      name: "Home",
-      url: "#",
-      icon: Home,
-    },
-    {
-      name: "Dashboard",
-      url: "/dashboard",
-      icon: BarChart,
-    },
-  ],
-  user: {
-    name: "Gustavo Antunes",
-    email: "gustavo@gtechtecnologia.com.br",
-    avatar: "/avatars/logo.jpg",
-  },
-  teams: [
-    {
-      name: "Ponto Certo",
-      logo: GalleryVerticalEnd,
-      plan: "Campo Limpo - Loja 01",
-    },
-  ],
-  navMain: [
-    {
-      title: "Vendas",
-      url: "#",
-      icon: ShoppingCart,
-      isActive: false,
-      items: [
-        {
-          title: "Relação",
-          url: "#",
-        },
-        {
-          title: "Categoria",
-          url: "#",
-        },
-        {
-          title: "Produtos",
-          url: "#",
-        },
-        {
-          title: "Oferta",
-          url: "#",
-        }
-      ],
-    },{
-      title: "Cadastros",
-      url: "#",
-      icon: UserPlus,
-      isActive: false,
-      items: [
-        {
-          title: "Produtos",
-          url: "#",
-        },
-        {
-          title: "Clientes",
-          url: "#",
-        },
-        {
-          title: "Fornecedores",
-          url: "#",
-        },
-        {
-          title: "Funcionários",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Compras",
-      url: "#",
-      icon: ShoppingBag,
-      items: [
-        {
-          title: "Ordem De Compra",
-          url: "#",
-        },
-        {
-          title: "Histórico",
-          url: "#",
-        },
-        {
-          title: "Fornecedores",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Estoque",
-      url: "#",
-      icon: Package,
-      items: [
-        {
-          title: "Inventário",
-          url: "#",
-        },
-        {
-          title: "Relatórios",
-          url: "#",
-        },
-        {
-          title: "Pereciveis",
-          url: "#",
-        }
-      ],
-    },{
-      title: "Financeiro",
-      url: "#",
-      icon: DollarSign,
-      items: [
-        {
-          title: "Constas a Pagar",
-          url: "#",
-        },
-        {
-          title: "Contas a Receber",
-          url: "#",
-        },
-        {
-          title: "Fluxo de Caixa",
-          url: "#",
-        },
-        {
-          title: "Relatórios",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Automação",
-      url: "#",
-      icon: Sliders,
-      items: [
-        {
-          title: "Etiquetas",
-          url: "#",
-        },
-        {
-          title: "Balanças",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Frente Caixa",
-      url: "#",
-      icon: MonitorUp,
-      items: [
-        {
-          title: "Perfil PDV",
-          url: "#",
-        },
-        {
-          title: "PDV",
-          url: "#",
-        },
-        {
-          title: "Teclados",
-          url: "#",
-        },
-        {
-          title: "Telas",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Calendario",
-      url: "#",
-      icon: CalendarCheck2,
-      items: [
-        {
-          title: "Metas",
-          url: "#",
-        },
-        {
-          title: "PDV",
-          url: "#",
-        },
-        {
-          title: "Teclados",
-          url: "#",
-        },
-        {
-          title: "Telas",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Configuração",
-      url: "#",
-      icon: Settings,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ]
-}
+  const AppSidebar = ()=> {
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavFavorites projects={data.pages} />
-        <NavMain items={data.navMain} />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
-  )
-}
+    const { open } = useSidebar(); 
+    
+    return (
+      <Sidebar variant="sidebar"  collapsible="icon">
+        <SidebarHeader>
+            <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
+        </SidebarHeader>
+        <SidebarSeparator/>
+        <SidebarContent>
+            <SidebarGroup>
+            <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
+            <SidebarGroupContent>
+                <SidebarMenu >
+                {items.map((item) => (
+                    <SidebarMenuItem key={item.title} >
+                    <SidebarMenuButton asChild tooltip={item.title}>
+                        <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                        </a>
+                    </SidebarMenuButton>
+                    </SidebarMenuItem>
+                ))}
+                </SidebarMenu>
+            </SidebarGroupContent>
+            </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    )
+  }
+
+
+
+  export default AppSidebar
+  
