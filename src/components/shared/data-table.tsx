@@ -39,9 +39,9 @@ export function DataTable<TData, TValue>({
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} >
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
+                <TableHead className="bg-black text-white" key={header.id}>
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()

@@ -1,5 +1,6 @@
 // Definição do objeto de configuração (cada item do array "configuracao")
-export type Configuracao = {
+export type ConfiguracaoMeioPag = {
+    opcoes: any;
     id: number;
     mpgtoId: number;
     mpgtoCodigo: string;
@@ -16,7 +17,7 @@ export type Configuracao = {
     codigo: string;
     descricao: string;
     tipoMeioPgto: string;
-    configuracao: Configuracao[];
+    configuracao: ConfiguracaoMeioPag[];
     configEmpresa: [];
   };
   

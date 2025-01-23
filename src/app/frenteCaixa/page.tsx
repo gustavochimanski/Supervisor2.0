@@ -13,7 +13,7 @@ const pages = [
 const PageFrenteCaixa = () => {
   
   return (
-    <div className="">
+    <div >
       <Tabs defaultValue={pages[0].value} className="w-[400px] m-2">
         <TabsList>
           {pages.map((pagina) => (
