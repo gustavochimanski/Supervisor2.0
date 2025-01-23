@@ -31,7 +31,7 @@
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
     --accent: 60 4.8% 95.9%;
-    --accent-foreground:200, 100%, 60%; /*HOVER SUBMENUS SIDEBAR*/
+    --accent-foreground:200, 100%, 60%; /*HOVER PORTA ABRIR SIDEBAR*/
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%; 
     --border: 20 5.9% 90%;
@@ -51,8 +51,7 @@
     --sidebar-accent-foreground: 240, 100%, 50%; /*HOVER BUTTONS SIDEBAR*/
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --tootip-text-color: #00BFFF;
-    --tabs-background-color: #C0C0FF;
+    --tootip-text-color: #D5E9FF;
   }
   .dark {
     --background: 20 14.3% 4.1%;
@@ -88,7 +87,6 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --tootip-text-color: #00BFFF;
-    --tabs-background-color: #C0C0FF;
   }
 }
 
