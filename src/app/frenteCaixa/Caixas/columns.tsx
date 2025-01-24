@@ -26,30 +26,3 @@ export const meioPgtoColumns: ColumnDef<MeioPgto>[] = [
   // Removemos a coluna de ações
 ];
 
-// Colunas para a Tabela de Configuração (Configuracao)
-export const configuracaoColumns: ColumnDef<ConfiguracaoMeioPag>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
-  {
-    accessorKey: "nomeCampo",
-    header: "Descrição",
-  },
-  {
-    accessorKey: "stringValue",
-    header: "Valor",
-  },
-  {
-    accessorKey: "integerValue",
-    header: "Valor",
-  },
-  {
-    accessorKey: "doubleValue",
-    header: "Valor",
-  },
-  {
-    accessorKey: "dateValue",
-    header: "Data",
-  }
-];

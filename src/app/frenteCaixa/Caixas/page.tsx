@@ -9,11 +9,8 @@ import { meioPgtoColumns } from "./columns";
 import { DataTable } from "@/components/shared/data-table";
 import { Modal } from "@/components/ui/modal"; // Componente de Modal
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import ConfigsMeioPagamento from "./configMpgt/configMpgt";
-
+import ConfigsMeioPagamento from "./configMeioPag/configMeioPagamento";
+import { Form } from "@/components/ui/form";
 
 export default function PageFrenteCaixa() {
   const [meio, setMeio] = useState<MeioPgto | null>(null);
@@ -101,37 +98,35 @@ export default function PageFrenteCaixa() {
       {/* ============= MODAL COM AS CONFIGURAÇÕES ============= */}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <div className="h-full flex flex-col">
-            {/* Card do Cabeçalho (fixo) */}
-            <Card className="sticky top-0 z-10 bg-white shadow-md">
-              <CardHeader>
-                <CardTitle>Meio de Pagamento {meio?.descricao || "Selecionado"}</CardTitle>
-                <CardDescription>
-                  Configurações do meio de pagamento {meio?.descricao || "Selecionado"}
-                </CardDescription>
-              </CardHeader>
-            </Card>
+          {/* Card do Cabeçalho (fixo) */}
+          <div className="sticky top-0 z-10 bg-white shadow-md">
+            <h2 className="text-xl font-semibold">
+              Meio de Pagamento {meio?.descricao || "Selecionado"}
+            </h2>
+            <p className="text-gray-600">
+              Configurações do meio de pagamento {meio?.descricao || "Selecionado"}
+            </p>
+          </div>
 
-            {/* Card do Meio (fixo, com conteúdo rolável) */}
-            <div className="relative flex-1 overflow-hidden my-4">
-              <Card className="h-full bg-white shadow-md">
-                <CardContent className="h-full overflow-y-auto">
-                  <ConfigsMeioPagamento />
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Botões (fixos) */}
-            <div className="sticky bottom-0 z-10 bg-white shadow-md flex justify-between p-4">
-              <Button onClick={() => setShowModal(false)} variant={"destructive"}>
-                Fechar
-              </Button>
-              <Button variant={"default"}>Salvar</Button>
+          {/* Área de Conteúdo Rolável */}
+          <div className="flex-1 overflow-auto my-4">
+            {/* Card do Meio */}
+            <div className="bg-white shadow-md p-4 rounded">
+              <ConfigsMeioPagamento />
             </div>
           </div>
-        </Modal>
 
+          {/* Botões (fixos) */}
+          <div className="sticky bottom-0 z-10 bg-white shadow-md flex justify-between p-4">
+            <Button onClick={() => setShowModal(false)} variant={"destructive"}>
+              Fechar
+            </Button>
+            <Button variant={"default"} type="submit">Salvar</Button>
+          </div>
+        </Modal>
       )}
+
+
     </div>
   );
 }
