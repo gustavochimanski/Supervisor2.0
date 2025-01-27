@@ -1,6 +1,6 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CaixasComponent from "./Caixas/page";
+import CaixasComponent from "./Caixas/component";
 
 const pages = [
   { nomePage: "Caixas", value: "caixas" },

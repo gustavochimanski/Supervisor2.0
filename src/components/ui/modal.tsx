@@ -1,21 +1,22 @@
 
-
-import React from "react";
-
 interface ModalProps {
   children: React.ReactNode;
   onClose: () => void;
+  style?: React.CSSProperties;
 }
 
-export function Modal({ children, onClose }: ModalProps) {
+import React from "react";
+
+export function Modal({ children, onClose, style }: ModalProps) {
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden"
-      onClick={onClose} // Fecha o modal ao clicar fora da caixa
+      onClick={onClose}
     >
       <div
-        className="flex flex-col bg-white rounded shadow-lg max-w-[60vw] max-h-[80vh] w-full h-auto overflow-hidden"
-        onClick={(e) => e.stopPropagation()} // Evita fechar ao clicar dentro da caixa
+        style={style} 
+        className="flex flex-col bg-white rounded shadow-lg max-w-[90vw] max-h-[90vh] w-full h-auto overflow-hidden"
+        onClick={(e) => e.stopPropagation()} // Evita fechar ao clicar dentro
       >
         {children}
       </div>

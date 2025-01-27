@@ -1,5 +1,5 @@
 type ConfigOption = {
-  value: string;
+  value: string | number;
   label: string;
 };
 
@@ -13,19 +13,8 @@ type Configuracao = {
 
 // Constantes reutilizáveis para opções
 const simNaoOptions: ConfigOption[] = [
-  { value: "N", label: "Não" },
-  { value: "S", label: "Sim" },
-];
-
-const percentualOptions: ConfigOption[] = [
-  { value: "0", label: "0%" },
-  { value: "5", label: "5%" },
-  { value: "10", label: "10%" },
-];
-
-const trocoOptions: ConfigOption[] = [
-  { value: "50", label: "R$50" },
-  { value: "100", label: "R$100" },
+  { value: "N", label: "Não"},
+  { value: "S", label: "Sim"},
 ];
 
 // Configurações manuais com suporte a valores personalizados
@@ -59,8 +48,8 @@ export const configMap: Configuracao[] = [
     id: 4,
     label: "Desconto Ticket",
     property: "doubleValue",
-    options: percentualOptions,
-    allowCustomValue: true,
+    options: [],
+    allowCustomValue: false,
   },
   {
     id: 5,
@@ -143,10 +132,10 @@ export const configMap: Configuracao[] = [
   {
     id: 15,
     label: "Meio Pgto Troco",
-    property: "stringValue",
+    property: "integerValue",
     options: [
-      { value: "01", label: "Troco 1" },
-      { value: "02", label: "Troco 2" },
+      { value: 1, label: "01" },
+      { value: 2, label: "02" },
     ],
     allowCustomValue: true,
   },
@@ -163,21 +152,21 @@ export const configMap: Configuracao[] = [
     id: 17,
     label: "Percentual de Desconto",
     property: "doubleValue",
-    options: percentualOptions,
-    allowCustomValue: true,
-  },
+    options: [],
+    allowCustomValue: false,
+  },  
   {
     id: 18,
     label: "Percentual de Acréscimo",
     property: "doubleValue",
-    options: percentualOptions,
-    allowCustomValue: true,
+    options: [],
+    allowCustomValue: false,
   },
   {
     id: 19,
     label: "Troco Máximo",
     property: "doubleValue",
-    options: trocoOptions,
-    allowCustomValue: true,
+    options: [],
+    allowCustomValue: false,
   },
 ];
