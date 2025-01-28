@@ -56,7 +56,7 @@ export default function PageFrenteCaixa() {
       )}
 
       {showModal && (
-        <Modal onClose={() => setShowModal(false)} style={{width: "60vh"}}>
+        <Modal onClose={() => setShowModal(false)} style={{width: "80vh"}}>
           <div className="sticky top-0 z-10 bg-[var(--foreground)] rounded-[var(--radius)] shadow-md  p-4">
             <h2 className="text-xl font-semibold">
               Meio de Pagamento {meio?.descricao || "Selecionado"}
