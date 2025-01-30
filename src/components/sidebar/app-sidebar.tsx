@@ -31,9 +31,9 @@ import SubMenuEmpresas from "./submenu-empresas";
 
   // Menu items.
   const items = [
-    { title: "Home", url: "#", icon: Home },
-    { title: "Dashboard", url: "#", icon: BarChart },
-    { title: "Vendas", url: "#", icon: ShoppingCart },
+    { title: "Home", url: "/", icon: Home },
+    { title: "Dashboard", url: "/dashboard", icon: BarChart },
+    { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "#", icon: UserPlus },
     { title: "Compras", url: "#", icon: ShoppingBag },
     { title: "Estoque", url: "#", icon: Package },

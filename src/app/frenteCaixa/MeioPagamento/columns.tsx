@@ -3,7 +3,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MeioPgto, ConfiguracaoMeioPag } from "./types";
+import { MeioPgto} from "./types";
 
 // Colunas para a Tabela Principal (MeioPgto)
 export const meioPgtoColumns: ColumnDef<MeioPgto>[] = [

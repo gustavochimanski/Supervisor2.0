@@ -1,11 +1,21 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CaixasComponent from "./Caixas/component";
+import CaixasComponent from "./MeioPagamento/component";
+import ComponentMeioPagamento from "./MeioPagamento/component";
+import ComponentCaixas from "./Caixas/component";
+import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";
 
-const pages = [
-  { nomePage: "Caixas", value: "caixas" },
-  { nomePage: "Meios de Pagamento", value: "meios-de-pagamento" },
-  { nomePage: "Processar caixa", value: "processar-caixa" },
+interface Page {
+  nomePage: string;
+  value: string;
+  Component: React.ComponentType;
+}
+
+
+const pages: Page[] = [
+  { nomePage: "Caixas", value: "caixas", Component: ComponentCaixas},
+  { nomePage: "Perfil De Caixa", value: "perfil-de-caixa", Component: ComponentPerfilDeCaixa },
+  { nomePage: "Meios de Pagamento", value: "meios-de-pagamento", Component: ComponentMeioPagamento },
 ];
 
 
@@ -25,8 +35,8 @@ const PageFrenteCaixa = () => {
 
         {pages.map((pagina) => (
           <TabsContent value={pagina.value} key={pagina.value}>
-            <h1>Conteúdo para a página {pagina.nomePage}</h1>
-            <CaixasComponent></CaixasComponent>
+            <h1>{pagina.nomePage}</h1>
+            <pagina.Component/>
           </TabsContent>
         ))}
       </Tabs>

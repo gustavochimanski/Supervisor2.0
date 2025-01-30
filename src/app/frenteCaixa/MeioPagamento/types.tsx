@@ -1,10 +1,9 @@
 // Definição do objeto de configuração (cada item do array "configuracao")
 export type ConfiguracaoMeioPag = {
-    opcoes: any;
     id: number;
     mpgtoId: number;
     mpgtoCodigo: string;
-    nomeCampo: string;
+    readonly nomeCampo: string;
     stringValue: string;
     integerValue: number;
     doubleValue: number;
