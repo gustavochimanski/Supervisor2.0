@@ -1,40 +1,106 @@
+
 import { DataTable } from "@/components/shared/data-table"
-import React, { useEffect, useRef, useState } from "react";
-import { useFetch, useFetchById } from "./useFetch";
-import { ConfigPerfilPdv, PerfilPdv} from "./types";
+
+import React, {useEffect, useRef, useState } from "react";
+import { FormDataperfil, PerfilPdv} from "./types";
 import { columnsPerfisDeCaixa } from "./columns";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { findSourceMap } from "module";
+import { useFetchAll, useFetchById} from "./useFetch";
+import { Input } from "@/components/ui/input";
 
 
 const ComponentPerfilDeCaixa = () =>{
-  // ESTADOS
-  const [selectedPerfilPdvId, setSelectedPerfilPdvId] = useState<number | null>(null); // Estado para armazenar perfil Clicado
+  // === ESTADOS ===
+  const [selectedPerfilPdvId, setSelectedPerfilPdvId] = useState<string | undefined>(undefined); // Estado para armazenar perfil Clicado
   const [showModal, setShowModal] = useState(false) // Estado para controlar modal
+  const [formData, setFormData] = useState<FormDataperfil>({
+    Impressora: "",
+    ImpressoraPorta: "",
+    ImpressoraBaudRate: "",
+    ImpressoraParity: "",
+    ImpressoraStopBits: "",
+    ImpressoraDataBits: "",
+    Scanner: "",
+    ScannerPorta: "",
+    ScannerBaudRate: "",
+    ScannerParity: "",
+    ScannerStopBits: "",
+    ScannerDataBits: "",
+    Balanca: "",
+    BalancaPorta: "",
+    BalancaBaudRate: "",
+    BalancaParity: "",
+    BalancaStopBits: "",
+    BalancaDataBits: "",
+    BalancaTimeOut: "",
+    Teclado: "",
+    CodigoPrecoVenda: ""
+  });
 
-  // REQUISIÇÕES
-  const { data: dataAllPerfilPdv } = useFetch<PerfilPdv[]>("/v1/config/perfilpdv") //Requisição Todos os Perfis de Caixa
-  const {data: dataByIdPerfilPdv} = useFetchById<PerfilPdv>(
-    selectedPerfilPdvId? `/v1/config/perfilpdv/${selectedPerfilPdvId}` : null) // Requisição Perfil De caixa Por ID
+  // // === REQUISIÇÕES ===
+  const { data: dataAllPerfilPdv, isFetching: isFetchingAll } = useFetchAll(); // Fetch todos os perfis PDV
+  const { data: dataByIdPerfilPdv, isFetching: isFetchingById } = useFetchById(selectedPerfilPdvId); // Fetch perfil PDV por ID
 
   // REFERÊNCIAS
   const formRef = useRef<any>(null); // Referência para o formulário
 
+  // === EFEITOS ===
+  // Inicializa o formData quando dataByIdPerfilPdv é carregado
+  useEffect(() =>{
+    if (dataAllPerfilPdv && dataByIdPerfilPdv){
+      let initialData: FormDataperfil = {
+        Impressora: "",
+        ImpressoraPorta: "",
+        ImpressoraBaudRate: "",
+        ImpressoraParity: "",
+        ImpressoraStopBits: "",
+        ImpressoraDataBits: "",
+        Scanner: "",
+        ScannerPorta: "",
+        ScannerBaudRate: "",
+        ScannerParity: "",
+        ScannerStopBits: "",
+        ScannerDataBits: "",
+        Balanca: "",
+        BalancaPorta: "",
+        BalancaBaudRate: "",
+        BalancaParity: "",
+        BalancaStopBits: "",
+        BalancaDataBits: "",
+        BalancaTimeOut: "",
+        Teclado: "",
+        CodigoPrecoVenda: ""
+      };
+      dataByIdPerfilPdv.confPerfil.forEach((item) =>{
+        initialData[item.property as keyof FormDataperfil] = item.value
+      });
+      setFormData(initialData);
+    };
+  }, [dataByIdPerfilPdv]);
+
+  // ==== FUNCOES ===
+  // Lida com o Click de linha da tabela
   const handleRowClick = (row: PerfilPdv) =>{
-    setSelectedPerfilPdvId(row.id)
+    setSelectedPerfilPdvId(String(row.id))
     setShowModal(true)
   }
+
+  // Lidar com alterações nos input
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) =>{
+    const {name, value} = evt.target
+    setFormData((prev) =>({...prev, [name]: value,}))
+  }
+  
 
   // Lidar com botão salvar do Pai do formulário
   const handleSave = () => {
     if (formRef.current) {
       formRef.current.handleSubmit();
     }
+    console.log(formData)
   };
-
- 
 
     return(
         <div>
@@ -43,7 +109,7 @@ const ComponentPerfilDeCaixa = () =>{
             columns={columnsPerfisDeCaixa} 
             data={dataAllPerfilPdv ?? []}
             onRowClick={handleRowClick}
-            />
+          />
 
           {/* =========== MODAL ========== */}
           {showModal && (
@@ -56,16 +122,32 @@ const ComponentPerfilDeCaixa = () =>{
                     Perfil de Caixa <span>{dataByIdPerfilPdv ? dataByIdPerfilPdv.descricao : "Carregando ..."}</span>
                   </CardDescription>
                 </CardHeader>
-                
-                    <CardContent className="h-[50vh] overflow-auto">
-                      {dataByIdPerfilPdv && (
-                        <div>
-                          {dataByIdPerfilPdv.confPerfil.map((config) => (
-                            <div key={config.id}>{config.id}</div>
-                          ))}
-                        </div>
-                      )}
-                  </CardContent>
+
+                  {/* =========== CONTEUDO ===========*/}
+                  <CardContent className="h-[50vh] overflow-auto">
+                      <form action="">
+                      {/* Impressora */}
+                        <label htmlFor="Impressora">Impressora</label>
+                        <Input
+                          type="text"
+                          id="Impressora"
+                          name="Impressora"
+                          value={formData.Impressora|| ''}
+                          onChange={handleChange}
+                        />
+                      
+                      {/* ImpressoraPorta */}
+                        <label htmlFor="ImpressoraPorta">Porta</label>
+                        <Input
+                          type="text"
+                          id="ImpressoraPorta"
+                          name="ImpressoraPorta"
+                          value={formData.ImpressoraPorta || ''}
+                          onChange={handleChange}
+                        />
+
+                      </form>
+                    </CardContent>
 
                     {/* ===== RODAPÉ ==== */}
                   <CardFooter className="justify-between">

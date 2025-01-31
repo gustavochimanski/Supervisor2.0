@@ -1,7 +1,6 @@
+// layout.tsx
 import { cookies } from "next/headers"
-
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/sidebar/app-sidebar"
+import ClientLayout from "@/components/ClientLayout"
 import "./globals.css"
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
@@ -11,15 +10,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <html>
       <body>
-      <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar />
-        <main>
-          <SidebarTrigger variant={"secondary"} />
+        <ClientLayout defaultOpen={defaultOpen}>
           {children}
-        </main>
-      </SidebarProvider>
+        </ClientLayout>
       </body>
     </html>
-
   )
 }

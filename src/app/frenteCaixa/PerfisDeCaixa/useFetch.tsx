@@ -1,54 +1,33 @@
-import { useEffect, useState } from "react";
-import api from "@/api/api";
+import { useQuery } from 'react-query';
+import api from '@/api/api';
+import { PerfilPdv } from './types';
 
-export function useFetch<T = unknown>(url: string | null) {
-  const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!url) return;
-
-    setLoading(true);
-    setError(null);
-
-    api.get(url)
-      .then(response => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message || "Erro desconhecido");
-        setLoading(false);
-        console.error("Error fetching data:", error);
-      });
-  }, [url]);
-
-  return { data, error, loading };
+export const useFetchAll = () => {
+  return useQuery<PerfilPdv[]>(
+    'fetchAllPerfilPdvs',
+    async () => {
+      const response = await api.get('/v1/config/perfilpdv');
+      return response.data;
+    },
+    {
+      // Opções adicionais, se necessário
+     
+    }
+  );
 };
 
-export function useFetchById<T = unknown>(url: string | null) {
-  const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!url) return;
-
-    setLoading(true);
-    setError(null);
-
-    api.get(url)
-      .then(response => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message || "Erro desconhecido");
-        setLoading(false);
-        console.error("Error fetching data:", error);
-      });
-  }, [url]);
-
-  return { data, error, loading };
+export const useFetchById = (id: string | undefined) => {
+  return useQuery<PerfilPdv>(
+    ['fetchPerfilPdvById', id],
+    async () => {
+      const response = await api.get(`/v1/config/perfilpdv/${id}`);
+      return response.data;
+    },
+    {
+      enabled: !!id, // A query só será executada se o id existir
+     
+    }
+  );
 };
+
+
