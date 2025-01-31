@@ -10,8 +10,7 @@ export const useFetchAll = () => {
       return response.data;
     },
     {
-      // Opções adicionais, se necessário
-     
+      staleTime: 60 * 1000, 
     }
   );
 };
@@ -25,7 +24,7 @@ export const useFetchById = (id: string | undefined) => {
     },
     {
       enabled: !!id, // A query só será executada se o id existir
-     
+      staleTime: 60 * 1000, 
     }
   );
 };

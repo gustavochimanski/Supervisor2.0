@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useFetchAll, useFetchById} from "./useFetch";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 
 
 const ComponentPerfilDeCaixa = () =>{
@@ -125,8 +126,10 @@ const ComponentPerfilDeCaixa = () =>{
 
                   {/* =========== CONTEUDO ===========*/}
                   <CardContent className="h-[50vh] overflow-auto">
-                      <form action="">
+                    <Separator/>
+                      <form action="" className="flex flex-wrap my-4 gap-4">
                       {/* Impressora */}
+                      <div>
                         <label htmlFor="Impressora">Impressora</label>
                         <Input
                           type="text"
@@ -134,9 +137,11 @@ const ComponentPerfilDeCaixa = () =>{
                           name="Impressora"
                           value={formData.Impressora|| ''}
                           onChange={handleChange}
+                          className="w-28"
                         />
-                      
+                      </div>
                       {/* ImpressoraPorta */}
+                      <div >
                         <label htmlFor="ImpressoraPorta">Porta</label>
                         <Input
                           type="text"
@@ -144,7 +149,22 @@ const ComponentPerfilDeCaixa = () =>{
                           name="ImpressoraPorta"
                           value={formData.ImpressoraPorta || ''}
                           onChange={handleChange}
+                          className="w-28"
                         />
+                      </div>
+
+                      {/* ImpressoraPorta */}
+                      <div>
+                        <label htmlFor="ImpressoraPorta">Velocidade</label>
+                        <Input
+                          type="text"
+                          id="ImpressoraBaudRate"
+                          name="ImpressoraBaudRate"
+                          value={formData.ImpressoraBaudRate || ''}
+                          onChange={handleChange}
+                          className="w-28"
+                        />
+                      </div>
 
                       </form>
                     </CardContent>
