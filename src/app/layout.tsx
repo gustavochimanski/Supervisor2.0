@@ -14,7 +14,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
         <main>
-          <SidebarTrigger />
+          <SidebarTrigger variant={"secondary"} />
           {children}
         </main>
       </SidebarProvider>

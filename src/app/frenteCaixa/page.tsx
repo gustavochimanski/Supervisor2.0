@@ -14,7 +14,7 @@ interface Page {
 
 const pages: Page[] = [
   { nomePage: "Caixas", value: "caixas", Component: ComponentCaixas},
-  { nomePage: "Perfil De Caixa", value: "perfil-de-caixa", Component: ComponentPerfilDeCaixa },
+  { nomePage: "PerfiS De Caixa", value: "perfil-de-caixa", Component: ComponentPerfilDeCaixa },
   { nomePage: "Meios de Pagamento", value: "meios-de-pagamento", Component: ComponentMeioPagamento },
 ];
 

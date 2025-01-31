@@ -8,6 +8,7 @@ import { DataTable } from "@/components/shared/data-table";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import ConfigsMeioPagamento from "./configMeioPag/configMeioPagamento";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ComponentMeioPagamento() {
   const [meio, setMeio] = useState<MeioPgto | null>(null);
@@ -41,8 +42,7 @@ export default function ComponentMeioPagamento() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl mb-4">Tabela</h1>
+    <div>
       {loading ? (
         <p>Carregando dados...</p>
       ) : meio ? (
@@ -56,30 +56,39 @@ export default function ComponentMeioPagamento() {
       )}
 
       {showModal && (
-        <Modal onClose={() => setShowModal(false)} style={{width: "80vh"}}>
-          <div className="sticky top-0 z-10 bg-[var(--foreground)] rounded-[var(--radius)] shadow-md  p-4">
-            <h2 className="text-xl font-semibold">
-              Meio de Pagamento {meio?.descricao || "Selecionado"}
-            </h2>
-            <p className="text-gray-600">
-              Configurações do meio de pagamento {meio?.descricao || "Selecionado"}
-            </p>
-          </div>
+        <Modal onClose={() => setShowModal(false)} style={{width: "80vw", height: "70vh"}}>
+          <Card>
+            {/* ===== CABECALHO ===== */}
+            <CardHeader>
+                <CardTitle>Meio de Pagamento {meio?.descricao || "Selecionado"} </CardTitle>
+                <CardDescription>Configurações do meio de pagamento {meio?.descricao || "Selecionado"}</CardDescription>
+            </CardHeader>
 
-          <div className="flex-1 overflow-auto my-4">
-            <ConfigsMeioPagamento ref={formRef} />
-          </div>
+            {/* ===== CONTEUDO ===== */}
+            <CardContent className="h-[50vh] overflow-auto">
+              <ConfigsMeioPagamento ref={formRef} />
+            </CardContent>
 
-          <div className="sticky bottom-0 z-10 bg-white shadow-md flex justify-between p-4">
-            <Button onClick={() => setShowModal(false)} variant={"destructive"}>
-              Fechar
-            </Button>
-            <Button onClick={handleSave} variant={"default"}>
-              Salvar
-            </Button>
-          </div>
+            {/* ===== RODAPÉ ===== */}
+            <CardFooter className="justify-between">
+              <Button onClick={() => setShowModal(false)} variant={"destructive"}>
+                Fechar
+              </Button>
+              <Button onClick={handleSave} variant={"default"}>
+                Salvar
+              </Button>
+            </CardFooter>
+          
+          </Card>
         </Modal>
       )}
+
+      {/* ================== BUTTON RODAPÉ ================== */}
+      <div className="fixed flex bottom-0  w-full text-white p-4 gap-4 text-center ">
+          <Button>Incluir</Button>
+          <Button>Atualizar</Button>
+          <Button variant={"destructive"}>Deletar</Button>
+      </div>
     </div>
   );
 }

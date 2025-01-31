@@ -5,7 +5,7 @@ import { ConfigPerfilPdv, PerfilPdv} from "./types";
 import { columnsPerfisDeCaixa } from "./columns";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { findSourceMap } from "module";
 
 
@@ -27,7 +27,7 @@ const ComponentPerfilDeCaixa = () =>{
     setShowModal(true)
   }
 
-
+  // Lidar com botão salvar do Pai do formulário
   const handleSave = () => {
     if (formRef.current) {
       formRef.current.handleSubmit();
@@ -38,6 +38,7 @@ const ComponentPerfilDeCaixa = () =>{
 
     return(
         <div>
+          {/* =========== TABELA ============ */}
           <DataTable 
             columns={columnsPerfisDeCaixa} 
             data={dataAllPerfilPdv ?? []}
@@ -46,41 +47,49 @@ const ComponentPerfilDeCaixa = () =>{
 
           {/* =========== MODAL ========== */}
           {showModal && (
-            <Modal onClose={() => setShowModal(false)} style={{ width: "80vh" }}>
-              <Card>
+            <Modal onClose={() => setShowModal(false)} style={{ width: "80vw" , height: "70vh"}}>
+              {/* ==== CABECALHO ==== */}
+              <Card className="h-full">
+                <CardHeader>
+                  <CardTitle>Configurações</CardTitle>
+                  <CardDescription>
+                    Perfil de Caixa <span>{dataByIdPerfilPdv ? dataByIdPerfilPdv.descricao : "Carregando ..."}</span>
+                  </CardDescription>
+                </CardHeader>
+                
+                    <CardContent className="h-[50vh] overflow-auto">
+                      {dataByIdPerfilPdv && (
+                        <div>
+                          {dataByIdPerfilPdv.confPerfil.map((config) => (
+                            <div key={config.id}>{config.id}</div>
+                          ))}
+                        </div>
+                      )}
+                  </CardContent>
 
-              <CardHeader>
-                <CardTitle>Configurações</CardTitle>
-                <CardDescription>Perfil de Caixa <span>{dataByIdPerfilPdv ? dataByIdPerfilPdv.descricao : "Carregando ..."}</span></CardDescription>
-              </CardHeader>
-              <div className="sticky top-0 z-10 bg-[var(--foreground)] rounded-[var(--radius)] shadow-md  p-4">
-                <CardContent>
-                  {dataByIdPerfilPdv && (
-                    <div>
-                      {dataByIdPerfilPdv.confPerfil.map((config) =>(
-                        <div></div>
-                      ))}
-                    </div>
-                  )}
+                    {/* ===== RODAPÉ ==== */}
+                  <CardFooter className="justify-between">
+                      <Button onClick={() => setShowModal(false)} variant={"destructive"}>
+                        Fechar
+                      </Button>
+                      <Button onClick={handleSave} variant={"default"}>
+                        Salvar
+                      </Button>
+                  </CardFooter>
 
-                </CardContent>
-    
-                <div className="sticky bottom-0 z-10 bg-white shadow-md flex justify-between p-4">
-                  <Button onClick={() => setShowModal(false)} variant={"destructive"}>
-                    Fechar
-                  </Button>
-                  <Button onClick={handleSave} variant={"default"}>
-                    Salvar
-                  </Button>
-                </div>
-              </div>
+                
               </Card>
+
             </Modal>
           )}
 
 
-          <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4 text-center">
-              Hello
+          {/* ============ BUTTONS RODAPÉ ============ */}
+          <div className ="fixed flex bottom-0  w-full text-white p-4 gap-4 text-center ">
+              <Button>Incluir</Button>
+              <Button>Portabilidade</Button>
+              <Button>Atualizar</Button>
+              <Button variant={"destructive"}>Deletar</Button>
           </div>
 
         </div>
