@@ -10,7 +10,7 @@ import React from "react";
 export function Modal({ children, onClose, style }: ModalProps) {
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 overflow-hidden"
       onClick={onClose}
     >
       <div

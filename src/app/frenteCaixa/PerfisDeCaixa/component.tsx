@@ -7,15 +7,15 @@ import { columnsPerfisDeCaixa } from "./columns";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useFetchAll, useFetchById} from "./useFetch";
+import { useFetchAllPerfil, useFetchByIdPerfil, usePostNewPerfilDeCaixa,useDelPerfilDeCaixa} from "./usePerfil";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { Label } from "@/components/ui/label";
 
 
 const ComponentPerfilDeCaixa = () =>{
   // === ESTADOS ===
   const [selectedPerfilPdvId, setSelectedPerfilPdvId] = useState<string | undefined>(undefined); // Estado para armazenar perfil Clicado
-  const [showModal, setShowModal] = useState(false) // Estado para controlar modal
   const [formData, setFormData] = useState<FormDataperfil>({
     Impressora: "",
     ImpressoraPorta: "",
@@ -40,12 +40,13 @@ const ComponentPerfilDeCaixa = () =>{
     CodigoPrecoVenda: ""
   });
 
+  // ==== MODALS ====
+  const [showModalIncluirPerfil, setShowModalIncluirPerfil] = useState(false)
+  const [showModalPerfilById, setShowModalPerfilById] = useState(false)
+  
   // // === REQUISIÇÕES ===
-  const { data: dataAllPerfilPdv, isFetching: isFetchingAll } = useFetchAll(); // Fetch todos os perfis PDV
-  const { data: dataByIdPerfilPdv, isFetching: isFetchingById } = useFetchById(selectedPerfilPdvId); // Fetch perfil PDV por ID
-
-  // REFERÊNCIAS
-  const formRef = useRef<any>(null); // Referência para o formulário
+  const { data: dataAllPerfilPdv, isFetching: isFetchingAll, refetch: refetchAllPerfil } = useFetchAllPerfil(); // Fetch todos os perfis PDV
+  const { data: dataByIdPerfilPdv, isFetching: isFetchingById } = useFetchByIdPerfil(selectedPerfilPdvId); // Fetch perfil PDV por ID
 
   // === EFEITOS ===
   // Inicializa o formData quando dataByIdPerfilPdv é carregado
@@ -79,29 +80,59 @@ const ComponentPerfilDeCaixa = () =>{
       });
       setFormData(initialData);
     };
+    
   }, [dataByIdPerfilPdv]);
 
   // ==== FUNCOES ===
   // Lida com o Click de linha da tabela
   const handleRowClick = (row: PerfilPdv) =>{
     setSelectedPerfilPdvId(String(row.id))
-    setShowModal(true)
+    setShowModalPerfilById(true)
   }
 
-  // Lidar com alterações nos input
+  // Lidar com alterações nos input d
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) =>{
     const {name, value} = evt.target
     setFormData((prev) =>({...prev, [name]: value,}))
   }
+
+  // =================================================================
+  // ================== POST NOVO PERFIL DE CAIXA ====================
+  // ESTADOS
+  const [newPerfilDescricao, setNewPerfilDescricao] = useState<string>("");
+  const [showModalConfirm, setShowModalConfirm ] = useState(false);
+
+  const { mutate: postNewPerfil } = usePostNewPerfilDeCaixa();
+
+  const handleSaveNewPerfil = () => {
+    postNewPerfil(newPerfilDescricao)
+    setShowModalIncluirPerfil(false);
+  };
+
+  // ================================================================= 
+  // ===================== APAGA PERFIL POR ID =======================
+  const {mutate: deletePerfil} = useDelPerfilDeCaixa();
+
+  const handleDeletePerfil = (id: number | undefined) => {
+    if (!id) {
+      console.error("ID inválido para deleção");
+      return;
+    }
+    deletePerfil(String(id));
+    console.log(id)
+  }
   
+  // =================================================================
 
   // Lidar com botão salvar do Pai do formulário
   const handleSave = () => {
-    if (formRef.current) {
-      formRef.current.handleSubmit();
-    }
-    console.log(formData)
+    console.log(formData.ImpressoraBaudRate)
   };
+
+  // ====== BUTTONS =======
+  const handleClickInserirPerfil = () => {
+    setShowModalIncluirPerfil(true);
+  }
 
     return(
         <div>
@@ -113,8 +144,8 @@ const ComponentPerfilDeCaixa = () =>{
           />
 
           {/* =========== MODAL ========== */}
-          {showModal && (
-            <Modal onClose={() => setShowModal(false)} style={{ width: "80vw" , height: "70vh"}}>
+          {showModalPerfilById && (
+            <Modal onClose={() => setShowModalPerfilById(false)} style={{ width: "80vw" , height: "70vh"}}>
               {/* ==== CABECALHO ==== */}
               <Card className="h-full">
                 <CardHeader>
@@ -170,30 +201,65 @@ const ComponentPerfilDeCaixa = () =>{
                     </CardContent>
 
                     {/* ===== RODAPÉ ==== */}
-                  <CardFooter className="justify-between">
-                      <Button onClick={() => setShowModal(false)} variant={"destructive"}>
-                        Fechar
-                      </Button>
-                      <Button onClick={handleSave} variant={"default"}>
-                        Salvar
-                      </Button>
+                  <CardFooter className="flex gap-4 justify-center">
+                      <Button onClick={() => setShowModalPerfilById(false)} variant={"outline"}>Fechar</Button>
+                      <Button variant={"destructive"} onClick={() => setShowModalConfirm(true)}>Apagar</Button>
+                      <Button onClick={handleSave} variant={"default"}>Salvar</Button>
                   </CardFooter>
-
-                
               </Card>
 
-            </Modal>
-          )}
+              {/* MODAL DE CONFIRMAÇÃO PARA APAGAR PERFIL PDV */}
+              {showModalConfirm && (
+                <Modal style={{width: "350px", textAlign: "center"}}  onClose={() => setShowModalConfirm(false)}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Tem certeza que deseja apagar o perfil ?</CardTitle>
+                      <CardDescription>Atenção! Todas as informações serão perdidas!!! </CardDescription>
+                    </CardHeader>
 
+                    <CardFooter className="justify-center flex gap-4">
+                      <Button onClick={() => handleDeletePerfil(dataByIdPerfilPdv?.id)} variant={"destructive"}>Confirmar</Button>
+                      <Button onClick={() => setShowModalConfirm(false)} variant={"outline"}>Cancelar</Button>
+                    </CardFooter>
+                    </Card>
+                </Modal>
+              )}
+            </Modal>
+            
+          )}
 
           {/* ============ BUTTONS RODAPÉ ============ */}
           <div className ="fixed flex bottom-0  w-full text-white p-4 gap-4 text-center ">
-              <Button>Incluir</Button>
+              <Button onClick={handleClickInserirPerfil}>Incluir</Button>
               <Button>Portabilidade</Button>
-              <Button>Atualizar</Button>
+              <Button onClick={() => refetchAllPerfil()}>Atualizar</Button>
               <Button variant={"destructive"}>Deletar</Button>
           </div>
 
+          {/* ========= MODAL INCLUIR ========== */}
+          {showModalIncluirPerfil && (
+            <Modal onClose={() => setShowModalIncluirPerfil(false)} style={{width: "350px"}}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Incluir Novo Perfil</CardTitle>
+                </CardHeader>
+                
+                <CardContent>
+                  <Label>Descrição</Label>
+                  <Input 
+                    onChange={(evt) => setNewPerfilDescricao(evt.target.value)}
+                    value={newPerfilDescricao}
+                  > 
+                  </Input>
+                </CardContent>
+
+                <CardFooter className="justify-between">
+                  <Button variant={"destructive"} onClick={() => setShowModalIncluirPerfil(false)}>Fechar</Button>
+                  <Button onClick={handleSaveNewPerfil}>Salvar</Button>
+                </CardFooter>
+              </Card>
+            </Modal>
+          )}
         </div>
     )
 }
