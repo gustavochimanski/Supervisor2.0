@@ -55,3 +55,41 @@ export const useDelPerfilDeCaixa = () => {
   }
 )
 }
+
+
+// ================================================================
+// ========================== PUT ===============================
+
+// Definindo a interface do payload para a configuração
+export interface PatchConfPerfilPayload {
+  id: number;
+  property: string;
+  value: string;
+  perfilId: number;
+}
+
+// Interface para os parâmetros da mutação, incluindo o idPerfil e o payload
+export interface PutConfPerfilParams {
+  idPerfil: string;
+  payload: PatchConfPerfilPayload;
+}
+
+// Hook para atualizar a configuração do perfil PDV
+export const usePutConfPerfilPdv = () => {
+  return useMutation(
+    async ({ idPerfil, payload }: PutConfPerfilParams) => {
+      const response = await api.put(`/v1/config/confperfil/${idPerfil}`, payload);
+      return response.data;
+    },
+    {
+      onSuccess: (data) => {
+        console.log('Configuração do perfil atualizada com sucesso:', data);
+        // Aqui você pode, por exemplo, invalidar queries ou exibir uma mensagem de sucesso
+      },
+      onError: (error) => {
+        console.error('Erro ao atualizar a configuração do perfil:', error);
+        // Aqui você pode tratar o erro, exibindo uma notificação ou executando outras ações
+      },
+    }
+  );
+};
