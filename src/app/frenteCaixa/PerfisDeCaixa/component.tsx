@@ -29,11 +29,12 @@ const ComponentPerfilDeCaixa: React.FC = () => {
   const [selectedPerfilPdvId, setSelectedPerfilPdvId] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<PerfilPdv | undefined>(undefined);
   const [originalData, setOriginalData] = useState<PerfilPdv | undefined>(undefined);
+  
+  // ==== MODAIS ======
   const [showModalIncluirPerfil, setShowModalIncluirPerfil] = useState(false);
   const [showModalPerfilById, setShowModalPerfilById] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
-  const [newPerfilDescricao, setNewPerfilDescricao] = useState<string>("");
-
+  
   // ===== DATA FETCHING =====
   const { data: dataAllPerfilPdv, refetch: refetchAllPerfil } = useFetchAllPerfil();
   const { data: dataByIdPerfilPdv } = useFetchByIdPerfil(selectedPerfilPdvId);
@@ -97,6 +98,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
   // =================================================================
   // ================== POST NOVO PERFIL DE CAIXA ====================
   const { mutate: postNewPerfil } = usePostNewPerfil();
+  const [newPerfilDescricao, setNewPerfilDescricao] = useState<string>("");
   const handleSaveNewPerfil = () => {
     postNewPerfil(newPerfilDescricao);
     setShowModalIncluirPerfil(false);

@@ -19,27 +19,35 @@ import { CardContent, CardTitle } from "@/components/ui/card";
 import { ConfiguracaoMeioPag, MeioPgto } from "../types";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { atualizarDescricaoMeioPgto, atualizarConfigMeioPag } from "../request";
+import { atualizarDescricaoMeioPgto} from "../serviceMeioPagamento";
 import api from "@/api/api";
+import { useAtualizarConfigMpgto } from "../useMeioPagamento";
+import { config } from "process";
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;
 }
 
-const ConfigsMeioPagamento = forwardRef<
-  ConfigsMeioPagamentoHandles
->((props, ref: ForwardedRef<ConfigsMeioPagamentoHandles>) => {
+const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref: ForwardedRef<ConfigsMeioPagamentoHandles>) => {
+
+  //======= ESTADOS =======
   const [dadosMeioPgto, setDadosMeioPgto] = useState<MeioPgto | null>(null);
   const [configDadosMeioPgto, setConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
+  const [originalConfigDadosMeioPgto, setOriginalConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
+
+  // MENSAGEM E LOADING
   const [mensagem, setMensagem] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [originalConfigDadosMeioPgto, setOriginalConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
+  
+
+  // ======== MUTEDS ========
+  const {mutate: atualizaConfigMpgto} = useAtualizarConfigMpgto();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get<MeioPgto>("/v1/config/meiospgto/1");
-        const { configuracao, ...meioPgto } = response.data;
+        const { configuracao } = response.data;
         
         setDadosMeioPgto(response.data);
         setConfigDadosMeioPgto(configuracao);
@@ -54,7 +62,7 @@ const ConfigsMeioPagamento = forwardRef<
   }, []);
 
   const handleChange = (
-    key: keyof ConfiguracaoMeioPag | keyof MeioPgto,
+    key: keyof ConfiguracaoMeioPag,
     value: any,
     nomeCampo: string
   ) => {
@@ -62,7 +70,6 @@ const ConfigsMeioPagamento = forwardRef<
       console.warn("nomeCampo não fornecido para handleChange");
       return;
     }
-    console.log(`handleChange chamado para nomeCampo: ${nomeCampo}, key: ${key}, value: ${value}`);
     
     setConfigDadosMeioPgto((prevConfigs) =>
       prevConfigs.map((config) => {
@@ -80,42 +87,29 @@ const ConfigsMeioPagamento = forwardRef<
   const acionaGaveta = configDadosMeioPgto.find(
     (item) => item.nomeCampo === "AcionaGaveta"
   );
-
   const handleSubmit = async () => {
     if (dadosMeioPgto?.id) { 
       setLoading(true);
       setMensagem("");
 
       try {
-        // Verifica se a descrição foi alterada
+        // Atualiza a descrição caso tenha sido alterada
         if (dadosMeioPgto.descricao) {
           await atualizarDescricaoMeioPgto(
-            dadosMeioPgto.id,
+            dadosMeioPgto.id.toString(),
             dadosMeioPgto.descricao,
-            setMensagem,
-            setDadosMeioPgto
           );
         }
-
-        // Filtra apenas as configurações que foram alteradas
-        const alteredConfigs = configDadosMeioPgto.filter((config) => {
-          const original = originalConfigDadosMeioPgto.find(
-            (orig) => orig.nomeCampo === config.nomeCampo
-          );
-          return (
-            original &&
-            (config.stringValue !== original.stringValue ||
-              config.integerValue !== original.integerValue ||
-              config.doubleValue !== original.doubleValue ||
-              config.dateValue !== original.dateValue)
-          );
-        });
-
-        // Atualiza cada configuração alterada
-        const promises = alteredConfigs.map((config) =>{
-          atualizarConfigMeioPag(dadosMeioPgto.id, config, setMensagem, setConfigDadosMeioPgto)
-      });
-        await Promise.all(promises);
+        
+        // Atualiza o Config
+        // Verifica se houve alteração nas configurações
+        if (
+          JSON.stringify(configDadosMeioPgto) !==
+          JSON.stringify(originalConfigDadosMeioPgto)
+        ) {
+          // Chama o hook para atualizar as configurações
+          atualizaConfigMpgto(configDadosMeioPgto);
+        }
 
         setMensagem("Atualização concluída com sucesso!");
       } catch (error) {
@@ -158,7 +152,7 @@ const ConfigsMeioPagamento = forwardRef<
               Descrição
             </label>
             <Input
-              id="descricao"
+              id={dadosMeioPgto.id.toString()}
               value={dadosMeioPgto.descricao ?? ""}
               onChange={(evt) =>
                 setDadosMeioPgto((prev) => prev ? { ...prev, descricao: evt.target.value } : prev)
@@ -182,7 +176,7 @@ const ConfigsMeioPagamento = forwardRef<
               <Select
                 value={acionaGaveta.stringValue ?? ""} // Valor atual do seletor
                 onValueChange={(value) =>
-                  handleChange("stringValue", value, "AcionaGaveta") // Atualiza o estado ao mudar o valor
+                  handleChange("stringValue", value, "AcionaGaveta")
                 }
               >
                 <SelectTrigger className="w-[180px]" id="acionaGavetaSelect">
@@ -204,9 +198,9 @@ const ConfigsMeioPagamento = forwardRef<
               </label>
               
               <Select
-                value={codigoPreco.integerValue?.toString() ?? "0"} // Garantindo que o valor do Select seja string
+                value={codigoPreco.integerValue?.toString() ?? "0"}
                 onValueChange={(value) => {
-                  handleChange("integerValue", Number(value), "CodigoPreco") // Convertendo a string para número
+                  handleChange("integerValue", Number(value), "CodigoPreco");
                 }}
               >
                 <SelectTrigger className="w-[180px]" id="codigoPrecoSelect">
@@ -225,10 +219,6 @@ const ConfigsMeioPagamento = forwardRef<
       </CardContent>
       {/* Exibe mensagens para o usuário */}
       {mensagem && <div className="mt-4 text-center text-sm text-red-500">{mensagem}</div>}
-      {/* Opcional: Botão para submeter as alterações diretamente no componente */}
-      {/* <button type="button" onClick={handleSubmit} disabled={loading}>
-        {loading ? "Atualizando..." : "Atualizar Configurações"}
-      </button> */}
     </form>
   );
 });
