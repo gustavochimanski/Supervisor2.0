@@ -1,94 +1,91 @@
-import { useQuery, useMutation } from 'react-query';
-import api from '@/api/api';
-import { PerfilPdv } from './types';
+// hooks/usePerfilPdv.ts
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import {
+  fetchAllPerfis,
+  fetchPerfilById,
+  postNewPerfil,
+  deletePerfil,
+  putConfPerfil,
+  patchAlteraDescricao,
+} from './perfilService';
+import { PatchConfPerfilPayload, PerfilPdv} from './types';
 
-// ================================================================
-// ========================== FETCH ==============================
-
-// BUSCA TODOS OS PERFIS DE CAIXA
+// Hook para buscar todos os perfis de caixa
 export const useFetchAllPerfil = () => {
-  return useQuery<PerfilPdv[]>(
-    'fetchAllPerfilPdvs',
-    async () => {
-      const response = await api.get('/v1/config/perfilpdv');
-      return response.data;
-    },
-    {
-      staleTime: 60 * 1000, 
-    }
-  );
-};
-
-// BUSCA PERFIL DE CAIXA POR ID
-export const useFetchByIdPerfil = (id: string | undefined) => {
-  return useQuery<PerfilPdv>(
-    ['fetchPerfilPdvById', id],
-    async () => {
-      const response = await api.get(`/v1/config/perfilpdv/${id}`);
-      return response.data;
-    },
-    {
-      enabled: !!id, // A query só será executada se o id existir
-      staleTime: 60 * 1000, 
-    }
-  );
-};
-
-
-// ================================================================
-// ========================== POST ==============================
-
-// INCLUI UM NOVO PERFIL DE CAIXA
-export const usePostNewPerfilDeCaixa = () => {
-  return useMutation(async(descricao:string) =>{
-    const response = await api.post("/v1/config/perfilpdv", { descricao });
-    return response.data;
+  return useQuery<PerfilPdv[]>('fetchAllPerfilPdvs', fetchAllPerfis, {
+    staleTime: 60 * 1000,
   });
 };
 
-// APAGA PERFIL DE CAIXA POR ID
+// Hook para buscar um perfil por ID
+export const useFetchByIdPerfil = (id: string | undefined) => {
+  return useQuery<PerfilPdv>(
+    ['fetchPerfilPdvById', id],
+    () => fetchPerfilById(id!),
+    {
+      enabled: !!id, // Só executa se houver um ID
+      staleTime: 60 * 1000,
+    }
+  );
+};
 
-export const useDelPerfilDeCaixa = () => {
-  return useMutation(async(id: string) => {
-    const response = await api.delete(`/v1/config/perfilpdv/${id}`)
-    return response.data
-  }
-)
-}
+// Hook para criar um novo perfil de caixa
+export const usePostNewPerfil = () => {
+  const queryClient = useQueryClient();
 
+  return useMutation(postNewPerfil, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza a lista após a inserção
+    },
+  });
+};
 
-// ================================================================
-// ========================== PUT ===============================
+// Hook para deletar um perfil de caixa
+export const useDelPerfil = () => {
+  const queryClient = useQueryClient();
 
-// Definindo a interface do payload para a configuração
-export interface PatchConfPerfilPayload {
-  id: number;
-  property: string;
-  value: string;
-  perfilId: number;
-}
-
-// Interface para os parâmetros da mutação, incluindo o idPerfil e o payload
-export interface PutConfPerfilParams {
-  idPerfil: string;
-  payload: PatchConfPerfilPayload;
-}
+  return useMutation(deletePerfil, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza a lista após a remoção
+    },
+  });
+};
 
 // Hook para atualizar a configuração do perfil PDV
 export const usePutConfPerfilPdv = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(
-    async ({ idPerfil, payload }: PutConfPerfilParams) => {
-      const response = await api.put(`/v1/config/confperfil/${idPerfil}`, payload);
-      return response.data;
+    async ({ idPerfil, payloadArray }: { idPerfil: string; payloadArray: PatchConfPerfilPayload[] }) => {
+      // Envia cada item do array separadamente
+      for (const payload of payloadArray) {
+        console.log(idPerfil, payload)
+        await putConfPerfil(idPerfil, payload);
+      }
     },
     {
-      onSuccess: (data) => {
-        console.log('Configuração do perfil atualizada com sucesso:', data);
-        // Aqui você pode, por exemplo, invalidar queries ou exibir uma mensagem de sucesso
+      onSuccess: () => {
+        console.log('Todas as configurações foram atualizadas com sucesso');
+        queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza os dados no cache
       },
       onError: (error) => {
-        console.error('Erro ao atualizar a configuração do perfil:', error);
-        // Aqui você pode tratar o erro, exibindo uma notificação ou executando outras ações
+        console.error('Erro ao atualizar as configurações:', error);
+      },
+    }
+  );
+};
+
+// ===================================================================
+// ========= Hook para atualizar a descrição do perfil PDV ===========
+export const usePutAlteraDescricao = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation(
+    ({ idPerfil, descricao }: { idPerfil: string; descricao: string }) =>
+      patchAlteraDescricao(idPerfil, descricao),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza os dados no cache
       },
     }
   );

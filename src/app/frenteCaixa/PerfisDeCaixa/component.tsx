@@ -17,19 +17,18 @@ import { Label } from "@/components/ui/label";
 import {
   useFetchAllPerfil,
   useFetchByIdPerfil,
-  usePostNewPerfilDeCaixa,
-  useDelPerfilDeCaixa,
+  useDelPerfil,
+  usePostNewPerfil,
   usePutConfPerfilPdv,
+  usePutAlteraDescricao,
 } from "./usePerfil";
-import { ConfigPerfilPdv, PerfilPdv } from "./types";
+import { PatchConfPerfilPayload, PerfilPdv } from "./types";
 
 const ComponentPerfilDeCaixa: React.FC = () => {
   // ===== STATES =====
   const [selectedPerfilPdvId, setSelectedPerfilPdvId] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<PerfilPdv | undefined>(undefined);
-  // Aqui vamos armazenar os dados originais para comparação
   const [originalData, setOriginalData] = useState<PerfilPdv | undefined>(undefined);
-
   const [showModalIncluirPerfil, setShowModalIncluirPerfil] = useState(false);
   const [showModalPerfilById, setShowModalPerfilById] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
@@ -39,8 +38,9 @@ const ComponentPerfilDeCaixa: React.FC = () => {
   const { data: dataAllPerfilPdv, refetch: refetchAllPerfil } = useFetchAllPerfil();
   const { data: dataByIdPerfilPdv } = useFetchByIdPerfil(selectedPerfilPdvId);
 
-  // Hook para PUT (atualizar configuração)
+  // Hooks para PUT
   const { mutate: updateConfigPerfil } = usePutConfPerfilPdv();
+  const { mutate: updateDescricaoPerfil } = usePutAlteraDescricao();
 
   // Initialize formData and originalData when a perfil is fetched by its ID
   useEffect(() => {
@@ -48,7 +48,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
       const initialData: PerfilPdv = {
         id: dataByIdPerfilPdv.id,
         descricao: dataByIdPerfilPdv.descricao,
-        confPerfil: dataByIdPerfilPdv.confPerfil.map((item: ConfigPerfilPdv) => ({
+        confPerfil: dataByIdPerfilPdv.confPerfil.map((item: PatchConfPerfilPayload) => ({
           id: item.id,
           property: item.property,
           value: item.value,
@@ -56,7 +56,6 @@ const ComponentPerfilDeCaixa: React.FC = () => {
         })),
       };
       setFormData(initialData);
-      // Armazena os dados originais para comparação
       setOriginalData(initialData);
     }
   }, [dataByIdPerfilPdv]);
@@ -73,15 +72,13 @@ const ComponentPerfilDeCaixa: React.FC = () => {
     setFormData((prev) => {
       if (!prev) return prev;
 
-      // Atualiza o campo 'descricao' se for esse o caso
-      if (name.toLowerCase() === "descricao") {
+      // Atualiza o campo 'descricao'
+      if (name === "descricao") {
         return { ...prev, descricao: value };
       }
 
       // Atualiza um item de configuração em confPerfil
-      const confIndex = prev.confPerfil.findIndex(
-        (item) => item.property.toLowerCase() === name.toLowerCase()
-      );
+      const confIndex = prev.confPerfil.findIndex((item) => item.property === name);
       if (confIndex !== -1) {
         const updatedConf = [...prev.confPerfil];
         updatedConf[confIndex] = { ...updatedConf[confIndex], value };
@@ -92,9 +89,14 @@ const ComponentPerfilDeCaixa: React.FC = () => {
     });
   };
 
+  // Abre o modal de inclusão
+  const handleClickInserirPerfil = () => {
+    setShowModalIncluirPerfil(true);
+  };
+
   // =================================================================
   // ================== POST NOVO PERFIL DE CAIXA ====================
-  const { mutate: postNewPerfil } = usePostNewPerfilDeCaixa();
+  const { mutate: postNewPerfil } = usePostNewPerfil();
   const handleSaveNewPerfil = () => {
     postNewPerfil(newPerfilDescricao);
     setShowModalIncluirPerfil(false);
@@ -103,13 +105,13 @@ const ComponentPerfilDeCaixa: React.FC = () => {
 
   // ================================================================= 
   // ===================== APAGA PERFIL POR ID =======================
-  const { mutate: deletePerfil } = useDelPerfilDeCaixa();
-  const handleDeletePerfil = (id?: number) => {
+  const { mutate: deletePerfil } = useDelPerfil();
+  const handleDeletePerfil = (id?: string) => {
     if (!id) {
       console.error("ID inválido para deleção");
       return;
     }
-    deletePerfil(String(id));
+    deletePerfil(id);
     setShowModalPerfilById(false);
   };
 
@@ -120,38 +122,38 @@ const ComponentPerfilDeCaixa: React.FC = () => {
       console.error("Dados insuficientes para comparação");
       return;
     }
-
-    // Verifica cada configuração se houve alteração
-    formData.confPerfil.forEach((config) => {
+  
+    if (!dataByIdPerfilPdv?.id) {
+      console.error("ID do perfil PDV não está disponível");
+      return;
+    }
+  
+    // Filtra apenas os itens de confPerfil que tiveram alteração no valor
+    const modifiedConfigs = formData.confPerfil.filter((config) => {
       const originalConfig = originalData.confPerfil.find(
-        (item) => item.property.toLowerCase() === config.property.toLowerCase()
+        (item) => item.property === config.property
       );
-      if (originalConfig && originalConfig.value !== config.value) {
-        // Cria o payload para o PUT
-        const payload = {
-          id: config.id,
-          property: config.property,
-          value: config.value,
-          perfilId: config.perfilId,
-        };
-        
-        updateConfigPerfil({
-          idPerfil: String(config.perfilId),
-          payload: payload,
-        });
-      }
+      return originalConfig && originalConfig.value !== config.value;
     });
-
-    // Se você também precisa atualizar o campo "descricao", pode comparar e atualizar aqui:
+  
+    // Se houver itens modificados, envia cada um via PUT
+    if (modifiedConfigs.length > 0) {
+      updateConfigPerfil({
+        idPerfil: String(dataByIdPerfilPdv.id),
+        payloadArray: modifiedConfigs,
+      });
+    }
+  
+    // Atualiza a descrição se houve alteração
     if (formData.descricao !== originalData.descricao) {
-      console.log("A descrição foi alterada para:", formData.descricao);
-      // Dispare a atualização para a descrição se necessário
+      updateDescricaoPerfil({
+        idPerfil: String(formData.id),
+        descricao: formData.descricao,
+      });
     }
   };
-
-  const handleClickInserirPerfil = () => {
-    setShowModalIncluirPerfil(true);
-  };
+  
+  
 
   return (
     <div>
@@ -194,9 +196,22 @@ const ComponentPerfilDeCaixa: React.FC = () => {
                   <Label htmlFor="impressora">Impressora</Label>
                   <Input
                     type="text"
-                    id={formData?.confPerfil.find(item => item.property === 'Impressora')?.id.toString() || ''}
+                    id={
+                      formData?.confPerfil.find((item) => item.property === "Impressora")?.id.toString() || ""}
                     name="Impressora"
-                    value={formData?.confPerfil.find(item => item.property === 'Impressora')?.value || ''}
+                    value={formData?.confPerfil.find((item) => item.property === "Impressora")?.value || ""}
+                    onChange={handleChange}
+                    className="w-28"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="impressoraParity">Impressora</Label>
+                  <Input
+                    type="text"
+                    id={
+                      formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.id.toString() || ""}
+                    name="ImpressoraParity"
+                    value={formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.value || ""}
                     onChange={handleChange}
                     className="w-28"
                   />
@@ -210,7 +225,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
               <Button variant="destructive" onClick={() => setShowModalConfirm(true)}>
                 Apagar
               </Button>
-              <Button onClick={handleSave} variant="default">
+              <Button onClick={handleSave} type="submit" variant="default">
                 Salvar
               </Button>
             </CardFooter>
@@ -225,7 +240,10 @@ const ComponentPerfilDeCaixa: React.FC = () => {
                   <CardDescription>Atenção! Todas as informações serão perdidas!</CardDescription>
                 </CardHeader>
                 <CardFooter className="flex gap-4 justify-center">
-                  <Button onClick={() => handleDeletePerfil(dataByIdPerfilPdv?.id)} variant="destructive">
+                  <Button
+                    onClick={() => handleDeletePerfil(dataByIdPerfilPdv?.id)}
+                    variant="destructive"
+                  >
                     Confirmar
                   </Button>
                   <Button onClick={() => setShowModalConfirm(false)} variant="outline">
