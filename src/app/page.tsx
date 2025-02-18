@@ -1,18 +1,20 @@
-"use client"; // Se estiver usando Next.js App Router
-
+"use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function LoginForm() {
-  // Armazenar o token de autenticação após o login
-  const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
+  const [username, setUsername] = useState("gustavo@gtech.com.br");
+  const [password, setPassword] = useState("123456");
   const [error, setError] = useState<string | null>(null);
 
-  async function handleLogin() {
+  async function handleLogin(event: React.FormEvent) {
+    event.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/auth/token", {
-        username: "gustavo@gtech.com.br",
-        password: "123456",
+        username,
+        password,
       });
 
       const receivedToken = response.data.token;
@@ -20,63 +22,44 @@ export default function LoginForm() {
         throw new Error("Token não encontrado na resposta");
       }
 
-      // Salva token em estado e localStorage
-      setToken(receivedToken);
       localStorage.setItem("jwt", receivedToken);
+      // Redireciona para a rota protegida (por exemplo, /dashboard)
+      router.push("/dashboard");
     } catch (err: any) {
       setError("Falha ao fazer login");
       console.error(err);
     }
   }
 
-  // Exemplo de requisição protegida
-  async function handleGetProtected() {
-    try {
-      const storedToken = localStorage.getItem("jwt"); 
-      if (!storedToken) {
-        alert("Nenhum token encontrado. Faça login antes!");
-        return;
-      }
-
-      // Envia GET para rota protegida, incluindo o cabeçalho Authorization
-      const response = await axios.get("http://localhost:8080/auth/protected", {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      });
-
-      // Exibe a resposta do servidor protegido
-      alert("Resposta da rota protegida: " + JSON.stringify(response.data));
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao acessar rota protegida!");
-    }
-  }
-
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Exemplo de Login + Rota Protegida</h1>
-      {!token ? (
-        <>
-          <p>
-            Testando login com: <br />
-            <strong>username:</strong> gustavo@gtech.com.br<br />
-            <strong>password:</strong> 123456
-          </p>
-          <button onClick={handleLogin}>Fazer Login</button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-        </>
-      ) : (
-        <>
-          <p style={{ color: "green" }}>Login bem-sucedido!</p>
-          <p>Token: {token}</p>
-          
-          {/* Botão que faz uma chamada a rota protegida */}
-          <button onClick={handleGetProtected}>
-            Chamar Rota Protegida
-          </button>
-        </>
-      )}
+    <div style={{ padding: 20, maxWidth: 400, margin: "0 auto" }}>
+      <h1>Login</h1>
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: 10 }}>
+          <label htmlFor="username">Usuário:</label>
+          <input
+            type="email"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
+          />
+        </div>
+        <div style={{ marginBottom: 10 }}>
+          <label htmlFor="password">Senha:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
+          />
+        </div>
+        <button type="submit" style={{ padding: "10px 20px" }}>
+          Fazer Login
+        </button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </form>
     </div>
   );
 }
