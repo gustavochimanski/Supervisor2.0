@@ -4,7 +4,8 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import AppSidebar from "@/components/sidebar/app-sidebar"
 import { QueryClientProvider } from "react-query"
-import { queryClient } from "@/services/queryClient"
+import { queryClient } from "@/services/QueryClient"
+import { useEffect, useState } from "react"
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -12,9 +13,19 @@ interface ClientLayoutProps {
 }
 
 export default function ClientLayout({ children, defaultOpen }: ClientLayoutProps) {
+  const [isSideBarOpen, setIsSidebarOpen] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    setIsSidebarOpen(defaultOpen)
+  }, [defaultOpen])
+
+  if (isSideBarOpen === null) {
+    return null // Evita o piscar da sidebar antes do estado ser definido
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
-      <SidebarProvider defaultOpen={defaultOpen}>
+      <SidebarProvider defaultOpen={isSideBarOpen}>
         <AppSidebar />
         <main>
           <SidebarTrigger variant="secondary" />

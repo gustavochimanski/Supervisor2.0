@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import ClientLayout from "@/components/ClientLayout";
-import AuthGuard from "@/components/AuthGuard";
+import AuthProvider from "@/context/AuthProvider";
+
 import "./globals.css";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
@@ -13,8 +14,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
     <html>
       <body>
         <ClientLayout defaultOpen={defaultOpen}>
-          {/* AuthGuard é um Client Component que faz o redirecionamento */}
-          <AuthGuard>{children}</AuthGuard>
+          {/* AuthProvider é um Client Component que faz o redirecionamento */}
+          <AuthProvider>{children}</AuthProvider>
         </ClientLayout>
       </body>
     </html>

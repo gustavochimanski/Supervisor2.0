@@ -29,7 +29,6 @@ import {
 
 import SubMenuEmpresas from "./submenu-empresas";
 import { useEffect, useState } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
 
   // Menu items.
   const items = [
@@ -56,23 +55,8 @@ import CircularProgress from "@mui/material/CircularProgress";
   const AppSidebar = ()=> {
 
   const { open } = useSidebar();
-  // ==================================================
-  // =================== ROTAS ========================
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (!token) {
-      setIsAuthChecked(false)
-    } else {
-      // Se houver token, atualiza o estado para permitir renderizar a sidebar
-      setIsAuthChecked(true);
-    }
-  }, []);
     
-    return (
-      <>
-        {isAuthChecked ?        
+    return ( 
         <Sidebar variant="sidebar"  collapsible="icon" className="dark">
             <SidebarHeader>
                 <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
@@ -98,10 +82,6 @@ import CircularProgress from "@mui/material/CircularProgress";
                 </SidebarGroup>
             </SidebarContent>
           </Sidebar>
-        :   
-          <div></div>
-        }
-      </>
     )
   }
 
