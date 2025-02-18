@@ -1,12 +1,13 @@
 "use client";
 
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Tabs, { TabItem } from "@/components/shared/tabs"; // ajuste o caminho conforme sua estrutura
 import ComponentCaixas from "./Caixas/component";
 import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";
 import ComponentMeioPagamento from "./MeioPagamento/component";
 import { useRouter } from "next/navigation";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const tabItems: TabItem[] = [
   { value: "caixas", label: "Caixas", Component: ComponentCaixas },
@@ -24,6 +25,12 @@ const PageFrenteCaixa = () => {
       router.push("/login");
   }
   }, [router]);
+
+  // NÃO DEIXA A PÁGINA CARREGAR CASO NÃO TENHA O TOKEN
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  if (!isAuthChecked) {
+    return <CircularProgress />; 
+  }
   
 
   return (

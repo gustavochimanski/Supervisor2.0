@@ -1,7 +1,9 @@
 "use client";
 
+
+import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const PageVendas = () => {
     const router = useRouter();
@@ -13,6 +15,12 @@ const PageVendas = () => {
         router.push("/login");
     }
     }, [router]);
+    
+    // NÃO DEIXA A PÁGINA CARREGAR CASO NÃO TENHA O TOKEN
+    const [isAuthChecked, setIsAuthChecked] = useState(false);
+    if (!isAuthChecked) {
+    return <CircularProgress />; 
+    }
 
 
     return(
