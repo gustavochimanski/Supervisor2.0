@@ -5,7 +5,7 @@ import Tabs, { TabItem } from "@/components/shared/tabs"; // ajuste o caminho co
 import ComponentCaixas from "./Caixas/component";
 import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";
 import ComponentMeioPagamento from "./MeioPagamento/component";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const tabItems: TabItem[] = [
   { value: "caixas", label: "Caixas", Component: ComponentCaixas },

@@ -1,7 +1,9 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+
 const Home = () => {
+
   const router = useRouter();
 
   useEffect(() => {
@@ -11,7 +13,7 @@ const Home = () => {
       router.push("/login");
   }
   }, [router]);
-  
+
   return(
     <div>
       <h1>Home</h1>
