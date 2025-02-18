@@ -1,6 +1,6 @@
 // hooks/useMeioPagamento.ts
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { atualizarConfigMeioPgto, atualizarDescricaoMeioPgto } from "./serviceMeioPagamento";
+import { atualizarConfigMeioPgto, atualizarDescricaoMeioPgto } from "./service";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
 import api from "@/api/api";
 

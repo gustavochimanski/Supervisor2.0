@@ -1,5 +1,6 @@
 // ConfigsMeioPagamento.tsx
 "use client";
+import { NumericFormat } from 'react-number-format';
 
 import React, {
   useImperativeHandle,
@@ -19,14 +20,16 @@ import { CardContent, CardTitle } from "@/components/ui/card";
 import { ConfiguracaoMeioPag, MeioPgto } from "../types";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { atualizarDescricaoMeioPgto} from "../serviceMeioPagamento";
+import { atualizarDescricaoMeioPgto} from "../service";
 import api from "@/api/api";
-import { useAtualizarConfigMpgto } from "../useMeioPagamento";
-import { config } from "process";
+import { useAtualizarConfigMpgto } from "../useMeioPag";
+import { FloatInput } from '@/components/shared/floatInput';
+
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;
 }
+
 
 const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref: ForwardedRef<ConfigsMeioPagamentoHandles>) => {
 
@@ -39,8 +42,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
   const [mensagem, setMensagem] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   
-
-  // ======== MUTEDS ========
+  // ======== MUTEDS ======== 
   const {mutate: atualizaConfigMpgto} = useAtualizarConfigMpgto();
 
   useEffect(() => {
@@ -81,12 +83,6 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
     );
   };
 
-  const codigoPreco = configDadosMeioPgto.find(
-    (item) => item.nomeCampo === "CodigoPreco"
-  );
-  const acionaGaveta = configDadosMeioPgto.find(
-    (item) => item.nomeCampo === "AcionaGaveta"
-  );
   const handleSubmit = async () => {
     if (dadosMeioPgto?.id) { 
       setLoading(true);
@@ -109,6 +105,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
         ) {
           // Chama o hook para atualizar as configurações
           atualizaConfigMpgto(configDadosMeioPgto);
+      
         }
 
         setMensagem("Atualização concluída com sucesso!");
@@ -165,19 +162,17 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
 
         {/* =============== CONFIGURAÇÕES ====================== */}
         <CardTitle className="my-3">Configurações</CardTitle>
-        <div className="flex flex-wrap gap-4 justify-between items-center">
+        <div className="flex gap-4 items-center">
           {/* ========= ACIONA GAVETA ========== */}
-          {acionaGaveta && (
+          {configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta") && (
             <div className="flex flex-col w-full md:w-1/2">
               <label htmlFor="acionaGavetaSelect" className="block text-sm font-medium text-gray-700">
                 Aciona Gaveta
               </label>
            
               <Select
-                value={acionaGaveta.stringValue ?? ""} // Valor atual do seletor
-                onValueChange={(value) =>
-                  handleChange("stringValue", value, "AcionaGaveta")
-                }
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "AcionaGaveta")}
               >
                 <SelectTrigger className="w-[180px]" id="acionaGavetaSelect">
                   <SelectValue />
@@ -191,19 +186,17 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           )}
 
           {/* ========= CÓDIGO PREÇO ========== */}
-          {codigoPreco && (
+          {configDadosMeioPgto.find((item) => item.nomeCampo === "CodigoPreco") && (
             <div className="flex flex-col w-full md:w-1/2">
               <label htmlFor="codigoPrecoSelect" className="block text-sm font-medium text-gray-700">
                 Código Preço
               </label>
               
               <Select
-                value={codigoPreco.integerValue?.toString() ?? "0"}
-                onValueChange={(value) => {
-                  handleChange("integerValue", Number(value), "CodigoPreco");
-                }}
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "CodigoPreco")?.integerValue.toString() ?? ""}
+                onValueChange={(value) => {handleChange("integerValue", Number(value), "CodigoPreco");}}
               >
-                <SelectTrigger className="w-[180px]" id="codigoPrecoSelect">
+                <SelectTrigger className="w-[180px]" id="codigoPreco">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -214,6 +207,43 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
+          )}
+          {/* ========= CARTÃO DIGITADO ========== */}
+          {configDadosMeioPgto.find((item) => item.nomeCampo === "CartaoDigitado") && (
+            <div className="flex flex-col w-full md:w-1/2">
+              <label htmlFor="CartaoDigitadoSelect" className="block text-sm font-medium text-gray-700">
+                Cartão Digitado
+              </label>
+              
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "CartaoDigitado")?.stringValue ?? ""}
+                onValueChange={(value) => {handleChange("stringValue", value, "CartaoDigitado");}}
+              >
+                <SelectTrigger className="w-[180px]" id="CartaoDigitado">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="S">Sim</SelectItem> 
+                  <SelectItem value="N">Não</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+          {/* ========= DESCONTO TICKET ========== */}
+          {configDadosMeioPgto.find((item) => item.nomeCampo === "DescontoTicket") && (
+            <div className="flex flex-col w-full md:w-1/2">
+              <label htmlFor="DescontoTicketSelect" className="block text-sm font-medium text-gray-700">
+                Desconto Ticket
+              </label>
+              
+              
+              <FloatInput
+                
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "DescontoTicket")?.doubleValue ?? 0}
+                onChangeValue={((value: number) => handleChange("doubleValue", value, "DescontoTicket"))}
+              />
+              
+            </div>            
           )}
         </div>
       </CardContent>
