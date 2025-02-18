@@ -28,6 +28,8 @@ import {
   } from "lucide-react";
 
 import SubMenuEmpresas from "./submenu-empresas";
+import { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
   // Menu items.
   const items = [
@@ -53,38 +55,55 @@ import SubMenuEmpresas from "./submenu-empresas";
   
   const AppSidebar = ()=> {
 
-    const { open } = useSidebar(); 
+  const { open } = useSidebar();
+  // ==================================================
+  // =================== ROTAS ========================
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      setIsAuthChecked(false)
+    } else {
+      // Se houver token, atualiza o estado para permitir renderizar a sidebar
+      setIsAuthChecked(true);
+    }
+  }, []);
     
     return (
-      <Sidebar variant="sidebar"  collapsible="icon" className="dark">
-        <SidebarHeader>
-            <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
-        </SidebarHeader>
-        <SidebarSeparator className="bg-white"/>
-        <SidebarContent>
-            <SidebarGroup>
-            <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
-            <SidebarGroupContent>
-                <SidebarMenu >
-                {items.map((item) => (
-                    <SidebarMenuItem key={item.title} >
-                    <SidebarMenuButton asChild tooltip={item.title}>
-                        <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                        </a>
-                    </SidebarMenuButton>
-                    </SidebarMenuItem>
-                ))}
-                </SidebarMenu>
-            </SidebarGroupContent>
-            </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
+      <>
+        {isAuthChecked ?        
+        <Sidebar variant="sidebar"  collapsible="icon" className="dark">
+            <SidebarHeader>
+                <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
+            </SidebarHeader>
+            <SidebarSeparator className="bg-white"/>
+            <SidebarContent>
+                <SidebarGroup>
+                <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
+                <SidebarGroupContent>
+                    <SidebarMenu >
+                    {items.map((item) => (
+                        <SidebarMenuItem key={item.title} >
+                        <SidebarMenuButton asChild tooltip={item.title}>
+                            <a href={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                            </a>
+                        </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    ))}
+                    </SidebarMenu>
+                </SidebarGroupContent>
+                </SidebarGroup>
+            </SidebarContent>
+          </Sidebar>
+        :   
+          <div></div>
+        }
+      </>
     )
   }
-
-
 
   export default AppSidebar
   

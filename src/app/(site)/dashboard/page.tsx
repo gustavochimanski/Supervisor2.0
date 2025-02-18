@@ -5,20 +5,25 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PageDashboard = () => {
+    // ==================================================
+    // =================== ROTAS ========================
     const router = useRouter();
-
+    const [isAuthChecked, setIsAuthChecked] = useState(false);
+  
     useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (!token) {
+      const token = localStorage.getItem("jwt");
+      if (!token) {
         // Se não houver token, redirecione para a página de login
         router.push("/login");
-    }
+      } else {
+        // Se houver token, atualiza o estado para permitir renderizar a página
+        setIsAuthChecked(true);
+      }
     }, [router]);
-
-    // NÃO DEIXA A PÁGINA CARREGAR CASO NÃO TENHA O TOKEN
-    const [isAuthChecked, setIsAuthChecked] = useState(false);
+  
+    // Enquanto a verificação não for concluída, exibe um spinner de carregamento
     if (!isAuthChecked) {
-    return <CircularProgress />; 
+      return <CircularProgress />;
     }
 
 

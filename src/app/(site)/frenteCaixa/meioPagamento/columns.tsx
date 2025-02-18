@@ -1,4 +1,3 @@
-// src/client/components/globals/columns.ts
 
 "use client";
 
