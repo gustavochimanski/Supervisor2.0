@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useEffect } from "react";
 import Tabs, { TabItem } from "@/components/shared/tabs"; // ajuste o caminho conforme sua estrutura
 import ComponentCaixas from "./Caixas/component";
