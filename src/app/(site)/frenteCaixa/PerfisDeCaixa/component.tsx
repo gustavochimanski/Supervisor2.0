@@ -198,8 +198,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
                   <Label htmlFor="impressora">Impressora</Label>
                   <Input
                     type="text"
-                    id={
-                      formData?.confPerfil.find((item) => item.property === "Impressora")?.id.toString() || ""}
+                    id={formData?.confPerfil.find((item) => item.property === "Impressora")?.id.toString() || ""}
                     name="Impressora"
                     value={formData?.confPerfil.find((item) => item.property === "Impressora")?.value || ""}
                     onChange={handleChange}
@@ -210,8 +209,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
                   <Label htmlFor="impressoraParity">Impressora</Label>
                   <Input
                     type="text"
-                    id={
-                      formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.id.toString() || ""}
+                    id={ formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.id.toString() || ""}
                     name="ImpressoraParity"
                     value={formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.value || ""}
                     onChange={handleChange}

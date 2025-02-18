@@ -49,7 +49,7 @@ export default function ComponentMeioPagamento() {
         <DataTable
           columns={meioPgtoColumns}
           data={[meio]}
-          onRowClick={(rowData) => handleVerConfig(rowData.configuracao)}
+          onRowClick={(rowData: any) => handleVerConfig(rowData.configuracao)}
         />
       ) : (
         <p>Nenhum dado encontrado.</p>
@@ -71,7 +71,7 @@ export default function ComponentMeioPagamento() {
 
             {/* ===== RODAPÉ ===== */}
             <CardFooter className="justify-between">
-              <Button onClick={() => setShowModal(false)} variant={"destructive"}>
+              <Button onClick={() => setShowModal(false)} variant="outline">
                 Fechar
               </Button>
               <Button onClick={handleSave} variant={"default"}>

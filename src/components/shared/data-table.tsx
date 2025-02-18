@@ -17,17 +17,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData>[]; // Removendo o segundo parâmetro genérico
   data: TData[];
-  onRowClick?: (row: TData) => void; // Nova prop para manipular clique na linha
+  onRowClick?: (row: TData) => void;
 }
 
-export function DataTable<TData, TValue>({
+
+export function DataTable<TData>({
   columns,
   data,
   onRowClick,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const table = useReactTable({
     data,
     columns,

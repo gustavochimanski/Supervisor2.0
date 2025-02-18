@@ -127,10 +127,8 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
   }
 
   return (
-    <form className="space-y-6">
-      <CardContent>
+    <form>
         {/* ==================== INFORMAÇÕES GERAIS ===================== */}
-        <CardTitle>Informações Gerais</CardTitle>
         <Separator className="my-3" />
         <div className="flex gap-1 mb-4">
           <div className="box">
@@ -246,7 +244,6 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
             </div>            
           )}
         </div>
-      </CardContent>
       {/* Exibe mensagens para o usuário */}
       {mensagem && <div className="mt-4 text-center text-sm text-red-500">{mensagem}</div>}
     </form>

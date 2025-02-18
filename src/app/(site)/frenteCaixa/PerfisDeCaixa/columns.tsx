@@ -10,5 +10,4 @@ export const columnsPerfisDeCaixa: ColumnDef<PerfilPdv>[] = [
         header: "Descrição",
         accessorKey: "descricao"
     }
-
 ]
