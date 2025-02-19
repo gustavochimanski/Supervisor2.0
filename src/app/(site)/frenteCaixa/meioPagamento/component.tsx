@@ -51,20 +51,24 @@ export default function ComponentMeioPagamento() {
         <p>Carregando dados...</p>          
       ) : meio ? (
         <>
-        {/* =============== PESQUISA ============== */}
-        <SearchComponent></SearchComponent>
+        {/* =============== CONTAINER TOPO ============== */}
+        <div className=" flex w-full justify-between  text-white mb-4 gap-4 text-center">
+          <div>
+            <SearchComponent className="w-full md:w-60"></SearchComponent>
+          </div>
+          <div className="my-4 flex gap-2">
+            <Button variant={"outline"} className="">Incluir</Button>
+            <Button variant={"outline"}>Atualizar</Button>
+            <Button variant={"destructive"}>Deletar</Button>
+          </div>
+        </div>
+        
         {/* ========== TABELA ============ */}
         <DataTable
           columns={meioPgtoColumns}
           data={[meio]}
           onRowClick={(rowData: any) => handleVerConfig(rowData.configuracao)}
         />
-        {/* ================== BUTTON RODAPÉ ================== */}
-        <div className="fixed flex bottom-0  w-full text-white mb-4 gap-4 text-center ">
-            <Button variant={"outline"}>Incluir</Button>
-            <Button variant={"outline"}>Atualizar</Button>
-            <Button variant={"destructive"}>Deletar</Button>
-        </div>
       </>
       ) : (
         <p>Nenhum dado encontrado.</p>
