@@ -59,7 +59,7 @@ const Tabs: React.FC<TabsProps> = ({
       className={containerClassName}
     >
       {/* Lista de gatilhos/abas */}
-      <TabsPrimitive.List className="flex border-b">
+      <TabsPrimitive.List className="flex border-b font-ubuntu">
         {items.map((item) => (
           <TabsPrimitive.Trigger
             key={item.value}

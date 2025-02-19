@@ -1,12 +1,16 @@
 "use client";
 
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 
 const Home = () => {
 
   return(
-    <div>
-      <h1>Home</h1>
-    </div>
+    <ProtectedRoute>
+      <div>
+        <h1>Home</h1>
+      </div>
+    </ProtectedRoute>
   )
 }
 

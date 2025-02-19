@@ -1,42 +1,66 @@
+// src/context/AuthProvider.tsx
 "use client";
 
-import { createContext, useEffect, useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
-import { login as loginService, logout as logoutService, LoginData } from "@/services/AuthService";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import {
+  login as loginService,
+  logout as logoutService,
+  LoginData,
+} from "@/services/AuthService";
 import CircularProgress from "@mui/material/CircularProgress";
 
-type AuthContextType = {
+interface AuthContextType {
+  isAuthChecked: boolean;
   isAuthenticated: boolean;
   login: (data: LoginData) => Promise<void>;
   logout: () => void;
-};
+}
 
-// Criando o contexto de autenticação
-export const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { isAuthChecked, isAuthenticated } = useAuth();
-  const [authState, setAuthState] = useState({ isAuthenticated: false });
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
-  async function login(data: LoginData) {
-    try {
-      await loginService(data);
-      setAuthState({ isAuthenticated: true });
-    } catch (error) {
-      console.error("Erro ao autenticar:", error);
-    }
-  }
+export default function AuthProvider({ children }: AuthProviderProps) {
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function logout() {
-    logoutService();
-    setAuthState({ isAuthenticated: false });
-  }
-
+  // Verifica a autenticação na montagem (por exemplo, lendo o token do localStorage)
   useEffect(() => {
-    if (isAuthChecked) {
-      setAuthState({ isAuthenticated });
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("jwt");
+      if (token) {
+        setIsAuthenticated(true);
+      }
+      setIsAuthChecked(true);
     }
-  }, [isAuthChecked, isAuthenticated]);
+  }, []);
+
+  const login = async (data: LoginData): Promise<void> => {
+    try {
+      // Supondo que o loginService retorne o token
+      const token = await loginService(data);
+      // Armazena o token no localStorage
+      localStorage.setItem("jwt", token);
+      setIsAuthenticated(true);
+    } catch (err: any) {
+      console.error("Erro ao autenticar:", err);
+      throw err;
+    }
+  };
+
+  const logout = () => {
+    logoutService();
+    localStorage.removeItem("jwt");
+    setIsAuthenticated(false);
+  };
 
   if (!isAuthChecked) {
     return (
@@ -47,8 +71,16 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated: authState.isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthChecked, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuthContext(): AuthContextType {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuthContext deve ser usado dentro de um AuthProvider");
+  }
+  return context;
 }

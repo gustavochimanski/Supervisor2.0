@@ -4,6 +4,7 @@ import Tabs, { TabItem } from "@/components/shared/tabs"; // ajuste o caminho co
 import ComponentCaixas from "./Caixas/component";
 import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";
 import ComponentMeioPagamento from "./meioPagamento/component";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 
 const tabItems: TabItem[] = [
@@ -16,14 +17,16 @@ const PageFrenteCaixa = () => {
 
 
   return (
-    <div className="max-w-xl mx-auto my-4">
-      <Tabs
-        items={tabItems}
-        containerClassName="w-full border rounded shadow ml-2"
-        triggerClassName="transition-colors"
-        contentClassName="bg-white"
-      />
-    </div>
+    <ProtectedRoute>
+      <div className="max-w-xl mx-auto my-4 font-ubuntu">
+        <Tabs
+          items={tabItems}
+          containerClassName="w-full border rounded shadow ml-2"
+          triggerClassName="transition-colors"
+          contentClassName="bg-white"
+        />
+      </div>
+    </ProtectedRoute>
   );
 };
 

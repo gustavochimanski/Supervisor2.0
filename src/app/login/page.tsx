@@ -45,6 +45,7 @@ export default function LoginFormComponent() {
         <form onSubmit={handleLogin}>
           <div className="relative mb-4">
             <input
+              autoFocus
               type="email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}

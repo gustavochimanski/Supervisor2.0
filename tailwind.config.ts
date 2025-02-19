@@ -11,6 +11,14 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		fontFamily:{
+			atkinson: ['"Atkinson Hyperlegible Next"', 'sans-serif'],
+			karla: ['Karla', 'sans-serif'],
+			lato: ['Lato', 'sans-serif'],
+			nunito: ['Nunito', 'sans-serif'],
+			robotoMono: ['"Roboto Mono"', 'monospace'],
+			ubuntu: ['Ubuntu', 'sans-serif'],
+		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'

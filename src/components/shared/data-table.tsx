@@ -36,7 +36,7 @@ export function DataTable<TData>({
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border font-ubuntu">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
