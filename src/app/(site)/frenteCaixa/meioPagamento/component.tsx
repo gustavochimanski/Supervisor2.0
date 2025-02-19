@@ -46,11 +46,19 @@ export default function ComponentMeioPagamento() {
       {loading ? (
         <p>Carregando dados...</p>
       ) : meio ? (
+        <>
         <DataTable
           columns={meioPgtoColumns}
           data={[meio]}
           onRowClick={(rowData: any) => handleVerConfig(rowData.configuracao)}
         />
+        {/* ================== BUTTON RODAPÉ ================== */}
+        <div className="fixed flex bottom-0  w-full text-white p-4 gap-4 text-center ">
+            <Button>Incluir</Button>
+            <Button>Atualizar</Button>
+            <Button variant={"destructive"}>Deletar</Button>
+        </div>
+      </>
       ) : (
         <p>Nenhum dado encontrado.</p>
       )}
@@ -83,12 +91,7 @@ export default function ComponentMeioPagamento() {
         </Modal>
       )}
 
-      {/* ================== BUTTON RODAPÉ ================== */}
-      <div className="fixed flex bottom-0  w-full text-white p-4 gap-4 text-center ">
-          <Button>Incluir</Button>
-          <Button>Atualizar</Button>
-          <Button variant={"destructive"}>Deletar</Button>
-      </div>
+
     </div>
   );
 }

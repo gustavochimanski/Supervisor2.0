@@ -59,13 +59,13 @@ const Tabs: React.FC<TabsProps> = ({
       className={containerClassName}
     >
       {/* Lista de gatilhos/abas */}
-      <TabsPrimitive.List className="flex border-b font-ubuntu">
+      <TabsPrimitive.List className="flex font-sans rounded-xl">
         {items.map((item) => (
           <TabsPrimitive.Trigger
             key={item.value}
             value={item.value}
             // Estilização básica do trigger, com possibilidade de customização via triggerClassName
-            className={`px-4 py-2 cursor-pointer text-sm text-gray-600 hover:bg-gray-200 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 ${
+            className={` rounded-t-xl bg-slate-100 px-4 py-2 cursor-pointer text-xs font-bold data-[state=active]:text-sidebar-accent-foreground data-[state=active]:bg-card text-slate-400 hover:bg-gray-200 data-[state=active]:border-b-2 border-none ${
               triggerClassName || ""
             }`}
           >

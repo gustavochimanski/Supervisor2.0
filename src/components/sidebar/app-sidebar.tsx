@@ -60,7 +60,7 @@ import SubMenuEmpresas from "./submenu-empresas";
             <SidebarHeader>
                 <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
             </SidebarHeader>
-            <SidebarSeparator className="bg-white"/>
+            <SidebarSeparator className="bg-sidebar-foreground"/>
             <SidebarContent>
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>

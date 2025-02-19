@@ -18,10 +18,10 @@ const PageFrenteCaixa = () => {
 
   return (
     <ProtectedRoute>
-      <div className="max-w-xl mx-auto my-4 font-ubuntu">
+      <div className="max-w-xl mx-auto my-4 font-ubuntu rounded-xl">
         <Tabs
           items={tabItems}
-          containerClassName="w-full border rounded shadow ml-2"
+          containerClassName="w-full border rounded-xl shadow ml-2"
           triggerClassName="transition-colors"
           contentClassName="bg-white"
         />

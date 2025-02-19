@@ -25,7 +25,7 @@
 
 @layer base {
   :root {
-    --background: 210, 14%, 89%;
+    --background: 210, 16%, 93%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
@@ -51,11 +51,11 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --sidebar-background: 0, 0%, 100%; /*COR DO FUNDO DA SIDEBAR*/
-    --sidebar-foreground:207, 90%, 54%; /*COR DOS ICONES SIDEBAR*/
+    --sidebar-foreground:208, 7%, 46%; /*COR DOS ICONES SIDEBAR*/
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%; /* ÍCONE SUBMENU CIMA*/
     --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 291, 64%, 42%; /*HOVER BUTTONS SIDEBAR*/
+    --sidebar-accent-foreground: 207, 90%, 54%; /*HOVER BUTTONS SIDEBAR*/
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --tootip-text-color: #D5E9FF;

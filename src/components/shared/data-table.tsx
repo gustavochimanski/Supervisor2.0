@@ -36,22 +36,30 @@ export function DataTable<TData>({
   });
 
   return (
-    <div className="rounded-md border font-ubuntu">
-      <Table>
+    <div className="rounded-xl border font-ubuntu">
+      <Table >
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id} >
-              {headerGroup.headers.map((header) => (
-                <TableHead className="bg-black text-white" key={header.id}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </TableHead>
-              ))}
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header, index) => {
+                const isFirst = index === 0;
+                const isLast = index === headerGroup.headers.length - 1;
+
+                return (
+                  <TableHead
+                    key={header.id}
+                    className={`bg-background text-foreground 
+                      ${isFirst ? "rounded-tl-lg" : ""} 
+                      ${isLast ? "rounded-tr-lg" : ""}`}
+                  >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
+
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
