@@ -70,11 +70,11 @@ export default function ComponentMeioPagamento() {
             </CardContent>
 
             {/* ===== RODAPÉ ===== */}
-            <CardFooter className="justify-between">
+            <CardFooter className="justify-center gap-4">
               <Button onClick={() => setShowModal(false)} variant="outline">
                 Fechar
               </Button>
-              <Button onClick={handleSave} variant={"default"}>
+              <Button onClick={handleSave} variant={"gradient"}>
                 Salvar
               </Button>
             </CardFooter>

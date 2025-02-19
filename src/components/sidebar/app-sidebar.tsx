@@ -28,7 +28,6 @@ import {
   } from "lucide-react";
 
 import SubMenuEmpresas from "./submenu-empresas";
-import { useEffect, useState } from "react";
 
   // Menu items.
   const items = [
@@ -57,7 +56,7 @@ import { useEffect, useState } from "react";
   const { open } = useSidebar();
     
     return ( 
-        <Sidebar variant="sidebar"  collapsible="icon" className="dark">
+        <Sidebar variant="sidebar"  collapsible="icon">
             <SidebarHeader>
                 <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
             </SidebarHeader>
