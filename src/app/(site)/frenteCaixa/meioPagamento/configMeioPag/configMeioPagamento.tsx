@@ -85,6 +85,18 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
     );
   };
 
+  // LIDA COM O SELECT DO PERMITE TROCO
+  const [permiteTroco, setPermiteTroco] = useState(false);
+  const [permiteTrocoString, setPermiteTrocoString] = useState("");
+  const handlePermiteTroco = (value: string) => {
+    if (value === "S"){
+      setPermiteTroco(true)
+    }else if (value=== "N"){
+      setPermiteTroco(false)
+    }else(window.alert("Opção Inválida"))
+    setPermiteTrocoString(value)
+  }
+
   const handleSubmit = async () => {
     if (dadosMeioPgto?.id) { 
       setLoading(true);
@@ -130,22 +142,22 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
 
   return (
     <form>
-        {/* ==================== INFORMAÇÕES GERAIS ===================== */}
+        {/* ==================== INFORMAÇÕES ===================== */}
         <Separator className="my-3" />
-        <div className="flex gap-1 mb-4 font-ubuntu ">
+        <div className="flex justify-center md:justify-normal gap-1 mb-4 font-sans text-xs font-bold ">
           <div className="box">
-            <label htmlFor="id" className="block text-sm font-Atkinson text-gray-700 p-1">
+            <label htmlFor="id" className="block font-Atkinson text-gray-500 font-bold ">
               Id
             </label>
             <Input
               id="id"
               value={dadosMeioPgto.id}
-              className="w-12 bg-slate-300"
+              className="w-12 bg-slate-300 "
               disabled
             />
           </div>
           <div className="ml-4">
-            <label htmlFor="descricao" className="block text-sm  text-gray-700 p-1">
+            <label htmlFor="descricao" className="block  text-gray-500 ">
               Descrição
             </label>
             <Input
@@ -154,35 +166,34 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
               onChange={(evt) =>
                 setDadosMeioPgto((prev) => prev ? { ...prev, descricao: evt.target.value } : prev)
               }
-              className="w-72"
+              className="w-full md:w-52 text-gray-500"
             />
           </div>
         </div>
         <Separator className="my-3" />
 
         {/* =============== Geral ====================== */}
-        <CardTitle className="my-3">Geral</CardTitle>
-        <div className="flex flex-wrap gap-4 font-ubuntu">
-          {/* =============================================================================== */}
-          {/* ================================== SELECTS ==================================== */}
-          {/* =============================================================================== */}
-          {/* ========= LIBERAÇÃO SUPERVISOR ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "LiberacaoSupervisor") && (
-            <div className="flex flex-col md:w-1/6 ">
-              <label htmlFor="LiberacaoSupervisorSelect" className="block whitespace-nowrap text-sm  text-gray-700 ">
-                Supervisor {"    "}
-                <Popover>
-                  <PopoverTrigger><CircleHelp size={13} className='pb-0'/></PopoverTrigger>
-                  <PopoverContent className='text-sm'>Essa opção indica se o meio de pagamento vai solicitar Supervisor (Fiscal de Caixa) ao ser selecionado </PopoverContent>
-                </Popover>
-              </label>
+        <CardTitle className="m-3 ">Geral</CardTitle>
+        <div className="flex flex-wrap gap-4 font-sans text-xs justify-center md:justify-normal font-bold text-gray-400">
 
-           
+          {/* ========= LIBERAÇÃO SUPERVISOR ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
+              <div className='flex'>
+                <label htmlFor="LiberacaoSupervisorSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  Supervisor
+                </label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent className='text-xs'><strong><u>Liberação Supervisor</u> -</strong>  Essa opção indica se o meio de pagamento vai solicitar Supervisor (Fiscal de Caixa) ao ser selecionado </PopoverContent>
+                </Popover>
+              </div>
+
               <Select
-                value={configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta")?.stringValue ?? ""} // Valor atual do seletor
-                onValueChange={(value) =>handleChange("stringValue", value, "AcionaGaveta")}
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "LiberacaoSupervisor")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "LiberacaoSupervisor")}
               >
-                <SelectTrigger className="w-[100px]" id="acionaGavetaSelect">
+                <SelectTrigger  id="LiberacaoSupervisorSelect">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -191,11 +202,170 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
-          )}
+          }
+          {/* ========== GRUPO MEIO PAGAMENTO ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className='flex'>
+                  <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                    Grupo 
+                  </label>
+                  <Popover>
+                      <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                      <PopoverContent className='text-xs'><strong><u>Grupo meio de pagamento</u> - </strong>Defina aqui o grupo qual o meio de pagamento pertence</PopoverContent>
+                  </Popover>
+              </div>
+              <IntegerInput
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "GrupoMeioPgto")?.integerValue ?? 0}
+                onChange={(e) => {
+                  const newValue = e;
+                  handleChange("integerValue", newValue, "GrupoMeioPgto");
+                }}
+              />
+            </div>            
+          }
+          {/* ========= PERMITE TROCO ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
+              <div className='flex'>
+                  <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                    Troco 
+                  </label>
+                  <Popover>
+                      <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                      <PopoverContent className="text-xs"><strong><u>Permite Troco</u> - </strong> Esta opção define se o meio de pagamento aceita a entrega de troco. 
+                      <strong> Atenção </strong>ao habilitá-la, as configurações relacionadas a função de troco serão desbloqueadas.
+                    </PopoverContent>
+                  </Popover>
+              </div>
+              <Select
+                value={permiteTrocoString} // Valor atual do seletor
+                onValueChange={(value: string) => handlePermiteTroco(value)}
+              >
+                <SelectTrigger  id="LiberacaoSupervisorTrocoSelect">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="S">Sim</SelectItem> 
+                  <SelectItem value="N">Não</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+          {/* =========== TROCO MÁXIMO PERMITIDO =========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className='flex'>
+                <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap  text-gray-500 p-1">Troco Max</label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent className='text-xs'><strong><u>Troco Máximo</u> - </strong>Defina nesse campo o <u>troco máximo</u> permitido para esse meio de pagamento</PopoverContent>
+                </Popover>
+              </div>
+              <FloatInput 
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "TrocoMaximo")?.doubleValue ?? 0}
+                onChangeValue={((value: number) => handleChange("doubleValue", Number(value), "TrocoMaximo"))}
+                disabled={!permiteTroco}
+              />
+            </div>            
+          }
+          {/* =========== MEIO DE PAGAMENTO DO TROCO =========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className='flex'>
+                <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap  text-gray-500 p-1">M.P Troco</label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent className='text-xs'><strong><u>Meio De Pagamento Troco</u> - </strong>Essa opção eu não tenho certeza. Preciso que me expliquem melhor kk</PopoverContent>
+                </Popover>
+              </div>
+              <IntegerInput 
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "MpgtoTroco")?.integerValue ?? 0}
+                onChange={((value: number) => handleChange("integerValue", value, "MpgtoTroco"))}
+                disabled={!permiteTroco}
+              />
+            </div>            
+          }
+          {/* ========= LIBERAÇÃO SUPERVISOR PARA TROCO ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
+              <div className='flex'>
+                <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  Lib. Supervisor
+                </label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent className='text-xs'><strong><u>Permite Troco</u> - </strong>Essa opção indica se o meio de pagamento precisa
+                    de liberação do supervisor</PopoverContent>
+                </Popover>
+              </div>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "LiberacaoSupervisorTroco")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "LiberacaoSupervisorTroco")}
+                disabled={!permiteTroco}
+              >
+                <SelectTrigger  id="LiberacaoSupervisorTrocoSelect">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="S">Sim</SelectItem> 
+                  <SelectItem value="N">Não</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+          {/* ============== EMITE CONTRA VALE ================ */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
+              <div className='flex'>
+                <label htmlFor="EmiteContraVale" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  Emite Cv
+                </label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent className='text-xs'><strong><u>Emite Contra Vale</u> - </strong>Essa opção indica se o meio de pagamento emite <strong>Contra Vale</strong></PopoverContent>
+                </Popover>
+              </div>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "EmiteContraVale")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "EmiteContraVale")}
+                disabled={!permiteTroco}
+              >
+                <SelectTrigger  id="EmiteContraVale">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="S">Sim</SelectItem> 
+                  <SelectItem value="N">Não</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+          {/* ========== VIAS CONTRA VALE ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className='flex'>
+                  <label htmlFor="ViasCvSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                    Vias Cv 
+                  </label>
+                  <Popover>
+                      <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                      <PopoverContent className='text-xs'><strong><u>Vias Contra Vale</u> - </strong>Defina aqui quantas vias de contra vale irá imprimir</PopoverContent>
+                  </Popover>
+              </div>
+              <IntegerInput
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "ViasCv")?.integerValue ?? 0}
+                onChange={(e) => {
+                  const newValue = e;
+                  handleChange("integerValue", newValue, "ViasCv");
+                }}
+              />
+            </div>            
+          }
           {/* ========= ACIONA GAVETA ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta") && (
-            <div className="flex flex-col md:w-1/6 ">
-              <label htmlFor="acionaGavetaSelect" className="block whitespace-nowrap text-sm  text-gray-700 p-1">
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <label htmlFor="acionaGavetaSelect" className="block whitespace-nowrap p-1  text-gray-500 ">
                 Aciona Gaveta
               </label>
            
@@ -203,7 +373,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta")?.stringValue ?? ""} // Valor atual do seletor
                 onValueChange={(value) =>handleChange("stringValue", value, "AcionaGaveta")}
               >
-                <SelectTrigger className="w-[100px]" id="acionaGavetaSelect">
+                <SelectTrigger id="acionaGavetaSelect">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -212,12 +382,11 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
-          )}
-
+          }
           {/* ========= CÓDIGO PREÇO ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "CodigoPreco") && (
-            <div className="flex flex-col w-full md:w-1/6 ">
-              <label htmlFor="codigoPrecoSelect" className="block text-sm whitespace-nowrap  text-gray-700 p-1">
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal  ">
+              <label htmlFor="codigoPrecoSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
                 Código Preço
               </label>
               
@@ -225,7 +394,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "CodigoPreco")?.integerValue.toString() ?? ""}
                 onValueChange={(value) => {handleChange("integerValue", Number(value), "CodigoPreco");}}
               >
-                <SelectTrigger className="w-[100px]" id="codigoPreco">
+                <SelectTrigger id="codigoPreco">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -236,11 +405,11 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
-          )}
+          }
           {/* ========= CARTÃO DIGITADO ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "CartaoDigitado") && (
-            <div className="flex flex-col w-full md:w-1/6">
-              <label htmlFor="CartaoDigitadoSelect" className="text-sm whitespace-nowrap font-medium text-gray-700 p-1">
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <label htmlFor="CartaoDigitadoSelect" className=" whitespace-nowrap  text-gray-500 p-1">
                 Cartão Digitado
               </label>
               
@@ -248,7 +417,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "CartaoDigitado")?.stringValue ?? ""}
                 onValueChange={(value) => {handleChange("stringValue", value, "CartaoDigitado");}}
               >
-                <SelectTrigger className="w-[120px]" id="CartaoDigitado">
+                <SelectTrigger id="CartaoDigitado">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -257,11 +426,11 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
-          )}
+          }
           {/* ========= EMITE CONTRAVALE ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "EmiteContraVale") && (
-            <div className="flex flex-col w-full md:w-1/6">
-              <label htmlFor="EmiteContraValeSelect" className="block text-sm whitespace-nowrap font-medium text-gray-700 p-1">
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <label htmlFor="EmiteContraValeSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
                 Emite Contra Vale
               </label>
               
@@ -269,7 +438,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "EmiteContraVale")?.stringValue ?? ""}
                 onValueChange={(value) => {handleChange("stringValue", value, "EmiteContraVale");}}
               >
-                <SelectTrigger className="w-[100px]" id="EmiteContraVale">
+                <SelectTrigger  id="EmiteContraVale">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -278,11 +447,11 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
-          )}
+          }
           {/* ========= EFETUAR SANGRIA ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "EfetuarSangria") && (
-            <div className="flex flex-col w-full md:w-1/6">
-              <label htmlFor="EfetuarSangriaSelect" className="block text-sm whitespace-nowrap font-medium text-gray-700 p-1">
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <label htmlFor="EfetuarSangriaSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
                 Efetuar Sangria
               </label>
               
@@ -290,7 +459,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "EfetuarSangria")?.stringValue ?? ""}
                 onValueChange={(value) => {handleChange("stringValue", value, "EfetuarSangria");}}
               >
-                <SelectTrigger className="w-[100px]" id="EfetuarSangria">
+                <SelectTrigger  id="EfetuarSangria">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -299,40 +468,22 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </SelectContent>
               </Select>
             </div>
-          )}
-          {/* =============================================================================== */}
-          {/* ================================== INPUTS ==================================== */}
-          {/* =============================================================================== */}
+          }
           {/* =========== DESCONTO TICKET =========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "DescontoTicket") && (
-            <div className="flex flex-col w-full md:w-28">
-              <label htmlFor="DescontoTicketSelect" className="block text-sm whitespace-nowrap font-medium text-gray-700 p-1">
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <label htmlFor="DescontoTicketSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
                 Desconto Ticket
               </label>
               <FloatInput 
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "DescontoTicket")?.doubleValue ?? 0}
-                onChangeValue={((value: number) => handleChange("doubleValue", value, "DescontoTicket"))}
+                onChangeValue={((value: number) => handleChange("doubleValue", Number(value), "DescontoTicket"))}
               />
             </div>            
-          )}
-          {/* ========== GRUPO MEIO PAGAMENTO ========== */}
-          {configDadosMeioPgto.find((item) => item.nomeCampo === "GrupoMeioPgto") && (
-            <div className="flex flex-col w-full md:w-1/6">
-              <label htmlFor="GrupoMeioPgto" className="block text-sm font-medium whitespace-nowrap text-gray-700 p-1">
-                Grupo Meio Pagamento
-              </label>
-              <IntegerInput
-                value={configDadosMeioPgto.find((item) => item.nomeCampo === "GrupoMeioPgto")?.integerValue ?? 0}
-                onChange={(e) => {
-                  const newValue = e;
-                  handleChange("integerValue", newValue, "GrupoMeioPgto");
-                }}
-              />
-            </div>            
-          )}
+          }
         </div>
       {/* Exibe mensagens para o usuário */}
-      {mensagem && <div className="mt-4 text-center text-sm text-red-500">{mensagem}</div>}
+      {mensagem && <div className="mt-4 text-center  text-red-500">{mensagem}</div>}
     </form>
   );
 });

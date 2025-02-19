@@ -37,7 +37,7 @@ export default function ComponentMeioPagamento() {
 
   function handleVerConfig(configs: ConfiguracaoMeioPag[]) {
     setShowModal(true);
-  }
+  }         
 
   const handleSave = () => {
     if (formRef.current) {
@@ -45,10 +45,10 @@ export default function ComponentMeioPagamento() {
     }
   };
 
-  return (
+  return (          
     <div>
       {loading ? (
-        <p>Carregando dados...</p>
+        <p>Carregando dados...</p>          
       ) : meio ? (
         <>
         {/* =============== PESQUISA ============== */}

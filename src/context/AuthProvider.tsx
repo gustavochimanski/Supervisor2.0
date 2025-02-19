@@ -13,7 +13,8 @@ import {
   logout as logoutService,
   LoginData,
 } from "@/services/AuthService";
-import CircularProgress from "@mui/material/CircularProgress";
+import LoaderComponent from "@/components/ui/loader";
+
 
 interface AuthContextType {
   isAuthChecked: boolean;
@@ -65,7 +66,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   if (!isAuthChecked) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <CircularProgress />
+        <LoaderComponent />
       </div>
     );
   }

@@ -58,7 +58,7 @@
     --sidebar-accent-foreground: 207, 90%, 54%; /*HOVER BUTTONS SIDEBAR*/
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --tootip-text-color: #D5E9FF;
+    --tootip-text-color: #2094F3;
   }
   .dark {
     --background: 20 14.3% 4.1%;
@@ -93,7 +93,7 @@
     --sidebar-accent-foreground: 240, 100%, 50%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --tootip-text-color: #00BFFF;
+    --tootip-text-color: #2094F3;
   }
 }
 
@@ -104,4 +104,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+strong {
+  color: var(--tootip-text-color);
 }
