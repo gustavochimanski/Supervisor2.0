@@ -1,6 +1,6 @@
 // hooks/useMeioPagamento.ts
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { atualizarConfigMeioPgto, atualizarDescricaoMeioPgto } from "./service";
+import { atualizarConfigMeioPgto, atualizarDescricaoMeioPgto, fetchByIdMeioPgto } from "./service";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
 import api from "@/api/api";
 
@@ -13,19 +13,13 @@ export const useFetchAllMeiosPgto = () => {
 };
 
 // Hook para buscar um meio de pagamento pelo ID
-export const useFetchByIdMeioPgto = (id: string | undefined) => {
-  return useQuery<MeioPgto, Error>(
-    ["fetchMeioPgtoById", id],
-    async () => {
-      if (!id) {
-        throw new Error("ID não fornecido");
-      }
-      const response = await api.get<MeioPgto>(`/v1/config/meiospgto/${id}`);
-      return response.data;
-    },
+export const useFetchByIdMeioPgto = (id: string) => {
+  return useQuery<MeioPgto>(["fetchMeioPgtoById", id], 
+    () => fetchByIdMeioPgto(id),
     { enabled: !!id } // Só executa se o id estiver definido
   );
 }
+
 
 export const useAtualizarDescricaoMeioPgto = () => {
   const queryClient = useQueryClient();

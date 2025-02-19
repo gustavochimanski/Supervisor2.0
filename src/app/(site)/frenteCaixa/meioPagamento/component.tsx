@@ -9,27 +9,31 @@ import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import ConfigsMeioPagamento from "./configMeioPag/configMeioPagamento";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { SearchComponent } from "@/components/shared/searchComponent";
+import { useFetchAllMeiosPgto, useFetchByIdMeioPgto } from "./useMeioPag";
 
 export default function ComponentMeioPagamento() {
-  const [meio, setMeio] = useState<MeioPgto | null>(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [meio, setMeio] = useState<MeioPgto | undefined>(undefined);
+  const [idSelected, setIdSelected] = useState("1"); // Define "1" já como valor inicial
   const formRef = useRef<any>(null); // Referência para o formulário
-
+  
+  // Chama o hook com o idSelected
+  const { data: dataByIdMeiopgto, isLoading } = useFetchByIdMeioPgto(idSelected);
+  
+  // useEffect para atualizar o estado 'meio' quando os dados forem carregados
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get("/v1/config/meiospgto/1");
-        setMeio(response.data);
-      } catch (err) {
-        console.error("Erro ao buscar dados:", err);
-        setMeio(null);
-      } finally {
-        setLoading(false);
-      }
+    if (dataByIdMeiopgto) {
+      setMeio(dataByIdMeiopgto);
     }
-    fetchData();
-  }, []);
+  }, [dataByIdMeiopgto]);
+  
+  // Se necessário, você pode controlar o estado 'loading' com base no status do hook:
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
+  
 
   function handleVerConfig(configs: ConfiguracaoMeioPag[]) {
     setShowModal(true);
@@ -47,15 +51,18 @@ export default function ComponentMeioPagamento() {
         <p>Carregando dados...</p>
       ) : meio ? (
         <>
+        {/* =============== PESQUISA ============== */}
+        <SearchComponent></SearchComponent>
+        {/* ========== TABELA ============ */}
         <DataTable
           columns={meioPgtoColumns}
           data={[meio]}
           onRowClick={(rowData: any) => handleVerConfig(rowData.configuracao)}
         />
         {/* ================== BUTTON RODAPÉ ================== */}
-        <div className="fixed flex bottom-0  w-full text-white p-4 gap-4 text-center ">
-            <Button>Incluir</Button>
-            <Button>Atualizar</Button>
+        <div className="fixed flex bottom-0  w-full text-white mb-4 gap-4 text-center ">
+            <Button variant={"outline"}>Incluir</Button>
+            <Button variant={"outline"}>Atualizar</Button>
             <Button variant={"destructive"}>Deletar</Button>
         </div>
       </>
@@ -68,8 +75,8 @@ export default function ComponentMeioPagamento() {
           <Card>
             {/* ===== CABECALHO ===== */}
             <CardHeader>
-                <CardTitle>Meio de Pagamento {meio?.descricao || "Selecionado"} </CardTitle>
-                <CardDescription>Configurações do meio de pagamento {meio?.descricao || "Selecionado"}</CardDescription>
+                <CardTitle>Meio de Pagamento {dataByIdMeiopgto?.descricao || "Selecionado"} </CardTitle>
+                <CardDescription>Configurações do meio de pagamento {dataByIdMeiopgto?.descricao || "Selecionado"}</CardDescription>
             </CardHeader>
 
             {/* ===== CONTEUDO ===== */}

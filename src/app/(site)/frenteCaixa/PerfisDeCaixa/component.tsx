@@ -219,13 +219,13 @@ const ComponentPerfilDeCaixa: React.FC = () => {
               </form>
             </CardContent>
             <CardFooter className="flex gap-4 justify-center">
-              <Button onClick={() => setShowModalPerfilById(false)} variant="outline">
-                Fechar
-              </Button>
               <Button variant="destructive" onClick={() => setShowModalConfirm(true)}>
                 Apagar
               </Button>
-              <Button onClick={handleSave} type="submit" variant="default">
+              <Button onClick={() => setShowModalPerfilById(false)} variant="outline">
+                Fechar
+              </Button>
+              <Button onClick={handleSave} type="submit" variant={"gradient"}>
                 Salvar
               </Button>
             </CardFooter>
@@ -257,11 +257,10 @@ const ComponentPerfilDeCaixa: React.FC = () => {
       )}
 
       {/* ===== Footer Buttons ===== */}
-      <div className="fixed flex bottom-0 w-full text-white p-4 gap-4 text-center">
-        <Button onClick={handleClickInserirPerfil}>Incluir</Button>
-        <Button>Portabilidade</Button>
-        <Button onClick={() => refetchAllPerfil()}>Atualizar</Button>
-        <Button variant="destructive">Deletar</Button>
+      <div className="fixed flex bottom-0 w-full text-white mb-4 gap-4 text-center">
+        <Button onClick={handleClickInserirPerfil} variant="outline">Incluir</Button>
+        <Button variant="outline">Portabilidade</Button>
+        <Button onClick={() => refetchAllPerfil()}  variant="outline">Atualizar</Button>
       </div>
 
       {/* ===== New Perfil Modal ===== */}

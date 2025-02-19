@@ -13,3 +13,8 @@ export const atualizarConfigMeioPgto = async (payload: ConfiguracaoMeioPag[]): P
   const response = await api.put<ConfiguracaoMeioPag[]>('/v1/config/confmeiospgto', payload)
   return response.data
 }
+
+export const fetchByIdMeioPgto = async (id: string) => {
+  const response = await api.get<MeioPgto>(`/v1/config/meiospgto/${id}`)
+  return response.data
+}
