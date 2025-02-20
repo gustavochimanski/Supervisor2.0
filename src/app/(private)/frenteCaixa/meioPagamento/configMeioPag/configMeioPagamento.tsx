@@ -341,27 +341,6 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
               </Select>
             </div>
           }
-          {/* ========== VIAS CONTRA VALE ========== */}
-          {
-            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
-              <div className='flex'>
-                  <label htmlFor="ViasCvSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
-                    Vias Cv 
-                  </label>
-                  <Popover>
-                      <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                      <PopoverContent className='text-xs'><strong><u>Vias Contra Vale</u> - </strong>Defina aqui quantas vias de contra vale irá imprimir</PopoverContent>
-                  </Popover>
-              </div>
-              <IntegerInput
-                value={configDadosMeioPgto.find((item) => item.nomeCampo === "ViasCv")?.integerValue ?? 0}
-                onChange={(e) => {
-                  const newValue = e;
-                  handleChange("integerValue", newValue, "ViasCv");
-                }}
-              />
-            </div>            
-          }
           {/* ========= ACIONA GAVETA ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
