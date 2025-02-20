@@ -31,7 +31,7 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
         <AppSidebar />
         <main>
           <SidebarTrigger variant="secondary" />
-          <div className="mt-10">
+          <div className="mt-16">
             {children}
           </div> 
         </main>

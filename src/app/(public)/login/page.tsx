@@ -5,7 +5,6 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; // Ícones 
 import "@/app/(private)/globals.css"
 import styles from "./button.module.css"
 import LogoImg from "../../../../public/logo";
-import CircularProgress from "@mui/material/CircularProgress";
 import { login } from "@/services/AuthService";
 import LoaderComponent from "@/components/ui/loader";
 import { Button } from "@/components/ui/button";
@@ -31,8 +30,9 @@ export default function LoginFormComponent() {
   }
 
   return (
+
     <div className="justify-center w-full h-full">
-      <div className="flex flex-col justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[95%] max-w-md p-6 bg-white rounded-lg shadow md:h-3/4">
+      <div className=" flex flex-col justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[95%] max-w-md p-6 bg-white rounded-lg shadow md:h-3/4">
         {/* Cabeçalho com ícone e título */}
         <div className="flex flex-col items-center my-6">
           <div className="flex items-center justify-center w-14 h-14rounded mb-4">
@@ -40,6 +40,7 @@ export default function LoginFormComponent() {
           </div>
           <h1 className="text-2xl font-semibold">Unitec</h1>
         </div>
+        
 
         {/* Formulário de login */}
         <form onSubmit={handleLogin}>

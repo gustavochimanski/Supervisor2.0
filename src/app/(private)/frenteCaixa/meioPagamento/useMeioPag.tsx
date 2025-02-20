@@ -1,54 +1,60 @@
 // hooks/useMeioPagamento.ts
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { atualizarConfigMeioPgto, atualizarDescricaoMeioPgto, fetchByIdMeioPgto } from "./service";
+import { 
+  atualizarConfigMeioPgto, 
+  atualizarDescricaoMeioPgto, 
+  fetchAllMeioPgto, 
+  fetchByIdMeioPgto 
+} from "./service";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
-import api from "@/api/api";
 
 // Hook para buscar todos os meios de pagamento
 export const useFetchAllMeiosPgto = () => {
-  return useQuery<MeioPgto[], Error>("fetchAllMeiosPgto", async () => {
-    const response = await api.get<MeioPgto[]>("/v1/config/meiospgto");
-    return response.data;
-  });
+  return useQuery<MeioPgto[]>("fetchAllMeiosPgto", () => fetchAllMeioPgto());
 };
 
-// Hook para buscar um meio de pagamento pelo ID
 export const useFetchByIdMeioPgto = (id: string) => {
-  return useQuery<MeioPgto>(["fetchMeioPgtoById", id], 
-    () => fetchByIdMeioPgto(id),
-    { enabled: !!id } // Só executa se o id estiver definido
-  );
-}
-
-
-export const useAtualizarDescricaoMeioPgto = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation(
-    async ({ id, novaDescricao }: { id: string; novaDescricao: string }) => {
-      console.log(`Dados Enviados id=${id} descricao=${novaDescricao}`)
-      return atualizarDescricaoMeioPgto(id, novaDescricao);
+  return useQuery<MeioPgto>(
+    ["fetchMeioPgtoById", id],
+    () => {
+      console.log("Fetching meioPgto with id:", id);
+      return fetchByIdMeioPgto(id);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("fetchMeiosPgto");
-      },
+    { 
+      enabled: !!id,
     }
   );
 };
 
 
+// Hook para atualizar a descrição de um meio de pagamento
+export const useAtualizarDescricaoMeioPgto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    async ({ id, novaDescricao }: { id: string; novaDescricao: string }) => {
+      return atualizarDescricaoMeioPgto(id, novaDescricao);
+    },
+    {
+      onSuccess: () => {
+        // Invalida a query para que os dados sejam reatualizados
+        queryClient.invalidateQueries("fetchAllMeiosPgto");
+      },
+    }
+  );
+};
+
+// Hook para atualizar a configuração dos meios de pagamento
 export const useAtualizarConfigMpgto = () => {
-  const queryClient = useQueryClient(); // Chamada correta do hook
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (payload: ConfiguracaoMeioPag[]) => {
-      console.log("Payload a ser atualizado:", payload);
       return await atualizarConfigMeioPgto(payload);
     },
     {
       onSuccess: () => {
-        // Invalida a query para que os dados sejam reatualizados, se necessário.
+        // Invalida a query para atualizar os dados
         queryClient.invalidateQueries("fetchAllMeiosPgto");
       },
     }

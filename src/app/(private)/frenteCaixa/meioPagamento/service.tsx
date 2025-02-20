@@ -18,3 +18,8 @@ export const fetchByIdMeioPgto = async (id: string) => {
   const response = await api.get<MeioPgto>(`/v1/config/meiospgto/${id}`)
   return response.data
 }
+
+export const fetchAllMeioPgto = async () => {
+  const response = await api.get<MeioPgto[]>("/v1/config/meiospgto/")
+  return response.data
+}

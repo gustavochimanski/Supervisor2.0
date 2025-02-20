@@ -28,7 +28,6 @@ import {
     LogOut,
   } from "lucide-react";
 
-import SubMenuEmpresas from "./submenu-empresas";
 import { logout } from "@/services/AuthService";
 
   // Menu items.
@@ -59,10 +58,6 @@ import { logout } from "@/services/AuthService";
     
     return (
         <Sidebar collapsible="icon">
-            <SidebarHeader>
-                <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
-            </SidebarHeader>
-            <SidebarSeparator className="bg-sidebar-foreground"/>
             <SidebarContent className="justify-between">
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>

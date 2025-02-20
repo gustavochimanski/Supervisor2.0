@@ -1,6 +1,5 @@
 // ConfigsMeioPagamento.tsx
 "use client";
-import { NumericFormat } from 'react-number-format';
 
 import React, {
   useImperativeHandle,
@@ -21,8 +20,7 @@ import { ConfiguracaoMeioPag, MeioPgto } from "../types";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { atualizarDescricaoMeioPgto} from "../service";
-import api from "@/api/api";
-import { useAtualizarConfigMpgto } from "../useMeioPag";
+import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../useMeioPag";
 import { FloatInput } from '@/components/shared/floatInput';
 import { IntegerInput } from '@/components/shared/integerInput';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -43,28 +41,24 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
   // MENSAGEM E LOADING
   const [mensagem, setMensagem] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  
-  // ======== MUTEDS ======== 
-  const {mutate: atualizaConfigMpgto} = useAtualizarConfigMpgto();
 
+  // DATA
+  const { data : dataConfigMpgto } = useFetchByIdMeioPgto('1');
+
+  // Atualiza os estados assim que os dados são carregados
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get<MeioPgto>("/v1/config/meiospgto/1");
-        const { configuracao } = response.data;
-        
-        setDadosMeioPgto(response.data);
-        setConfigDadosMeioPgto(configuracao);
-        setOriginalConfigDadosMeioPgto(configuracao);
-      } catch (err) {
-        console.error("Erro ao buscar dados:", err);
-        setMensagem("Erro ao carregar dados.");
-      }
-    };
-  
-    fetchData();
-  }, []);
+    if (dataConfigMpgto) {
+      setDadosMeioPgto(dataConfigMpgto);
+      setConfigDadosMeioPgto(dataConfigMpgto.configuracao || []);
+      setOriginalConfigDadosMeioPgto(dataConfigMpgto.configuracao || []);
+      
+    }
+  }, [dataConfigMpgto]);
 
+  // ======== MUTEDS ======== 
+  const { mutate: atualizaConfigMpgto } = useAtualizarConfigMpgto();
+
+  console.log(dataConfigMpgto)
   const handleChange = (
     key: keyof ConfiguracaoMeioPag,
     value: any,
@@ -171,9 +165,9 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           </div>
         </div>
         <Separator className="my-3" />
-
-        {/* =============== Geral ====================== */}
-        <CardTitle className="m-3 ">Geral</CardTitle>
+        {/* ================================================================================== */}     
+        {/*=================================== GERAL ========================================= */}
+        <CardTitle className="m-3 text-sidebar-border">Geral</CardTitle>
         <div className="flex flex-wrap gap-4 font-sans text-xs justify-center md:justify-normal font-bold text-gray-400">
 
           {/* ========= LIBERAÇÃO SUPERVISOR ========== */}
@@ -185,7 +179,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                    <PopoverContent className='text-xs'><strong><u>Liberação Supervisor</u> -</strong>  Essa opção indica se o meio de pagamento vai solicitar Supervisor (Fiscal de Caixa) ao ser selecionado </PopoverContent>
+                    <PopoverContent ><strong><u>Liberação Supervisor</u> -</strong>  Essa opção indica se o meio de pagamento vai solicitar Supervisor (Fiscal de Caixa) ao ser selecionado </PopoverContent>
                 </Popover>
               </div>
 
@@ -207,12 +201,12 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                  <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  <label htmlFor="GrupoMeioPgto" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
                     Grupo 
                   </label>
                   <Popover>
                       <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                      <PopoverContent className='text-xs'><strong><u>Grupo meio de pagamento</u> - </strong>Defina aqui o grupo qual o meio de pagamento pertence</PopoverContent>
+                      <PopoverContent ><strong><u>Grupo meio de pagamento</u> - </strong>Defina aqui o grupo qual o meio de pagamento pertence</PopoverContent>
                   </Popover>
               </div>
               <IntegerInput
@@ -233,7 +227,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                   </label>
                   <Popover>
                       <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                      <PopoverContent className="text-xs"><strong><u>Permite Troco</u> - </strong> Esta opção define se o meio de pagamento aceita a entrega de troco. 
+                      <PopoverContent ><strong><u>Permite Troco</u> - </strong> Esta opção define se o meio de pagamento aceita a entrega de troco. 
                       <strong> Atenção </strong>ao habilitá-la, as configurações relacionadas a função de troco serão desbloqueadas.
                     </PopoverContent>
                   </Popover>
@@ -259,7 +253,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap  text-gray-500 p-1">Troco Max</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                    <PopoverContent className='text-xs'><strong><u>Troco Máximo</u> - </strong>Defina nesse campo o <u>troco máximo</u> permitido para esse meio de pagamento</PopoverContent>
+                    <PopoverContent ><strong><u>Troco Máximo</u> - </strong>Defina nesse campo o <u>troco máximo</u> permitido para esse meio de pagamento</PopoverContent>
                 </Popover>
               </div>
               <FloatInput 
@@ -276,7 +270,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap  text-gray-500 p-1">M.P Troco</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                    <PopoverContent className='text-xs'><strong><u>Meio De Pagamento Troco</u> - </strong>Essa opção eu não tenho certeza. Preciso que me expliquem melhor kk</PopoverContent>
+                    <PopoverContent ><strong><u>Meio De Pagamento Troco</u> - </strong>Essa opção eu não tenho certeza. Preciso que me expliquem melhor kk</PopoverContent>
                 </Popover>
               </div>
               <IntegerInput 
@@ -295,7 +289,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                    <PopoverContent className='text-xs'><strong><u>Permite Troco</u> - </strong>Essa opção indica se o meio de pagamento precisa
+                    <PopoverContent ><strong><u>Permite Troco</u> - </strong>Essa opção indica se o meio de pagamento precisa
                     de liberação do supervisor</PopoverContent>
                 </Popover>
               </div>
@@ -323,7 +317,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 </label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
-                    <PopoverContent className='text-xs'><strong><u>Emite Contra Vale</u> - </strong>Essa opção indica se o meio de pagamento emite <strong>Contra Vale</strong></PopoverContent>
+                    <PopoverContent ><strong><u>Emite Contra Vale</u> - </strong>Essa opção indica se o meio de pagamento emite <u>Contra Vale</u></PopoverContent>
                 </Popover>
               </div>
               <Select
@@ -341,46 +335,87 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
               </Select>
             </div>
           }
-          {/* ========= ACIONA GAVETA ========== */}
+          {/* ============== IDENTIFICAÇÃO CONTRA VALE ================ */}
           {
-            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
-              <label htmlFor="acionaGavetaSelect" className="block whitespace-nowrap p-1  text-gray-500 ">
-                Aciona Gaveta
-              </label>
-           
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
+              <div className='flex'>
+                <label htmlFor="IdentificacaoContraVale" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  Tipo Cv
+                </label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent ><strong><u>Indentificação Contra Vale</u> - </strong>Defina aqui qual o tipo de <u>identificação</u> do contra vale</PopoverContent>
+                </Popover>
+              </div>
               <Select
-                value={configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta")?.stringValue ?? ""} // Valor atual do seletor
-                onValueChange={(value) =>handleChange("stringValue", value, "AcionaGaveta")}
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "IdentificacaoContraVale")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "IdentificacaoContraVale")}
+                disabled={!permiteTroco}
               >
-                <SelectTrigger id="acionaGavetaSelect">
+                <SelectTrigger  id="IdentificacaoContraVale">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="S">Sim</SelectItem> 
-                  <SelectItem value="N">Não</SelectItem> 
+                  <SelectItem value="D">Dinheiro</SelectItem> 
+                  <SelectItem value="C">Cartão</SelectItem> 
                 </SelectContent>
               </Select>
             </div>
           }
-          {/* ========= CÓDIGO PREÇO ========== */}
+          {/* ================================================================================== */}
+          {/* ====================================== CARTOES =================================== */}
+          <Separator/>
+          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Cartões</CardTitle>
+          {/* ========= TIPO CARTÃO ========== */}
           {
-            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal  ">
-              <label htmlFor="codigoPrecoSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
-                Código Preço
-              </label>
-              
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className="flex">
+                <label htmlFor="TipoCartaoTef" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Tipo Cartão
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Aciona Gaveta</u> - </strong>Define se o meio de pagamento vai acionar a gaveta</PopoverContent>
+                </Popover>
+              </div>
               <Select
-                value={configDadosMeioPgto.find((item) => item.nomeCampo === "CodigoPreco")?.integerValue.toString() ?? ""}
-                onValueChange={(value) => {handleChange("integerValue", Number(value), "CodigoPreco");}}
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "TipoCartaoTef")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "TipoCartaoTef")}
               >
-                <SelectTrigger id="codigoPreco">
+                <SelectTrigger id="TipoCartaoTef">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1">Preço 1</SelectItem>
-                  <SelectItem value="2">Preço 2</SelectItem>
-                  <SelectItem value="3">Preço 3</SelectItem>
-                  <SelectItem value="4">Preço 4</SelectItem>
+                  <SelectItem value="C">Crédito</SelectItem> 
+                  <SelectItem value="D">Débito</SelectItem> 
+                  <SelectItem value="P">Pix</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+          {/* ========= TIPO PARC CARTÃO ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-36 md:justify-normal">
+              <div className="flex">
+                <label htmlFor="TipoParcCartao" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Tipo Parc
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Tipo Parcelamento Cartão</u> - </strong>Define o tipo de parcelamento do cartão</PopoverContent>
+                </Popover>
+              </div>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "TipoParcCartao")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "TipoParcCartao")}
+              >
+                <SelectTrigger  id="TipoParcCartao">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent >
+                  <SelectItem value="A">A vista</SelectItem> 
+                  <SelectItem value="L">Loja</SelectItem> 
+                  <SelectItem value="D">Administradora</SelectItem> 
                 </SelectContent>
               </Select>
             </div>
@@ -406,33 +441,75 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
               </Select>
             </div>
           }
-          {/* ========= EMITE CONTRAVALE ========== */}
+          {/* ==================================================================================== */}
+          {/* ====================================== CONVENIOS =================================== */}
+          <Separator/>
+          <CardTitle className="ml-3 text-base flex w-full sidebar-border">Convênio </CardTitle>
+          {/* ========= IDENTIFICACAO CONVENIO ========== */}
           {
-            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
-              <label htmlFor="EmiteContraValeSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
-                Emite Contra Vale
-              </label>
-              
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal  ">
+              <div className="flex">
+                <label htmlFor="IdentificacaoConvenio" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Entrada
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Tipo Entrada Convênio</u> - </strong>Define o tipo de entrada que vai receber os dados no PDV</PopoverContent>
+                </Popover>
+              </div>
               <Select
-                value={configDadosMeioPgto.find((item) => item.nomeCampo === "EmiteContraVale")?.stringValue ?? ""}
-                onValueChange={(value) => {handleChange("stringValue", value, "EmiteContraVale");}}
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "IdentificacaoConvenio")?.stringValue ?? ""}
+                onValueChange={(value) => {handleChange("stringValue", value, "IdentificacaoConvenio");}}
               >
-                <SelectTrigger  id="EmiteContraVale">
+                <SelectTrigger id="IdentificacaoConvenio">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="S">Sim</SelectItem> 
-                  <SelectItem value="N">Não</SelectItem> 
+                  <SelectItem value="P">Padrão</SelectItem>
+                  <SelectItem value="C">Código</SelectItem>
+                  <SelectItem value="J">Cpf / Cnpj</SelectItem>
+                  <SelectItem value="T">Cartão</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           }
-          {/* ========= EFETUAR SANGRIA ========== */}
+          {/* ========== VIAS CONVENIO ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
-              <label htmlFor="EfetuarSangriaSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
-                Efetuar Sangria
-              </label>
+              <div className='flex'>
+                  <label htmlFor="ViasConvenio" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                    Vias
+                  </label>
+                  <Popover>
+                      <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                      <PopoverContent ><strong><u>Número de Vias</u> - </strong>Defina quantas cópias do recibo serão impressas para cada vendaa </PopoverContent>
+                  </Popover>
+              </div>
+              <IntegerInput
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "ViasConvenio")?.integerValue ?? 0}
+                onChange={(e) => {
+                  const newValue = e;
+                  handleChange("integerValue", newValue, "ViasConvenio");
+                }}
+              />
+            </div>            
+          }
+          {/* ==================================================================================== */}
+          {/* ====================================== SANGRIAS =================================== */}
+          <Separator/>
+          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Sangrias</CardTitle>
+          {/* ========= EFETUAR SANGRIA ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
+              <div className="flex">
+                <label htmlFor="EfetuarSangria" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Efetua Sang
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Efetua Sangria</u> - </strong>Selecione se o PDV deve realizar a sangria, ou seja, a retirada de valores do caixa para segurança e organização.</PopoverContent>
+                </Popover>
+              </div>
               
               <Select
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "EfetuarSangria")?.stringValue ?? ""}
@@ -444,21 +521,188 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
                 <SelectContent>
                   <SelectItem value="S">Sim</SelectItem> 
                   <SelectItem value="N">Não</SelectItem> 
+                  <SelectItem value="F">Fechamento</SelectItem> 
                 </SelectContent>
               </Select>
             </div>
           }
-          {/* =========== DESCONTO TICKET =========== */}
+          {/* =========== NUMERO DE VIAS SANGRIA =========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
-              <label htmlFor="DescontoTicketSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
-                Desconto Ticket
-              </label>
+              <div className='flex'>
+                <label htmlFor="ViasSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Vias Sang</label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent ><strong><u>Número de vias Sangria</u> - </strong>Defina quantas cópias do comprovante de sangria serão impressas a cada operação. <i>Essa configuração é útil para ter registros físicos para conferência e controle do caixa.</i></PopoverContent>
+                </Popover>
+              </div>
+              <IntegerInput 
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "ViasSangria")?.integerValue ?? 0}
+                onChange={((value: number) => handleChange("integerValue", value, "ViasSangria"))}
+           
+              />
+            </div>            
+          }
+          {/* ========= TIPO SANGRIA ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
+              <div className="flex">
+                <label htmlFor="TipoSangria" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Tipo Sang
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Tipo Sangria Fechamento</u> - </strong>NÃO ENTENDI</PopoverContent>
+                </Popover>
+              </div>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "TipoSangria")?.stringValue ?? ""}
+                onValueChange={(value) => {handleChange("stringValue", value, "TipoSangria");}}
+              >
+                <SelectTrigger  id="TipoSangria">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="C">NAO ENTENDI</SelectItem> 
+                  <SelectItem value="D">NAO ENTENDI</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+          {/* ========= TIPO SANGRIA FECHAMENTO COLETA ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
+              <div className="flex">
+                <label htmlFor="TipoSangriaFecham" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Tipo Coleta
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Tipo Sangria Fechamento</u> - </strong>NÃO ENTENDI</PopoverContent>
+                </Popover>
+              </div>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "TipoSangriaFecham")?.stringValue ?? ""}
+                onValueChange={(value) => {handleChange("stringValue", value, "TipoSangriaFecham");}}
+              >
+                <SelectTrigger  id="TipoSangriaFecham">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="G">Efetua sangria do saldo meio pagamento</SelectItem> 
+                  <SelectItem value="I">Informa valor para sangria</SelectItem> 
+                  <SelectItem value="C">Valor configurado meio de pagamento</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+          {/* =========== VALOR AVISO SANGRIA =========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className='flex'>
+                <label htmlFor="ValorAvisoSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Valor aviso</label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent ><strong><u>Valor Aviso Sangria</u> - </strong>
+                    Defina o valor limite que, ao ser ultrapassado, fará com que o sistema avise no caixa que é necessário efetuar a sangria. <i>Essa configuração ajuda a manter o controle e a segurança dos valores em caixa.</i></PopoverContent>
+                </Popover>
+              </div>
+              <FloatInput 
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "ValorAvisoSangria")?.doubleValue ?? 0}
+                onChangeValue={((value: number) => handleChange("doubleValue", Number(value), "ValorAvisoSangria"))}
+              />
+            </div>            
+          }
+          {/* =========== VALOR BLOQUEIO SANGRIA =========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className='flex'>
+                <label htmlFor="ValorBloqSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Valor bloq</label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent ><strong><u>Bloqueio Sangria</u> - </strong>Ative esta opção para que, ao atingir o valor limite, o caixa seja bloqueado, impedindo novas operações até que a sangria seja realizada. <i>Isso garante maior segurança e controle financeiro.</i></PopoverContent>
+                </Popover>
+              </div>
+              <FloatInput 
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "ValorBloqSangria")?.doubleValue ?? 0}
+                onChangeValue={((value: number) => handleChange("doubleValue", Number(value), "ValorBloqSangria"))}
+              />
+            </div>            
+          }
+          {/* ==================================================================================== */}
+          {/* ====================================== TICKETS =================================== */}
+          <Separator/>
+          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Tickets</CardTitle>
+          {/* =========== DESCONTO TICKET =========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
+              <div className='flex'>
+                <label htmlFor="ValorBloqSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Desconto</label>
+                <Popover>
+                    <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                    <PopoverContent ><strong><u>Tickets - Percentual de Desconto</u> - </strong>
+                    Defina o percentual de desconto que será aplicado aos tickets. Esse valor reduzirá automaticamente o preço final, permitindo promoções e ajustes no caixa conforme necessário.</PopoverContent>
+                </Popover>
+              </div>
               <FloatInput 
                 value={configDadosMeioPgto.find((item) => item.nomeCampo === "DescontoTicket")?.doubleValue ?? 0}
                 onChangeValue={((value: number) => handleChange("doubleValue", Number(value), "DescontoTicket"))}
               />
             </div>            
+          }
+          {/* ==================================================================================== */}
+          {/* ====================================== OUTROS =================================== */}
+          <Separator/>
+          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Tickets</CardTitle>
+          {/* ========= ACIONA GAVETA ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
+              <div className="flex">
+                <label htmlFor="acionaGavetaSelect" className="block whitespace-nowrap p-1  text-gray-500 ">
+                  Aciona gaveta
+                </label>
+                <Popover>
+                  <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
+                  <PopoverContent><strong><u>Aciona Gaveta</u> - </strong>Indica se o meio de pagamento deve abrir a gaveta do caixa automaticamente no final da transação.</PopoverContent>
+                </Popover>
+              </div>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "AcionaGaveta")?.stringValue ?? ""} // Valor atual do seletor
+                onValueChange={(value) =>handleChange("stringValue", value, "AcionaGaveta")}
+              >
+                <SelectTrigger id="acionaGavetaSelect">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="S">Sim</SelectItem> 
+                  <SelectItem value="N">Não</SelectItem> 
+                </SelectContent>
+              </Select>
+            </div>
+          }
+
+
+          {/* ========= CÓDIGO PREÇO ========== */}
+          {
+            <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal  ">
+              <label htmlFor="codigoPrecoSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
+                Código Preço
+              </label>
+              <Select
+                value={configDadosMeioPgto.find((item) => item.nomeCampo === "CodigoPreco")?.integerValue.toString() ?? ""}
+                onValueChange={(value) => {handleChange("integerValue", Number(value), "CodigoPreco");}}
+              >
+                <SelectTrigger id="codigoPreco">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">Preço 1</SelectItem>
+                  <SelectItem value="2">Preço 2</SelectItem>
+                  <SelectItem value="3">Preço 3</SelectItem>
+                  <SelectItem value="4">Preço 4</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           }
         </div>
       {/* Exibe mensagens para o usuário */}

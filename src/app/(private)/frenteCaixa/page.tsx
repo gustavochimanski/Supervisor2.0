@@ -18,7 +18,7 @@ const tabItems = [
 const PageFrenteCaixa = () => {
   return (
     <ProtectedRoute>
-      <div className="w-[95vw] mx-auto font-sans rounded-xl">
+      <div className="w-[95vw] mx-auto mt-5 font-sans rounded-xl">
         <Suspense fallback={<LoaderComponent />}>
           <Tabs
             items={tabItems}

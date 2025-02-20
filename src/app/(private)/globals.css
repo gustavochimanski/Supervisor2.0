@@ -23,9 +23,11 @@
   box-sizing: border-box;
 }
 
+/* BLUE: #2196F3  */
+
 @layer base {
   :root {
-    --background: 210, 16%, 93%;
+    --background: 230, 37%, 97%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
@@ -56,7 +58,7 @@
     --sidebar-primary-foreground: 0 0% 98%; /* ÍCONE SUBMENU CIMA*/
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 207, 90%, 54%; /*HOVER BUTTONS SIDEBAR*/
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 207, 90%, 61%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --tootip-text-color: #2094F3;
   }

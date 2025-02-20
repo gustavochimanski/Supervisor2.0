@@ -155,8 +155,6 @@ const ComponentPerfilDeCaixa: React.FC = () => {
     }
   };
   
-  
-
   return (
     <div>
       {/* ===== Data Table ===== */}
@@ -169,68 +167,68 @@ const ComponentPerfilDeCaixa: React.FC = () => {
       {/* ===== Perfil Detail Modal ===== */}
       {showModalPerfilById && (
         <Modal onClose={() => setShowModalPerfilById(false)} style={{ width: "80vw", height: "70vh" }}>
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle>Configurações</CardTitle>
-              <CardDescription>
-                Perfil de Caixa{" "}
-                <span>
-                  {dataByIdPerfilPdv ? dataByIdPerfilPdv.descricao : "Carregando..."}
-                </span>
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="h-[50vh] overflow-auto">
+          <CardHeader>
+            <CardTitle>Configurações</CardTitle>
+            <CardDescription>
+              Perfil de Caixa{" "}
+              <span>
+                {dataByIdPerfilPdv ? dataByIdPerfilPdv.descricao : "Carregando..."}
+              </span>
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="h-[50vh] overflow-auto">
+            <Separator />
+            <form className="flex flex-wrap my-4 gap-4">
+              <div>
+                <Label htmlFor="descricao">Descrição</Label>
+                <Input
+                  type="text"
+                  id="descricao"
+                  name="descricao"
+                  value={formData?.descricao || ""}
+                  onChange={handleChange}
+                  className="w-60"
+                />
+              </div>
               <Separator />
-              <form className="flex flex-wrap my-4 gap-4">
-                <div>
-                  <Label htmlFor="descricao">Descrição</Label>
-                  <Input
-                    type="text"
-                    id="descricao"
-                    name="descricao"
-                    value={formData?.descricao || ""}
-                    onChange={handleChange}
-                    className="w-60"
-                  />
-                </div>
-                <Separator />
-                <div>
-                  <Label htmlFor="impressora">Impressora</Label>
-                  <Input
-                    type="text"
-                    id={formData?.confPerfil.find((item) => item.property === "Impressora")?.id.toString() || ""}
-                    name="Impressora"
-                    value={formData?.confPerfil.find((item) => item.property === "Impressora")?.value || ""}
-                    onChange={handleChange}
-                    className="w-28"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="impressoraParity">Impressora</Label>
-                  <Input
-                    type="text"
-                    id={ formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.id.toString() || ""}
-                    name="ImpressoraParity"
-                    value={formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.value || ""}
-                    onChange={handleChange}
-                    className="w-28"
-                  />
-                </div>
-              </form>
-            </CardContent>
-            <CardFooter className="flex gap-4 justify-center">
-              <Button variant="destructive" onClick={() => setShowModalConfirm(true)}>
-                Apagar
-              </Button>
-              <Button onClick={() => setShowModalPerfilById(false)} variant="outline">
-                Fechar
-              </Button>
-              <Button onClick={handleSave} type="submit" variant={"gradient"}>
-                Salvar
-              </Button>
-            </CardFooter>
-          </Card>
+              <div>
+                <Label htmlFor="impressora">Impressora</Label>
+                <Input
+                  type="text"
+                  id={formData?.confPerfil.find((item) => item.property === "Impressora")?.id.toString() || ""}
+                  name="Impressora"
+                  value={formData?.confPerfil.find((item) => item.property === "Impressora")?.value || ""}
+                  onChange={handleChange}
+                  className="w-28"
+                />
+              </div>
+              <div>
+                <Label htmlFor="impressoraParity">Impressora</Label>
+                <Input
+                  type="text"
+                  id={ formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.id.toString() || ""}
+                  name="ImpressoraParity"
+                  value={formData?.confPerfil.find((item) => item.property === "ImpressoraParity")?.value || ""}
+                  onChange={handleChange}
+                  className="w-28"
+                />
+              </div>
+            </form>
+          </CardContent>
 
+          {/* ========== FOOTER ========= */}
+          <CardFooter className="flex gap-4 justify-center">
+            <Button variant="destructive" onClick={() => setShowModalConfirm(true)}>
+              Apagar
+            </Button>
+            <Button onClick={() => setShowModalPerfilById(false)} variant="outline">
+              Fechar
+            </Button>
+            <Button onClick={handleSave} type="submit" variant={"gradient"}>
+              Salvar
+            </Button>
+          </CardFooter>
+        
           {/* ===== Confirmation Modal for Deletion ===== */}
           {showModalConfirm && (
             <Modal onClose={() => setShowModalConfirm(false)} style={{ width: "350px", textAlign: "center" }}>
