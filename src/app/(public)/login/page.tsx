@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; // Ícones de olho
-import "@/app/(site)/globals.css"
+import "@/app/(private)/globals.css"
 import styles from "./button.module.css"
-import LogoImg from "../../../public/logo";
+import LogoImg from "../../../../public/logo";
 import CircularProgress from "@mui/material/CircularProgress";
 import { login } from "@/services/AuthService";
+import LoaderComponent from "@/components/ui/loader";
+import { Button } from "@/components/ui/button";
 
 export default function LoginFormComponent() {
   const router = useRouter();
@@ -30,13 +31,12 @@ export default function LoginFormComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-sm rounded-lg shadow p-8">
+    <div className="justify-center w-full h-full">
+      <div className="flex flex-col justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[95%] max-w-md p-6 bg-white rounded-lg shadow md:h-3/4">
         {/* Cabeçalho com ícone e título */}
-        <div className="flex flex-col items-center mb-6">
+        <div className="flex flex-col items-center my-6">
           <div className="flex items-center justify-center w-14 h-14rounded mb-4">
           <LogoImg/>
-
           </div>
           <h1 className="text-2xl font-semibold">Unitec</h1>
         </div>
@@ -50,7 +50,7 @@ export default function LoginFormComponent() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Email"
-              className=" p-4 w-full border-b-2 border-slate-200 focus:border-gray-50  border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
+              className="my-6 p-4 w-full border-b-2 border-slate-200 focus:border-gray-50  border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
               bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"            />
           </div>
 
@@ -60,7 +60,7 @@ export default function LoginFormComponent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="p-3 w-full border-b-2  border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
+              className="my-6 p-3 w-full border-b-2  border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
               bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"             />
             {/* Ícone para exibir/ocultar senha */}
             <div
@@ -75,12 +75,12 @@ export default function LoginFormComponent() {
             </div>
           </div>
 
-          <div className="w-full h-16 flex justify-center">
-            {isloading && (<CircularProgress/>)}
-            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+          <div className="">
+            {isloading && (<LoaderComponent/>)}
+            {error && <p className="text-rose-600 text-center my-4">{error}</p>}
           </div>
 
-          <button type="submit" className={styles.button}>LOGIN</button>
+          <Button type="submit" disabled={isloading} className={styles.button}>LOGIN</Button>
 
         </form>
 

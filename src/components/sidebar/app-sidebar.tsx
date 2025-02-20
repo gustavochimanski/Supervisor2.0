@@ -24,10 +24,12 @@ import {
     Settings,
     BarChart,
     ShoppingBag,
-    MonitorUpIcon
+    MonitorUpIcon,
+    LogOut,
   } from "lucide-react";
 
 import SubMenuEmpresas from "./submenu-empresas";
+import { logout } from "@/services/AuthService";
 
   // Menu items.
   const items = [
@@ -55,13 +57,13 @@ import SubMenuEmpresas from "./submenu-empresas";
 
   const { open } = useSidebar();
     
-    return ( 
+    return (
         <Sidebar variant="sidebar"  collapsible="icon">
             <SidebarHeader>
                 <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
             </SidebarHeader>
             <SidebarSeparator className="bg-sidebar-foreground"/>
-            <SidebarContent>
+            <SidebarContent className="justify-between">
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
                 <SidebarGroupContent>
@@ -79,7 +81,23 @@ import SubMenuEmpresas from "./submenu-empresas";
                     </SidebarMenu>
                 </SidebarGroupContent>
                 </SidebarGroup>
+                
+                {/*====== BUTTONS FOOTER SIDEBAR ====== */}
+                <SidebarGroup>
+                  <SidebarGroupLabel>Pessoal</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    {/* BUTTONS */}
+                    <SidebarMenu>
+                      <SidebarMenuItem >
+                        <SidebarMenuButton onClick={logout} tooltip={"Sair"}>
+                          <LogOut/>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
             </SidebarContent>
+
           </Sidebar>
     )
   }

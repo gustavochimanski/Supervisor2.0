@@ -26,4 +26,5 @@ export async function login({ username, password }: LoginData) {
 
 export function logout() {
   localStorage.removeItem("jwt");
+  window.location.href = "/login";
 }

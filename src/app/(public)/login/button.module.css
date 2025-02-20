@@ -1,6 +1,7 @@
 .button {
   position: relative; /* Necessário para o posicionamento do ::before */
   width: 100%;
+  height: 40px;
   padding: 12px;
   font-weight: 600;
   color: #fff;

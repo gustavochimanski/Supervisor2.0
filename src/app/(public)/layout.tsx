@@ -1,6 +1,6 @@
 // src/app/login/layout.tsx
 
-export default function LoginLayout({
+export default function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
