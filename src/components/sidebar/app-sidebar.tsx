@@ -58,7 +58,7 @@ import { logout } from "@/services/AuthService";
   const { open } = useSidebar();
     
     return (
-        <Sidebar variant="sidebar"  collapsible="icon">
+        <Sidebar collapsible="icon">
             <SidebarHeader>
                 <SubMenuEmpresas empresas={empresas} isSidebarOpen={open}/>
             </SidebarHeader>

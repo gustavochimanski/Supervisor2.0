@@ -1,6 +1,6 @@
 .button {
   position: relative; /* Necessário para o posicionamento do ::before */
-  width: 100%;
+  width: 80%;
   height: 40px;
   padding: 12px;
   font-weight: 600;
@@ -33,16 +33,10 @@
   opacity: 0;
   background: #fff;
   box-shadow: 0 0 50px 30px #fff;
-  -webkit-transform: skewX(-20deg);
-  -moz-transform: skewX(-20deg);
-  -ms-transform: skewX(-20deg);
-  -o-transform: skewX(-20deg);
   transform: skewX(-20deg);
 }
 
 .button:hover::before {
-  -webkit-animation: sh02 0.5s linear;
-  -moz-animation: sh02 0.5s linear;
   animation: sh02 0.5s linear;
 }
 
@@ -63,4 +57,13 @@
 .button:active {
   box-shadow: 0 0 0 0 transparent;
   transition: box-shadow 0.2s ease-in;
+}
+
+/* Media Query: telas maiores terão botão menor */
+@media (min-width: 1024px) {
+  .button {
+    width: 70%; /* altura menor */
+    padding: 8px; /* padding reduzido */
+    font-size: 0.875rem; /* opcional: fonte um pouco menor */
+  }
 }

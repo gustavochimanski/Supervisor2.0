@@ -48,8 +48,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     try {
       // Supondo que o loginService retorne o token
       const token = await loginService(data);
-      // Armazena o token no localStorage
-      localStorage.setItem("jwt", token);
       setIsAuthenticated(true);
     } catch (err: any) {
       console.error("Erro ao autenticar:", err);
@@ -61,6 +59,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     logoutService();
     localStorage.removeItem("jwt");
     setIsAuthenticated(false);
+    window.location.href = "/login";
   };
 
   if (!isAuthChecked) {

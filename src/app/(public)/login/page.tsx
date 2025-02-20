@@ -43,7 +43,7 @@ export default function LoginFormComponent() {
 
         {/* Formulário de login */}
         <form onSubmit={handleLogin}>
-          <div className="relative mb-4">
+          <div className="flex justify-center items-center mb-4">
             <input
               autoFocus
               type="email"
@@ -80,7 +80,12 @@ export default function LoginFormComponent() {
             {error && <p className="text-rose-600 text-center my-4">{error}</p>}
           </div>
 
-          <Button type="submit" disabled={isloading} className={styles.button}>LOGIN</Button>
+          <div className="flex justify-center">
+            <Button type="submit" disabled={isloading} className={styles.button}>
+              LOGIN
+            </Button>
+          </div>
+
 
         </form>
 

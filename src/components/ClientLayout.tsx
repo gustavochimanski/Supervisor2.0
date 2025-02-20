@@ -6,6 +6,7 @@ import AppSidebar from "@/components/sidebar/app-sidebar"
 import { QueryClientProvider } from "react-query"
 import queryClient from "@/services/QueryClient"
 import { useEffect, useState } from "react"
+import TopBarComponent from "./topBar/app-topBar"
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -26,11 +27,15 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={isSideBarOpen}>
+        
         <AppSidebar />
         <main>
           <SidebarTrigger variant="secondary" />
-          {children}
+          <div className="mt-10">
+            {children}
+          </div> 
         </main>
+        <TopBarComponent></TopBarComponent>
       </SidebarProvider>
     </QueryClientProvider>
   )
