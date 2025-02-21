@@ -19,8 +19,11 @@ const buttonVariants = cva(
           "border text-black border-input bg-card shadow-sm hover:bg-accent hover:text-sidebar-accent-foreground",
         secondary:
           "bg-card border text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground text-primary",
-        link: "text-primary underline-offset-4 hover:underline",
+          sidebarTrigger:
+          " bg-sidebar py-[25px] rounded-[50%] border-none border-0 hover:text-accent-foreground text-primary ",
+          ghost:
+          "hover:text-accent-foreground text-primary ",
+          link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-8 px-4 py-2",

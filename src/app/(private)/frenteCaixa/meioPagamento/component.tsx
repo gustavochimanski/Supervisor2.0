@@ -7,12 +7,13 @@ import { meioPgtoColumns } from "./columns";
 import { DataTable } from "@/components/shared/data-table";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import ConfigsMeioPagamento from "./configMeioPag/configMeioPagamento";
+import ConfigsMeioPagamento from "./configMeioPag/component";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { useFetchByIdMeioPgto } from "./useMeioPag";
-import { ArrowRight, ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, Plus, RefreshCcw, Save, Trash2 } from "lucide-react";
+import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, Plus, RefreshCcw, Save, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import DataTableComponent from "@/components/shared/mui-data-table";
 
 export default function ComponentMeioPagamento() {
   // ==== MODAIS ======
@@ -64,9 +65,9 @@ export default function ComponentMeioPagamento() {
         <div>
           <SearchComponent className="w-full md:w-60" />
         </div>
-        <div className="my-4 flex justify-between gap-2"> 
+        <div className="flex justify-between gap-2"> 
           <Button><CirclePlus/> Inserir</Button>
-          <Button variant="secondary"><RefreshCcw />Atualizar</Button>
+          <Button variant="secondary" onClick={() => {refetchByIdMeioPgto()}}><RefreshCcw />Atualizar</Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant={"secondary"} ><EllipsisVertical/>Mais</Button>
@@ -86,6 +87,8 @@ export default function ComponentMeioPagamento() {
           </DropdownMenu>
         </div>
       </div>
+
+      {/* <DataTableComponent/> */}
 
       {/* ========== TABELA ============ */}
       <DataTable

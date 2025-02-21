@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 
 import { cookies } from "next/headers";
-import ClientLayout from "@/components/ClientLayout";
+import ClientLayout from "@/components/security/ClientLayout";
 import AuthProvider from "@/context/AuthProvider";
 
 import "./globals.css";

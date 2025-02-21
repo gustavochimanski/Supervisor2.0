@@ -10,7 +10,7 @@ interface SearchComponentProps {
 
 export function SearchComponent({ className }: SearchComponentProps) {
   return (
-    <div className={`relative w-full my-4 ${className || ""}`}>
+    <div className={`relative w-full  ${className || ""}`}>
       <Input
         type="search"
         placeholder="Pesquisar..."
@@ -18,7 +18,7 @@ export function SearchComponent({ className }: SearchComponentProps) {
       />
       <Button 
         variant="ghost"
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center p-2"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center px-2 pb-3  "
       >
         <Search className="h-4 w-4" />
       </Button>

@@ -6,7 +6,7 @@ import AppSidebar from "@/components/sidebar/app-sidebar"
 import { QueryClientProvider } from "react-query"
 import queryClient from "@/services/QueryClient"
 import { useEffect, useState } from "react"
-import TopBarComponent from "./topBar/app-topBar"
+import TopBarComponent from "../topBar/app-topBar"
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -30,7 +30,7 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
         
         <AppSidebar />
         <main>
-          <SidebarTrigger variant="secondary" />
+          <SidebarTrigger variant="sidebarTrigger" />
           <div className="mt-16">
             {children}
           </div> 

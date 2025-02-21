@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/security/ProtectedRoute";
 import LoaderComponent from "@/components/ui/loader";
 import ComponentCaixas from "./Caixas/component";
 import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";

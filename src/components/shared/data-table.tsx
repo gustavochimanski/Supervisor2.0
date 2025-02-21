@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Delete } from "lucide-react";
 
 interface DataTableProps<TData> {
   columns: ColumnDef<TData>[]; // Removendo o segundo parâmetro genérico
@@ -62,14 +63,16 @@ export function DataTable<TData>({
 
         <TableBody>
           {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
+            table.getRowModel().rows.map((row) => (  
               <TableRow
                 key={row.id}
                 onClick={() => onRowClick && onRowClick(row.original)}
                 className={`cursor-pointer bg-[#f8f9fa] hover:bg-slate-200 ${
                   onRowClick ? "select-none" : ""
                 }`}
+                
               >
+                
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(
@@ -78,6 +81,7 @@ export function DataTable<TData>({
                     )}
                   </TableCell>
                 ))}
+                
               </TableRow>
             ))
           ) : (

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { useAuthContext } from "@/context/AuthProvider";
 import { useRouter } from "next/navigation";
 
-import LoaderComponent from "./ui/loader";
+import LoaderComponent from "../ui/loader";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
