@@ -36,7 +36,7 @@ export function DataTable<TData>({
   });
 
   return (
-    <div className="rounded-xl border-none font-sans">
+    <div className="rounded-xl font-sans">
       <Table >
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -48,7 +48,7 @@ export function DataTable<TData>({
                 return (
                   <TableHead
                     key={header.id}
-                    className={`bg-background text-foreground 
+                    className={`bg-background text-blue-700
                       ${isFirst ? "rounded-tl-lg" : ""} 
                       ${isLast ? "rounded-tr-lg" : ""}`}
                   >

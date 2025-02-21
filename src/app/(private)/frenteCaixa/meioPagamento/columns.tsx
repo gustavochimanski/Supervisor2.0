@@ -8,7 +8,7 @@ import { MeioPgto} from "./types";
 export const meioPgtoColumns: ColumnDef<MeioPgto>[] = [
   {
     accessorKey: "id",
-    header: "ID",
+    header: "Id",
   },
   {
     accessorKey: "codigo",

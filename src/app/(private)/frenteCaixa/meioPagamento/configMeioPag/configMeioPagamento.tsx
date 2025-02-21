@@ -25,6 +25,7 @@ import { FloatInput } from '@/components/shared/floatInput';
 import { IntegerInput } from '@/components/shared/integerInput';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CircleHelp } from 'lucide-react';
+import { CardContent } from "@mui/material";
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;
@@ -136,45 +137,42 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
 
   return (
     <form>
+      <CardContent>
         {/* ==================== INFORMAÇÕES ===================== */}
         <Separator className="my-3" />
-        <div className="flex justify-center md:justify-normal gap-1 mb-4 font-sans text-xs font-bold ">
-          <div className="box">
-            <label htmlFor="id" className="block font-Atkinson text-gray-500 font-bold ">
-              Id
-            </label>
+        <div className="flex justify-center md:justify-normal gap-2 mb-5 font-sans  ">
+          <div className="flex flex-col gap-1 items-center">
+            <CardTitle>Id</CardTitle>
             <Input
               id="id"
               value={dadosMeioPgto.id}
-              className="w-12 bg-slate-300 "
+              className="w-12 text-center bg-slate-300 "
               disabled
             />
           </div>
-          <div className="ml-4">
-            <label htmlFor="descricao" className="block  text-gray-500 ">
-              Descrição
-            </label>
+          <div className="flex flex-col gap-1 ">
+            <CardTitle>Descrição</CardTitle>
             <Input
               id={dadosMeioPgto.id.toString()}
               value={dadosMeioPgto.descricao ?? ""}
               onChange={(evt) =>
                 setDadosMeioPgto((prev) => prev ? { ...prev, descricao: evt.target.value } : prev)
               }
-              className="w-full md:w-52 text-gray-500"
+              className="w-full md:w-52"
             />
           </div>
         </div>
         <Separator className="my-3" />
         {/* ================================================================================== */}     
         {/*=================================== GERAL ========================================= */}
-        <CardTitle className="m-3 text-sidebar-border">Geral</CardTitle>
-        <div className="flex flex-wrap gap-4 font-sans text-xs justify-center md:justify-normal font-bold text-gray-400">
+        <CardTitle className="m-3 ">Geral</CardTitle>
+        <div className="flex flex-wrap gap-2 font-sans text-xs justify-center md:justify-normal">
 
           {/* ========= LIBERAÇÃO SUPERVISOR ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
               <div className='flex'>
-                <label htmlFor="LiberacaoSupervisorSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                <label htmlFor="LiberacaoSupervisorSelect" className="block whitespace-nowrap  p-1 pl-1">
                   Supervisor
                 </label>
                 <Popover>
@@ -201,7 +199,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                  <label htmlFor="GrupoMeioPgto" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  <label htmlFor="GrupoMeioPgto" className="block whitespace-nowrap  p-1 pl-1">
                     Grupo 
                   </label>
                   <Popover>
@@ -222,7 +220,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
               <div className='flex'>
-                  <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap  p-1 pl-1">
                     Troco 
                   </label>
                   <Popover>
@@ -250,7 +248,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap  text-gray-500 p-1">Troco Max</label>
+                <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap   p-1">Troco Max</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
                     <PopoverContent ><strong><u>Troco Máximo</u> - </strong>Defina nesse campo o <u>troco máximo</u> permitido para esse meio de pagamento</PopoverContent>
@@ -267,7 +265,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap  text-gray-500 p-1">M.P Troco</label>
+                <label htmlFor="MpgtoTroco" className="block  whitespace-nowrap   p-1">M.P Troco</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
                     <PopoverContent ><strong><u>Meio De Pagamento Troco</u> - </strong>Essa opção eu não tenho certeza. Preciso que me expliquem melhor kk</PopoverContent>
@@ -284,7 +282,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
               <div className='flex'>
-                <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                <label htmlFor="LiberacaoSupervisorTrocoSelect" className="block whitespace-nowrap  p-1 pl-1">
                   Lib. Supervisor
                 </label>
                 <Popover>
@@ -312,7 +310,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
               <div className='flex'>
-                <label htmlFor="EmiteContraVale" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                <label htmlFor="EmiteContraVale" className="block whitespace-nowrap  p-1 pl-1">
                   Emite Cv
                 </label>
                 <Popover>
@@ -339,7 +337,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal ">
               <div className='flex'>
-                <label htmlFor="IdentificacaoContraVale" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                <label htmlFor="IdentificacaoContraVale" className="block whitespace-nowrap  p-1 pl-1">
                   Tipo Cv
                 </label>
                 <Popover>
@@ -364,13 +362,13 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           }
           {/* ================================================================================== */}
           {/* ====================================== CARTOES =================================== */}
-          <Separator/>
-          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Cartões</CardTitle>
+          <Separator className="my-3"/>
+          <CardTitle className="ml-3 text-base flex w-full ">Cartões</CardTitle>
           {/* ========= TIPO CARTÃO ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className="flex">
-                <label htmlFor="TipoCartaoTef" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="TipoCartaoTef" className="block whitespace-nowrap p-1   ">
                   Tipo Cartão
                 </label>
                 <Popover>
@@ -397,7 +395,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-36 md:justify-normal">
               <div className="flex">
-                <label htmlFor="TipoParcCartao" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="TipoParcCartao" className="block whitespace-nowrap p-1   ">
                   Tipo Parc
                 </label>
                 <Popover>
@@ -423,7 +421,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {/* ========= CARTÃO DIGITADO ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
-              <label htmlFor="CartaoDigitadoSelect" className=" whitespace-nowrap  text-gray-500 p-1">
+              <label htmlFor="CartaoDigitadoSelect" className=" whitespace-nowrap   p-1">
                 Cartão Digitado
               </label>
               
@@ -443,13 +441,13 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           }
           {/* ==================================================================================== */}
           {/* ====================================== CONVENIOS =================================== */}
-          <Separator/>
+          <Separator className="my-3"/>
           <CardTitle className="ml-3 text-base flex w-full sidebar-border">Convênio </CardTitle>
           {/* ========= IDENTIFICACAO CONVENIO ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal  ">
               <div className="flex">
-                <label htmlFor="IdentificacaoConvenio" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="IdentificacaoConvenio" className="block whitespace-nowrap p-1   ">
                   Entrada
                 </label>
                 <Popover>
@@ -477,7 +475,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                  <label htmlFor="ViasConvenio" className="block whitespace-nowrap text-gray-500 p-1 pl-1">
+                  <label htmlFor="ViasConvenio" className="block whitespace-nowrap  p-1 pl-1">
                     Vias
                   </label>
                   <Popover>
@@ -497,12 +495,12 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {/* ==================================================================================== */}
           {/* ====================================== SANGRIAS =================================== */}
           <Separator/>
-          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Sangrias</CardTitle>
+          <CardTitle className="ml-3 text-base flex w-full ">Sangrias</CardTitle>
           {/* ========= EFETUAR SANGRIA ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
               <div className="flex">
-                <label htmlFor="EfetuarSangria" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="EfetuarSangria" className="block whitespace-nowrap p-1   ">
                   Efetua Sang
                 </label>
                 <Popover>
@@ -530,7 +528,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                <label htmlFor="ViasSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Vias Sang</label>
+                <label htmlFor="ViasSangria" className="block  whitespace-nowrap   p-1">Vias Sang</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
                     <PopoverContent ><strong><u>Número de vias Sangria</u> - </strong>Defina quantas cópias do comprovante de sangria serão impressas a cada operação. <i>Essa configuração é útil para ter registros físicos para conferência e controle do caixa.</i></PopoverContent>
@@ -547,7 +545,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
               <div className="flex">
-                <label htmlFor="TipoSangria" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="TipoSangria" className="block whitespace-nowrap p-1   ">
                   Tipo Sang
                 </label>
                 <Popover>
@@ -573,7 +571,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
               <div className="flex">
-                <label htmlFor="TipoSangriaFecham" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="TipoSangriaFecham" className="block whitespace-nowrap p-1   ">
                   Tipo Coleta
                 </label>
                 <Popover>
@@ -600,7 +598,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                <label htmlFor="ValorAvisoSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Valor aviso</label>
+                <label htmlFor="ValorAvisoSangria" className="block  whitespace-nowrap   p-1">Valor aviso</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
                     <PopoverContent ><strong><u>Valor Aviso Sangria</u> - </strong>
@@ -617,7 +615,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className='flex'>
-                <label htmlFor="ValorBloqSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Valor bloq</label>
+                <label htmlFor="ValorBloqSangria" className="block  whitespace-nowrap   p-1">Valor bloq</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
                     <PopoverContent ><strong><u>Bloqueio Sangria</u> - </strong>Ative esta opção para que, ao atingir o valor limite, o caixa seja bloqueado, impedindo novas operações até que a sangria seja realizada. <i>Isso garante maior segurança e controle financeiro.</i></PopoverContent>
@@ -631,13 +629,13 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           }
           {/* ==================================================================================== */}
           {/* ====================================== TICKETS =================================== */}
-          <Separator/>
-          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Tickets</CardTitle>
+          <Separator className="my-3"/>
+          <CardTitle className="ml-3 text-base flex w-full ">Tickets</CardTitle>
           {/* =========== DESCONTO TICKET =========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
               <div className='flex'>
-                <label htmlFor="ValorBloqSangria" className="block  whitespace-nowrap  text-gray-500 p-1">Desconto</label>
+                <label htmlFor="ValorBloqSangria" className="block  whitespace-nowrap   p-1">Desconto</label>
                 <Popover>
                     <PopoverTrigger><CircleHelp size={13}/></PopoverTrigger>
                     <PopoverContent ><strong><u>Tickets - Percentual de Desconto</u> - </strong>
@@ -652,13 +650,13 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           }
           {/* ==================================================================================== */}
           {/* ====================================== OUTROS =================================== */}
-          <Separator/>
-          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Outros</CardTitle>
+          <Separator className="my-3"/>
+          <CardTitle className="ml-3 text-base flex w-full ">Outros</CardTitle>
           {/* ========= ACIONA GAVETA ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">
               <div className="flex">
-                <label htmlFor="acionaGavetaSelect" className="block whitespace-nowrap p-1  text-gray-500 ">
+                <label htmlFor="acionaGavetaSelect" className="block whitespace-nowrap p-1   ">
                   Aciona gaveta
                 </label>
                 <Popover>
@@ -685,7 +683,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {/* ========= CÓDIGO PREÇO ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal  ">
-              <label htmlFor="codigoPrecoSelect" className="block  whitespace-nowrap  text-gray-500 p-1">
+              <label htmlFor="codigoPrecoSelect" className="block  whitespace-nowrap   p-1">
                 Código Preço
               </label>
               <Select
@@ -707,6 +705,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
         </div>
       {/* Exibe mensagens para o usuário */}
       {mensagem && <div className="mt-4 text-center  text-red-500">{mensagem}</div>}
+      </CardContent>
     </form>
   );
 });

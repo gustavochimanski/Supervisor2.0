@@ -3,7 +3,7 @@ import { PerfilPdv } from "./types"
 
 export const columnsPerfisDeCaixa: ColumnDef<PerfilPdv>[] = [
     {
-        header: "ID",
+        header: "Id",
         accessorKey: "id"
     },
     {

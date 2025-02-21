@@ -8,7 +8,7 @@ import { TypeCaixas } from "./types";
 export const caixasColumns: ColumnDef<TypeCaixas>[] = [
   {
     accessorKey: "id",
-    header: "ID",
+    header: "Id",
   },
   {
     accessorKey: "descricao",
