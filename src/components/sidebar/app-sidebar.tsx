@@ -25,7 +25,7 @@ import {
     BarChart,
     ShoppingBag,
     MonitorUpIcon,
-    LogOut,
+    Power,
   } from "lucide-react";
 
 import { logout } from "@/services/AuthService";
@@ -85,7 +85,7 @@ import { logout } from "@/services/AuthService";
                     <SidebarMenu>
                       <SidebarMenuItem >
                         <SidebarMenuButton onClick={logout} tooltip={"Sair"}>
-                          <LogOut/>
+                          <Power/>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     </SidebarMenu>

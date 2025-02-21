@@ -167,6 +167,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
       {/* ===== Perfil Detail Modal ===== */}
       {showModalPerfilById && (
         <Modal onClose={() => setShowModalPerfilById(false)} style={{ width: "80vw", height: "70vh" }}>
+          
           <CardHeader>
             <CardTitle>Configurações</CardTitle>
             <CardDescription>
@@ -244,7 +245,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
                   >
                     Confirmar
                   </Button>
-                  <Button onClick={() => setShowModalConfirm(false)} variant="outline">
+                  <Button onClick={() => setShowModalConfirm(false)}>
                     Cancelar
                   </Button>
                 </CardFooter>

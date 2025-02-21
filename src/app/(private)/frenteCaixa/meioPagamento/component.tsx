@@ -1,19 +1,24 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { MeioPgto, ConfiguracaoMeioPag } from "./types";
+
+import React, { useEffect, useRef, useState } from "react";
+import { ConfiguracaoMeioPag, MeioPgto } from "./types";
 import { meioPgtoColumns } from "./columns";
 import { DataTable } from "@/components/shared/data-table";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import ConfigsMeioPagamento from "./configMeioPag/configMeioPagamento";
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { useFetchByIdMeioPgto } from "./useMeioPag";
-import { CirclePlus, Plus } from "lucide-react";
+import { ArrowRight, ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, Plus, RefreshCcw, Save, Trash2 } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function ComponentMeioPagamento() {
-  const [showModal, setShowModal] = useState(false);
+  // ==== MODAIS ======
+  const [showModalById, setShowModalById] = useState(false);
+  const [showModalIncluirPerfil, setShowModalIncluirPerfil] = useState(false);
+  const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [idSelected, setIdSelected] = useState<string>("1");
   const formRef = useRef<any>(null);
 
@@ -21,12 +26,13 @@ export default function ComponentMeioPagamento() {
   // const { data: allMeios, isLoading: isLoadingAll } = useFetchAllMeiosPgto();
 
   // Busca um meio de pagamento específico pelo ID
-  const { data: dataByIdMeiopgto, isLoading } = useFetchByIdMeioPgto(idSelected);
+  const { data: dataByIdMeiopgto, isLoading, refetch: refetchByIdMeioPgto } = useFetchByIdMeioPgto(idSelected);
+;
 
   // Abre o modal e define o id do meio selecionado para buscar detalhes
   function handleVerConfig(configs: ConfiguracaoMeioPag[], id: string) {
     setIdSelected(id);
-    setShowModal(true);
+    setShowModalById(true);
   }
 
   const handleSave = () => {
@@ -35,20 +41,49 @@ export default function ComponentMeioPagamento() {
     }
   };
 
+  // ================================================================= 
+  // ===================== APAGA MEIO PAGAMENTO POR ID =======================
+  // const { mutate: deletePerfil } = useDelPerfil();
+  const handleDeletePerfil = (id?: string) => {
+    setShowModalConfirm(true)
+    if (!id) {
+      console.log("ID inválido para deleção", id);
+      return;
+    }
+    setShowModalConfirm(false)
+    setShowModalById(false);
+  };
+
   if (isLoading) {
     return <p>Carregando dados...</p>;
   }
   return (
     <div>
       {/* =============== CONTAINER TOPO ============== */}
-      <div className="flex w-full justify-between text-white mb-4 gap-4 text-center">
+      <div className="flex flex-col md:flex-row w-full justify-between mb-4 gap-4 text-center">
         <div>
           <SearchComponent className="w-full md:w-60" />
         </div>
-        <div className="my-4 flex gap-2"> 
-         <Button><Plus/></Button>
-          <Button  variant="secondary" >Atualizar</Button>
-          <Button variant="destructive">Deletar</Button>
+        <div className="my-4 flex justify-between gap-2"> 
+          <Button><CirclePlus/> Inserir</Button>
+          <Button variant="secondary"><RefreshCcw />Atualizar</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant={"secondary"} ><EllipsisVertical/>Mais</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Opções</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem >
+                <ArrowRightCircle/>
+                <a href="/">Carga</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Barcode/>
+                <a href="/">Etiquetas</a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -61,8 +96,8 @@ export default function ComponentMeioPagamento() {
         }
       />
 
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)} style={{ width: "80vw", height: "70vh" }}>
+      {showModalById && (
+        <Modal onClose={() => setShowModalById(false)} style={{ width: "80vw", height: "70vh" }}>
           {/* ===== CABECALHO ===== */}
           <CardHeader>
             <CardTitle>
@@ -80,11 +115,38 @@ export default function ComponentMeioPagamento() {
 
           {/* ===== RODAPÉ ===== */}
           <CardFooter className="justify-center gap-4">
-            <Button onClick={() => setShowModal(false)} variant="outline">Fechar</Button>
-            <Button type="submit" onClick={handleSave} >Salvar</Button>
+            <Button type="submit" onClick={handleSave} ><Save/>Salvar</Button>
+            <Button onClick={() => setShowModalById(false)} variant="outline"><CircleX/>Fechar</Button>
+            <Button onClick={() => handleDeletePerfil()} variant="destructive"><Trash2/> Apagar</Button>
           </CardFooter>
+
+
+
+          {/* ===== Confirmation Modal for Deletion ===== */}
+          {showModalConfirm && (
+            <Modal onClose={() => setShowModalConfirm(false)} style={{ width: "350px", textAlign: "center" }}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Tem certeza que deseja apagar o perfil?</CardTitle>
+                  <CardDescription>Atenção! Todas as informações serão perdidas!</CardDescription>
+                </CardHeader>
+                <CardFooter className="flex gap-4 justify-center">
+                  <Button
+                    onClick={() => handleDeletePerfil(dataByIdMeiopgto?.id.toString())}
+                    variant="destructive"
+                  >
+                    Confirmar
+                  </Button>
+                  <Button onClick={() => setShowModalConfirm(false)} >
+                    Cancelar
+                  </Button>
+                </CardFooter>
+              </Card>
+            </Modal>
+          )}
         </Modal>
-      )}
+    
+      )}  
     </div>
   );
 }

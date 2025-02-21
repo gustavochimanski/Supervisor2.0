@@ -14,7 +14,7 @@ export function SearchComponent({ className }: SearchComponentProps) {
       <Input
         type="search"
         placeholder="Pesquisar..."
-        className="pr-10 h-8 text-stone-500" // espaço extra à direita para o ícone
+        className="pr-10 h-8" // espaço extra à direita para o ícone
       />
       <Button 
         variant="ghost"

@@ -17,10 +17,10 @@ export const useFetchByIdMeioPgto = (id: string) => {
   return useQuery<MeioPgto>(
     ["fetchMeioPgtoById", id],
     () => {
-      console.log("Fetching meioPgto with id:", id);
       return fetchByIdMeioPgto(id);
     },
-    { 
+    {
+      staleTime: 0,
       enabled: !!id,
     }
   );
