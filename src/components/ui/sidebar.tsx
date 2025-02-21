@@ -181,7 +181,7 @@ const Sidebar = React.forwardRef<
       return (
         <div
           className={cn(
-            "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground",
+            "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-blue-700",
             className
           )}
           ref={ref}
@@ -270,7 +270,7 @@ const SidebarTrigger = React.forwardRef<
       ref={ref}
       data-sidebar="trigger"
       size="icon"
-      className={cn("absolute z-10 h-9 w-8 border-0 text-sidebar-accent-foreground ", className)}
+      className={cn("absolute z-10 h-9 w-8 border-0 text-blue-700 ", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()

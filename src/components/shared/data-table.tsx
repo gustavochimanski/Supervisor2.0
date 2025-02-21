@@ -66,7 +66,7 @@ export function DataTable<TData>({
               <TableRow
                 key={row.id}
                 onClick={() => onRowClick && onRowClick(row.original)}
-                className={`cursor-pointer hover:bg-gray-100 ${
+                className={`cursor-pointer bg-[#f8f9fa] hover:bg-slate-200 ${
                   onRowClick ? "select-none" : ""
                 }`}
               >

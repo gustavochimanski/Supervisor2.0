@@ -569,7 +569,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
               </Select>
             </div>
           }
-          {/* ========= TIPO SANGRIA FECHAMENTO COLETA ========== */}
+          {/* ========= TIPO COLETA SANGRIA FECHAMENTO ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32 md:justify-normal">
               <div className="flex">
@@ -653,7 +653,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
           {/* ==================================================================================== */}
           {/* ====================================== OUTROS =================================== */}
           <Separator/>
-          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Tickets</CardTitle>
+          <CardTitle className="ml-3 text-base flex w-full text-sidebar-border">Outros</CardTitle>
           {/* ========= ACIONA GAVETA ========== */}
           {
             <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28 md:justify-normal">

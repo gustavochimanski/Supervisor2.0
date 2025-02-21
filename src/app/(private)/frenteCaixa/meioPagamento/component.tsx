@@ -10,6 +10,7 @@ import ConfigsMeioPagamento from "./configMeioPag/configMeioPagamento";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { useFetchByIdMeioPgto } from "./useMeioPag";
+import { CirclePlus, Plus } from "lucide-react";
 
 export default function ComponentMeioPagamento() {
   const [showModal, setShowModal] = useState(false);
@@ -44,9 +45,9 @@ export default function ComponentMeioPagamento() {
         <div>
           <SearchComponent className="w-full md:w-60" />
         </div>
-        <div className="my-4 flex gap-2">
-          <Button variant="outline">Incluir</Button>
-          <Button variant="outline">Atualizar</Button>
+        <div className="my-4 flex gap-2"> 
+         <Button><Plus/></Button>
+          <Button  variant="secondary" >Atualizar</Button>
           <Button variant="destructive">Deletar</Button>
         </div>
       </div>
@@ -80,7 +81,7 @@ export default function ComponentMeioPagamento() {
           {/* ===== RODAPÉ ===== */}
           <CardFooter className="justify-center gap-4">
             <Button onClick={() => setShowModal(false)} variant="outline">Fechar</Button>
-            <Button type="submit" onClick={handleSave} variant="gradient">Salvar</Button>
+            <Button type="submit" onClick={handleSave} >Salvar</Button>
           </CardFooter>
         </Modal>
       )}
