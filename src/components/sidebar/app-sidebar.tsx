@@ -62,6 +62,7 @@ import { logout } from "@/services/AuthService";
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
                 <SidebarGroupContent>
+                  <img src="../../../logo.jpg" alt="Logo" className="h-5 mb-3 m-auto "/>
                     <SidebarMenu >
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title} >
