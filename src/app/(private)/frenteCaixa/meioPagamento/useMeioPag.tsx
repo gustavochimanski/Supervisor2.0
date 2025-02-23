@@ -4,31 +4,35 @@ import {
   atualizarConfigMeioPgto, 
   atualizarDescricaoMeioPgto, 
   fetchAllMeioPgto, 
-  fetchByIdMeioPgto 
+  fetchByIdMeioPgto, 
+  incluiMeioPgtoById
 } from "./service";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
-import { error } from "console";
 
-// Hook para buscar todos os meios de pagamento
-export const useFetchAllMeiosPgto = () => {
-  return useQuery<MeioPgto[]>("fetchAllMeiosPgto", () => fetchAllMeioPgto());
-};
-
+//====================================================
+//=========== BUSCA MEIO DE PAGAMENTO POR ID =========
+//====================================================
 export const useFetchByIdMeioPgto = (id: string) => {
   return useQuery<MeioPgto>(
-    ["fetchMeioPgtoById", id],
+    ["fetchByIdMeioPgto", id],
     () => {
       return fetchByIdMeioPgto(id);
-    },
-    {
-      staleTime: 0,
-      enabled: !!id,
+    },{
+      enabled: !!id, // Só atualiza se existir ID
     }
   );
 };
+//====================================================
+//======== BUSCA TODOS OS MEIOS DE PAGAMENTO =========
+//====================================================
+export const useFetchAllMeiosPgto = () => {
+  return useQuery<MeioPgto[]>("fetchAllMeioPgto", () => fetchAllMeioPgto());
+};
 
 
-// Hook para atualizar a descrição de um meio de pagamento
+//====================================================
+//======== ATUALIZA DESCRICAO MEIO PAGAMENTO =========
+//====================================================
 export const useAtualizarDescricaoMeioPgto = () => {
   const queryClient = useQueryClient();
 
@@ -39,14 +43,15 @@ export const useAtualizarDescricaoMeioPgto = () => {
     {
       onSuccess: () => {
         // Invalida a query para que os dados sejam reatualizados
-        queryClient.invalidateQueries("fetchMeioPgtoById");
+        queryClient.invalidateQueries('fetchAllMeioPgto');
 
       },
     }
   );
 };
-
-// Hook para atualizar a configuração dos meios de pagamento
+//====================================================
+//======== ATUALIZA CONFIGS MEIO DE PAGAMENTO ========
+//====================================================
 export const useAtualizarConfigMpgto = () => {
   const queryClient = useQueryClient();
 
@@ -57,7 +62,23 @@ export const useAtualizarConfigMpgto = () => {
     {
       onSuccess: () => {
         // Invalida a query para atualizar os dados
-        queryClient.invalidateQueries("fetchMeioPgtoById");
+        queryClient.invalidateQueries('fetchAllMeioPgto');
+      },
+    }
+  );
+};
+//====================================================
+//============ INCLUI MEIO DE PAGAMENTO ==============
+//====================================================
+export const useIncluiMeioPgto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ codigo, descricao, tipoMeioPgto }: any) =>
+      incluiMeioPgtoById(codigo, descricao, tipoMeioPgto),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('fetchAllMeioPgto');
       },
     }
   );

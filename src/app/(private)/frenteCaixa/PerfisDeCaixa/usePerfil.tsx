@@ -3,21 +3,25 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import {
   fetchAllPerfis,
   fetchPerfilById,
-  postNewPerfil,
-  deletePerfil,
-  putConfPerfil,
-  patchAlteraDescricao,
+  deletePerfilById,
+  postNewPerfilByDescricao,
+  putConfPerfilById,
+  patchAlteraDescricaoById,
 } from './perfilService';
 import { PatchConfPerfilPayload, PerfilPdv} from './types';
 
-// Hook para buscar todos os perfis de caixa
+//====================================================
+//=========== BUSCA TODOS PERFIS DE CAIXA ============
+//====================================================
 export const useFetchAllPerfil = () => {
   return useQuery<PerfilPdv[]>('fetchAllPerfilPdvs', fetchAllPerfis, {
     staleTime: 60 * 1000,
   });
 };
 
-// Hook para buscar um perfil por ID
+//====================================================
+//============== BUSCA PERFIL POR ID =================
+//====================================================
 export const useFetchByIdPerfil = (id: string | undefined) => {
   return useQuery<PerfilPdv>(
     ['fetchPerfilPdvById', id],
@@ -29,29 +33,35 @@ export const useFetchByIdPerfil = (id: string | undefined) => {
   );
 };
 
-// Hook para criar um novo perfil de caixa
+//====================================================
+//=========== INSERIR PERFIL POR DESCRICAO ===========
+//====================================================
 export const usePostNewPerfil = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(postNewPerfil, {
+  return useMutation(postNewPerfilByDescricao, {
     onSuccess: () => {
       queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza a lista após a inserção
     },
   });
 };
 
-// Hook para deletar um perfil de caixa
+//====================================================
+//============== DELETE PERFIL POR ID  ===============
+//====================================================
 export const useDelPerfil = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(deletePerfil, {
+  return useMutation(deletePerfilById, {
     onSuccess: () => {
       queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza a lista após a remoção
     },
   });
 };
 
-// Hook para atualizar a configuração do perfil PDV
+//====================================================
+//============ ATUALIZA CONFIGS POR ID ===============
+//====================================================
 export const usePutConfPerfilPdv = () => {
   const queryClient = useQueryClient();
 
@@ -60,7 +70,7 @@ export const usePutConfPerfilPdv = () => {
       // Envia cada item do array separadamente
       for (const payload of payloadArray) {
         console.log(idPerfil, payload)
-        await putConfPerfil(idPerfil, payload);
+        await putConfPerfilById(idPerfil, payload);
       }
     },
     {
@@ -75,14 +85,15 @@ export const usePutConfPerfilPdv = () => {
   );
 };
 
-// ===================================================================
-// ========= Hook para atualizar a descrição do perfil PDV ===========
+//====================================================
+//================ ATUALIZA DESCRICAO ================
+//====================================================
 export const usePutAlteraDescricao = () => {
   const queryClient = useQueryClient();
   
   return useMutation(
     ({ idPerfil, descricao }: { idPerfil: string; descricao: string }) =>
-      patchAlteraDescricao(idPerfil, descricao),
+      patchAlteraDescricaoById(idPerfil, descricao),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza os dados no cache

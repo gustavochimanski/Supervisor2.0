@@ -5,7 +5,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; // Ícones 
 import "@/app/(private)/globals.css"
 import styles from "./button.module.css"
 import LogoImg from "../../../../public/logo";
-import { login } from "@/services/AuthService";
+import { login } from "@/services/security/AuthService";
 import LoaderComponent from "@/components/ui/loader";
 import { Button } from "@/components/ui/button";
 

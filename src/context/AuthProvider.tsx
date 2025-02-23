@@ -12,7 +12,7 @@ import {
   login as loginService,
   logout as logoutService,
   LoginData,
-} from "@/services/AuthService";
+} from "@/services/security/AuthService";
 import LoaderComponent from "@/components/ui/loader";
 
 

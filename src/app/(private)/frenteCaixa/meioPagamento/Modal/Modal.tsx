@@ -62,6 +62,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
       });
     });
   };
+  console.log(dadosMeioPgto?.tipoMeioPgto)
     
   // SUBMIT PARA ATUALIZAR OS DADOS
   const handleSubmit = async () => {
@@ -100,9 +101,16 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
     <form className="p-4 flex flex-col">
       <CardDescription>
         <Separator className="my-3"/>
-        <InfoSection dadosMeioPgto={dadosMeioPgto} setDescricao={(desc) =>
-          setDadosMeioPgto((prev) => prev && { ...prev, descricao: desc })}
+        <InfoSection 
+          dadosMeioPgto={dadosMeioPgto}
+          setDescricao={(desc) =>
+            setDadosMeioPgto((prev) => prev && { ...prev, descricao: desc })
+          }
+          setTipoMpgto={(tipo) =>
+            setDadosMeioPgto((prev) => prev && { ...prev, tipoMeioPgto: tipo })
+          }
         />
+
       </CardDescription>
       {/* </CardHeader> */}
       <CardContent>

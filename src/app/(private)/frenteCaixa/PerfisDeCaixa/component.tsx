@@ -23,6 +23,8 @@ import {
   usePutAlteraDescricao,
 } from "./usePerfil";
 import { PatchConfPerfilPayload, PerfilPdv } from "./types";
+import DataTableComponentMui from "@/components/shared/mui-data-table";
+import { GridColDef } from "@mui/x-data-grid";
 
 const ComponentPerfilDeCaixa: React.FC = () => {
   // ===== STATES =====
@@ -61,8 +63,14 @@ const ComponentPerfilDeCaixa: React.FC = () => {
     }
   }, [dataByIdPerfilPdv]);
 
+  // ============= COLUNAS ===============
+  const columns: GridColDef[] = [
+    {field: 'id', headerName: 'ID', width: 70},
+    {field: 'descricao', headerName: 'Descrição', width: 300},
+  ]
+
   // ===== HANDLERS =====
-  const handleRowClick = (row: PerfilPdv) => {
+  const handleVerConfig = (row: PerfilPdv) => {
     setSelectedPerfilPdvId(String(row.id));
     setShowModalPerfilById(true);
   };
@@ -88,11 +96,6 @@ const ComponentPerfilDeCaixa: React.FC = () => {
 
       return prev;
     });
-  };
-
-  // Abre o modal de inclusão
-  const handleClickInserirPerfil = () => {
-    setShowModalIncluirPerfil(true);
   };
 
   // =================================================================
@@ -157,11 +160,15 @@ const ComponentPerfilDeCaixa: React.FC = () => {
   
   return (
     <div>
-      {/* ===== Data Table ===== */}
-      <DataTable
-        columns={columnsPerfisDeCaixa}
-        data={dataAllPerfilPdv ?? []}
-        onRowClick={handleRowClick}
+      {/* =================================================== */}
+      {/* ====================== TABELA ===================== */}
+      {/* =================================================== */}
+      <DataTableComponentMui 
+        rows={dataAllPerfilPdv} 
+        columns={columns}
+        onRowClick={(rowData: any) =>
+          handleVerConfig(rowData)
+        }
       />
 
       {/* ===== Perfil Detail Modal ===== */}
@@ -257,7 +264,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
 
       {/* ===== Footer Buttons ===== */}
       <div className="fixed flex bottom-0 w-full text-white mb-4 gap-4 text-center">
-        <Button onClick={handleClickInserirPerfil} variant="outline">Incluir</Button>
+        <Button onClick={() => setShowModalIncluirPerfil(true)} variant="outline">Incluir</Button>
         <Button variant="outline">Portabilidade</Button>
         <Button onClick={() => refetchAllPerfil()}  variant="outline">Atualizar</Button>
       </div>
