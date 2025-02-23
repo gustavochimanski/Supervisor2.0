@@ -1,13 +1,12 @@
 // TrocoSettings.tsx
-import React from "react";
-import { ConfiguracaoMeioPag } from "../types";
+import React, { useState } from "react";
+import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { FloatInput } from "@/components/shared/floatInput";
 import { IntegerInput } from "@/components/shared/integerInput";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 interface TrocoSettingsProps {
   configDadosMeioPgto: ConfiguracaoMeioPag[];
@@ -15,15 +14,17 @@ interface TrocoSettingsProps {
 }
 
 const TrocoSettings: React.FC<TrocoSettingsProps> = ({ configDadosMeioPgto, handleChange }) => {
-  // Obtem o valor atual para PermiteTroco
-  const permiteTrocoString =
-    configDadosMeioPgto.find((item) => item.nomeCampo === "PermiteTroco")?.stringValue || "";
+  
+  const [permiteTroco, setPermiteTroco] = useState("N")
+
 
   return (
     <div>
-      <CardTitle className="m-3">Troco</CardTitle>
-      <div className="flex flex-wrap gap-2 font-sans text-xs justify-center md:justify-normal">
-        {/* Permite Troco */}
+      <CardTitle className="m-3 text-base">Troco</CardTitle>
+      <div className="flex flex-wrap gap-2 font-sans  justify-center md:justify-normal">
+        {/* =================================================== */}
+        {/* ================== PERMITE TROCO ================== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="PermiteTroco" className="block whitespace-nowrap p-1">
@@ -37,8 +38,8 @@ const TrocoSettings: React.FC<TrocoSettingsProps> = ({ configDadosMeioPgto, hand
             </Popover>
           </div>
           <Select
-            value={permiteTrocoString}
-            onValueChange={(value) => handleChange("stringValue", value, "PermiteTroco")}
+            value={permiteTroco}
+            onValueChange={() => setPermiteTroco("S")}
           >
             <SelectTrigger id="PermiteTroco">
               <SelectValue />
@@ -49,7 +50,9 @@ const TrocoSettings: React.FC<TrocoSettingsProps> = ({ configDadosMeioPgto, hand
             </SelectContent>
           </Select>
         </div>
-        {/* Troco Máximo */}
+        {/* =================================================== */}
+        {/* =================== TROCO MÁXIMO ================== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="TrocoMaximo" className="block whitespace-nowrap p-1">
@@ -65,10 +68,12 @@ const TrocoSettings: React.FC<TrocoSettingsProps> = ({ configDadosMeioPgto, hand
           <FloatInput
             value={configDadosMeioPgto.find((item) => item.nomeCampo === "TrocoMaximo")?.doubleValue ?? 0}
             onChangeValue={(value: number) => handleChange("doubleValue", value, "TrocoMaximo")}
-            disabled={permiteTrocoString !== "S"}
+            disabled={permiteTroco !== "S"}
           />
         </div>
-        {/* Meio de Pagamento para Troco */}
+        {/* =================================================== */}
+        {/* ========== MEIO DE PAGAMENTO PARA TROCO =========== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="MpgtoTroco" className="block whitespace-nowrap p-1">
@@ -84,10 +89,12 @@ const TrocoSettings: React.FC<TrocoSettingsProps> = ({ configDadosMeioPgto, hand
           <IntegerInput
             value={configDadosMeioPgto.find((item) => item.nomeCampo === "MpgtoTroco")?.integerValue ?? 0}
             onChange={(value) => handleChange("integerValue", value, "MpgtoTroco")}
-            disabled={permiteTrocoString !== "S"}
+            disabled={permiteTroco !== "S"}
           />
         </div>
-        {/* Liberação Supervisor para Troco */}
+        {/* =================================================== */}
+        {/* =========== LIBERACAO SUPERVISOR TROCO ============ */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="LiberacaoSupervisorTroco" className="block whitespace-nowrap p-1">
@@ -103,7 +110,7 @@ const TrocoSettings: React.FC<TrocoSettingsProps> = ({ configDadosMeioPgto, hand
           <Select
             value={configDadosMeioPgto.find((item) => item.nomeCampo === "LiberacaoSupervisorTroco")?.stringValue ?? ""}
             onValueChange={(value) => handleChange("stringValue", value, "LiberacaoSupervisorTroco")}
-            disabled={permiteTrocoString !== "S"}
+            disabled={permiteTroco !== "S"}
           >
             <SelectTrigger id="LiberacaoSupervisorTroco">
               <SelectValue />

@@ -2,7 +2,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 interface InfoSectionProps {
   dadosMeioPgto: { id: number | string; descricao?: string };
@@ -12,7 +11,7 @@ interface InfoSectionProps {
 const InfoSection: React.FC<InfoSectionProps> = ({ dadosMeioPgto, setDescricao }) => {
   return (
     <div>
-      <div className="flex justify-center md:justify-normal gap-2  font-sans">
+      <div className="flex justify-center md:justify-normal gap-2 font-sans">
         <div className="flex flex-col gap-1 items-center">
           <CardTitle>Id</CardTitle>
           <Input

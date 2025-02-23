@@ -1,12 +1,12 @@
 // GeneralSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../types";
+import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { IntegerInput } from "@/components/shared/integerInput";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+
 
 interface GeneralSettingsProps {
   configDadosMeioPgto: ConfiguracaoMeioPag[];
@@ -16,9 +16,11 @@ interface GeneralSettingsProps {
 const GeneralSettings: React.FC<GeneralSettingsProps> = ({ configDadosMeioPgto, handleChange }) => {
   return (
     <div>
-      <CardTitle className="ml-3">Geral</CardTitle>
-      <div className="flex flex-wrap gap-2 font-sans text-xs justify-center md:justify-normal">
-        {/* Grupo Meio de Pagamento */}
+      <CardTitle className="ml-3 text-base">Geral</CardTitle>
+      <div className="flex flex-wrap gap-2 font-sans justify-center md:justify-normal">
+        {/* =================================================== */}
+        {/* =============== GRUPO MEIO PAGAMENTO ============== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="GrupoMeioPgto" className="block whitespace-nowrap p-1">
@@ -36,7 +38,9 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ configDadosMeioPgto, 
             onChange={(value) => handleChange("integerValue", value, "GrupoMeioPgto")}
           />
         </div>
-        {/* Liberação Supervisor */}
+        {/* =================================================== */}
+        {/* ================ LIBERACAO SUPERVISOR ============= */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="LiberacaoSupervisor" className="block whitespace-nowrap p-1">

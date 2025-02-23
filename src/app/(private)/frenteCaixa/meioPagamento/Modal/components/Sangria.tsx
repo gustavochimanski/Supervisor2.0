@@ -1,13 +1,12 @@
 // SangriaSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../types";
+import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { FloatInput } from "@/components/shared/floatInput";
 import { IntegerInput } from "@/components/shared/integerInput";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 interface SangriaSettingsProps {
   configDadosMeioPgto: ConfiguracaoMeioPag[];
@@ -19,7 +18,9 @@ const SangriaSettings: React.FC<SangriaSettingsProps> = ({ configDadosMeioPgto, 
     <div>
       <CardTitle className="ml-3 text-base flex w-full">Sangrias</CardTitle>
       <div className="flex flex-wrap gap-2 justify-center md:justify-normal">
-        {/* Efetuar Sangria */}
+        {/* =================================================== */}
+        {/* ================== EFETUA SANGRIA ================= */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32">
           <div className="flex">
             <label htmlFor="EfetuarSangria" className="block whitespace-nowrap p-1">
@@ -46,25 +47,9 @@ const SangriaSettings: React.FC<SangriaSettingsProps> = ({ configDadosMeioPgto, 
             </SelectContent>
           </Select>
         </div>
-        {/* Vias Sangria */}
-        <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
-          <div className="flex">
-            <label htmlFor="ViasSangria" className="block whitespace-nowrap p-1">
-              Vias Sangria
-            </label>
-            <Popover>
-              <PopoverTrigger><CircleHelp size={13} /></PopoverTrigger>
-              <PopoverContent>
-                <strong><u>Número de Vias</u> - </strong> Defina quantas cópias do comprovante serão impressas.
-              </PopoverContent>
-            </Popover>
-          </div>
-          <IntegerInput
-            value={configDadosMeioPgto.find((item) => item.nomeCampo === "ViasSangria")?.integerValue ?? 0}
-            onChange={(value) => handleChange("integerValue", value, "ViasSangria")}
-          />
-        </div>
-        {/* Tipo Sangria */}
+        {/* =================================================== */}
+        {/* =================== TIPO SANGRIA ================== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32">
           <div className="flex">
             <label htmlFor="TipoSangria" className="block whitespace-nowrap p-1">
@@ -90,7 +75,9 @@ const SangriaSettings: React.FC<SangriaSettingsProps> = ({ configDadosMeioPgto, 
             </SelectContent>
           </Select>
         </div>
-        {/* Tipo Coleta Sangria */}
+        {/* =================================================== */}
+        {/* ======== TIPO FECHAMENTO COLETA SANGRIA =========== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-32">
           <div className="flex">
             <label htmlFor="TipoSangriaFecham" className="block whitespace-nowrap p-1">
@@ -117,7 +104,29 @@ const SangriaSettings: React.FC<SangriaSettingsProps> = ({ configDadosMeioPgto, 
             </SelectContent>
           </Select>
         </div>
-        {/* Valor Aviso Sangria */}
+        {/* =================================================== */}
+        {/* =================== VIAS SANGRIA ================== */}
+        {/* =================================================== */}
+        <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
+          <div className="flex">
+            <label htmlFor="ViasSangria" className="block whitespace-nowrap p-1">
+              Vias Sangria
+            </label>
+            <Popover>
+              <PopoverTrigger><CircleHelp size={13} /></PopoverTrigger>
+              <PopoverContent>
+                <strong><u>Número de Vias</u> - </strong> Defina quantas cópias do comprovante serão impressas.
+              </PopoverContent>
+            </Popover>
+          </div>
+          <IntegerInput
+            value={configDadosMeioPgto.find((item) => item.nomeCampo === "ViasSangria")?.integerValue ?? 0}
+            onChange={(value) => handleChange("integerValue", value, "ViasSangria")}
+          />
+        </div>
+        {/* =================================================== */}
+        {/* =============== VALOR AVISO SANGRIA =============== */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="ValorAvisoSangria" className="block whitespace-nowrap p-1">
@@ -135,7 +144,9 @@ const SangriaSettings: React.FC<SangriaSettingsProps> = ({ configDadosMeioPgto, 
             onChangeValue={(value: number) => handleChange("doubleValue", value, "ValorAvisoSangria")}
           />
         </div>
-        {/* Valor Bloqueio Sangria */}
+        {/* =================================================== */}
+        {/* ============== VALOR BLOQUEIO SANGRIA ============= */}
+        {/* =================================================== */}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="ValorBloqSangria" className="block whitespace-nowrap p-1">
@@ -154,7 +165,6 @@ const SangriaSettings: React.FC<SangriaSettingsProps> = ({ configDadosMeioPgto, 
           />
         </div>
       </div>
-      
     </div>
   );
 };

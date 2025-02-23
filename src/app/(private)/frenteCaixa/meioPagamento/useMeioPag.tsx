@@ -7,6 +7,7 @@ import {
   fetchByIdMeioPgto 
 } from "./service";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
+import { error } from "console";
 
 // Hook para buscar todos os meios de pagamento
 export const useFetchAllMeiosPgto = () => {
@@ -38,7 +39,8 @@ export const useAtualizarDescricaoMeioPgto = () => {
     {
       onSuccess: () => {
         // Invalida a query para que os dados sejam reatualizados
-        queryClient.invalidateQueries("fetchAllMeiosPgto");
+        queryClient.invalidateQueries("fetchMeioPgtoById");
+
       },
     }
   );
@@ -55,7 +57,7 @@ export const useAtualizarConfigMpgto = () => {
     {
       onSuccess: () => {
         // Invalida a query para atualizar os dados
-        queryClient.invalidateQueries("fetchAllMeiosPgto");
+        queryClient.invalidateQueries("fetchMeioPgtoById");
       },
     }
   );

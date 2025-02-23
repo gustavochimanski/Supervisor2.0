@@ -27,7 +27,6 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={isSideBarOpen}>
-        
         <AppSidebar />
         <main>
           <SidebarTrigger variant="sidebarTrigger" />

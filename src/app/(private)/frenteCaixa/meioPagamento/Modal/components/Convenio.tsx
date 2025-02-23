@@ -1,6 +1,6 @@
 // ConvenioSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../types";
+import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IntegerInput } from "@/components/shared/integerInput";
@@ -18,7 +18,9 @@ const ConvenioSettings: React.FC<ConvenioSettingsProps> = ({ configDadosMeioPgto
     <div>
       <CardTitle className="ml-3 text-base flex w-full">Convênio</CardTitle>
       <div className="flex flex-wrap gap-2 justify-center md:justify-normal">
-        {/* Identificação Convênio */}
+        {/* ===================================================*/}
+        {/*============== IDENTIFICACAO CONVENIO ==============*/}
+        {/* ===================================================*/}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="IdentificacaoConvenio" className="block whitespace-nowrap p-1">
@@ -46,7 +48,9 @@ const ConvenioSettings: React.FC<ConvenioSettingsProps> = ({ configDadosMeioPgto
             </SelectContent>
           </Select>
         </div>
-        {/* Vias Convênio */}
+        {/* ===================================================*/}
+        {/*=================== VIAS CONVENIO ==================*/}
+        {/* ===================================================*/}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="ViasConvenio" className="block whitespace-nowrap p-1">

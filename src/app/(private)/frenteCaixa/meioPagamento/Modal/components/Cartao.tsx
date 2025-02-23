@@ -1,11 +1,10 @@
 // CartaoSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../types";
+import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 interface CartaoSettingsProps {
   configDadosMeioPgto: ConfiguracaoMeioPag[];
@@ -15,9 +14,11 @@ interface CartaoSettingsProps {
 const CartaoSettings: React.FC<CartaoSettingsProps> = ({ configDadosMeioPgto, handleChange }) => {
   return (
     <div>
-      <CardTitle className="ml-3 text-base flex w-full">Cartões</CardTitle>
+      <CardTitle className="ml-3 text-base">Cartões</CardTitle>
       <div className="flex flex-wrap gap-2 justify-center md:justify-normal">
-        {/* Tipo Cartão */}
+        {/* ===================================================*/}
+        {/*===================  TIPO CARTÃO ===================*/}
+        {/* ===================================================*/}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="TipoCartaoTef" className="block whitespace-nowrap p-1">
@@ -44,7 +45,9 @@ const CartaoSettings: React.FC<CartaoSettingsProps> = ({ configDadosMeioPgto, ha
             </SelectContent>
           </Select>
         </div>
-        {/* Tipo Parcelamento */}
+        {/* ===================================================*/}
+        {/*================  TIPO PARCELAMENTO ================*/}
+        {/* ===================================================*/}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-36">
           <div className="flex">
             <label htmlFor="TipoParcCartao" className="block whitespace-nowrap p-1">
@@ -71,7 +74,9 @@ const CartaoSettings: React.FC<CartaoSettingsProps> = ({ configDadosMeioPgto, ha
             </SelectContent>
           </Select>
         </div>
-        {/* Cartão Digitado */}
+        {/* ===================================================*/}
+        {/*================== CARTÃO DIGITADO =================*/}
+        {/* ===================================================*/}
         <div className="flex flex-col mx-3 w-1/3 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="CartaoDigitado" className="block whitespace-nowrap p-1">

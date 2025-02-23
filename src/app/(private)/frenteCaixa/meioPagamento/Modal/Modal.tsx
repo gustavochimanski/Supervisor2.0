@@ -5,14 +5,17 @@ import { ConfiguracaoMeioPag, MeioPgto } from "../types";
 import { Separator } from "@/components/ui/separator";
 import { atualizarDescricaoMeioPgto } from "../service";
 import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../useMeioPag";
-import GeneralSettings from "./Geral";
-import OtherSettings from "./Outras";
-import InfoSection from "./InfoSection";
-import TrocoSettings from "./Troco";
-import CartaoSettings from "./Cartao";
-import ConvenioSettings from "./Convenio";
-import SangriaSettings from "./Sangria";
-import TicketSettings from "./Tickets";
+import GeneralSettings from "./components/Geral";
+import OtherSettings from "./components/Outras";
+import InfoSection from "./components/Informacoes";
+import TrocoSettings from "./components/Troco";
+import CartaoSettings from "./components/Cartao";
+import ConvenioSettings from "./components/Convenio";
+import SangriaSettings from "./components/Sangria";
+import TicketSettings from "./components/Tickets";
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import DescontosSettings from "./components/Descontos";
+import ContraValeSettings from "./components/ContraVale";
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;
@@ -36,6 +39,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
     }
   }, [dataConfigMpgto]);
 
+  // LIDA COM MUDANÇA E ATUALIZA OS DADOS DO FORMULARIO
   const handleChange = (
     key: keyof ConfiguracaoMeioPag, 
     value: any, 
@@ -58,8 +62,8 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
       });
     });
   };
-  
-
+    
+  // SUBMIT PARA ATUALIZAR OS DADOS
   const handleSubmit = async () => {
     if (dadosMeioPgto?.id) {
       setLoading(true);
@@ -83,6 +87,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
     }
   };
 
+  // REFERÊNCIA PARA BUTTON
   useImperativeHandle(ref, () => ({
     handleSubmit,
   }));
@@ -93,25 +98,34 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
 
   return (
     <form className="p-4 flex flex-col">
-      <Separator className="my-3"/>
-      <InfoSection dadosMeioPgto={dadosMeioPgto} setDescricao={(desc) =>
-        setDadosMeioPgto((prev) => prev && { ...prev, descricao: desc })}
-      />
-      <Separator className="my-5"/>
-      <GeneralSettings  configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
-      <TrocoSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
-      <CartaoSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
-      <ConvenioSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
-      <SangriaSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
-      <TicketSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
-      <OtherSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
-      <Separator className="my-5"/>
+      <CardDescription>
+        <Separator className="my-3"/>
+        <InfoSection dadosMeioPgto={dadosMeioPgto} setDescricao={(desc) =>
+          setDadosMeioPgto((prev) => prev && { ...prev, descricao: desc })}
+        />
+      </CardDescription>
+      {/* </CardHeader> */}
+      <CardContent>
+        <Separator className="my-5"/>
+        <GeneralSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+        <CartaoSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+        <ConvenioSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+        <SangriaSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+        <TrocoSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+        <DescontosSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange}/>
+        <Separator className="my-5"/>
+        <ContraValeSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange}/>
+        <Separator className="my-5"/>
+        <TicketSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+        <OtherSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
+        <Separator className="my-5"/>
+      </CardContent>
       {mensagem && <div className="mt-4 text-center text-red-500">{mensagem}</div>}
     </form>
   );
