@@ -35,10 +35,10 @@ export default function LoginFormComponent() {
       <div className=" flex flex-col justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[95%] max-w-md p-6 bg-white rounded-lg shadow md:h-3/4">
         {/* Cabeçalho com ícone e título */}
         <div className="flex flex-col items-center my-6">
-          <div className="flex items-center justify-center w-14 h-14rounded mb-4">
+          <div className="flex items-center justify-center w-1/3 h-14 rounded mb-4">
           <LogoImg/>
           </div>
-          <h1 className="text-2xl font-semibold">Unitec</h1>
+          {/* <h1 className="text-2xl font-semibold">Unitec</h1> */}
         </div>
         
 
@@ -78,7 +78,9 @@ export default function LoginFormComponent() {
 
           <div className="">
             {isloading && (<LoaderComponent/>)}
-            {error && <p className="text-rose-600 text-center my-4">{error}</p>}
+            <div className="w-full h-10 p-2 my-6">
+              {error && <p className="text-rose-600 text-center">{error}</p>}
+            </div>
           </div>
 
           <div className="flex justify-center">
