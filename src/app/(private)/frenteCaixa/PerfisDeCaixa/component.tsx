@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DataTable } from "@/components/shared/data-table";
+import { DataTable } from "@/components/shared/table/data-table";
 import { columnsPerfisDeCaixa } from "./columns";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ import {
   usePutAlteraDescricao,
 } from "./usePerfil";
 import { PatchConfPerfilPayload, PerfilPdv } from "./types";
-import DataTableComponentMui from "@/components/shared/mui-data-table";
+import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { GridColDef } from "@mui/x-data-grid";
 
 const ComponentPerfilDeCaixa: React.FC = () => {

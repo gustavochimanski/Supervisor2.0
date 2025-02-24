@@ -3,7 +3,7 @@ import React from "react";
 import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { FloatInput } from "@/components/shared/floatInput";
+import { FloatInput } from "@/components/shared/Inputs/floatInput";
 import { CircleHelp } from "lucide-react";
 
 interface TicketSettingsProps {

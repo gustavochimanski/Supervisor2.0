@@ -3,7 +3,7 @@ import React from "react";
 import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { IntegerInput } from "@/components/shared/integerInput";
+import { IntegerInput } from "@/components/shared/Inputs/integerInput";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
 import { Separator } from "@/components/ui/separator";

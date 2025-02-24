@@ -62,7 +62,6 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref
       });
     });
   };
-  console.log(dadosMeioPgto?.tipoMeioPgto)
     
   // SUBMIT PARA ATUALIZAR OS DADOS
   const handleSubmit = async () => {

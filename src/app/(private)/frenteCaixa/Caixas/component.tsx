@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/shared/data-table";
+import { DataTable } from "@/components/shared/table/data-table";
 import { useFetchAllCaixas, useFetchByIdCaixa } from "./useCaixa";
 import { caixasColumns } from "./columns";
 import { useState } from "react";

@@ -2,6 +2,6 @@
 
 export default function LogoImg() {
     return(
-        <img src="./logoNome.jpg" alt="" />
+        <img src="./logoNome.jpg" alt=""  />
     )
 }

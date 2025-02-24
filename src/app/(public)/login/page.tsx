@@ -32,10 +32,10 @@ export default function LoginFormComponent() {
   return (
 
     <div className="justify-center w-full h-full">
-      <div className=" flex flex-col justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[95%] max-w-md p-6 bg-white rounded-lg shadow md:h-3/4">
+      <div className=" flex flex-col justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[95%] max-w-md p-6 bg-white rounded-lg shadow md:h-3/4">
         {/* Cabeçalho com ícone e título */}
         <div className="flex flex-col items-center my-6">
-          <div className="flex items-center justify-center w-1/3 h-14 rounded mb-4">
+          <div className="flex items-center justify-center w-1/5 h-14 rounded m-auto">
           <LogoImg/>
           </div>
           {/* <h1 className="text-2xl font-semibold">Unitec</h1> */}
@@ -51,7 +51,7 @@ export default function LoginFormComponent() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Email"
-              className="my-6 p-4 w-full border-b-2 border-slate-200 focus:border-gray-50  border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
+              className="mt-4 mb-1 p-3 w-full border-b-2  border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
               bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"            />
           </div>
 
@@ -61,7 +61,7 @@ export default function LoginFormComponent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="my-6 p-3 w-full border-b-2  border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
+              className="mb-4 mt-1 p-3 w-full border-b-2  border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] 
               bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"             />
             {/* Ícone para exibir/ocultar senha */}
             <div
@@ -75,10 +75,11 @@ export default function LoginFormComponent() {
               )}
             </div>
           </div>
+          {/* ========= LOADER CARREGANDO =========== */}
+          {isloading && (<LoaderComponent/>)} 
 
           <div className="">
-            {isloading && (<LoaderComponent/>)}
-            <div className="w-full h-10 p-2 my-6">
+            <div className="w-full h-8 p-2">
               {error && <p className="text-rose-600 text-center">{error}</p>}
             </div>
           </div>

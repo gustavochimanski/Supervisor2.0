@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { ConfiguracaoMeioPag } from "../../types";
 import { CardTitle } from "@/components/ui/card";
-import { FloatInput } from "@/components/shared/floatInput";
-import { IntegerInput } from "@/components/shared/integerInput";
+import { FloatInput } from "@/components/shared/Inputs/floatInput";
+import { IntegerInput } from "@/components/shared/Inputs/integerInput";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";

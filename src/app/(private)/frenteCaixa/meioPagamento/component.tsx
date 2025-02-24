@@ -3,7 +3,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
-import { DataTable } from "@/components/shared/data-table";
+import { DataTable } from "@/components/shared/table/data-table";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import ConfigsMeioPagamento from "./Modal/Modal";
@@ -12,12 +12,15 @@ import { SearchComponent } from "@/components/shared/searchComponent";
 import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "./useMeioPag";
 import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, Plus, RefreshCcw, Save, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import DataTableComponentMui from "@/components/shared/mui-data-table";
-import ConfirmModal from "@/components/shared/modalConfirm";
+import DataTableComponentMui from "@/components/shared/table/mui-data-table";
+import ConfirmModal from "@/components/shared/modal/modalConfirm";
 import { GridColDef } from '@mui/x-data-grid';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getErrorMessage } from "@/utils/getErrorMessage";
+import { toast } from "sonner";
+import InputLeftZero from "@/components/shared/Inputs/LeftZeroInput";
 
 export default function ComponentMeioPagamento() {
   // ==== MODAIS ======
@@ -27,6 +30,7 @@ export default function ComponentMeioPagamento() {
 
   // States
   const [idSelected, setIdSelected] = useState<string>("1");
+  const [error, setError] = useState(false)
 
   // REFERENCIA SUBMIT
   const formRef = useRef<any>(null);
@@ -36,7 +40,7 @@ export default function ComponentMeioPagamento() {
   // const { data: allMeios, isLoading: isLoadingAll } = useFetchAllMeiosPgto();
   // MUTATES
   // const { mutate: deletePerfil } = useDelPerfil();
-  const {mutate: mutateIncluiMeioPgto, error: erroIncluirMpgto} = useIncluiMeioPgto();
+  const {mutateAsync: mutateAsyncIncluiMeioPgto} = useIncluiMeioPgto();
 
   const columns: GridColDef[] = [
     {field: 'id', headerName: 'ID', width: 70},
@@ -46,8 +50,6 @@ export default function ComponentMeioPagamento() {
 
   // Abre o modal e define o id do meio selecionado para buscar detalhes
   function handleVerConfig(configs: ConfiguracaoMeioPag) {
-    console.log(configs)
-    console.log(configs.id)
     setIdSelected(configs.id.toString());
     setShowModalById(true);
   }
@@ -61,6 +63,7 @@ export default function ComponentMeioPagamento() {
 
   // =========================================================================
   // ===================== APAGA MEIO PAGAMENTO POR ID =======================
+  // NÃO IMPLEMENTADO, INDISPONÍVEL NA API
   // =========================================================================
   const handleDeletePerfil = (id?: string) => {
     setShowModalConfirm(true)
@@ -80,9 +83,18 @@ export default function ComponentMeioPagamento() {
     descricao: '',
     tipoMeioPgto: '',
   });
-  const handleIncluiPerfil = () => {
-    mutateIncluiMeioPgto(newMeioPgtoPayload)
-   
+  const handleIncluiPerfil = async () => {
+    try {
+      setError(false);
+      await mutateAsyncIncluiMeioPgto(newMeioPgtoPayload);
+    
+      toast.success("Meio de pagamento incluído com sucesso!");
+    } catch (error) {
+      setError(true);
+      const message = getErrorMessage(error) ?? "Erro ao incluir meio de pagamento.";
+      toast.error(message);
+      console.error("Erro ao incluir meio de pagamento:", error);
+    }
   };
 
 
@@ -90,6 +102,7 @@ export default function ComponentMeioPagamento() {
   if (isLoading) {
     return <p>Carregando dados...</p>;
   }
+
   return (
     <div>
       {/* =============== CONTAINER TOPO ============== */}
@@ -132,12 +145,12 @@ export default function ComponentMeioPagamento() {
       <DataTableComponentMui 
         rows={dataByIdMeiopgto ? [dataByIdMeiopgto!]: []} 
         columns={columns}
-        onRowClick={(rowData: any) =>
-          handleVerConfig(rowData)
-        }
+        onRowClick={(rowData: any) => handleVerConfig(rowData)}
       />
       
-
+      {/* =================================================== */}
+      {/* ============= MODAL CONFIGURAÇÕES ================= */}
+      {/* =================================================== */}
       {showModalById && (
         <Modal onClose={() => setShowModalById(false)} style={{ width: "80vw", height: "70vh" }}>
           {/* =================================================== */}
@@ -193,14 +206,16 @@ export default function ComponentMeioPagamento() {
             {/* CODIGO */}
             <div>
               <Label htmlFor="codigo">Código</Label>
-              <Input
+              <InputLeftZero
                 id="codigo"
-                type="text"
-              
-                onChange={(e) => setNewMeioPgtoPayload((prev) => ({
-                  ...prev, codigo: e.target.value
-                }))}
-                value={newMeioPgtoPayload.codigo}
+                type="number"
+                onChange={(e) => {
+                  setNewMeioPgtoPayload((prev) => ({
+                    ...prev,
+                    codigo: e,
+                  }));
+                }}
+                value={Number(newMeioPgtoPayload.codigo)}
               />
             </div>
             {/* DESCRIÇÃO */}
@@ -234,7 +249,7 @@ export default function ComponentMeioPagamento() {
               </Select>
             </div>
           </CardContent>
-          {erroIncluirMpgto && ((erroIncluirMpgto as any)?.response?.data?.errors?.[0]?.message)}
+
 
           {/* BUTTONS */}
           <CardFooter className="justify-between mt-4">

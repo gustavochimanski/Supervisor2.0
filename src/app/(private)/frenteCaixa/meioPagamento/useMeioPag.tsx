@@ -8,6 +8,7 @@ import {
   incluiMeioPgtoById
 } from "./service";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 //====================================================
 //=========== BUSCA MEIO DE PAGAMENTO POR ID =========
@@ -79,6 +80,9 @@ export const useIncluiMeioPgto = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('fetchAllMeioPgto');
+      },
+      onError: (error: any) => {
+        console.error("Erro ao incluir meio de pagamento:", error);
       },
     }
   );

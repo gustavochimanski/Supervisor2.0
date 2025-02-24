@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Modal } from "../ui/modal";
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
+import { Modal } from "../../ui/modal";
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "../../ui/card";
+import { Button } from "../../ui/button";
 
 interface ConfirmModalProps {
   // Controla se o modal está visível

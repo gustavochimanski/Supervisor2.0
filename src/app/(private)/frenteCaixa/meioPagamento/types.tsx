@@ -14,7 +14,7 @@ export type MeioPgto = {
   message?: string;
   code?: number;
   id: number;
-  codigo: string;
+  codigo: string ;
   descricao: string;
   tipoMeioPgto: string;
   configuracao: ConfiguracaoMeioPag[];

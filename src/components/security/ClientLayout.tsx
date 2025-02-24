@@ -7,6 +7,7 @@ import { QueryClientProvider } from "react-query"
 import queryClient from "@/services/QueryClient"
 import { useEffect, useState } from "react"
 import TopBarComponent from "../topBar/app-topBar"
+import { Toaster } from "../ui/toastes"
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -35,6 +36,7 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
           </div> 
         </main>
         <TopBarComponent></TopBarComponent>
+        <Toaster />
       </SidebarProvider>
     </QueryClientProvider>
   )

@@ -2,7 +2,7 @@ import { CardTitle } from "@/components/ui/card";
 import { ConfiguracaoMeioPag } from "../../types";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FloatInput } from "@/components/shared/floatInput";
+import { FloatInput } from "@/components/shared/Inputs/floatInput";
 import { CircleHelp } from "lucide-react";
 
 interface DescontosSettingsProps {

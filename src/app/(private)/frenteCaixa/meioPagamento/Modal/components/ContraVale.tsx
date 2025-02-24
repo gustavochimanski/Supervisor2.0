@@ -3,7 +3,7 @@ import { ConfiguracaoMeioPag } from "../../types";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
-import { IntegerInput } from "@/components/shared/integerInput";
+import { IntegerInput } from "@/components/shared/Inputs/integerInput";
 
 interface ContraValeSettingsProps {
   configDadosMeioPgto: ConfiguracaoMeioPag[];
