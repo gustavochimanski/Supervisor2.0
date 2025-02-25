@@ -1,4 +1,4 @@
-import api from "@/api/api"
+import api from "@/app/api/api"
 import { TypeCaixas } from "./types"
 
 export const fetchAllCaixas = async (): Promise<TypeCaixas[]> => {

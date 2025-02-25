@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { DataTable } from "@/components/shared/table/data-table";
-import { columnsPerfisDeCaixa } from "./columns";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import {

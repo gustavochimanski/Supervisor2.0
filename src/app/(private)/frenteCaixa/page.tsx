@@ -1,11 +1,10 @@
 "use client";
 
 import React, { Suspense } from "react";
-import ProtectedRoute from "@/components/security/ProtectedRoute";
 import LoaderComponent from "@/components/ui/loader";
 import ComponentCaixas from "./Caixas/component";
 import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";
-import ComponentMeioPagamento from "./meioPagamento/component";
+import ComponentMeioPagamento from "./meioPagamento/main";
 
 const Tabs = React.lazy(() => import("@/components/shared/tabs"));
 
@@ -17,7 +16,6 @@ const tabItems = [
 
 const PageFrenteCaixa = () => {
   return (
-    <ProtectedRoute>
       <div className="w-[95vw] mx-auto mt-5 font-sans rounded-xl">
         <Suspense fallback={<LoaderComponent />}>
           <Tabs
@@ -28,7 +26,6 @@ const PageFrenteCaixa = () => {
           />
         </Suspense>
       </div>
-    </ProtectedRoute>
   );
 };
 

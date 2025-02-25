@@ -1,26 +1,22 @@
 "use client";
 
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { ConfiguracaoMeioPag, MeioPgto } from "./types";
-import { DataTable } from "@/components/shared/table/data-table";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import ConfigsMeioPagamento from "./Modal/Modal";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "./useMeioPag";
-import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, Plus, RefreshCcw, Save, Trash2 } from "lucide-react";
+import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, RefreshCcw, Save, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import ConfirmModal from "@/components/shared/modal/modalConfirm";
 import { GridColDef } from '@mui/x-data-grid';
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { toast } from "sonner";
-import InputLeftZero from "@/components/shared/Inputs/LeftZeroInput";
+import FormIncluirMeioPgto, { FormData } from "./schema/formIncluiMpgto";
 
 export default function ComponentMeioPagamento() {
   // ==== MODAIS ======
@@ -28,19 +24,24 @@ export default function ComponentMeioPagamento() {
   const [showModalIncluirMpgto, setShowModalIncluirMpgto] = useState(false);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
 
-  // States
+  // Estados do componente principal
   const [idSelected, setIdSelected] = useState<string>("1");
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
-  // REFERENCIA SUBMIT
+  // Estados para o formulário de inclusão
+  const [incluirFormData, setIncluirFormData] = useState<FormData>({
+    codigo: "",
+    descricao: "",
+    tipoMeioPgto: "",
+  });
+
+  // REFERENCIA SUBMIT (para modal de configurações)
   const formRef = useRef<any>(null);
 
   // DATAS
   const { data: dataByIdMeiopgto, isLoading, refetch: refetchByIdMeioPgto } = useFetchByIdMeioPgto(idSelected);
-  // const { data: allMeios, isLoading: isLoadingAll } = useFetchAllMeiosPgto();
   // MUTATES
-  // const { mutate: deletePerfil } = useDelPerfil();
-  const {mutateAsync: mutateAsyncIncluiMeioPgto} = useIncluiMeioPgto();
+  const { mutateAsync: mutateAsyncIncluiMeioPgto } = useIncluiMeioPgto();
 
   const columns: GridColDef[] = [
     {field: 'id', headerName: 'ID', width: 70},
@@ -78,15 +79,11 @@ export default function ComponentMeioPagamento() {
   // =========================================================================
   // ======================= INCLUI MEIO DE PAGAMENTO ========================
   // =========================================================================
-  const [newMeioPgtoPayload, setNewMeioPgtoPayload] = useState<Pick<MeioPgto, 'codigo' | 'descricao' | 'tipoMeioPgto'>>({
-    codigo: '',
-    descricao: '',
-    tipoMeioPgto: '',
-  });
+
   const handleIncluiPerfil = async () => {
     try {
       setError(false);
-      await mutateAsyncIncluiMeioPgto(newMeioPgtoPayload);
+      await mutateAsyncIncluiMeioPgto(incluirFormData);
     
       toast.success("Meio de pagamento incluído com sucesso!");
     } catch (error) {
@@ -199,65 +196,13 @@ export default function ComponentMeioPagamento() {
       {/* =================================================== */}
       {showModalIncluirMpgto && (
         <Modal onClose={() => setShowModalIncluirMpgto(false)} style={{ width: "350px" }}>
-          <CardHeader className="text-center">
-            <CardTitle>Incluir Novo Perfil</CardTitle>
-          </CardHeader>
-          <CardContent className="p-10 gap-4 flex flex-col">
-            {/* CODIGO */}
-            <div>
-              <Label htmlFor="codigo">Código</Label>
-              <InputLeftZero
-                id="codigo"
-                type="number"
-                onChange={(e) => {
-                  setNewMeioPgtoPayload((prev) => ({
-                    ...prev,
-                    codigo: e,
-                  }));
-                }}
-                value={Number(newMeioPgtoPayload.codigo)}
-              />
-            </div>
-            {/* DESCRIÇÃO */}
-            <div>
-              <Label htmlFor="descricao">Descrição</Label>
-              <Input
-                id="descricao"
-                type="text"
-                onChange={(e) => setNewMeioPgtoPayload((prev) => ({
-                  ...prev, descricao: e.target.value
-                }))}
-                value={newMeioPgtoPayload.descricao}
-              />
-            </div>
-            {/* TIPO MEIO PGTO */}
-            <div>
-              <Label htmlFor="tipoMeioPgto">Tipo</Label>
-              <Select
-                value={newMeioPgtoPayload.tipoMeioPgto}
-                onValueChange={(e) => setNewMeioPgtoPayload((prev) => ({
-                  ...prev, tipoMeioPgto: e
-                }))}
-              >
-                <SelectTrigger className="md:w-1/2" id="CartaoDigitado">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="D">Dinheiro</SelectItem>
-                  <SelectItem value="C">Cheque</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-
-
-          {/* BUTTONS */}
-          <CardFooter className="justify-between mt-4">
-            <Button variant="destructive" onClick={() => setShowModalIncluirMpgto(false)}>
-              Fechar
-            </Button>
-            <Button onClick={() => handleIncluiPerfil()}>Salvar</Button>
-          </CardFooter>
+          <FormIncluirMeioPgto
+            formData={incluirFormData}
+        
+            onChange={(field, value) => setIncluirFormData((prev) => ({ ...prev, [field]: value }))}
+            onSubmit={handleIncluiPerfil}
+            onClose={() => setShowModalIncluirMpgto(false)}
+          />
         </Modal>
       )}
     </div>

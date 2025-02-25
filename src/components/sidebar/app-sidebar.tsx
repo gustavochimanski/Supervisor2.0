@@ -28,7 +28,7 @@ import {
     Power,
   } from "lucide-react";
 
-import { logout } from "@/services/security/AuthService";
+import { logout } from "@/services/auth";
 
   // Menu items.
   const items = [

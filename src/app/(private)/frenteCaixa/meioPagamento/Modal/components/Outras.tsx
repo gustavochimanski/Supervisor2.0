@@ -152,10 +152,12 @@ const OtherSettings: React.FC<OtherSettingsProps> = ({ configDadosMeioPgto, hand
             </SelectContent>
           </Select>
         </div>
-        {/* =================================================  */}
+      </div>
+              {/* =================================================  */}
         {/* ============= OPERACOES PERMITIDAS ==============  */}
         {/* =================================================  */}
-        <div className="flex flex-col mx-3 w-full justify-center md:w-28">
+
+        <div className="flex flex-col mx-3 w-full my-2 justify-center md:w-28">
           <div className="flex">
             <label htmlFor="OperacoesPermitidas" className="block whitespace-nowrap p-1">
               Operações Permitidas
@@ -182,7 +184,6 @@ const OtherSettings: React.FC<OtherSettingsProps> = ({ configDadosMeioPgto, hand
             ))}
           </div>
         </div>
-      </div>
 
     </div>
   );

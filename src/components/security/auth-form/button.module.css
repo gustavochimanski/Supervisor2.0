@@ -67,3 +67,13 @@
     font-size: 0.875rem; /* opcional: fonte um pouco menor */
   }
 }
+
+.hideDefaultPasswordIcons :global(input[type="password"]::-ms-reveal),
+.hideDefaultPasswordIcons :global(input[type="password"]::-ms-clear) {
+  display: none !important;
+}
+
+.hideDefaultPasswordIcons :global(input[type="password"]) {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
