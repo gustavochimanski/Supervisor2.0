@@ -72,5 +72,6 @@ const LeftZeroInput: React.FC<InputLeftZeroProps> = ({
 };
 
 LeftZeroInput.displayName = "LeftZeroInput";
+CustomInput.displayName = "CustomInput";
 
 export default LeftZeroInput;

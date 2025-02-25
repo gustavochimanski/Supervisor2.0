@@ -1,9 +1,11 @@
-import { LogOut, Power, User } from "lucide-react";
+import { Power, User } from "lucide-react";
 import { SearchComponent } from "../shared/searchComponent";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { logout } from "@/services/auth";
 import { useMediaQuery, useTheme } from "@mui/material";
+import Image from 'next/image';
+
 
 
 const TopBarComponent = () => {
@@ -19,7 +21,7 @@ const TopBarComponent = () => {
       {/* BUTTONS SIDEBAR */}
       <div className="bg-sidebar flex gap-4  items-center ">
         {isMobile && (
-          <img src="../../../logo.jpg" alt="logo" className="h-5  m-auto" />
+          <Image src="../../../logo.jpg" alt="logo" className="h-5  m-auto" />
         )}
        <SearchComponent className="flex gap-4 mx-4 md:w-1/2" />
        <DropdownMenu>
