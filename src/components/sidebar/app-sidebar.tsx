@@ -29,6 +29,8 @@ import {
   } from "lucide-react";
 
 import { logout } from "@/services/auth";
+import Image from 'next/image';
+
 
   // Menu items.
   const items = [
@@ -62,7 +64,7 @@ import { logout } from "@/services/auth";
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
                 <SidebarGroupContent>
-                  <img src="../../../logo.jpg" alt="Logo" className="h-5 mb-3 m-auto "/>
+                  <Image src="../../../logo.jpg" alt="Logo" className="h-5 mb-3 m-auto "/>
                     <SidebarMenu >
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title} >

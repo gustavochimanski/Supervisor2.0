@@ -23,7 +23,7 @@ const CustomInput = React.forwardRef<
   React.InputHTMLAttributes<HTMLInputElement>
 >((props, ref) => <input ref={ref} {...props} />);
 
-const InputLeftZero: React.FC<InputLeftZeroProps> = ({
+const LeftZeroInput: React.FC<InputLeftZeroProps> = ({
   value,
   onChange,
   className,
@@ -71,6 +71,6 @@ const InputLeftZero: React.FC<InputLeftZeroProps> = ({
   );
 };
 
-InputLeftZero.displayName = "InputLeftZero";
+LeftZeroInput.displayName = "LeftZeroInput";
 
-export default InputLeftZero;
+export default LeftZeroInput;
