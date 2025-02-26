@@ -64,7 +64,7 @@ import Image from 'next/image';
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
                 <SidebarGroupContent>
-                  <Image src="../../../logo.jpg" alt="Logo" className="h-5 mb-3 m-auto "/>
+                  <Image src="/logo.jpg" alt="Logo" className="mb-3 m-auto" width={20} height={20}/>
                     <SidebarMenu >
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title} >

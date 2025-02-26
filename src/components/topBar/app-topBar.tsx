@@ -21,7 +21,7 @@ const TopBarComponent = () => {
       {/* BUTTONS SIDEBAR */}
       <div className="bg-sidebar flex gap-4  items-center ">
         {isMobile && (
-          <Image src="../../../logo.jpg" alt="logo" className="h-5  m-auto" />
+          <Image src="/logo.jpg" alt="logo" className=" m-auto" width={20} height={20} />
         )}
        <SearchComponent className="flex gap-4 mx-4 md:w-1/2" />
        <DropdownMenu>
