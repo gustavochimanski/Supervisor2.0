@@ -28,14 +28,14 @@ import {
     Power,
   } from "lucide-react";
 
-import { logout } from "@/services/auth";
+import { logout } from "@/services/Auth/authenticate";
 import Image from 'next/image';
 
 
   // Menu items.
   const items = [
-    { title: "Home", url: "/", icon: Home },
-    { title: "Dashboard", url: "/dashboard", icon: BarChart },
+    { title: "Home", url: "/home", icon: Home },
+    { title: "Dashboard", url: "/", icon: BarChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "#", icon: UserPlus },
     { title: "Compras", url: "#", icon: ShoppingBag },

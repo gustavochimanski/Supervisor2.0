@@ -1,11 +1,12 @@
 "use client";
 
+import { logout } from "@/services/Auth/authenticate";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
 const api = axios.create({
   // Aponte para o proxy do Next.js, não para o servidor real.
-  baseURL: "/api/proxy",
+  baseURL: "http://localhost:8080/",
   withCredentials: true, // Envia automaticamente os cookies
 });
 
@@ -28,8 +29,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      window.location.href = "/login";
-      console.error(error);
+      logout();
+      console.error("Não autorizado: 401", error);
     }
     return Promise.reject(error);
   }

@@ -2,7 +2,7 @@ import { Power, User } from "lucide-react";
 import { SearchComponent } from "../shared/searchComponent";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { logout } from "@/services/auth";
+import { logout } from "@/services/Auth/authenticate";
 import { useMediaQuery, useTheme } from "@mui/material";
 import Image from 'next/image';
 
