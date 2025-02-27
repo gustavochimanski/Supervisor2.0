@@ -48,7 +48,6 @@ export default auth(async (request: NextRequest) => {
 
 export const config: MiddlewareConfig = {
   matcher: [
-    // Remova "login" da lista de exclusões para que o middleware também intercepte essa rota.
     '/((?!api|_next/static|_next/image|public|unitec|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
