@@ -20,7 +20,7 @@ export const { auth, handlers } = NextAuth({
 
         try {
           // Envia a requisição com os dados no formato desejado
-          const response = await axios.post("http://localhost:8080/auth/token", {
+          const response = await axios.post("http://aramopg.ddns.com.br:8087/auth/token", {
             username: credentials.username,
             password: credentials.password,
           });

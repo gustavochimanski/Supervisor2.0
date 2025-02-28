@@ -42,7 +42,7 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
       <DataGrid
         rows={rows}
         columns={columns}
-        rowHeight={40} // Altura menor para deixar a linha mais fina
+        rowHeight={30} // Altura menor para deixar a linha mais fina
         disableRowSelectionOnClick
         localeText={defaultLocaleText}
         onRowClick={handleRowClick}

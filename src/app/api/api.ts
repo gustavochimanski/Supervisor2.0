@@ -6,7 +6,7 @@ import { getSession } from "next-auth/react";
 
 const api = axios.create({
   // Aponte para o proxy do Next.js, não para o servidor real.
-  baseURL: "http://localhost:8080/",
+  baseURL: "http://aramopg.ddns.com.br:8087/",
   withCredentials: true, // Envia automaticamente os cookies
 });
 
