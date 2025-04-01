@@ -6,7 +6,7 @@ import { PerfilPdv, PatchConfPerfilPayload } from './types'
 //=========== BUSCA TODOS PERFIS DE CAIXA ============
 //====================================================
 export const fetchAllPerfis = async (): Promise<PerfilPdv[]> => {
-  const response = await api.get('/v1/config/perfilpdv');
+  const response = await api.get('config/perfilpdv');
   return response.data;
 };
 
@@ -14,7 +14,7 @@ export const fetchAllPerfis = async (): Promise<PerfilPdv[]> => {
 //============== BUSCA PERFIL POR ID =================
 //====================================================
 export const fetchPerfilById = async (id: string): Promise<PerfilPdv> => {
-  const response = await api.get(`/v1/config/perfilpdv/${id}`);
+  const response = await api.get(`config/perfilpdv/${id}`);
   return response.data;
 };
 
@@ -22,7 +22,7 @@ export const fetchPerfilById = async (id: string): Promise<PerfilPdv> => {
 //=========== INSERIR PERFIL POR DESCRICAO ===========
 //====================================================
 export const postNewPerfilByDescricao = async (descricao: string) => {
-  const response = await api.post('/v1/config/perfilpdv', { descricao });
+  const response = await api.post('config/perfilpdv', { descricao });
   return response.data;
 };
 
@@ -30,7 +30,7 @@ export const postNewPerfilByDescricao = async (descricao: string) => {
 //============== DELETE PERFIL POR ID  ===============
 //====================================================
 export const deletePerfilById = async (id: string) => {
-  const response = await api.delete(`/v1/config/perfilpdv/${id}`);
+  const response = await api.delete(`config/perfilpdv/${id}`);
   return response.data;
 };
 
@@ -38,7 +38,7 @@ export const deletePerfilById = async (id: string) => {
 //============ ATUALIZA CONFIGS POR ID ===============
 //====================================================
 export const putConfPerfilById = async (idPerfil: string, payload: PatchConfPerfilPayload) => {
-  const response = await api.put(`/v1/config/confperfil/${idPerfil}`, payload);
+  const response = await api.put(`config/confperfil/${idPerfil}`, payload);
   return response.data;
 };
 
@@ -46,6 +46,6 @@ export const putConfPerfilById = async (idPerfil: string, payload: PatchConfPerf
 //================ ATUALIZA DESCRICAO ================
 //====================================================
 export const patchAlteraDescricaoById = async (idPerfil: string, descricao: string) => {
-  const response = await api.patch(`/v1/config/perfilpdv/${idPerfil}`, { descricao });
+  const response = await api.patch(`config/perfilpdv/${idPerfil}`, { descricao });
   return response.data;
 };

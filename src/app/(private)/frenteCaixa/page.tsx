@@ -3,7 +3,7 @@
 import React, { Suspense } from "react";
 import LoaderComponent from "@/components/ui/loader";
 import ComponentCaixas from "./Caixas/component";
-import ComponentPerfilDeCaixa from "./PerfisDeCaixa/component";
+import ComponentPerfilDeCaixa from "./PerfisDeCaixa/main";
 import ComponentMeioPagamento from "./meioPagamento/main";
 
 const Tabs = React.lazy(() => import("@/components/shared/tabs"));
