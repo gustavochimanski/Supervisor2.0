@@ -6,7 +6,7 @@ import AppSidebar from "@/components/sidebar/app-sidebar"
 import { QueryClientProvider } from "react-query"
 import queryClient from "@/services/Query/QueryClient"
 import { useEffect, useState } from "react"
-import TopBarComponent from "../topBar/app-topBar"
+import TopBarComponent from "../shared/app-topBar"
 import { Toaster } from "../ui/toastes"
 
 interface ClientLayoutProps {

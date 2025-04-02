@@ -5,12 +5,12 @@ export const caixasColumns: GridColDef[] = [
   {
     field: 'id',
     headerName: 'Id',
-    width: 50, // sempre defina pelo menos uma largura
+    width: 50, 
   },
   {
     field: 'descricao',
     headerName: 'Descrição',
-    flex: 1, // usa o espaço restante de forma proporcional
+    width: 300, 
   },
   {
     field: 'empresaId',

@@ -41,7 +41,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardFooter className="flex gap-4 justify-center">
-          <Button onClick={onConfirm} variant="destructive">
+          <Button onClick={() => {onConfirm(); onClose();}} variant="destructive">
             {confirmLabel}
           </Button>
           <Button onClick={onClose}>{cancelLabel}</Button>

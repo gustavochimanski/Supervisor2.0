@@ -3,26 +3,12 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import React from "react";
 
-/**
- * Interface que representa um item de aba.
- * @property {string} value - Valor único que identifica a aba.
- * @property {string} label - Rótulo exibido na aba.
- * @property {React.ComponentType} Component - Componente que será renderizado quando a aba estiver ativa.
- */
-export interface TabItem {
+interface TabItem {
   value: string;
-  label: string;
-  Component: React.ComponentType;
+  label: React.ReactNode; // ✅ aceita string ou JSX
+  Component: React.FC<any>;
 }
 
-/**
- * Propriedades esperadas pelo componente Tabs.
- * @property {TabItem[]} items - Lista de itens (abas) a serem renderizadas.
- * @property {string} [defaultValue] - Valor da aba que deve estar ativa por padrão.
- * @property {string} [containerClassName] - Classe CSS para estilizar o container principal das abas.
- * @property {string} [triggerClassName] - Classe CSS para estilizar cada botão (gatilho) das abas.
- * @property {string} [contentClassName] - Classe CSS para estilizar o conteúdo de cada aba.
- */
 interface TabsProps {
   items: TabItem[];
   defaultValue?: string;
@@ -31,20 +17,7 @@ interface TabsProps {
   contentClassName?: string;
 }
 
-/**
- * Componente Tabs que renderiza uma interface de abas utilizando o Radix UI.
- *
- * @param {TabsProps} props - Propriedades do componente.
- * @returns {JSX.Element} Elemento JSX representando o componente de abas.
- *
- * @example
- * const tabItems = [
- *   { value: "home", label: "Home", Component: HomeComponent },
- *   { value: "profile", label: "Perfil", Component: ProfileComponent }
- * ];
- *
- * <Tabs items={tabItems} defaultValue="home" />
- */
+
 const Tabs: React.FC<TabsProps> = ({
   items,
   defaultValue,

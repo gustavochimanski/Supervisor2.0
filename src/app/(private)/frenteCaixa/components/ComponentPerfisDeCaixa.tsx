@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { DataTable } from "@/components/shared/table/data-table";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +26,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ArrowRightCircle, Barcode, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
+import ConfirmModal from "@/components/shared/modals/modalConfirm";
 
 const ComponentPerfilDeCaixa: React.FC = () => {
   // ===== STATES =====
@@ -207,7 +207,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
         }
       />
 
-      {/* ===== Perfil Detail Modal ===== */}
+      {/* ===== Detalhes do perfil ===== */}
       {showModalPerfilById && (
         <Modal onClose={() => setShowModalPerfilById(false)} style={{ width: "80vw", height: "70vh" }}>
           
@@ -272,29 +272,18 @@ const ComponentPerfilDeCaixa: React.FC = () => {
               Salvar
             </Button>
           </CardFooter>
-        
-          {/* ===== Confirmation Modal for Deletion ===== */}
-          {showModalConfirm && (
-            <Modal onClose={() => setShowModalConfirm(false)} style={{ width: "350px", textAlign: "center" }}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Tem certeza que deseja apagar o perfil?</CardTitle>
-                  <CardDescription>Atenção! Todas as informações serão perdidas!</CardDescription>
-                </CardHeader>
-                <CardFooter className="flex gap-4 justify-center">
-                  <Button
-                    onClick={() => handleDeletePerfil(dataByIdPerfilPdv?.id)}
-                    variant="destructive"
-                  >
-                    Confirmar
-                  </Button>
-                  <Button onClick={() => setShowModalConfirm(false)}>
-                    Cancelar
-                  </Button>
-                </CardFooter>
-              </Card>
-            </Modal>
-          )}
+
+          {/* ============= MODAL CONFIRMAR =========== */}
+          <ConfirmModal
+            isOpen={showModalConfirm}
+            title="Tem certeza que deseja apagar o Perfil de Caixa ? "
+            description="Essa ação não poderá ser desfeita."
+            confirmLabel="Apagar"
+            cancelLabel="Cancelar"
+            onClose={() => setShowModalConfirm(false)}
+            onConfirm={() => { handleDeletePerfil(dataByIdPerfilPdv?.id); setShowModalConfirm(false); }}
+            
+          />
         </Modal>
       )}
 

@@ -12,7 +12,7 @@ import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "../../hooks/useMeioPag"
 import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, RefreshCcw, Save, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
-import ConfirmModal from "@/components/shared/modal/modalConfirm";
+import ConfirmModal from "@/components/shared/modals/modalConfirm";
 import { GridColDef } from '@mui/x-data-grid';
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { toast } from "sonner";
