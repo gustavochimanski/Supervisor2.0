@@ -2,10 +2,10 @@
 
 
 import React, { useRef, useState } from "react";
-import { ConfiguracaoMeioPag } from "../../Types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "../../types/typesMeioPag";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import ConfigsMeioPagamento from "../../modals/MeioPagamento/Modal";
+import ConfigsMeioPagamento from "./ConfigsMeioPag/MAIN";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "../../hooks/useMeioPag";

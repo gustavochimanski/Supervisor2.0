@@ -7,7 +7,7 @@ import {
   postNewPerfilByDescricao,
   putConfPerfilById,
   patchAlteraDescricaoById, } from "../services/PerfisDeCaixaService"
-import { PatchConfPerfilPayload, PerfilPdv} from '../Types/typesPerfisDeCaixa';
+import { PatchConfPerfilPayload, PerfilPdv} from '../types/typesPerfisDeCaixa';
 
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============

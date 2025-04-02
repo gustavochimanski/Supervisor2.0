@@ -1,6 +1,6 @@
 // TicketSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../../../Types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "../../../types/typesMeioPag";
 import { CardTitle } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { FloatInput } from "@/components/shared/Inputs/floatInput";

@@ -1,6 +1,6 @@
 // TrocoSettings.tsx
 import React, { useState } from "react";
-import { ConfiguracaoMeioPag } from "../../../Types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "../../../types/typesMeioPag";
 import { CardTitle } from "@/components/ui/card";
 import { FloatInput } from "@/components/shared/Inputs/floatInput";
 import { IntegerInput } from "@/components/shared/Inputs/integerInput";

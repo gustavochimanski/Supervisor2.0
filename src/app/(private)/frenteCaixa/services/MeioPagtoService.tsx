@@ -1,6 +1,6 @@
 // services/meioPagamentoService.ts
 import api from "@/app/api/api";
-import { ConfiguracaoMeioPag, MeioPgto } from "../Types/typesMeioPag";
+import { ConfiguracaoMeioPag, MeioPgto } from "../types/typesMeioPag";
 
 //====================================================
 //=========== BUSCA MEIO DE PAGAMENTO POR ID =========

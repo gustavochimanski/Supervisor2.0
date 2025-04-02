@@ -7,7 +7,7 @@ import {
   fetchByIdMeioPgto, 
   incluiMeioPgtoById
 } from "../services/MeioPagtoService"
-import { ConfiguracaoMeioPag, MeioPgto } from "../Types/typesMeioPag";
+import { ConfiguracaoMeioPag, MeioPgto } from "../types/typesMeioPag";
 
 //====================================================
 //=========== BUSCA MEIO DE PAGAMENTO POR ID =========

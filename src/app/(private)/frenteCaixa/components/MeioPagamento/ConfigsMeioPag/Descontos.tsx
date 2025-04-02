@@ -1,5 +1,5 @@
 import { CardTitle } from "@/components/ui/card";
-import { ConfiguracaoMeioPag } from "../../../Types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "../../../types/typesMeioPag";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FloatInput } from "@/components/shared/Inputs/floatInput";
