@@ -1,6 +1,4 @@
-import { DataTable } from "@/components/shared/table/data-table";
 import { useFetchAllCaixas, useFetchByIdCaixa } from "../hooks/useCaixa";
-import { caixasColumns } from "../columns/columCaixas";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,17 +12,23 @@ import { SearchComponent } from "@/components/shared/searchComponent";
 import { Button } from "@/components/ui/button";
 import { ArrowRightCircle, Barcode, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { GridColDef } from "@mui/x-data-grid";
 
 
 const ComponentCaixas = () => {
     // STATES
     const [selectedIdCaixa, setSelectedIdCaixa] = useState<string | undefined>(undefined);
     const [formData, setFormData] = useState<TypeCaixas| undefined>(undefined);
-    const [originalData, setOriginalData] = useState<TypeCaixas| undefined>(undefined);
     const [showModalCaixas, setShowModalCaixas] = useState(false);
 
     // MODALS
     const [showModalByIdCaixa, setShowModalByIdCaixa] = useState(false);
+
+    const caixasColumns: GridColDef[] = [
+      { field: 'id', headerName: 'ID', width: 50, align: "center", headerAlign: 'center'},
+      { field: 'descricao', headerName: 'Descrição', width: 300, align: "left", headerAlign: 'left'},
+      { field: 'empresaId', headerName: 'Empresa', width: 150 },
+    ];
 
     // FETCHING DATA
     const {data: dataAllCaixas, refetch: refetchAllCaixas} = useFetchAllCaixas();
@@ -104,6 +108,7 @@ const ComponentCaixas = () => {
               rows={dataAllCaixas} 
               columns={caixasColumns}
               onRowClick={handleRowClick}
+              sortModel={[{ field: 'descricao', sort: 'asc' }]}
             />
 
             {showModalByIdCaixa && 

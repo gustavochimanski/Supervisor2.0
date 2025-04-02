@@ -67,8 +67,8 @@ const ComponentPerfilDeCaixa: React.FC = () => {
 
   // ============= COLUNAS ===============
   const columns: GridColDef[] = [
-    {field: 'id', headerName: 'ID', width: 70},
-    {field: 'descricao', headerName: 'Descrição', width: 300},
+    {field: 'id', headerName: 'ID', width: 50, align: "center", headerAlign: 'center'},
+    {field: 'descricao', headerName: 'Descrição', width: 300, align: 'left', headerAlign: 'left'} // <-- alinha o título da coluna},
   ]
 
   // ===== HANDLERS =====
@@ -205,6 +205,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
         onRowClick={(rowData: any) =>
           handleVerConfig(rowData)
         }
+        sortModel={[{ field: 'descricao', sort: 'asc' }]}
       />
 
       {/* ===== Detalhes do perfil ===== */}

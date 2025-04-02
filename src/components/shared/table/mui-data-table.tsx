@@ -46,15 +46,19 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
   };
 
   return (
-    <Paper sx={{ height: "75vh", width: "100%" }}>
+    <Paper sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", overflow: "hidden" }}>
       <DataGrid
         rows={rows}
         columns={columns}
+        autoHeight={false}
         rowHeight={40} // ✅ Mais altura para espaço interno (aconselhável)
         disableRowSelectionOnClick
         localeText={defaultLocaleText}
         onRowClick={handleRowClick}
         sx={{
+          flex: 1,               // <<< MUITO IMPORTANTE
+          minHeight: 0,          // <<< ESSENCIAL para flexbox funcionar
+          overflow: "auto",
           // ✅ Separador de linhas oficial do MUI
           "--DataGrid-rowBorder": "none",
 
