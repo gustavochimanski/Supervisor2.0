@@ -1,4 +1,4 @@
-import { PerfilPdv } from "../PerfisDeCaixa/types"
+import { PerfilPdv } from "./typesPerfisDeCaixa"
 
 export type TypeCaixas = {
     id: number

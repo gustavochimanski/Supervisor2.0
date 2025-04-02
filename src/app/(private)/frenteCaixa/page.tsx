@@ -2,9 +2,9 @@
 
 import React, { Suspense } from "react";
 import LoaderComponent from "@/components/ui/loader";
-import ComponentCaixas from "./Caixas/component";
-import ComponentPerfilDeCaixa from "./PerfisDeCaixa/main";
-import ComponentMeioPagamento from "./meioPagamento/main";
+import ComponentCaixas from "./components/Caixas";
+import ComponentPerfilDeCaixa from "./components/PerfisDeCaixa";
+import ComponentMeioPagamento from "./components/MeioPagamento/main";
 
 const Tabs = React.lazy(() => import("@/components/shared/tabs"));
 
@@ -16,13 +16,13 @@ const tabItems = [
 
 const PageFrenteCaixa = () => {
   return (
-      <div className="w-[95vw] mx-auto mt-5 font-sans rounded-xl">
+      <div className="w-[95vw] h-[89vh] mx-auto font-sans ">
         <Suspense fallback={<LoaderComponent />}>
           <Tabs
             items={tabItems}
-            containerClassName="w-full border rounded-xl m-3 shadow"
-            triggerClassName="transition-colors"
-            contentClassName="bg-white"
+            containerClassName="w-full border rounded-sm m-3 shadow h-full "
+            triggerClassName="transition-colors  "
+            contentClassName="bg-white rounded-sm h-[85.5vh]  "
           />
         </Suspense>
       </div>

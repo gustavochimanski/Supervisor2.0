@@ -1,21 +1,21 @@
 "use client";
 
 import React, { useImperativeHandle, useState, forwardRef, useEffect, ForwardedRef } from "react";
-import { ConfiguracaoMeioPag, MeioPgto } from "../types";
+import { ConfiguracaoMeioPag, MeioPgto } from "../../Types/typesMeioPag";
 import { Separator } from "@/components/ui/separator";
-import { atualizarDescricaoMeioPgto } from "../service";
-import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../useMeioPag";
-import GeneralSettings from "./components/Geral";
-import OtherSettings from "./components/Outras";
-import InfoSection from "./components/Informacoes";
-import TrocoSettings from "./components/Troco";
-import CartaoSettings from "./components/Cartao";
-import ConvenioSettings from "./components/Convenio";
-import SangriaSettings from "./components/Sangria";
-import TicketSettings from "./components/Tickets";
+import { atualizarDescricaoMeioPgto } from "../../services/MeioPagtoService";
+import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../../hooks/useMeioPag";
+import GeneralSettings from "../../components/MeioPagamento/components/Geral";
+import OtherSettings from "../../components/MeioPagamento/components/Outras";
+import InfoSection from "../../components/MeioPagamento/components/Informacoes";
+import TrocoSettings from "../../components/MeioPagamento/components/Troco";
+import CartaoSettings from "../../components/MeioPagamento/components/Cartao";
+import ConvenioSettings from "../../components/MeioPagamento/components/Convenio";
+import SangriaSettings from "../../components/MeioPagamento/components/Sangria";
+import TicketSettings from "../../components/MeioPagamento/components/Tickets";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import DescontosSettings from "./components/Descontos";
-import ContraValeSettings from "./components/ContraVale";
+import DescontosSettings from "../../components/MeioPagamento/components/Descontos";
+import ContraValeSettings from "../../components/MeioPagamento/components/ContraVale";
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;

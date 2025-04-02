@@ -20,8 +20,8 @@ import {
   usePostNewPerfil,
   usePutConfPerfilPdv,
   usePutAlteraDescricao,
-} from "./usePerfil";
-import { PatchConfPerfilPayload, PerfilPdv } from "./types";
+} from "../hooks/usePerfil";
+import { PatchConfPerfilPayload, PerfilPdv } from "../Types/typesPerfisDeCaixa";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { GridColDef } from "@mui/x-data-grid";
 import { SearchComponent } from "@/components/shared/searchComponent";
@@ -161,10 +161,9 @@ const ComponentPerfilDeCaixa: React.FC = () => {
   };
   
   return (
-    <div>
-
-            {/* =============== CONTAINER TOPO ============== */}
-            <div className="flex flex-col md:flex-row w-full justify-between mb-4 gap-4 text-center">
+    <div className=" flex flex-col h-full">
+      {/* =============== CONTAINER TOPO ============== */}
+      <div className="flex flex-col md:flex-row w-full justify-between mb-4 gap-4 text-center">
         {/* =================================================== */}
         {/* ==================== PESQUISAR  =================== */}
         {/* =================================================== */}
@@ -298,13 +297,6 @@ const ComponentPerfilDeCaixa: React.FC = () => {
           )}
         </Modal>
       )}
-
-      {/* ===== Footer Buttons ===== */}
-      <div className="fixed flex bottom-0 w-full text-white mb-4 gap-4 text-center">
-        <Button onClick={() => setShowModalIncluirPerfil(true)} variant="outline">Incluir</Button>
-        <Button variant="outline">Portabilidade</Button>
-        <Button onClick={() => refetchAllPerfil()}  variant="outline">Atualizar</Button>
-      </div>
 
       {/* ===== New Perfil Modal ===== */}
       {showModalIncluirPerfil && (

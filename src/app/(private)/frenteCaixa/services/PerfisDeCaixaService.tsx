@@ -1,6 +1,6 @@
-// services/perfilPdvService.ts
+
 import api from '@/app/api/api';
-import { PerfilPdv, PatchConfPerfilPayload } from './types'
+import { PerfilPdv, PatchConfPerfilPayload } from '../../app/(private)/frenteCaixa/PerfisDeCaixa/types'
 
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============

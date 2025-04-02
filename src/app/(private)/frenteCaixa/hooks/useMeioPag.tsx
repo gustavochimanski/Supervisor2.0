@@ -6,9 +6,8 @@ import {
   fetchAllMeioPgto, 
   fetchByIdMeioPgto, 
   incluiMeioPgtoById
-} from "./service";
-import { ConfiguracaoMeioPag, MeioPgto } from "./types";
-import { getErrorMessage } from "@/utils/getErrorMessage";
+} from "../services/MeioPagtoService"
+import { ConfiguracaoMeioPag, MeioPgto } from "../Types/typesMeioPag";
 
 //====================================================
 //=========== BUSCA MEIO DE PAGAMENTO POR ID =========

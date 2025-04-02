@@ -1,6 +1,6 @@
 // SangriaSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../../types";
+import { ConfiguracaoMeioPag } from "../../../Types/typesMeioPag";
 import { CardTitle } from "@/components/ui/card";
 import { FloatInput } from "@/components/shared/Inputs/floatInput";
 import { IntegerInput } from "@/components/shared/Inputs/integerInput";

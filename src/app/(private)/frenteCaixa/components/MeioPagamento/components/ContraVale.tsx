@@ -1,5 +1,5 @@
 import { CardTitle } from "@/components/ui/card";
-import { ConfiguracaoMeioPag } from "../../types";
+import { ConfiguracaoMeioPag } from "../../../Types/typesMeioPag";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CircleHelp } from "lucide-react";
