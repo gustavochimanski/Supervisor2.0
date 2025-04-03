@@ -29,7 +29,7 @@ const Tabs: React.FC<TabsProps> = ({
     <TabsPrimitive.Root
       // Define o valor padrão da aba ativa. Se defaultValue não for informado, utiliza o primeiro item da lista.
       defaultValue={defaultValue || items[0].value}
-      className={containerClassName}
+      className={`flex flex-col ${containerClassName || ''}`}
     >
       {/* Lista de gatilhos/abas */}
       <TabsPrimitive.List className="flex font-sans rounded-xl">

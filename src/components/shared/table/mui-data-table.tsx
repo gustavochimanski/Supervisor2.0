@@ -23,13 +23,13 @@ const defaultLocaleText: DataGridProps["localeText"] = {
   columnMenuHideColumn: "Ocultar Coluna",
   columnMenuShowColumns: "Mostrar Colunas",
   columnMenuManageColumns: "Definir Colunas",
-
-  // ✅ Personalizando paginação
-  footerRowSelected: (count) =>
-    count > 1
-      ? `${count.toLocaleString()} linhas selecionadas`
-      : `${count.toLocaleString()} linha selecionada`,
   footerTotalRows: "Total de linhas:",
+  
+  // Pagination buttons
+  MuiTablePagination: {
+    labelRowsPerPage: "Linhas por página",
+    labelDisplayedRows: ({ from, to, count }) => `${from}–${to} de ${count}`,
+  },
 };
 
 const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
@@ -46,11 +46,12 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
   };
 
   return (
-    <Paper sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", overflow: "hidden" }}>
+    <Paper 
+      elevation={0}
+      sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", overflow: "hidden"}}>
       <DataGrid
         rows={rows}
         columns={columns}
-        autoHeight={false}
         rowHeight={40} // ✅ Mais altura para espaço interno (aconselhável)
         disableRowSelectionOnClick
         localeText={defaultLocaleText}
@@ -59,12 +60,9 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           flex: 1,               // <<< MUITO IMPORTANTE
           minHeight: 0,          // <<< ESSENCIAL para flexbox funcionar
           overflow: "auto",
-          // ✅ Separador de linhas oficial do MUI
-          "--DataGrid-rowBorder": "none",
-
-          // ✅ Background geral
-          backgroundColor: "var(--bg-sidebar)",
           border: "none",
+          "--DataGrid-rowBorder": "none", // ✅ Separador de linhas oficial do MUI
+          backgroundColor: "var(--bg-sidebar)", // ✅ Background geral
 
           // ✅ Cabeçalho da tabela
           "& .MuiDataGrid-columnHeaders": {
@@ -96,7 +94,8 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           // ✅ Células com Fonte melhorado
           "& .MuiDataGrid-cell": {
             fontSize: "0.95rem",
-            cursor: "pointer"
+            cursor: "pointer",
+            border: "none",
           },
 
           // ✅ Footer clean

@@ -145,13 +145,13 @@ const tabItems = [
 
 const PageFrenteCaixa = () => {
   return (
-    <div className="w-[95vw] h-[90vh] mx-auto font-sans">
+    <div className="w-[95vw]  mx-auto font-sans">
       <Suspense fallback={<LoaderComponent />}>
         <Tabs
           items={tabItems}
-          containerClassName="w-full border rounded-sm m-3 shadow h-full"
+          containerClassName="w-full border rounded-sm m-3 shadow "
           triggerClassName="transition-colors"
-          contentClassName="bg-white rounded-sm h-[85.5vh]"
+          contentClassName="bg-white rounded-sm h-[85vh]"
         />
       </Suspense>
     </div>

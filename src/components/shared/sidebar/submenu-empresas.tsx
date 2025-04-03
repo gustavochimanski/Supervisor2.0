@@ -7,7 +7,7 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
   } from "@radix-ui/react-dropdown-menu";
-import { SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator } from "../ui/sidebar";
+import { SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator } from "../../ui/sidebar";
 import { Briefcase, ChevronDown} from "lucide-react";
 import { useState } from "react";
 

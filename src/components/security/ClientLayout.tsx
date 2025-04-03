@@ -2,7 +2,7 @@
 "use client"
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/sidebar/app-sidebar"
+import AppSidebar from "@/components/shared/sidebar/app-sidebar"
 import { QueryClientProvider } from "react-query"
 import queryClient from "@/services/Query/QueryClient"
 import { useEffect, useState } from "react"
