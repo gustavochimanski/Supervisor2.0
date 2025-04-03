@@ -132,7 +132,7 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
         {...rest}
       />
       {/* ---------- BOTÕES ABAIXO DO GRID EXPORTAÇÃO ---------- */}
-      <Box display="flex" justifyContent="flex-end" mt={2} p={1}>
+      <Box display="flex" justifyContent="flex-end">
         <ExportButtonPro apiRef={apiRef} />
       </Box>
     </Paper>

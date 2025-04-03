@@ -53,7 +53,7 @@ const Tabs: React.FC<TabsProps> = ({
           key={item.value}
           value={item.value}
           // Estilização básica do conteúdo, com possibilidade de customização via contentClassName
-          className={`p-3 ${contentClassName || ""}`}
+          className={`p-4 ${contentClassName || ""}`}
         >
           {/* Renderiza o componente associado à aba */}
           <item.Component />
