@@ -54,6 +54,50 @@ const ComponentCadastros: React.FC = () => {
     </div>
   );
 };
+
+const ComponentProcessos: React.FC = () => {
+  const nestedTabItems = [
+    {
+      value: "caixas",
+      label: (
+        <span className="flex items-center gap-2">
+          <Monitor size={14} /> Caixas
+        </span>
+      ),
+      Component: ComponentCaixas,
+    },
+    {
+      value: "perfil-de-caixa",
+      label: (
+        <span className="flex items-center gap-2">
+          <User size={14} /> Perfis de Caixa
+        </span>
+      ),
+      Component: ComponentPerfilDeCaixa
+    },
+    {
+      value: "meios-de-pagamento",
+      label: (
+        <span className="flex items-center gap-2">
+          <BanknoteIcon size={14} /> Meios de Pagamento
+        </span>
+      ),
+      Component: ComponentMeioPagamento
+    },
+  ];
+
+  return (
+    <div className="p-2">
+  
+      <Tabs
+        items={nestedTabItems}
+          containerClassName="w-full border rounded-sm  shadow h-full"
+          triggerClassName="transition-colors"
+          contentClassName="bg-white rounded-sm h-[75.5vh]"
+      />
+    </div>
+  );
+};
 // ----------------------------------------------------------------------
 
 // ------------------------- Tabs Principais ----------------------------

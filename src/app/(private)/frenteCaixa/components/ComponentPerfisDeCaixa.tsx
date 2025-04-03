@@ -185,7 +185,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem >
                 <ArrowRightCircle/>
-                <a href="/">Carga</a>
+                <a href="/">Enviar Configuração</a>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Barcode/>
