@@ -2,11 +2,15 @@
 
 import React from "react";
 import { BanknoteIcon, Monitor, User, Settings } from "lucide-react";
-import ComponentCaixas from "../../../components/ComponentCaixas";
-import ComponentPerfilDeCaixa from "../../../components/ComponentPerfisDeCaixa";
-import ComponentMeioPagamento from "../../../components/MeioPagamento/ComponentMeioPag";
-import { ComponentPerifericos } from "../subtabs/ComponentPerifericos";
+
 import Tabs from "@/components/shared/tabs";
+import ComponentMeioPagamento from "./subtabs/meioPagamento/ComponentMeioPag";
+import { ComponentPerifericos } from "./subtabs/perifericos/ComponentPerifericos";
+import ComponentProdutos from "./subtabs/ComponentProdutos";
+import ComponentEntidades from "./subtabs/ComponentEntidades";
+import ComponentCaixas from "./subtabs/ComponentCaixas";
+import ComponentPerfilDeCaixa from "./subtabs/ComponentPerfisDeCaixa";
+import ComponentEmpresas from "./subtabs/ComponentEmpresas";
 
 const ComponentCadastros: React.FC = () => {
   const nestedTabItems = [
@@ -17,7 +21,7 @@ const ComponentCadastros: React.FC = () => {
             <BanknoteIcon size={14} /> Produtos
           </span>
         ),
-        Component: ComponentMeioPagamento
+        Component: ComponentProdutos,
       },
       {
         value: "entidades",
@@ -26,7 +30,7 @@ const ComponentCadastros: React.FC = () => {
             <BanknoteIcon size={14} /> Entidades
           </span>
         ),
-        Component: ComponentMeioPagamento
+        Component: ComponentEntidades,
       },
       {
         value: "empresas",
@@ -35,7 +39,7 @@ const ComponentCadastros: React.FC = () => {
             <BanknoteIcon size={14} /> Empresas
           </span>
         ),
-        Component: ComponentMeioPagamento
+        Component: ComponentEmpresas
       },
     {
       value: "caixas",
@@ -76,12 +80,12 @@ const ComponentCadastros: React.FC = () => {
   ];
 
   return (
-    <div >
+    <div className="flex-1 h-full">
       <Tabs
         items={nestedTabItems}
-        containerClassName="w-full border rounded-sm shadow h-full"
+        containerClassName="w-full border rounded-sm shadow h-full flex flex-col"
         triggerClassName="transition-colors"
-        contentClassName="bg-white rounded-sm h-[75.5vh]"
+        contentClassName="bg-white rounded-sm flex-1 overflow-auto"
       />
     </div>
   );

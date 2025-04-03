@@ -2,14 +2,12 @@
 
 import React, { Suspense } from "react";
 import LoaderComponent from "@/components/ui/loader";
-import { BanknoteIcon, Monitor, User, Settings, FileText, Database, Workflow } from "lucide-react";
-import ComponentCaixas from "./components/ComponentCaixas";
-import ComponentPerfilDeCaixa from "./components/ComponentPerfisDeCaixa";
-import ComponentMeioPagamento from "./components/MeioPagamento/ComponentMeioPag";
-import ComponentCadastros from "./tabs/cadastros/main/ComponentCadastros";
-import { ComponentProcessos } from "./tabs/cadastros/main/ComponentProcessos";
-import { ComponentRelatorios } from "./tabs/cadastros/main/ComponentRelatorios";
-import { ComponentConfiguracoes } from "./tabs/cadastros/main/ComponentConfiguracoes";
+import { Settings, FileText, Database, Workflow } from "lucide-react";
+import ComponentCadastros from "./components/tabs/cadastros/ComponentCadastros";
+import { ComponentProcessos } from "./components/tabs/processos/ComponentProcessos";
+import { ComponentRelatorios } from "./components/tabs/relatorios/ComponentRelatorios";
+import { ComponentConfiguracoes } from "./components/tabs/config/ComponentConfiguracoes";
+
 
 // Carregando componente de Tabs
 const Tabs = React.lazy(() => import("@/components/shared/tabs"));
@@ -59,17 +57,21 @@ const tabItems = [
 
 const PageFrenteCaixa = () => {
   return (
-    <div className="w-[95vw]  mx-auto font-sans">
+    <div className="w-full h-screen flex justify-center font-sans">
       <Suspense fallback={<LoaderComponent />}>
-        <Tabs
-          items={tabItems}
-          containerClassName="w-full border rounded-sm m-3 shadow "
-          triggerClassName="transition-colors"
-          contentClassName="bg-white rounded-sm h-[85vh]"
-        />
+        <div className="w-[95vw] border rounded-sm shadow mb-[70px] ml-3 flex flex-col">
+          <Tabs
+            items={tabItems}
+            containerClassName="flex flex-col flex-1  h-full"
+            triggerClassName="transition-colors"
+            contentClassName="bg-white rounded-sm flex-1 overflow-auto"
+          />
+        </div>
       </Suspense>
     </div>
   );
 };
+
+
 
 export default PageFrenteCaixa;

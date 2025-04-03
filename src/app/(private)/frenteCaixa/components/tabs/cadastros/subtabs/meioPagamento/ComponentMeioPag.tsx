@@ -2,13 +2,13 @@
 
 
 import React, { useRef, useState } from "react";
-import { ConfiguracaoMeioPag } from "../../types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "@/app/(private)/frenteCaixa/types/typesMeioPag";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import ConfigsMeioPagamento from "./ConfigsMeioPag/MAIN";
+import ConfigsMeioPagamento from "./config/MAIN";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
-import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "../../hooks/useMeioPag";
+import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "@/app/(private)/frenteCaixa/hooks/useMeioPag";
 import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, RefreshCcw, Save, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
@@ -16,7 +16,7 @@ import ConfirmModal from "@/components/shared/modals/modalConfirm";
 import { GridColDef } from '@mui/x-data-grid';
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { toast } from "sonner";
-import FormIncluirMeioPgto, {FormData} from "../../schemas/formIncluiMpgto";
+import FormIncluirMeioPgto, {FormData} from "@/app/(private)/frenteCaixa/schemas/formIncluiMpgto";
 
 export default function ComponentMeioPagamento() {
   // ==== MODAIS ======

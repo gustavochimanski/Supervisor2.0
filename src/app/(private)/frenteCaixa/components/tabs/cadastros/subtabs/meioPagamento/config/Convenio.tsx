@@ -1,6 +1,6 @@
 // ConvenioSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "../../../types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "@/app/(private)/frenteCaixa/types/typesMeioPag";
 import { CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IntegerInput } from "@/components/shared/Inputs/integerInput";

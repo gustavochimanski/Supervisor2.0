@@ -1,8 +1,9 @@
-import { Monitor } from "lucide-react";
-import ComponentCaixas from "../../../components/ComponentCaixas";
-import Tabs from "@/components/shared/tabs";
 
-export const ComponentProcessos: React.FC = () => {
+import Tabs from "@/components/shared/tabs";
+import ComponentCaixas from "../cadastros/subtabs/ComponentCaixas";
+import { Monitor } from "lucide-react";
+
+export const ComponentConfiguracoes: React.FC = () => {
     const nestedTabItems = [
       {
         value: "caixas",
@@ -16,12 +17,12 @@ export const ComponentProcessos: React.FC = () => {
     ];
   
     return (
-      <div>
+      <div className="p-2">
         <Tabs
           items={nestedTabItems}
-            containerClassName="w-full border rounded-sm  shadow h-full"
-            triggerClassName="transition-colors"
-            contentClassName="bg-white rounded-sm h-[75.5vh]"
+          containerClassName="w-full border rounded-sm  shadow h-full"
+          triggerClassName="transition-colors"
+          contentClassName="bg-white rounded-sm h-[75.5vh]"
         />
       </div>
     );

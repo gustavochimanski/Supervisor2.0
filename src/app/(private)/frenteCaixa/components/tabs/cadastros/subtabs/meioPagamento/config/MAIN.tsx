@@ -1,21 +1,23 @@
 "use client";
 
 import React, { useImperativeHandle, useState, forwardRef, useEffect, ForwardedRef } from "react";
-import { ConfiguracaoMeioPag, MeioPgto } from "../../../types/typesMeioPag";
-import { Separator } from "@/components/ui/separator";
-import { atualizarDescricaoMeioPgto } from "../../../services/MeioPagtoService";
-import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../../../hooks/useMeioPag";
+import { ConfiguracaoMeioPag, MeioPgto } from "../../../../../../types/typesMeioPag";
+import { atualizarDescricaoMeioPgto } from "../../../../../../services/MeioPagtoService";
+import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../../../../../../hooks/useMeioPag";
 import GeneralSettings from "./Geral";
-import OtherSettings from "./Outras";
+
+import { CardContent, CardDescription } from "@/components/ui/card";
 import InfoSection from "./Informacoes";
-import TrocoSettings from "./Troco";
 import CartaoSettings from "./Cartao";
 import ConvenioSettings from "./Convenio";
 import SangriaSettings from "./Sangria";
-import TicketSettings from "./Tickets";
-import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import DescontosSettings from "./Descontos";
+import TrocoSettings from "./Troco";
 import ContraValeSettings from "./ContraVale";
+import TicketSettings from "./Tickets";
+import OtherSettings from "./Outras";
+import { Separator } from "@/components/ui/separator";
+
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;

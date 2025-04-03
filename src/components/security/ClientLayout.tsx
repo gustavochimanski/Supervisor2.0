@@ -29,9 +29,9 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={isSideBarOpen}>
         <AppSidebar />
-        <main>
+        <main className="flex h-screen overflow-hidden">
           <SidebarTrigger variant="sidebarTrigger" />
-          <div className="mt-16">
+          <div className="mt-14">
             {children}
           </div> 
         </main>
