@@ -1,6 +1,7 @@
 
 import api from '@/app/api/api';
-import { PerfilPdv, PatchConfPerfilPayload } from '../../app/(private)/frenteCaixa/PerfisDeCaixa/types'
+import { PatchConfPerfilPayload, PerfilPdv } from '../types/typesPerfisDeCaixa';
+
 
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============

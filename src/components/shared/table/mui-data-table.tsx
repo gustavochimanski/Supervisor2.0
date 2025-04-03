@@ -4,6 +4,7 @@ import {
   GridColDef,
   DataGridProps,
   GridRowParams,
+  GridToolbar,
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 
@@ -50,6 +51,7 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
       elevation={0}
       sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", overflow: "hidden"}}>
       <DataGrid
+        slots={{ toolbar: GridToolbar }}
         rows={rows}
         columns={columns}
         rowHeight={40} // ✅ Mais altura para espaço interno (aconselhável)
