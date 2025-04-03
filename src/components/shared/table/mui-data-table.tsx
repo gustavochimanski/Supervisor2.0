@@ -4,9 +4,12 @@ import {
   GridColDef,
   DataGridProps,
   GridRowParams,
-  GridToolbar,
+  GridCsvExportOptions,
+  useGridApiRef,
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
+import { Box } from "@mui/material";
+import { ExportButtonPro } from "../exportCsvButton";
 
 export interface DataTableComponentProps
   extends Omit<DataGridProps, "rows" | "columns" | "localeText"> {
@@ -14,6 +17,12 @@ export interface DataTableComponentProps
   columns: GridColDef[];
   onRowClick?: (rowData: any) => void;
 }
+
+// Opções personalizadas
+const csvOptions: GridCsvExportOptions = {
+  delimiter: ";",           // <<< separador de colunas
+  utf8WithBom: true,        // <<< resolve o problema dos acentos no Excel
+};
 
 // Tradução dos textos padrão do DataGrid
 const defaultLocaleText: DataGridProps["localeText"] = {
@@ -46,12 +55,16 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
     }
   };
 
+  // ⚠️ Criação do apiRef
+  const apiRef = useGridApiRef();
+
+
   return (
     <Paper 
       elevation={0}
       sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", overflow: "hidden"}}>
       <DataGrid
-        slots={{ toolbar: GridToolbar }}
+        apiRef={apiRef}
         rows={rows}
         columns={columns}
         rowHeight={40} // ✅ Mais altura para espaço interno (aconselhável)
@@ -118,6 +131,10 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
         }}
         {...rest}
       />
+      {/* ---------- BOTÕES ABAIXO DO GRID EXPORTAÇÃO ---------- */}
+      <Box display="flex" justifyContent="flex-end" mt={2} p={1}>
+        <ExportButtonPro apiRef={apiRef} />
+      </Box>
     </Paper>
   );
 };
