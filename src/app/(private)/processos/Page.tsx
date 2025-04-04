@@ -2,7 +2,7 @@ import { Monitor } from "lucide-react";
 import ComponentCaixas from "../cadastros/subtabs/ComponentCaixas";
 import Tabs from "@/components/shared/tabs";
 
-export const ComponentRelatorios: React.FC = () => {
+export const ComponentProcessos: React.FC = () => {
     const nestedTabItems = [
       {
         value: "caixas",
@@ -16,12 +16,12 @@ export const ComponentRelatorios: React.FC = () => {
     ];
   
     return (
-      <div className="p-2">
+      <div className="flex-1 h-full">
         <Tabs
           items={nestedTabItems}
-            containerClassName="w-full border rounded-sm  shadow h-full"
-            triggerClassName="transition-colors"
-            contentClassName="bg-white rounded-sm h-[75.5vh]"
+          containerClassName="w-full rounded-sm shadow h-full flex flex-col"
+          triggerClassName="transition-colors"
+          contentClassName="bg-sidebar rounded-sm flex-1 overflow-auto"
         />
       </div>
     );

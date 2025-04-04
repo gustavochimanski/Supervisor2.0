@@ -29,13 +29,15 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={isSideBarOpen}>
         <AppSidebar />
-        <main className="flex h-screen overflow-hidden">
+        <main className="flex h-screen w-full overflow-hidden">
           <SidebarTrigger variant="sidebarTrigger" />
-          <div className="mt-14">
-            {children}
-          </div> 
+          <div className="flex-1 flex flex-col overflow-hidden w-full">
+            <TopBarComponent />
+            <div className="flex-1 overflow-auto w-full p-4 pt-14">
+              {children}
+            </div>
+          </div>
         </main>
-        <TopBarComponent></TopBarComponent>
         <Toaster />
       </SidebarProvider>
     </QueryClientProvider>

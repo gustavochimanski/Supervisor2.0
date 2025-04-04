@@ -1,9 +1,10 @@
-import { useFetchAllCaixas, useFetchByIdCaixa } from "../../../../hooks/useCaixa";
+"use client"
+import { useFetchAllCaixas, useFetchByIdCaixa } from "../../hooks/useCaixa";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardContent } from "@mui/material";
-import { TypeCaixas } from "../../../../types/typesCaixas";
+import { TypeCaixas } from "../../types/typesCaixas";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";

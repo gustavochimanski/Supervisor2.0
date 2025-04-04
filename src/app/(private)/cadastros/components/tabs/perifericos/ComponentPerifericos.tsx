@@ -1,5 +1,5 @@
 import Tabs from "@/components/shared/tabs";
-import { Monitor } from "lucide-react";
+import { Keyboard, Monitor, Printer } from "lucide-react";
 
 export const ComponentPerifericos: React.FC = () => {
     const nestedTabItems = [
@@ -7,7 +7,7 @@ export const ComponentPerifericos: React.FC = () => {
         value: "impressora",
         label: (
           <span className="flex items-center gap-2">
-            <Monitor size={14} /> Impressora
+            <Printer size={14} /> Impressora
           </span>
         ),
         Component: () => <div>🖨️ Configurações de Impressora</div>
@@ -16,10 +16,19 @@ export const ComponentPerifericos: React.FC = () => {
         value: "teclado",
         label: (
           <span className="flex items-center gap-2">
-            <Monitor size={14} /> Teclado
+            <Keyboard size={14} /> Teclado
           </span>
         ),
         Component: () => <div>⌨️ Configurações de Teclado</div>
+      },
+      {
+        value: "tela",
+        label: (
+          <span className="flex items-center gap-2">
+            <Monitor size={14} /> Monitor
+          </span>
+        ),
+        Component: () => <div>⌨️ Configurações do Monitor</div>
       },
     ];
   

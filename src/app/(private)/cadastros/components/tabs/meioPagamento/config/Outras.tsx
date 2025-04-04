@@ -1,6 +1,6 @@
 // OtherSettings.tsx
 import React from "react";
-import { ConfiguracaoMeioPag } from "@/app/(private)/frenteCaixa/types/typesMeioPag";
+import { ConfiguracaoMeioPag } from "@/app/(private)/cadastros/types/typesMeioPag";
 import { CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";

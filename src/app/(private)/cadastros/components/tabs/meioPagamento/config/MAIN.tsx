@@ -1,37 +1,43 @@
 "use client";
 
 import React, { useImperativeHandle, useState, forwardRef, useEffect, ForwardedRef } from "react";
-import { ConfiguracaoMeioPag, MeioPgto } from "../../../../../../types/typesMeioPag";
-import { atualizarDescricaoMeioPgto } from "../../../../../../services/MeioPagtoService";
-import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "../../../../../../hooks/useMeioPag";
-import GeneralSettings from "./Geral";
 
+import { Separator } from "@/components/ui/separator";
+import { ConfiguracaoMeioPag, MeioPgto } from "@/app/(private)/cadastros/types/typesMeioPag";
 import { CardContent, CardDescription } from "@/components/ui/card";
 import InfoSection from "./Informacoes";
+import GeneralSettings from "./Geral";
 import CartaoSettings from "./Cartao";
 import ConvenioSettings from "./Convenio";
 import SangriaSettings from "./Sangria";
-import DescontosSettings from "./Descontos";
 import TrocoSettings from "./Troco";
+import DescontosSettings from "./Descontos";
 import ContraValeSettings from "./ContraVale";
 import TicketSettings from "./Tickets";
 import OtherSettings from "./Outras";
-import { Separator } from "@/components/ui/separator";
+import { useAtualizarConfigMpgto, useFetchByIdMeioPgto } from "@/app/(private)/cadastros/hooks/useMeioPag";
+import { atualizarDescricaoMeioPgto } from "@/app/(private)/cadastros/services/MeioPagtoService";
 
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;
 }
 
-const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles>((props, ref: ForwardedRef<ConfigsMeioPagamentoHandles>) => {
-  const [dadosMeioPgto, setDadosMeioPgto] = useState<MeioPgto | null>(null);
-  const [configDadosMeioPgto, setConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
-  const [originalConfigDadosMeioPgto, setOriginalConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
-  const [mensagem, setMensagem] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+interface Props {
+  idMeioPgto: string;
+}
 
-  const { data: dataConfigMpgto } = useFetchByIdMeioPgto("1");
-  const { mutate: atualizaConfigMpgto } = useAtualizarConfigMpgto();
+const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles, Props>(
+  ({ idMeioPgto }, ref) => {
+    const [dadosMeioPgto, setDadosMeioPgto] = useState<MeioPgto | null>(null);
+    const [configDadosMeioPgto, setConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
+    const [originalConfigDadosMeioPgto, setOriginalConfigDadosMeioPgto] = useState<ConfiguracaoMeioPag[]>([]);
+    const [mensagem, setMensagem] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
+
+    // Aqui você usa o ID dinâmico:
+    const { data: dataConfigMpgto } = useFetchByIdMeioPgto(idMeioPgto);
+    const { mutate: atualizaConfigMpgto } = useAtualizarConfigMpgto();
 
   useEffect(() => {
     if (dataConfigMpgto) {

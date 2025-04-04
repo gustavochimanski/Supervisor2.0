@@ -37,14 +37,14 @@ import Image from 'next/image';
     { title: "Home", url: "/home", icon: Home },
     { title: "Dashboard", url: "/", icon: BarChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
-    { title: "Cadastros", url: "#", icon: UserPlus },
+    { title: "Cadastros", url: "/cadastros", icon: UserPlus },
     { title: "Compras", url: "#", icon: ShoppingBag },
     { title: "Estoque", url: "#", icon: Package },
     { title: "Financeiro", url: "#", icon: DollarSign },
     { title: "Automação", url: "#", icon: Sliders },
     { title: "Frente Caixa", url: "/frenteCaixa", icon: MonitorUpIcon },
     { title: "Calendário", url: "#", icon: Calendar },
-    { title: "Configuração", url: "#", icon: Settings },
+    { title: "Configuração", url: "/configuracao", icon: Settings },
   ];
 
   const empresas = [

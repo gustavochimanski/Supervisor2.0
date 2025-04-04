@@ -19,8 +19,8 @@ import {
   usePostNewPerfil,
   usePutConfPerfilPdv,
   usePutAlteraDescricao,
-} from "../../../../hooks/usePerfil";
-import { PatchConfPerfilPayload, PerfilPdv } from "../../../../types/typesPerfisDeCaixa";
+} from "../../hooks/usePerfil";
+import { PatchConfPerfilPayload, PerfilPdv } from "../../types/typesPerfisDeCaixa";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { GridColDef } from "@mui/x-data-grid";
 import { SearchComponent } from "@/components/shared/searchComponent";

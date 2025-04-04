@@ -17,12 +17,12 @@ export const ComponentConfiguracoes: React.FC = () => {
     ];
   
     return (
-      <div className="p-2">
+      <div className="flex-1 h-full ">
         <Tabs
           items={nestedTabItems}
-          containerClassName="w-full rounded-sm shadow h-full"
+          containerClassName="w-full rounded-sm shadow h-full flex flex-col"
           triggerClassName="transition-colors"
-          contentClassName="bg-white rounded-sm h-[75.5vh]"
+          contentClassName="bg-sidebar rounded-sm flex-1 overflow-auto"
         />
       </div>
     );

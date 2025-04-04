@@ -15,7 +15,7 @@ const TopBarComponent = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   
   return (
-    <div className="fixed w-full md:ml-12 bg-sidebar h-10 z-0 flex items-center justify-end ">
+    <div className="fixed top-0 left-0 right-0 h-10 w-full bg-sidebar z-0 flex items-center justify-end px-4">
       {/* FUNDO PARA LOGO NÃO MEXA */}
  
       {/* BUTTONS SIDEBAR */}
