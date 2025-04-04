@@ -59,12 +59,12 @@ const PageFrenteCaixa = () => {
   return (
     <div className="w-full h-screen flex justify-center font-sans">
       <Suspense fallback={<LoaderComponent />}>
-        <div className="w-[95vw] border rounded-sm shadow mb-[70px] ml-3 flex flex-col">
+        <div className="w-[95vw] rounded-sm shadow  mb-[70px] ml-3 flex flex-col">
           <Tabs
             items={tabItems}
             containerClassName="flex flex-col flex-1  h-full"
             triggerClassName="transition-colors"
-            contentClassName="bg-white rounded-sm flex-1 overflow-auto"
+            contentClassName="bg-sidebar rounded-sm flex-1 overflow-auto"
           />
         </div>
       </Suspense>

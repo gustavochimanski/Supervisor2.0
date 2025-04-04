@@ -26,9 +26,9 @@ export const ComponentPerifericos: React.FC = () => {
     return (
       <Tabs
         items={nestedTabItems}
-        containerClassName="w-full border rounded-sm shadow h-full"
+        containerClassName="w-full rounded-sm shadow h-full"
         triggerClassName="transition-colors"
-        contentClassName="bg-white rounded-sm h-[70vh]"
+        contentClassName="bg-sidebarrounded-sm h-[70vh]"
       />
     );
   };

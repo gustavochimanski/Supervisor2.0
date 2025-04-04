@@ -80,12 +80,12 @@ const ComponentCadastros: React.FC = () => {
   ];
 
   return (
-    <div className="flex-1 h-full">
+    <div className="flex-1 h-full ">
       <Tabs
         items={nestedTabItems}
-        containerClassName="w-full border rounded-sm shadow h-full flex flex-col"
+        containerClassName="w-full rounded-sm shadow h-full flex flex-col"
         triggerClassName="transition-colors"
-        contentClassName="bg-white rounded-sm flex-1 overflow-auto"
+        contentClassName="bg-sidebar rounded-sm flex-1 overflow-auto"
       />
     </div>
   );

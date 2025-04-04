@@ -20,7 +20,7 @@ export const ComponentConfiguracoes: React.FC = () => {
       <div className="p-2">
         <Tabs
           items={nestedTabItems}
-          containerClassName="w-full border rounded-sm  shadow h-full"
+          containerClassName="w-full rounded-sm shadow h-full"
           triggerClassName="transition-colors"
           contentClassName="bg-white rounded-sm h-[75.5vh]"
         />
