@@ -7,6 +7,7 @@ import ComponentProdutos from "./components/tabs/ComponentProdutos";
 import ComponentEmpresas from "./components/tabs/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
 import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
+import ComponentFiscal from "./components/tabs/ComponentFiscal";
 
 const PageCadastros: React.FC = () => {
     const nestedTabItems = [
@@ -65,13 +66,13 @@ const PageCadastros: React.FC = () => {
         Component: ComponentPerifericos 
       },
       {
-        value: "tributacao",
+        value: "fiscal",
         label: (
           <span className="flex items-center gap-2">
-            <HandCoins size={15} /> Tributações
+            <HandCoins size={15} /> Fiscal
           </span>
         ),
-        Component: () => <div>Tributações</div>,
+        Component: ComponentFiscal,
       },
       {
         value: "outros",

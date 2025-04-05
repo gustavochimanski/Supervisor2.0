@@ -6,17 +6,14 @@ import {
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
-    SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarSeparator,
     useSidebar,
   } from "@/components/ui/sidebar"
   import {
     Home,
     ShoppingCart,
-    UserPlus,
     Package,
     DollarSign,
     Sliders,
@@ -26,6 +23,8 @@ import {
     ShoppingBag,
     MonitorUpIcon,
     Power,
+    User,
+    Workflow,
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -37,7 +36,8 @@ import Image from 'next/image';
     { title: "Home", url: "/home", icon: Home },
     { title: "Dashboard", url: "/", icon: BarChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
-    { title: "Cadastros", url: "/cadastros", icon: UserPlus },
+    { title: "Cadastros", url: "/cadastros", icon: User },
+    { title: "Processos", url: "/processos", icon: Workflow },
     { title: "Compras", url: "#", icon: ShoppingBag },
     { title: "Estoque", url: "#", icon: Package },
     { title: "Financeiro", url: "#", icon: DollarSign },

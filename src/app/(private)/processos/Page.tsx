@@ -1,8 +1,9 @@
+"use client"
 import { Monitor } from "lucide-react";
-import ComponentCaixas from "../cadastros/subtabs/ComponentCaixas";
 import Tabs from "@/components/shared/tabs";
+import ComponentEnviarConfiguracao from "./components/ComponentEnviarConfiguracao";
 
-export const ComponentProcessos: React.FC = () => {
+const PageProcessos: React.FC = () => {
     const nestedTabItems = [
       {
         value: "caixas",
@@ -11,7 +12,7 @@ export const ComponentProcessos: React.FC = () => {
             <Monitor size={14} /> Caixas
           </span>
         ),
-        Component: ComponentCaixas,
+        Component: ComponentEnviarConfiguracao,
       }
     ];
   
@@ -26,3 +27,5 @@ export const ComponentProcessos: React.FC = () => {
       </div>
     );
   };
+
+  export default PageProcessos
