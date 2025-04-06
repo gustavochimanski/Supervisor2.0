@@ -1,11 +1,12 @@
+import React from "react";
+import { X } from "lucide-react";
+import { Button } from "./button";
 
 interface ModalProps {
   children: React.ReactNode;
   onClose: () => void;
   style?: React.CSSProperties;
 }
-
-import React from "react";
 
 export function Modal({ children, onClose, style }: ModalProps) {
   return (
@@ -14,11 +15,24 @@ export function Modal({ children, onClose, style }: ModalProps) {
       onClick={onClose}
     >
       <div
-        style={style} 
-        className="flex flex-col bg-white rounded shadow-lg max-w-[90vw] max-h-[90vh] w-full h-auto overflow-hidden"
-        onClick={(e) => e.stopPropagation()} // Evita fechar ao clicar dentro
+        style={style}
+        className="relative flex flex-col bg-white rounded shadow-lg max-w-[90vw] max-h-[90vh] w-full h-auto"
+        onClick={(e) => e.stopPropagation()}
       >
-        {children}
+        {/* Botão de fechar */}
+        <Button
+          onClick={onClose}
+          className="absolute w-10 h-10 -top-5 -right-5 p-2 rounded-full shadow-md transition z-20"
+          aria-label="Fechar modal"
+          variant={"destructive"}
+        >
+          <X size={20} />
+        </Button>
+
+        {/* Conteúdo com scroll, se necessário */}
+        <div className="overflow-auto">
+          {children}
+        </div>
       </div>
     </div>
   );

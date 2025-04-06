@@ -15,15 +15,15 @@ const TopBarComponent = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   
   return (
-    <div className="fixed top-0 left-0 right-0 h-10 w-full bg-sidebar z-0 flex items-center justify-end px-4">
+    <div className="fixed right-0 h-10 w-full bg-sidebar z-0 flex items-center justify-end ">
       {/* FUNDO PARA LOGO NÃO MEXA */}
  
       {/* BUTTONS SIDEBAR */}
-      <div className="bg-sidebar flex gap-4  items-center ">
+      <div className="flex items-center gap-4 justify-end mr-2 ">
         {isMobile && (
           <Image src="/logo.jpg" alt="logo" className=" m-auto" width={20} height={20} />
         )}
-       <SearchComponent className="flex gap-4 mx-4 md:w-1/2" />
+       <SearchComponent className="flex gap-4  md:w-1/2" />
        <DropdownMenu>
           <DropdownMenuTrigger asChild><Button variant={"secondary"}><User/></Button></DropdownMenuTrigger>
           <DropdownMenuContent >

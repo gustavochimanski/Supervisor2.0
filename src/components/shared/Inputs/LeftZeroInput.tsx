@@ -1,77 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
-// Extendendo as props para incluir o "format"
-interface CustomNumericFormatProps extends NumericFormatProps {
-  format?: (inputValue: string) => string;
-}
-
-interface InputLeftZeroProps
-  extends Omit<
-    CustomNumericFormatProps,
-    "onValueChange" | "onChange" | "customInput"
-  > {
-  value: number | string | undefined;
-  onChange: (value: string) => void;
+interface LeftZeroInputProps
+  extends Omit<NumericFormatProps, "onValueChange" | "customInput"> {
+  value: string;
+  onFormattedChange: (val: string) => void;
   className?: string;
 }
 
-// Componente wrapper para o input
-const CustomInput = React.forwardRef<
-  HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement>
->((props, ref) => <input ref={ref} {...props} />);
-
-const LeftZeroInput: React.FC<InputLeftZeroProps> = ({
+const LeftZeroInput: React.FC<LeftZeroInputProps> = ({
   value,
-  onChange,
+  onFormattedChange,
   className,
   ...props
 }) => {
-  // Se value for undefined ou null, converte para string vazia
-  const stringValue =
-    value !== undefined && value !== null
-      ? typeof value === "string"
-        ? value
-        : value.toString()
-      : "";
+  const [internalValue, setInternalValue] = useState("");
 
-  // Função de formatação: garante 3 dígitos preenchendo com zeros à esquerda
-  const formatValue = (inputValue: string) => {
-    const numericValue = inputValue.replace(/\D/g, "").slice(0, 3);
-    return numericValue.padStart(3, "0");
+  useEffect(() => {
+    setInternalValue(value.replace(/^0+/, "") || "");
+  }, [value]);
+
+  const handleBlur = () => {
+    const formatted = internalValue.padStart(3, "0");
+    onFormattedChange(formatted);
   };
 
   return (
     <NumericFormat
-      value={stringValue}
-      // Aplica a formatação a cada renderização
-      format={formatValue}
-      onValueChange={(values) => {
-        onChange(values.formattedValue);
+      value={internalValue}
+      onValueChange={(vals) => {
+        const numericOnly = vals.value.slice(0, 3);
+        setInternalValue(numericOnly);
       }}
-      // Ao perder o foco, força a formatação e atualiza o valor
-      onBlur={(e) => {
-        const formatted = formatValue(e.target.value);
-        onChange(formatted);
-        // Se houver um onBlur passado em props, o chama também
-        if (props.onBlur) {
-          props.onBlur(e);
-        }
-      }}
-      customInput={CustomInput}
+      onBlur={handleBlur}
+      customInput={Input}
+      allowLeadingZeros={false}
+      allowNegative={false}
+      decimalScale={0}
+      type="text"
       className={cn(
-        "flex h-6 w-full rounded-2xl border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
         className
       )}
       {...props}
-      maxLength={3}
     />
   );
 };
 
-LeftZeroInput.displayName = "LeftZeroInput";
-CustomInput.displayName = "CustomInput";
 
 export default LeftZeroInput;
