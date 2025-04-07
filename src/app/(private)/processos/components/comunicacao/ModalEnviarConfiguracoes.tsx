@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { CircleArrowRight, CircleX, XIcon } from "lucide-react";
 import { useState } from "react";
-import { useModalStore } from "@/stores/useModalStore";
+import { useModalStore } from "@/global/useModalStore";
 
 const ModalEnviarConfiguracao = () => {
   const { isEnviarConfiguracaoModalOpen, closeEnviarConfig } = useModalStore();

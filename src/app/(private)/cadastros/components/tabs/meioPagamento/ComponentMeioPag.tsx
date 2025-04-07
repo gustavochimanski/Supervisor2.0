@@ -17,7 +17,7 @@ import { GridColDef } from '@mui/x-data-grid';
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { toast } from "sonner";
 import FormIncluirMeioPgto, {FormData} from "@/app/(private)/cadastros/schemas/formIncluiMpgto";
-import { useModalStore } from "@/stores/useModalStore";
+import { useModalStore } from "@/global/useModalStore";
 
 export default function ComponentMeioPagamento() {
   // ==== MODAIS ======

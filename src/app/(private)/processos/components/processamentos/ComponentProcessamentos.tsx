@@ -19,10 +19,9 @@ const ComponentProcessamentos = () => {
             icon={<RefreshCcw size={16} />}
             onClick={() => setModalAberto("processarPdv")}
           />
-          
         </div>
   
-        <ModalProcessarPdv isOpen={modalAberto === "processarPdv"} onClose={() => setModalAberto(null)} />
+        <ModalProcessarPdv />
       </>
     );
 };

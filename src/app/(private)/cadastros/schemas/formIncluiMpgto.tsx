@@ -43,9 +43,10 @@ const FormIncluirMeioPgto: React.FC<FormIncluirMeioPgtoProps> = ({
         <div>
           <Label htmlFor="codigo">Código</Label>
           <InputLeftZero
-            name="codigo"
+            name="codigo"   
             value={formData.codigo}
-            onChange={(value: string) => onChange("codigo", value)}
+            onFormattedChange={(value: string) => onChange("codigo", value)} 
+
           />
         </div>
         {/* Campo Descrição */}

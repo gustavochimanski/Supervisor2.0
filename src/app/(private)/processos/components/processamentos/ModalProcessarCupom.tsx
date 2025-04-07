@@ -1,5 +1,4 @@
-import CardInfoButton from "@/components/shared/Card/CardInfoButton";
-import { IntegerInput } from "@/components/shared/Inputs/integerInput";
+
 import LeftZeroInput from "@/components/shared/Inputs/LeftZeroInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -14,12 +13,11 @@ interface ModalProcessarCupomProps {
 }
 
 const ModalProcessarCupom = ({ isOpen, onClose }: ModalProcessarCupomProps) => {
-  if (!isOpen) return null;
 
   const [empresa, setEmpresa] = useState<string>("");
   const [caixa, setCaixa] = useState<string>("");
 
-  console.log(empresa);
+  if (!isOpen) return null;
 
   return (
     <Modal onClose={onClose}>

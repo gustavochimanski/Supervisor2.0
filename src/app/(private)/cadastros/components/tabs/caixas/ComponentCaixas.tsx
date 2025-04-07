@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRightCircle, Barcode, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { GridColDef, GridRowSelectionModel, useGridApiRef } from "@mui/x-data-grid";
-import { useModalStore } from "@/stores/useModalStore";
+import { useModalStore } from "@/global/useModalStore";
 import { ExportButtonPro } from "@/components/shared/exportCsvButton";
 import perfisPdvs from "./mock.json"
 

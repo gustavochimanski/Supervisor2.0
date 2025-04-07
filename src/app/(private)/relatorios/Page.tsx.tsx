@@ -1,5 +1,5 @@
 import { Monitor } from "lucide-react";
-import ComponentCaixas from "../cadastros/subtabs/ComponentCaixas";
+import ComponentCaixas from "../cadastros/components/tabs/caixas/ComponentCaixas";
 import Tabs from "@/components/shared/tabs";
 
 export const ComponentRelatorios: React.FC = () => {
