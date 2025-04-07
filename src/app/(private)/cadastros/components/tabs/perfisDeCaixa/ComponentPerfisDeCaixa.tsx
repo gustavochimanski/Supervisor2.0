@@ -28,6 +28,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ArrowRightCircle, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
 import ConfirmModal from "@/components/shared/modals/modalConfirm";
 import { ExportButtonPro } from "@/components/shared/exportCsvButton";
+import { useStore } from "zustand";
+import { useModalStore } from "@/store/useModalStore";
  
 
 const ComponentPerfilDeCaixa: React.FC = () => {
@@ -35,6 +37,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
   const [selectedPerfilPdvId, setSelectedPerfilPdvId] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<PerfilPdv | undefined>(undefined);
   const [originalData, setOriginalData] = useState<PerfilPdv | undefined>(undefined);
+  const { openEnviarConfig } = useModalStore()
   
   // ==== MODAIS ======
   const [showModalIncluirPerfil, setShowModalIncluirPerfil] = useState(false);
@@ -169,10 +172,7 @@ const ComponentPerfilDeCaixa: React.FC = () => {
         {/* =================================================== */}
         {/* ==================== PESQUISAR  =================== */}
         {/* =================================================== */}
-        <div>
           <SearchComponent className="w-full md:w-60" />
-        </div>
-
       </div>
 
       {/* =================================================== */}
@@ -200,13 +200,13 @@ const ComponentPerfilDeCaixa: React.FC = () => {
               <DropdownMenuItem onClick={() => refetchAllPerfil()}>
                 <RefreshCcw />Atualizar
               </DropdownMenuItem>
-              <DropdownMenuItem >
-                <ArrowRightCircle/>
-                <a href="/">Enviar Configuração</a>
-              </DropdownMenuItem>
+                <DropdownMenuItem onClick={openEnviarConfig}>
+                  <ArrowRightCircle />Enviar Configuração
+                </DropdownMenuItem>
               <DropdownMenuItem>
                 <ExportButtonPro rows={[dataAllPerfilPdv]}>Excel</ExportButtonPro>
               </DropdownMenuItem>
+              
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

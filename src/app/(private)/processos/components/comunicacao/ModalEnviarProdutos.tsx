@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { CircleArrowRight, CircleX } from "lucide-react";
 import { useState } from "react";
-import { useModalStore } from "@/global/useModalStore";
+import { useModalStore } from "@/store/useModalStore";
 
 const ModalEnviarProdutos = () => {
 
@@ -21,7 +21,7 @@ const ModalEnviarProdutos = () => {
     <Modal onClose={closeEnviarProdutos}>
       <Card>
         <CardHeader>
-          <CardTitle>Enviar Configuração</CardTitle>
+          <CardTitle>Enviar Carga de Produtos</CardTitle>
         </CardHeader>
 
         <CardContent className="flex px-8 gap-4 pb-4 pt-2">

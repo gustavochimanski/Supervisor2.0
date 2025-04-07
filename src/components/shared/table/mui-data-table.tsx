@@ -1,4 +1,4 @@
-  import React from "react";
+  import React, { useState } from "react";
   import {
     DataGrid,
     GridColDef,
@@ -50,7 +50,7 @@
         onRowClick(params.row);
       }
     };
-  
+
     return (
       <Paper
         elevation={0}
@@ -59,17 +59,16 @@
           flexDirection: "column",
           height: "100%",
           width: "100%",
-          overflow: "hidden",
+          overflow: "auto",
         }}
       >
         <DataGrid
           apiRef={apiRef} // <- usa o que veio por props
           rows={rows}
           columns={columns}
-          rowHeight={40}
+          rowHeight={35}
           disableRowSelectionOnClick
           checkboxSelection
-          paginationModel={{ pageSize: 10, page: 0 }}
           pageSizeOptions={[10, 20, 30]}
           localeText={defaultLocaleText}
           onRowSelectionModelChange={onRowSelectionModelChange}
@@ -83,7 +82,7 @@
             backgroundColor: "var(--bg-sidebar)",
             "& .MuiDataGrid-columnHeaders": {
               backgroundColor: "var(--bg-sidebar)",
-              color: "#1E40AF",
+              color: "#666666",
               fontSize: "0.9rem",
               borderBottom: "1px solid rgba(0,0,0,0.08)",
             },
@@ -102,8 +101,8 @@
             },
             "& .MuiDataGrid-cell": {
               fontSize: "0.85rem",
-              cursor: "pointer",
               border: "none",
+              color: "#858585",
             },
             "& .MuiDataGrid-footerContainer": {
               backgroundColor: "var(--bg-sidebar)",
@@ -114,6 +113,14 @@
             },
             "& .MuiDataGrid-root": {
               border: "none",
+            },
+            "& .cell-status-ativo": {
+              color: "green",
+              fontWeight: 600,
+            },
+            "& .cell-status-inativo": {
+              color: "red",
+              fontWeight: 600,
             },
           }}
           {...rest}

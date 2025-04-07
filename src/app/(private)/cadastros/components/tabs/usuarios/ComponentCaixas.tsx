@@ -1,8 +1,7 @@
 "use client"
 
-import ComponentCaixas from "./pdvs/ComponentPdvs"
+import ComponentCaixas from "../caixas/ComponentCaixas"
 import ComponentPerfilDeCaixa from "../perfisDeCaixa/ComponentPerfisDeCaixa"
-import ComponentConfigCaixas from "./config/ComponentConfigCaixas"
 
 const ComponentMainCaixas = () => {
   return (
@@ -15,12 +14,12 @@ const ComponentMainCaixas = () => {
           <ComponentCaixas />
         </div>
       </div>
-    
-      {/* Seção Config */}
-      <div className="flex flex-col flex-1">
-        <h2 className="text-lg text-[#666666] font-semibold mb-2">Config</h2>
+      
+      {/* Seção Perfil de Caixa */}
+      <div className="flex flex-col w-full md:w-[35%]">
+        <h2 className="text-lg text-[#666666]  font-semibold mb-2">Perfis de Caixa</h2>
         <div className="p-4 h-full shadow rounded-xl border overflow-auto flex-1">
-          <ComponentConfigCaixas />
+          <ComponentPerfilDeCaixa />
         </div>
       </div>
 

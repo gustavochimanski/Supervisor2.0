@@ -1,0 +1,283 @@
+[
+  {
+    "id": "001",
+    "descricao": "Perfil PDV 001",
+    "status": "S",
+    "ip": "192.168.121.101",
+    "empresaId": "001",
+    "tipoSat": "01"
+  },
+  {
+    "id": "002",
+    "descricao": "Perfil PDV 002",
+    "status": "N",
+    "ip": "192.168.121.102",
+    "empresaId": "001"
+  },
+  {
+    "id": "003",
+    "descricao": "Perfil PDV 003",
+    "status": "S",
+    "ip": "192.168.121.103",
+    "empresaId": "002"
+  },
+  {
+    "id": "004",
+    "descricao": "Perfil Fiscal 004",
+    "status": "N",
+    "ip": "192.168.121.104",
+    "empresaId": "002"
+  },
+  {
+    "id": "005",
+    "descricao": "Perfil NFC-e 005",
+    "status": "S",
+    "ip": "192.168.121.105",
+    "empresaId": "003"
+  },
+  {
+    "id": "006",
+    "descricao": "Perfil PDV 006",
+    "status": "S",
+    "ip": "192.168.121.106",
+    "empresaId": "001"
+  },
+  {
+    "id": "007",
+    "descricao": "Perfil PDV 007",
+    "status": "N",
+    "ip": "192.168.121.107",
+    "empresaId": "003"
+  },
+  {
+    "id": "008",
+    "descricao": "Perfil Fiscal 008",
+    "status": "S",
+    "ip": "192.168.121.108",
+    "empresaId": "002"
+  },
+  {
+    "id": "009",
+    "descricao": "Perfil NFC-e 009",
+    "status": "N",
+    "ip": "192.168.121.109",
+    "empresaId": "004"
+  },
+  {
+    "id": "010",
+    "descricao": "Perfil PDV 010",
+    "status": "S",
+    "ip": "192.168.121.110",
+    "empresaId": "001"
+  },
+  {
+    "id": "011",
+    "descricao": "Perfil PDV 011",
+    "status": "N",
+    "ip": "192.168.121.111",
+    "empresaId": "002"
+  },
+  {
+    "id": "012",
+    "descricao": "Perfil Fiscal 012",
+    "status": "S",
+    "ip": "192.168.121.112",
+    "empresaId": "002"
+  },
+  {
+    "id": "013",
+    "descricao": "Perfil NFC-e 013",
+    "status": "S",
+    "ip": "192.168.121.113",
+    "empresaId": "003"
+  },
+  {
+    "id": "014",
+    "descricao": "Perfil PDV 014",
+    "status": "N",
+    "ip": "192.168.121.114",
+    "empresaId": "004"
+  },
+  {
+    "id": "015",
+    "descricao": "Perfil PDV 015",
+    "status": "S",
+    "ip": "192.168.121.115",
+    "empresaId": "001"
+  },
+  {
+    "id": "016",
+    "descricao": "Perfil Fiscal 016",
+    "status": "N",
+    "ip": "192.168.121.116",
+    "empresaId": "003"
+  },
+  {
+    "id": "017",
+    "descricao": "Perfil NFC-e 017",
+    "status": "S",
+    "ip": "192.168.121.117",
+    "empresaId": "004"
+  },
+  {
+    "id": "018",
+    "descricao": "Perfil PDV 018",
+    "status": "S",
+    "ip": "192.168.121.118",
+    "empresaId": "002"
+  },
+  {
+    "id": "019",
+    "descricao": "Perfil PDV 019",
+    "status": "N",
+    "ip": "192.168.121.119",
+    "empresaId": "003"
+  },
+  {
+    "id": "020",
+    "descricao": "Perfil Fiscal 020",
+    "status": "S",
+    "ip": "192.168.121.120",
+    "empresaId": "001"
+  },
+  {
+    "id": "021",
+    "descricao": "Perfil PDV 021",
+    "status": "N",
+    "ip": "192.168.121.121",
+    "empresaId": "001"
+  },
+  {
+    "id": "022",
+    "descricao": "Perfil Fiscal 022",
+    "status": "S",
+    "ip": "192.168.121.122",
+    "empresaId": "002"
+  },
+  {
+    "id": "023",
+    "descricao": "Perfil NFC-e 023",
+    "status": "S",
+    "ip": "192.168.121.123",
+    "empresaId": "003"
+  },
+  {
+    "id": "024",
+    "descricao": "Perfil PDV 024",
+    "status": "N",
+    "ip": "192.168.121.124",
+    "empresaId": "004"
+  },
+  {
+    "id": "025",
+    "descricao": "Perfil PDV 025",
+    "status": "S",
+    "ip": "192.168.121.125",
+    "empresaId": "001"
+  },
+  {
+    "id": "026",
+    "descricao": "Perfil Fiscal 026",
+    "status": "N",
+    "ip": "192.168.121.126",
+    "empresaId": "002"
+  },
+  {
+    "id": "027",
+    "descricao": "Perfil NFC-e 027",
+    "status": "S",
+    "ip": "192.168.121.127",
+    "empresaId": "003"
+  },
+  {
+    "id": "028",
+    "descricao": "Perfil PDV 028",
+    "status": "N",
+    "ip": "192.168.121.128",
+    "empresaId": "004"
+  },
+  {
+    "id": "029",
+    "descricao": "Perfil PDV 029",
+    "status": "S",
+    "ip": "192.168.121.129",
+    "empresaId": "001"
+  },
+  {
+    "id": "030",
+    "descricao": "Perfil Fiscal 030",
+    "status": "S",
+    "ip": "192.168.121.130",
+    "empresaId": "002"
+  },
+  {
+    "id": "031",
+    "descricao": "Perfil NFC-e 031",
+    "status": "N",
+    "ip": "192.168.121.131",
+    "empresaId": "003"
+  },
+  {
+    "id": "032",
+    "descricao": "Perfil PDV 032",
+    "status": "S",
+    "ip": "192.168.121.132",
+    "empresaId": "004"
+  },
+  {
+    "id": "033",
+    "descricao": "Perfil PDV 033",
+    "status": "N",
+    "ip": "192.168.121.133",
+    "empresaId": "001"
+  },
+  {
+    "id": "034",
+    "descricao": "Perfil Fiscal 034",
+    "status": "S",
+    "ip": "192.168.121.134",
+    "empresaId": "002"
+  },
+  {
+    "id": "035",
+    "descricao": "Perfil NFC-e 035",
+    "status": "S",
+    "ip": "192.168.121.135",
+    "empresaId": "003"
+  },
+  {
+    "id": "036",
+    "descricao": "Perfil PDV 036",
+    "status": "N",
+    "ip": "192.168.121.136",
+    "empresaId": "004"
+  },
+  {
+    "id": "037",
+    "descricao": "Perfil PDV 037",
+    "status": "S",
+    "ip": "192.168.121.137",
+    "empresaId": "001"
+  },
+  {
+    "id": "038",
+    "descricao": "Perfil Fiscal 038",
+    "status": "N",
+    "ip": "192.168.121.138",
+    "empresaId": "002"
+  },
+  {
+    "id": "039",
+    "descricao": "Perfil NFC-e 039",
+    "status": "S",
+    "ip": "192.168.121.139",
+    "empresaId": "003"
+  },
+  {
+    "id": "040",
+    "descricao": "Perfil PDV 040",
+    "status": "S",
+    "ip": "192.168.121.140",
+    "empresaId": "004"
+  }
+]

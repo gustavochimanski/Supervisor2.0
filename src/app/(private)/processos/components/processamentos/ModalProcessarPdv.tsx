@@ -1,5 +1,4 @@
-import CardInfoButton from "@/components/shared/Card/CardInfoButton";
-import { IntegerInput } from "@/components/shared/Inputs/integerInput";
+
 import LeftZeroInput from "@/components/shared/Inputs/LeftZeroInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -8,20 +7,20 @@ import { Modal } from "@/components/ui/modal";
 import { CircleArrowRight, CircleX, XIcon } from "lucide-react";
 import { useState } from "react";
 
-import { useModalStore } from "@/global/useModalStore";
+import { useModalStore } from "@/store/useModalStore";
 
 
 const ModalProcessarPdv = () => {
 
-  const {isEnviarProdutosModalOpen, closeEnviarProdutos} = useModalStore()
+  const {isReprocessarPdvModalOpen,closeReprocessarPdv} = useModalStore()
   
   const [empresa, setEmpresa] = useState<string>("");
   console.log(empresa)
   
-  if (!isEnviarProdutosModalOpen) return null;
+  if (!isReprocessarPdvModalOpen) return null;
 
   return (
-    <Modal onClose={closeEnviarProdutos}>
+    <Modal onClose={closeReprocessarPdv}>
       <Card>
         <CardHeader>
           <CardTitle>Processar Pdv</CardTitle>
@@ -72,7 +71,7 @@ const ModalProcessarPdv = () => {
         </CardContent>
 
         <CardFooter className="flex justify-end gap-2">
-          <Button variant={"outline"} onClick={closeEnviarProdutos}>
+          <Button variant={"outline"} onClick={closeReprocessarPdv}>
             <CircleX/> Cancelar
           </Button>
           <Button >
