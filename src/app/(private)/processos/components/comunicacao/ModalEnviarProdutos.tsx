@@ -5,20 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { CircleArrowRight, CircleX } from "lucide-react";
 import { useState } from "react";
+import { useModalStore } from "@/stores/useModalStore";
 
-interface ModalEnviarConfiguracaoProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const ModalEnviarProdutos = () => {
 
-const ModalEnviarProdutos = ({ isOpen, onClose }: ModalEnviarConfiguracaoProps) => {
-    if (!isOpen) return null;
+  const {isEnviarProdutosModalOpen, closeEnviarProdutos} = useModalStore();
   
-    const [empresa, setEmpresa] = useState<string>("");
-    console.log(empresa)
+  const [empresa, setEmpresa] = useState<string>("");
+  const [caixa, setCaixa] = useState<string>("");
+  console.log(`Empresa: ${empresa} \n Caixa: ${caixa}`)
+
+  if (!isEnviarProdutosModalOpen) return null;
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={closeEnviarProdutos}>
       <Card>
         <CardHeader>
           <CardTitle>Enviar Configuração</CardTitle>
@@ -37,16 +37,36 @@ const ModalEnviarProdutos = ({ isOpen, onClose }: ModalEnviarConfiguracaoProps) 
 
             <div className="flex flex-col">
               <label className="text-sm text-muted-foreground mb-1">Caixa</label>
-              <Input placeholder="Caixas" />
+              <Input placeholder="Caixa" />
             </div>
         </CardContent>
 
         <CardContent className="h-[50vh] px-8 overflow-auto">
-          {"AQUI VAI O SQL"}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ab optio amet, quas voluptates vitae dolor odio, temporibus alias reiciendis, illo error nisi aut fuga fugiat ipsum officiis qui perspiciatis Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos provident quam, sapiente distinctio quos assumenda doloremque quod ratione, sit explicabo nam ullam excepturi unde. Corrupti consectetur saepe autem eum voluptate.
         </CardContent>
 
         <CardFooter className="flex justify-end gap-2">
-          <Button variant={"outline"} onClick={onClose}>
+          <Button variant={"outline"} onClick={closeEnviarProdutos}>
             <CircleX/> Cancelar
           </Button>
           <Button >

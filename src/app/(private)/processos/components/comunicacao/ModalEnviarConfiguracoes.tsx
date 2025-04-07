@@ -7,21 +7,19 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { CircleArrowRight, CircleX, XIcon } from "lucide-react";
 import { useState } from "react";
+import { useModalStore } from "@/stores/useModalStore";
 
-interface ModalEnviarConfiguracaoProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const ModalEnviarConfiguracao = ({ isOpen, onClose }: ModalEnviarConfiguracaoProps) => {
-  if (!isOpen) return null;
+const ModalEnviarConfiguracao = () => {
+  const { isEnviarConfiguracaoModalOpen, closeEnviarConfig } = useModalStore();
 
   const [empresa, setEmpresa] = useState<string>("");
-  console.log(empresa)
+  const [caixa, setCaixa] = useState<string>("");
+  console.log(`Empresa: ${empresa} \n Caixa: ${caixa}`)
 
-
+  if (!isEnviarConfiguracaoModalOpen) return null;
+  
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={closeEnviarConfig}>
       <Card>
         <CardHeader>
           <CardTitle>Enviar Configuração</CardTitle>
@@ -40,7 +38,7 @@ const ModalEnviarConfiguracao = ({ isOpen, onClose }: ModalEnviarConfiguracaoPro
 
             <div className="flex flex-col">
               <label className="text-sm text-muted-foreground mb-1">Caixa</label>
-              <Input placeholder="Caixas" />
+              <Input placeholder="Caixa" onChange={(evt) => setCaixa(evt.target.value)}/>
             </div>
         </CardContent>
 
@@ -72,7 +70,7 @@ const ModalEnviarConfiguracao = ({ isOpen, onClose }: ModalEnviarConfiguracaoPro
         </CardContent>
 
         <CardFooter className="flex justify-end gap-2">
-          <Button variant={"outline"} onClick={onClose}>
+          <Button variant={"outline"} onClick={closeEnviarConfig}>
             <CircleX/> Cancelar
           </Button>
           <Button >

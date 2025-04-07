@@ -2,7 +2,7 @@
 const ComponentEmpresas = () => {
     return(
         <div>
-            <h1>Entidades</h1>
+            <h1>Empresas</h1>
         </div>
     )
 }

@@ -8,20 +8,20 @@ import { Modal } from "@/components/ui/modal";
 import { CircleArrowRight, CircleX, XIcon } from "lucide-react";
 import { useState } from "react";
 
-interface ModalEnviarConfiguracaoProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { useModalStore } from "@/stores/useModalStore";
 
-const ModalEnviarConfiguracao = ({ isOpen, onClose }: ModalEnviarConfiguracaoProps) => {
-  if (!isOpen) return null;
 
+const ModalProcessarPdv = () => {
+
+  const {isEnviarProdutosModalOpen, closeEnviarProdutos} = useModalStore()
+  
   const [empresa, setEmpresa] = useState<string>("");
   console.log(empresa)
-
+  
+  if (!isEnviarProdutosModalOpen) return null;
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={closeEnviarProdutos}>
       <Card>
         <CardHeader>
           <CardTitle>Processar Pdv</CardTitle>
@@ -72,7 +72,7 @@ const ModalEnviarConfiguracao = ({ isOpen, onClose }: ModalEnviarConfiguracaoPro
         </CardContent>
 
         <CardFooter className="flex justify-end gap-2">
-          <Button variant={"outline"} onClick={onClose}>
+          <Button variant={"outline"} onClick={closeEnviarProdutos}>
             <CircleX/> Cancelar
           </Button>
           <Button >
@@ -84,4 +84,4 @@ const ModalEnviarConfiguracao = ({ isOpen, onClose }: ModalEnviarConfiguracaoPro
   );
 };
 
-export default ModalEnviarConfiguracao;
+export default ModalProcessarPdv;

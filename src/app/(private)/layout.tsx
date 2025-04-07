@@ -14,7 +14,6 @@ export default async function Layout({ children }: { children: React.ReactNode }
     <html>
       <body>
         <ClientLayout defaultOpen={defaultOpen}>
-          
           {children}
         </ClientLayout>
       </body>

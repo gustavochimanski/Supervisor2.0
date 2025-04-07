@@ -1,10 +1,10 @@
 "use client"
-import { useFetchAllCaixas, useFetchByIdCaixa } from "../../hooks/useCaixa";
+import { useFetchAllCaixas, useFetchByIdCaixa } from "../../../hooks/useCaixa";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardContent } from "@mui/material";
-import { TypeCaixas } from "../../types/typesCaixas";
+import { TypeCaixas } from "../../../types/typesCaixas";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -13,51 +13,58 @@ import { SearchComponent } from "@/components/shared/searchComponent";
 import { Button } from "@/components/ui/button";
 import { ArrowRightCircle, Barcode, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { GridColDef } from "@mui/x-data-grid";
-
+import { GridColDef, GridRowSelectionModel, useGridApiRef } from "@mui/x-data-grid";
+import { useModalStore } from "@/stores/useModalStore";
+import { ExportButtonPro } from "@/components/shared/exportCsvButton";
+import perfisPdvs from "./mock.json"
 
 const ComponentCaixas = () => {
     // STATES
     const [selectedIdCaixa, setSelectedIdCaixa] = useState<string | undefined>(undefined);
     const [formData, setFormData] = useState<TypeCaixas| undefined>(undefined);
     const [showModalCaixas, setShowModalCaixas] = useState(false);
+    const { openEnviarConfig } = useModalStore(); // Modal Global
 
     // MODALS
     const [showModalByIdCaixa, setShowModalByIdCaixa] = useState(false);
 
     const caixasColumns: GridColDef[] = [
       { field: 'id', headerName: 'ID', width: 50, align: "center", headerAlign: 'center'},
-      { field: 'descricao', headerName: 'Descrição', width: 300, align: "left", headerAlign: 'left'},
+      { field: 'descricao', headerName: 'Descrição', width: 300, align: "left", headerAlign: 'left', editable: true},
       { field: 'empresaId', headerName: 'Empresa', width: 150 },
     ];
 
     // FETCHING DATA
     const {data: dataAllCaixas, refetch: refetchAllCaixas} = useFetchAllCaixas();
     const {data: dataByIdCaixa} = useFetchByIdCaixa(selectedIdCaixa);
+    
 
-
-      const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = evt.target;
+    const handleLinhas = (idsLinhas: GridRowSelectionModel) => {
+      console.log(idsLinhas)
+    }
     
-        setFormData((prev) => {
-          if (!prev) return prev;
-    
-          // Atualiza o campo 'descricao'
-          if (name === "descricao") {
-            return { ...prev, descricao: value };
-          }
-    
-          return prev;
-        });
-      };
+    const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = evt.target;
+  
+      setFormData((prev) => {
+        if (!prev) return prev;
+  
+        // Atualiza o campo 'descricao'
+        if (name === "descricao") {
+          return { ...prev, descricao: value };
+        }
+  
+        return prev;
+      });
+    };
 
     const handleRowClick = (row: TypeCaixas) => {
     setSelectedIdCaixa(String(row.id));
-    setShowModalByIdCaixa(true);
+    setShowModalByIdCaixa(false);
   };
 
     return(
-        <div>
+        <div className="flex flex-col h-full">
           {/* =============== CONTAINER TOPO ============== */}
           <div className="flex flex-col md:flex-row w-full justify-between mb-4 gap-4 text-center">
             {/* =================================================== */}
@@ -66,12 +73,22 @@ const ComponentCaixas = () => {
             <div>
               <SearchComponent className="w-full md:w-60" />
             </div>
+          </div>
+            {/* =================================================== */}
+            {/* ====================== TABELA ===================== */}
+            {/* =================================================== */}
+            <DataTableComponentMui 
+              rows={perfisPdvs} 
+              columns={caixasColumns}
+              onRowClick={handleRowClick}
+              onRowSelectionModelChange={handleLinhas}
+            />
+
             {/* =================================================== */}
             {/* =============== BUTTONS FUNCOES =================== */}
             {/* =================================================== */}
             <div className="flex justify-between gap-2"> 
               <Button onClick={() => setShowModalCaixas(true)}><CirclePlus/>Incluir</Button>
-              <Button variant="secondary" onClick={() => refetchAllCaixas()}><RefreshCcw />Atualizar</Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant={"secondary"} ><EllipsisVertical/>Mais</Button>
@@ -79,17 +96,22 @@ const ComponentCaixas = () => {
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Opções</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem >
-                    <ArrowRightCircle/>
-                    <a href="/">Enviar Configuração</a>
+                  <DropdownMenuItem onClick={() => refetchAllCaixas()}>
+                    <RefreshCcw />Atualizar
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={openEnviarConfig}>
+                    <ArrowRightCircle />Enviar Configuração
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Barcode/>
-                    <a href="/">Etiquetas</a>
+                    <ExportButtonPro rows={perfisPdvs}>Excel</ExportButtonPro>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+
+
+
+
 
               {/* =================================================== */}
               {/* ============== MODAL INCLUIR MEIOPGTO ============= */}
@@ -97,20 +119,9 @@ const ComponentCaixas = () => {
               {showModalCaixas && (
                 <Modal onClose={() => setShowModalCaixas(false)}style={{ width: "350px" }}>
                   <Card className="h-10">
-                    
                   </Card>
                 </Modal>
               )}
-          </div>
-            {/* =================================================== */}
-            {/* ====================== TABELA ===================== */}
-            {/* =================================================== */}
-            <DataTableComponentMui 
-              rows={dataAllCaixas} 
-              columns={caixasColumns}
-              onRowClick={handleRowClick}
-              sortModel={[{ field: 'descricao', sort: 'asc' }]}
-            />
 
             {showModalByIdCaixa && 
              <Modal onClose={() => setShowModalByIdCaixa(false)}>

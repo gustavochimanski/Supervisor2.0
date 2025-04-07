@@ -1,142 +1,126 @@
-import React from "react";
-import {
-  DataGrid,
-  GridColDef,
-  DataGridProps,
-  GridRowParams,
-  GridCsvExportOptions,
-  useGridApiRef,
-} from "@mui/x-data-grid";
-import Paper from "@mui/material/Paper";
-import { Box } from "@mui/material";
-import { ExportButtonPro } from "../exportCsvButton";
+  import React from "react";
+  import {
+    DataGrid,
+    GridColDef,
+    DataGridProps,
+    GridRowParams,
+    GridCsvExportOptions,
+    useGridApiRef,
+    GridRowSelectionModel,
+  } from "@mui/x-data-grid";
+  import Paper from "@mui/material/Paper";
 
-export interface DataTableComponentProps
+  export interface DataTableComponentProps
   extends Omit<DataGridProps, "rows" | "columns" | "localeText"> {
   rows: any[] | undefined;
   columns: GridColDef[];
   onRowClick?: (rowData: any) => void;
+  onRowSelectionModelChange?: (ids: GridRowSelectionModel) => void;
+  apiRef?: ReturnType<typeof useGridApiRef>;
 }
 
-// Opções personalizadas
-const csvOptions: GridCsvExportOptions = {
-  delimiter: ";",           // <<< separador de colunas
-  utf8WithBom: true,        // <<< resolve o problema dos acentos no Excel
-};
-
-// Tradução dos textos padrão do DataGrid
-const defaultLocaleText: DataGridProps["localeText"] = {
-  columnMenuLabel: "Menu da Coluna",
-  columnMenuSortAsc: "Ordenar Crescente",
-  columnMenuSortDesc: "Ordenar Decrescente",
-  columnMenuFilter: "Filtrar",
-  columnMenuHideColumn: "Ocultar Coluna",
-  columnMenuShowColumns: "Mostrar Colunas",
-  columnMenuManageColumns: "Definir Colunas",
-  footerTotalRows: "Total de linhas:",
-  
-  // Pagination buttons
-  MuiTablePagination: {
-    labelRowsPerPage: "Linhas por página",
-    labelDisplayedRows: ({ from, to, count }) => `${from}–${to} de ${count}`,
-  },
-};
-
-const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
-  rows,
-  columns,
-  onRowClick,
-  ...rest
-}) => {
-
-  const handleRowClick = (params: GridRowParams) => {
-    if (onRowClick) {
-      onRowClick(params.row);
-    }
+  // Tradução dos textos padrão do DataGrid
+  const defaultLocaleText: DataGridProps["localeText"] = {
+    columnMenuLabel: "Menu da Coluna",
+    columnMenuSortAsc: "Ordenar Crescente",
+    columnMenuSortDesc: "Ordenar Decrescente",
+    columnMenuFilter: "Filtrar",
+    columnMenuHideColumn: "Ocultar Coluna",
+    columnMenuShowColumns: "Mostrar Colunas",
+    columnMenuManageColumns: "Definir Colunas",
+    footerTotalRows: "Total de linhas:",
+    
+    // Pagination buttons
+    MuiTablePagination: {
+      labelRowsPerPage: "Linhas por página",
+      labelDisplayedRows: ({ from, to, count }) => `${from}–${to} de ${count}`,
+    },
   };
 
-  // ⚠️ Criação do apiRef
-  const apiRef = useGridApiRef();
-
-
-  return (
-    <Paper 
-      elevation={0}
-      sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", overflow: "hidden"}}>
-      <DataGrid
-        apiRef={apiRef}
-        rows={rows}
-        columns={columns}
-        rowHeight={40} // ✅ Mais altura para espaço interno (aconselhável)
-        disableRowSelectionOnClick
-        localeText={defaultLocaleText}
-        onRowClick={handleRowClick}
+  const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
+    rows,
+    columns,
+    onRowClick,
+    apiRef, // <- aqui ele vem do pai
+    onRowSelectionModelChange,
+    ...rest
+  }) => {
+    const handleRowClick = (params: GridRowParams) => {
+      if (onRowClick) {
+        onRowClick(params.row);
+      }
+    };
+  
+    return (
+      <Paper
+        elevation={0}
         sx={{
-          flex: 1,               // <<< MUITO IMPORTANTE
-          minHeight: 0,          // <<< ESSENCIAL para flexbox funcionar
-          overflow: "auto",
-          border: "none",
-          "--DataGrid-rowBorder": "none", // ✅ Separador de linhas oficial do MUI
-          backgroundColor: "var(--bg-sidebar)", // ✅ Background geral
-
-          // ✅ Cabeçalho da tabela
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: "var(--bg-sidebar)",
-            color: "#1D4ED8",
-            fontSize: "1rem",
-            borderBottom: "1px solid rgba(0,0,0,0.08)",
-          },
-
-          "& .MuiDataGrid-columnHeaderTitle": {
-            fontWeight: 600,
-          },
-
-          // ✅ Zebra
-          "& .MuiDataGrid-row:nth-of-type(odd)": {
-            backgroundColor: "#F9FAFB", // slate-50
-          },
-
-          "& .MuiDataGrid-row:nth-of-type(even)": {
-            backgroundColor: "#FFFFFF", // branco puro
-          },
-
-          // ✅ Hover com transição
-          "& .MuiDataGrid-row:hover": {
-            backgroundColor: "#EEF2F6", // slate-100
-            transition: "background-color 0.2s ease-in-out",
-          },
-
-          // ✅ Células com Fonte melhorado
-          "& .MuiDataGrid-cell": {
-            fontSize: "0.95rem",
-            cursor: "pointer",
-            border: "none",
-          },
-
-          // ✅ Footer clean
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: "var(--bg-sidebar)",
-            borderTop: "none",
-          },
-
-          // ✅ Remove outline azul padrão feio
-          "& .MuiDataGrid-cell:focus, & .MuiDataGrid-columnHeader:focus": {
-            outline: "none",
-          },
-
-          // ✅ Remove borda no grid geral
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          width: "100%",
+          overflow: "hidden",
         }}
-        {...rest}
-      />
-      {/* ---------- BOTÕES ABAIXO DO GRID EXPORTAÇÃO ---------- */}
-      <Box display="flex" justifyContent="flex-end">
-        <ExportButtonPro apiRef={apiRef} />
-      </Box>
-    </Paper>
-  );
-};
+      >
+        <DataGrid
+          apiRef={apiRef} // <- usa o que veio por props
+          rows={rows}
+          columns={columns}
+          rowHeight={40}
+          disableRowSelectionOnClick
+          checkboxSelection
+          paginationModel={{ pageSize: 10, page: 0 }}
+          pageSizeOptions={[10, 20, 30]}
+          localeText={defaultLocaleText}
+          onRowSelectionModelChange={onRowSelectionModelChange}
+          onRowClick={handleRowClick}
+          sx={{
+            flex: 1,
+            minHeight: 0,
+            overflow: "auto",
+            border: "none",
+            "--DataGrid-rowBorder": "none",
+            backgroundColor: "var(--bg-sidebar)",
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "var(--bg-sidebar)",
+              color: "#1E40AF",
+              fontSize: "0.9rem",
+              borderBottom: "1px solid rgba(0,0,0,0.08)",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: 600,
+            },
+            "& .MuiDataGrid-row:nth-of-type(odd)": {
+              backgroundColor: "#F9FAFB",
+            },
+            "& .MuiDataGrid-row:nth-of-type(even)": {
+              backgroundColor: "#FFFFFF",
+            },
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "#EEF2F6",
+              transition: "background-color 0.2s ease-in-out",
+            },
+            "& .MuiDataGrid-cell": {
+              fontSize: "0.85rem",
+              cursor: "pointer",
+              border: "none",
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: "var(--bg-sidebar)",
+              borderTop: "none",
+            },
+            "& .MuiDataGrid-cell:focus, & .MuiDataGrid-columnHeader:focus": {
+              outline: "none",
+            },
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+          }}
+          {...rest}
+        />
+      </Paper>
+    );
+  };
+  
 
-export default DataTableComponentMui;
+  export default DataTableComponentMui;

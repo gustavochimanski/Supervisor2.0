@@ -1,12 +1,22 @@
 "use client"
 
-import { Monitor, RefreshCcwDot, Waypoints } from "lucide-react";
+import { Monitor, Network, RefreshCcwDot, Waypoints } from "lucide-react";
 import Tabs from "@/components/shared/tabs";
 import ComponentComunicacao from "./components/comunicacao/ComponentComunicacao";
 import ComponentProcessamentos from "./components/processamentos/ComponentProcessamentos";
+import componentCentralNFCE from "./components/centralNFCE/ComponentCentralNFCE";
 
 const PageProcessos: React.FC = () => {
     const nestedTabItems = [
+      {
+        value: "centralNFCE",
+        label: (
+          <span className="flex items-center gap-2">
+            <Network size={14} /> Central NFCE
+          </span>
+        ),
+        Component: componentCentralNFCE,
+      },
       {
         value: "caixas",
         label: (

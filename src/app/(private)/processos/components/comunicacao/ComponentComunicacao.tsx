@@ -3,10 +3,10 @@ import CardInfoButton from "@/components/shared/Card/CardInfoButton";
 import { CircleArrowRight, Send } from "lucide-react";
 import ModalEnviarConfiguracao from "./ModalEnviarConfiguracoes";
 import ModalEnviarProdutos from "./ModalEnviarProdutos";
-
+import { useModalStore } from "@/stores/useModalStore";
 
 const ComponentComunicacao = () => {
-  const [modalAberto, setModalAberto] = useState<string | null>(null);
+  const { openEnviarConfig, openEnviarProdutos } = useModalStore();
 
   return (
     <>
@@ -16,7 +16,7 @@ const ComponentComunicacao = () => {
           description="Envia as configurações aplicadas para a frente de caixa."
           titleButton="Enviar"
           icon={<CircleArrowRight size={16} />}
-          onClick={() => setModalAberto("config")}
+          onClick={openEnviarConfig}
         />
 
         <CardInfoButton
@@ -24,12 +24,12 @@ const ComponentComunicacao = () => {
           description="Realiza o envio completo de todos os produtos para a frente de caixa. Esse processo pode levar alguns minutos."
           titleButton="Enviar"
           icon={<CircleArrowRight size={16} />}
-          onClick={() => setModalAberto("produtos")}
+          onClick={openEnviarConfig}
         />
       </div>
 
-      <ModalEnviarConfiguracao isOpen={modalAberto === "config"} onClose={() => setModalAberto(null)} />
-      <ModalEnviarProdutos isOpen={modalAberto === "produtos"} onClose={() => setModalAberto(null)} />
+      <ModalEnviarConfiguracao  />
+      <ModalEnviarProdutos  />
     </>
   );
 };

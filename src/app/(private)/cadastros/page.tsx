@@ -1,13 +1,14 @@
 "use client"
 import Tabs from "@/components/shared/tabs";
 import { BanknoteIcon, Building, HandCoins, LucideShoppingCart, Menu, Monitor, Mouse, User } from "lucide-react";
-import ComponentCaixas from "./components/tabs/ComponentCaixas";
+import ComponentCaixas from "./components/tabs/caixas/ComponentCaixas";
 import ComponentUsuarios from "./components/tabs/ComponentUsuarios";
 import ComponentProdutos from "./components/tabs/ComponentProdutos";
 import ComponentEmpresas from "./components/tabs/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
 import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
 import ComponentFiscal from "./components/tabs/ComponentFiscal";
+import ComponentMainCaixas from "./components/tabs/caixas/page";
 
 const PageCadastros: React.FC = () => {
     const nestedTabItems = [
@@ -18,7 +19,7 @@ const PageCadastros: React.FC = () => {
             <Monitor size={15} /> Caixas
           </span>
         ),
-        Component: ComponentCaixas,
+        Component: ComponentMainCaixas,
       },
       {
         value: "usuarios",

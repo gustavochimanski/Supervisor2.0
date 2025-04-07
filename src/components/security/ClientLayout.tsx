@@ -8,6 +8,8 @@ import queryClient from "@/services/Query/QueryClient"
 import { useEffect, useState } from "react"
 import TopBarComponent from "../shared/app-topBar"
 import { Toaster } from "../ui/toastes"
+import ModalEnviarConfiguracao from "@/app/(private)/processos/components/comunicacao/ModalEnviarConfiguracoes"
+import ModalEnviarProdutos from "@/app/(private)/processos/components/comunicacao/ModalEnviarProdutos"
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -39,6 +41,10 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
           </div>
         </main>
         <Toaster />
+        {/* =========================================== */}
+        {/* ============== MODAIS GLOBAIS ============= */}
+        <ModalEnviarConfiguracao />
+        <ModalEnviarProdutos />
       </SidebarProvider>
     </QueryClientProvider>
   )
