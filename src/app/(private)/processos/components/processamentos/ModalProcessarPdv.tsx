@@ -26,7 +26,7 @@ const ModalProcessarPdv = () => {
           <CardTitle>Processar Pdv</CardTitle>
         </CardHeader>
 
-        <CardContent className="flex px-8 gap-4 pb-4 pt-2">
+        <CardContent className="flex gap-4 ">
             <div className="flex flex-col">
               <label className="text-sm text-muted-foreground mb-1">Empresa</label>
               <LeftZeroInput  maxLength={3} className="w-20" placeholder="Empresa" onFormattedChange={(val) => setEmpresa(val)} value={empresa} />

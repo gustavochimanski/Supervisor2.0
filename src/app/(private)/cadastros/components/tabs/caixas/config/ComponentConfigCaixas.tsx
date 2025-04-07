@@ -1,7 +1,8 @@
 import Tabs from "@/components/shared/tabs"
 import TabConfigCaixas from "./tabs/TabConfigCaixas"
-import { Settings, Settings2 } from "lucide-react"
+import { ListTodo, Settings, Settings2 } from "lucide-react"
 import TabConfigSat from "./tabs/TabSat"
+import TabConfigDiretivas from "./tabs/TabDiretivas"
 
 
 const ComponentConfigCaixas = () => {
@@ -24,6 +25,15 @@ const ComponentConfigCaixas = () => {
             </span>
           ),
           Component: TabConfigSat,
+        },
+        {
+          value: "diretivas",
+          label: (
+            <span className="flex items-center gap-2">
+              <ListTodo size={15} /> Diretivas
+            </span>
+          ),
+          Component: TabConfigDiretivas,
         },
     ]
     return(

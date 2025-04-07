@@ -22,7 +22,6 @@ const ComponentProcessamentos = () => {
             icon={<RefreshCcw size={16} />}
             onClick={openReprocessarPdv}
           />
-          
         </div>
   
         <ModalProcessarPdv />
