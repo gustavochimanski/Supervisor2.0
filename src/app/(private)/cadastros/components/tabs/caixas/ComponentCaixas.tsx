@@ -10,7 +10,7 @@ const ComponentMainCaixas = () => {
       
       {/* Seção Caixas */}
       <div className="flex flex-col flex-1">
-        <h2 className="text-lg text-[#666666] font-semibold mb-2">Caixas</h2>
+        <h2 className="text-lg text-muted-foreground font-semibold mb-2">Caixas</h2>
         <div className="p-4 h-full shadow rounded-xl border overflow-auto flex-1">
           <ComponentCaixas />
         </div>
@@ -18,7 +18,7 @@ const ComponentMainCaixas = () => {
     
       {/* Seção Config */}
       <div className="flex flex-col flex-1">
-        <h2 className="text-lg text-[#666666] font-semibold mb-2">Config</h2>
+        <h2 className="text-lg text-muted-foreground font-semibold mb-2">Config</h2>
         <div className="p-4 h-full shadow rounded-xl border overflow-auto flex-1">
           <ComponentConfigCaixas />
         </div>

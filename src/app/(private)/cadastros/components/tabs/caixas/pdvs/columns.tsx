@@ -14,7 +14,7 @@ export const getCaixasColumns = (
     headerName: 'Ver',
     align: "center",
     headerAlign: "center",
-    width: 80,
+    minWidth: 1,
     sortable: false,
     filterable: false,
     renderCell: (params) => (
@@ -22,7 +22,7 @@ export const getCaixasColumns = (
         variant="ghost"
         size="icon"
         onClick={() => handleOpenVisualizarModal(params.row)}
-        className="text-blue-500"
+        className="text-blue-700 "
       >
         <Eye size={18} />
       </Button>
@@ -34,7 +34,7 @@ export const getCaixasColumns = (
   {
     field: 'status',
     headerName: 'Status',
-    width: 70,
+    minWidth: 70,
     align: "center",
     headerAlign: "center",
     renderCell: (params) => {

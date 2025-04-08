@@ -19,12 +19,12 @@ import {
     Sliders,
     Calendar,
     Settings,
-    BarChart,
     ShoppingBag,
     MonitorUpIcon,
     Power,
     User,
     Network,
+    PieChart,
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -34,7 +34,7 @@ import Image from 'next/image';
   // Menu items.
   const items = [
     { title: "Home", url: "/home", icon: Home },
-    { title: "Dashboard", url: "/", icon: BarChart },
+    { title: "Dashboard", url: "/", icon: PieChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "/cadastros", icon: User },
     { title: "Processos", url: "/processos", icon: Network },

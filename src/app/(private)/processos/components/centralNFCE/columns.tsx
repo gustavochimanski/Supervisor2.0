@@ -76,7 +76,6 @@ export const nfceColumns = (
     align: "center",
     headerAlign: "center",
     minWidth: 50,
-    
     sortable: false,
     filterable: false,
     renderCell: (params) => (
@@ -84,7 +83,7 @@ export const nfceColumns = (
         variant="ghost"
         size="icon"
         onClick={() => handleOpenVisualizarModal?.(params.row)}
-        className="text-blue-500"
+        className=" text-blue-700"
       >
         <Eye size={18} />
       </Button>

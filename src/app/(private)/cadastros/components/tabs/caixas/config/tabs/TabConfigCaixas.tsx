@@ -7,7 +7,7 @@ import { CircleCheck, CircleX } from "lucide-react"
 const TabConfigCaixas = () => {
     return(
         <div>
-            <Card>
+            <Card className="text-muted-foreground">
                 <CardContent className="flex flex-col gap-3">
                     <div className="flex gap-4">
                         <div className="w-20 ">

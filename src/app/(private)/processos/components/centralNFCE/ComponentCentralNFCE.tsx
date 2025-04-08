@@ -13,11 +13,17 @@ import { Circle } from "lucide-react";
 
 import { nfceColumns, nfceColumnOrder } from "./columns";
 import mockCupons from "./mockCupons.json";
+import { useState } from "react";
+import { Modal } from "@/components/ui/modal";
 
 const ComponentCentralNFCE = () => {
+  const [modalView, setModalView] = useState(false);
+  const [dataModalView, setDataModalView] = useState<any>();
 
   const handleOpenVisualizarModal = (row: any) => {
     console.log("Visualizar:", row);
+    setModalView(true)
+    setDataModalView(row)
   };
 
   
@@ -59,9 +65,9 @@ const ComponentCentralNFCE = () => {
           </div>
 
           {/* Legenda */}
-          <div className="mr-10 flex flex-col text-sm">
-            <h1 className="text-end font-semibold mb-1">Legenda</h1>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+          <div className="m-auto flex flex-col text-sm">
+            <h1 className="font-semibold items-end mb-1">Legenda</h1>
+            <div className="flex gap-x-4 gap-y-1">
               <div className="flex items-center gap-2">
                 <Circle className="w-4 h-4 text-green-700 fill-green-700" />
                 <span>Autorizado</span>
@@ -90,6 +96,22 @@ const ComponentCentralNFCE = () => {
           />
         </CardContent>
       </Card>
+
+      {modalView && (
+        <Modal onClose={() => setModalView(false)} style={{ width: "80vw", height: "70vh" }}>
+          <Card >
+            <CardHeader>
+              <CardTitle>Detalhes do Cupom</CardTitle>
+              <CardDescription>Informações completas do registro</CardDescription>
+            </CardHeader>
+
+            <CardContent className="flex flex-col gap-4">
+              {dataModalView.idPerfil}
+            </CardContent>
+          </Card>
+        </Modal>
+      )}
+
     </div>
   );
 };
