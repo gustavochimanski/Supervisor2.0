@@ -7,7 +7,7 @@ import ComponentEmpresas from "./components/tabs/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
 import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
 import ComponentFiscal from "./components/tabs/ComponentFiscal";
-import ComponentMainCaixas from "./components/tabs/caixas/ComponentCaixas";
+import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
 import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
 
 const PageCadastros: React.FC = () => {

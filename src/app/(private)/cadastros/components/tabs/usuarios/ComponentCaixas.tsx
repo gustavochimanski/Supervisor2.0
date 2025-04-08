@@ -1,6 +1,6 @@
 "use client"
 
-import ComponentCaixas from "../caixas/ComponentCaixas"
+import ComponentCaixas from "../caixas/ComponentMainCaixas"
 import ComponentPerfilDeCaixa from "../perfisDeCaixa/ComponentPerfisDeCaixa"
 
 const ComponentMainCaixas = () => {

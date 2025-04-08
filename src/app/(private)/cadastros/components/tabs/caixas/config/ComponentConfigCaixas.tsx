@@ -3,11 +3,8 @@ import TabConfigCaixas from "./tabs/TabConfigCaixas";
 import TabConfigSat from "./tabs/TabSat";
 import TabConfigDiretivas from "./tabs/TabDiretivas";
 import { ListTodo, Settings, Settings2 } from "lucide-react";
-import { useState } from "react";
-import { TypeCaixas } from "../../../../types/typesCaixas";
 
-const ComponentConfigCaixas = () => {
-  const [dadosSelecionados, setDadosSelecionados] = useState<TypeCaixas | undefined>();
+const ComponentConfigCaixas = (data: any) => {
 
   const TabItems = [
     {
@@ -17,7 +14,7 @@ const ComponentConfigCaixas = () => {
           <Settings size={15} /> Caixas
         </span>
       ),
-      Component: () => <TabConfigCaixas data={dadosSelecionados} />,
+      Component: () => <TabConfigCaixas data={data} />,
     },
     {
       value: "sat",
