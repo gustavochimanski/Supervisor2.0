@@ -1,59 +1,118 @@
+import { Button } from "@/components/ui/button";
 import { GridColDef } from "@mui/x-data-grid";
+import { Eye } from "lucide-react";
 
-export const nfceColumns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 60, align: "center", headerAlign: "center" },
-  { field: "empresa", headerName: "Empresa", width: 80 },
-  { field: "pdv", headerName: "PDV", width: 80 },
-  { field: "dataMvto", headerName: "Data Mvto", width: 140 },
-  { field: "dataHoraEmitido", headerName: "Dt/Hora Emitido", width: 160 },
-  { field: "dataHoraCancelado", headerName: "Dt/Hora Cancelado", width: 160 },
-  { field: "cupom", headerName: "Cupom", width: 80 },
-  { field: "dcto", headerName: "Dcto", width: 100 },
-  { field: "serie", headerName: "Série", width: 60 },
-  { field: "cnpjCpf", headerName: "CNPJ/CPF", width: 140 },
-  { field: "chave", headerName: "Chave Dcto", width: 280 },
-  { field: "protocolo", headerName: "Protocolo", width: 140 },
-  { field: "protocoloCanc", headerName: "Protocolo Canc", width: 140 },
-  { field: "valor", headerName: "Valor Dcto", width: 100, type: "number" },
-  {
-    field: "sit",
-    headerName: "Status",
-    width: 100,
+export const nfceColumns = (
+  handleOpenVisualizarModal?: (row: any) => void
+): GridColDef[] => {
+  const baseColumns: GridColDef[] = [
+    { field: "id", headerName: "ID", minWidth: 70  },
+    { field: "empresa", headerName: "Empresa", minWidth: 80, },
+    { field: "pdv", headerName: "PDV", minWidth: 80 },
+    { field: "dataMvto", headerName: "Data Mvto", minWidth: 150 },
+    { field: "dataEmitido", headerName: "Data Emitido", minWidth: 160 },
+    { field: "dataCancelado", headerName: "Data Cancelado", minWidth: 160 },
+    { field: "cupom", headerName: "Cupom", minWidth: 80 },
+    { field: "dcto", headerName: "Dcto", minWidth: 80 },
+    { field: "serie", headerName: "Série", minWidth: 70 },
+    { field: "cnpjCpf", headerName: "CNPJ/CPF", minWidth: 150 },
+    { field: "chave", headerName: "Chave Dcto", minWidth: 200 },
+    { field: "protocolo", headerName: "Protocolo", minWidth: 140 },
+    { field: "protocoloCanc", headerName: "Protocolo Canc", minWidth: 140 },
+    { field: "valor", headerName: "Valor Dcto", minWidth: 120, type: "number", editable: true },
+    {
+      field: "sit",
+      headerName: "Status",
+      minWidth: 65,
+      
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        const value = params.value;
+        let color = "";
+        let title = "";
+
+        switch (value) {
+          case "A":
+            color = "#22c55e";
+            title = "Autorizado";
+            break;
+          case "P":
+            color = "#facc15";
+            title = "Pendente";
+            break;
+          case "C":
+            color = "#ef4444";
+            title = "Cancelado";
+            break;
+          case "I":
+            color = "#fb923c";
+            title = "Inutilizado";
+            break;
+          default:
+            color = "#9ca3af";
+            title = "Desconhecido";
+        }
+
+        return (
+          <span
+            style={{
+              display: "inline-block",
+              minWidth: 12,
+              height: 12,
+              borderRadius: "50%",
+              backgroundColor: color,
+            }}
+            title={title}
+          />
+        );
+      },
+    },
+    { field: "motivo", headerName: "Motivo", minWidth: 160 },
+    { field: "supCanc", headerName: "Sup. Canc", minWidth: 90 },
+    { field: "nomeSupCanc", headerName: "Sup. Canc", minWidth: 100 },
+    {field: "viewModal",
+    headerName: "Ver",
     align: "center",
     headerAlign: "center",
-    renderCell: (params) => {
-      const value = params.value;
-      let color = "";
-      let title = "";
+    minWidth: 50,
+    
+    sortable: false,
+    filterable: false,
+    renderCell: (params) => (
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => handleOpenVisualizarModal?.(params.row)}
+        className="text-blue-500"
+      >
+        <Eye size={18} />
+      </Button>
+    )},
+  ];
 
-      switch (value) {
-        case "A":
-          color = "#22c55e"; title = "Autorizado"; break;
-        case "P":
-          color = "#facc15"; title = "Pendente"; break;
-        case "C":
-          color = "#ef4444"; title = "Cancelado"; break;
-        case "I":
-          color = "#fb923c"; title = "Inutilizado"; break;
-        default:
-          color = "#9ca3af"; title = "Desconhecido";
-      }
+  return baseColumns;
+};
 
-      return (
-        <span
-          style={{
-            display: "inline-block",
-            width: 12,
-            height: 12,
-            borderRadius: "50%",
-            backgroundColor: color,
-          }}
-          title={title}
-        />
-      );
-    },
-  },
-  { field: "motivo", headerName: "Motivo", width: 160 },
-  { field: "supCanc", headerName: "Sup. Canc", width: 90 },
-  { field: "nomeSupCanc", headerName: "Nome Sup. Canc", width: 160 },
+
+export const nfceColumnOrder: string[] = [
+  "id",
+  "viewModal",
+  "empresa",
+  "pdv",
+  "serie",
+  "cupom",
+  "dcto",
+  "valor",
+  "sit",          // status com bolinha colorida
+  "cnpjCpf",
+  "dataMvto",
+  "chave",
+  "protocolo",
+  "nomeSupCanc",
+  "protocoloCanc",
+  "dataEmitido",
+  "dataCancelado",
+  "supCanc",
+  "motivo",
 ];

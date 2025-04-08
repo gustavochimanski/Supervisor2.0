@@ -4,7 +4,6 @@
     GridColDef,
     DataGridProps,
     GridRowParams,
-    GridCsvExportOptions,
     useGridApiRef,
     GridRowSelectionModel,
   } from "@mui/x-data-grid";
@@ -14,6 +13,7 @@
   extends Omit<DataGridProps, "rows" | "columns" | "localeText"> {
   rows: any[] | undefined;
   columns: GridColDef[];
+  columnOrder?: string[]; // Reordena as colunas
   onRowClick?: (rowData: any) => void;
   onRowSelectionModelChange?: (ids: GridRowSelectionModel) => void;
   apiRef?: ReturnType<typeof useGridApiRef>;
@@ -43,6 +43,7 @@
     onRowClick,
     apiRef, // <- aqui ele vem do pai
     onRowSelectionModelChange,
+    columnOrder,
     ...rest
   }) => {
     const handleRowClick = (params: GridRowParams) => {
@@ -50,6 +51,24 @@
         onRowClick(params.row);
       }
     };
+
+  // REORDENA E APLICA headerAlign e align CENTER COMO PADRÃO
+  const orderedColumns = React.useMemo(() => {
+    const enhanceColumn = (col: GridColDef): GridColDef => ({
+      ...col,
+      headerAlign: col.headerAlign ?? "center", // só aplica se não tiver
+      align: col.align ?? "center", // só aplica se não tiver
+      flex: col.flex ?? 1, // ⬅️ padrão flex: 1
+    });
+
+    const finalColumns = columns.map(enhanceColumn);
+
+    if (!columnOrder) return finalColumns;
+
+    const map = new Map(finalColumns.map((col) => [col.field, col]));
+    return columnOrder.map((field) => map.get(field)).filter(Boolean) as GridColDef[];
+  }, [columns, columnOrder]);
+
 
     return (
       <Paper
@@ -65,7 +84,7 @@
         <DataGrid
           apiRef={apiRef} // <- usa o que veio por props
           rows={rows}
-          columns={columns}
+          columns={orderedColumns}
           rowHeight={35}
           checkboxSelection
           disableRowSelectionOnClick
@@ -81,8 +100,8 @@
             backgroundColor: "var(--bg-sidebar)",
             "& .MuiDataGrid-columnHeaders": {
               backgroundColor: "var(--bg-sidebar)",
-              color: "#666666",
-              fontSize: "0.9rem",
+              color: "#9ca3af",
+              fontSize: "0.87rem",
               borderBottom: "1px solid rgba(0,0,0,0.08)",
             },
             "& .MuiDataGrid-columnHeaderTitle": {
@@ -96,7 +115,7 @@
             },
             "& .MuiDataGrid-row:hover": {
               backgroundColor: "#EEF2F6",
-              transition: "background-color 0.2s ease-in-out",
+              transition: "background-color 0.05s ease-in-out",
             },
             "& .MuiDataGrid-cell": {
               fontSize: "0.85rem",

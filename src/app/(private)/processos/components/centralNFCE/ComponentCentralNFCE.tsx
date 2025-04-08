@@ -11,10 +11,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Circle } from "lucide-react";
 
-import { nfceColumns } from "./columns";
+import { nfceColumns, nfceColumnOrder } from "./columns";
 import mockCupons from "./mockCupons.json";
 
 const ComponentCentralNFCE = () => {
+
+  const handleOpenVisualizarModal = (row: any) => {
+    console.log("Visualizar:", row);
+  };
+
+  
   return (
     <div className="flex flex-col h-full">
       <Card className="flex flex-col h-full">
@@ -79,7 +85,8 @@ const ComponentCentralNFCE = () => {
         <CardContent className="p-0 flex-1 overflow-hidden">
           <DataTableComponentMui
             rows={mockCupons}
-            columns={nfceColumns}
+            columns={nfceColumns(handleOpenVisualizarModal)}
+            columnOrder={nfceColumnOrder}
           />
         </CardContent>
       </Card>

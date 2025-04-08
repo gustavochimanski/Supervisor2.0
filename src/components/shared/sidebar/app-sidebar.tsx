@@ -24,7 +24,7 @@ import {
     MonitorUpIcon,
     Power,
     User,
-    Workflow,
+    CircleArrowRight
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -37,7 +37,7 @@ import Image from 'next/image';
     { title: "Dashboard", url: "/", icon: BarChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "/cadastros", icon: User },
-    { title: "Processos", url: "/processos", icon: Workflow },
+    { title: "Processos", url: "/processos", icon: CircleArrowRight },
     { title: "Compras", url: "#", icon: ShoppingBag },
     { title: "Estoque", url: "#", icon: Package },
     { title: "Financeiro", url: "#", icon: DollarSign },
@@ -47,13 +47,7 @@ import Image from 'next/image';
     { title: "Configuração", url: "/configuracao", icon: Settings },
   ];
 
-  const empresas = [
-    { nome_empresa: "Ponto Certo - Campo Limpo" },
-    { nome_empresa: "Ponto Certo - Novo Líder" },
-    { nome_empresa: "Ponto Certo - Embu" },
-  ];
 
-  
   const AppSidebar = ()=> {
 
   const { open } = useSidebar();
