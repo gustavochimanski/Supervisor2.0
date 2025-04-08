@@ -13,7 +13,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { GridRowSelectionModel} from "@mui/x-data-grid";
 import { useModalStore } from "@/store/useModalStore";
 import { ExportButtonPro } from "@/components/shared/exportCsvButton";
-import PdvsMock from "./mock.json"
 import { getCaixasColumns } from "./columns";
 
 interface ComponentPdvsProps {
@@ -73,7 +72,7 @@ const ComponentPdvs = ({ setRowSelectedProp }: ComponentPdvsProps) => {
                     <ArrowRightCircle />Enviar Configuração
                   </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <ExportButtonPro rows={PdvsMock}>Excel</ExportButtonPro>
+                  <ExportButtonPro rows={dataAllCaixas}>Excel</ExportButtonPro>
                 </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

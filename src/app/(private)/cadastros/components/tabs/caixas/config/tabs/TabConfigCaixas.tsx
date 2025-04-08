@@ -1,15 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardFooter, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardFooter, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { CardContent, CardHeader } from "@mui/material"
 import { CircleCheck, CircleX } from "lucide-react"
 
 const TabConfigCaixas = ({ data }: { data?: any }) => {
-  if (!data) return <div>Selecione um item para visualizar.</div>
-  if (!data.data) return <div>Não foi possível renderizar os dados</div>
-
+  if (!data) return 
+  if (!data.data) return <div>Selecione um item para visualizar.</div>
+  
   const confPerfil = data.data.perfilPdv?.confPerfil
   if (!confPerfil || !Array.isArray(confPerfil)) {
     return <div>Nenhuma configuração encontrada.</div>
@@ -17,9 +17,8 @@ const TabConfigCaixas = ({ data }: { data?: any }) => {
 
   return (
     <Card className="text-muted-foreground">
-        <CardHeader>
-            <CardTitle>Configurações {data.data.descricao}</CardTitle>
-        </CardHeader>
+
+        <CardTitle className="p-4 pb-0">Configurações {data.data.descricao}</CardTitle>
       <CardContent className="flex flex-wrap gap-4 text-xs">
         {confPerfil.map((config: any) => (
           <div
