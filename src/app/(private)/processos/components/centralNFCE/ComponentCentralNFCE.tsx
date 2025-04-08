@@ -1,17 +1,23 @@
 "use client";
 
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
-import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Circle } from "lucide-react";
 
 import { nfceColumns } from "./columns";
-import mockCupons from "./mockCupons.json"
+import mockCupons from "./mockCupons.json";
 
 const ComponentCentralNFCE = () => {
   return (
-    <div className="h-full">
-      <Card className="h-full">
+    <div className="flex flex-col h-full">
+      <Card className="flex flex-col h-full">
         <CardHeader>
           <CardTitle>Central NFCE</CardTitle>
           <CardDescription />
@@ -70,10 +76,11 @@ const ComponentCentralNFCE = () => {
           </div>
         </CardContent>
 
-        <CardContent className="p-0 ">
-            <DataTableComponentMui 
-                rows={mockCupons} 
-                columns={nfceColumns}/>
+        <CardContent className="p-0 flex-1 overflow-hidden">
+          <DataTableComponentMui
+            rows={mockCupons}
+            columns={nfceColumns}
+          />
         </CardContent>
       </Card>
     </div>

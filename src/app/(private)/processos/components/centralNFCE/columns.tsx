@@ -7,7 +7,6 @@ export const nfceColumns: GridColDef[] = [
   { field: "dataMvto", headerName: "Data Mvto", width: 140 },
   { field: "dataHoraEmitido", headerName: "Dt/Hora Emitido", width: 160 },
   { field: "dataHoraCancelado", headerName: "Dt/Hora Cancelado", width: 160 },
-  { field: "sit", headerName: "Sit", width: 60 },
   { field: "cupom", headerName: "Cupom", width: 80 },
   { field: "dcto", headerName: "Dcto", width: 100 },
   { field: "serie", headerName: "Série", width: 60 },

@@ -59,7 +59,7 @@
           flexDirection: "column",
           height: "100%",
           width: "100%",
-          overflow: "auto",
+          overflow: "hidden", // <- importante
         }}
       >
         <DataGrid
@@ -67,8 +67,8 @@
           rows={rows}
           columns={columns}
           rowHeight={35}
-          disableRowSelectionOnClick
           checkboxSelection
+          disableRowSelectionOnClick
           pageSizeOptions={[10, 20, 30]}
           localeText={defaultLocaleText}
           onRowSelectionModelChange={onRowSelectionModelChange}
@@ -76,7 +76,6 @@
           sx={{
             flex: 1,
             minHeight: 0,
-            overflow: "auto",
             border: "none",
             "--DataGrid-rowBorder": "none",
             backgroundColor: "var(--bg-sidebar)",

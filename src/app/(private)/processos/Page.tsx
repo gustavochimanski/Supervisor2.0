@@ -43,7 +43,7 @@ const PageProcessos: React.FC = () => {
           items={nestedTabItems}
           containerClassName="w-full rounded-sm shadow h-full flex flex-col"
           triggerClassName="transition-colors"
-          contentClassName="bg-sidebar rounded-sm flex-1 overflow-auto"
+          contentClassName="bg-sidebar rounded-sm flex-1 h-full overflow-hidden"
         />
       </div>
     );
