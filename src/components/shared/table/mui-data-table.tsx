@@ -114,8 +114,8 @@
               backgroundColor: "#FFFFFF",
             },
             "& .MuiDataGrid-row:hover": {
-              backgroundColor: "#EEF2F6",
-              transition: "background-color 0.05s ease-in-out",
+              backgroundColor: "#e7e5e4",
+              transition: "background-color 0s ease-in-out",
             },
             "& .MuiDataGrid-cell": {
               fontSize: "0.85rem",

@@ -1,11 +1,9 @@
 // columns/caixasColumns.ts
-import { Button } from "@/components/ui/button";
 import { GridColDef } from "@mui/x-data-grid";
-import { Eye } from "lucide-react";
-import { TypeCaixas } from "../../../../types/typesCaixas";
+import { ViewButton } from "@/components/shared/buttons/viewButton";
 
 export const getCaixasColumns = (
-  handleOpenVisualizarModal: (row: TypeCaixas) => void
+  setDadosSelecionados: (row: any) => void
 ): GridColDef[] => [
   { field: 'id', headerName: 'ID', minWidth: 50, align: "center", headerAlign: 'center' },
   { field: 'descricao', headerName: 'Descrição', minWidth: 120, editable: true },
@@ -14,23 +12,16 @@ export const getCaixasColumns = (
     headerName: 'Ver',
     align: "center",
     headerAlign: "center",
-    minWidth: 1,
+    minWidth: 70,
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => handleOpenVisualizarModal(params.row)}
-        className="text-blue-700 "
-      >
-        <Eye size={18} />
-      </Button>
+      <ViewButton onClick={() => setDadosSelecionados(params.row)} />
     ),
   },
-  { field: 'empresaId', headerName: 'Empresa', width: 100, align: "center", headerAlign: 'center' },
-  { field: 'ip', headerName: 'IP', width: 130, align: "center" , editable: true},
-  { field: 'tipoSat', headerName: 'Tipo Sat', width: 80, align: "center", headerAlign: 'center', editable: true},
+  { field: 'empresaId', headerName: 'Empresa', minWidth: 80, align: "center", headerAlign: 'center' },
+  { field: 'ip', headerName: 'IP', minWidth: 130, align: "center" , editable: true},
+  { field: 'tipoSat', headerName: 'Sat', minWidth: 90, align: "center", headerAlign: 'center', editable: true},
   {
     field: 'status',
     headerName: 'Status',

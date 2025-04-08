@@ -5,7 +5,7 @@ import axios from "axios";
 import { getSession } from "next-auth/react";
 
 const api = axios.create({
-  baseURL: "http://aramopg.ddns.com.br:8087/v1/",
+  baseURL: "http://51.38.190.174:8087/v1/",
   withCredentials: true, // Envia automaticamente os cookies
 });
 
