@@ -24,7 +24,7 @@ import {
     MonitorUpIcon,
     Power,
     User,
-    CircleArrowRight
+    Network,
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -37,7 +37,7 @@ import Image from 'next/image';
     { title: "Dashboard", url: "/", icon: BarChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "/cadastros", icon: User },
-    { title: "Processos", url: "/processos", icon: CircleArrowRight },
+    { title: "Processos", url: "/processos", icon: Network },
     { title: "Compras", url: "#", icon: ShoppingBag },
     { title: "Estoque", url: "#", icon: Package },
     { title: "Financeiro", url: "#", icon: DollarSign },
