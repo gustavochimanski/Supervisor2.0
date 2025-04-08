@@ -96,10 +96,7 @@ export default function ComponentMeioPagamento() {
   };
 
 
-  // LOADING
-  if (isLoading) {
-    return <p>Carregando dados...</p>;
-  }
+
 
   return (
     <div>

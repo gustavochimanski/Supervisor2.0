@@ -7,8 +7,8 @@ import { TypeCaixas } from "../../../../types/typesCaixas";
 export const getCaixasColumns = (
   handleOpenVisualizarModal: (row: TypeCaixas) => void
 ): GridColDef[] => [
-  { field: 'id', headerName: 'ID', width: 50, align: "center", headerAlign: 'center' },
-  { field: 'descricao', headerName: 'Descrição', width: 200, editable: true },
+  { field: 'id', headerName: 'ID', minWidth: 50, align: "center", headerAlign: 'center' },
+  { field: 'descricao', headerName: 'Descrição', minWidth: 120, editable: true },
   {
     field: 'viewModal',
     headerName: 'Ver',

@@ -25,6 +25,8 @@ import {
     User,
     Network,
     PieChart,
+    CircleUser,
+    Atom,
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -36,8 +38,8 @@ import Image from 'next/image';
     { title: "Home", url: "/home", icon: Home },
     { title: "Dashboard", url: "/", icon: PieChart },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
-    { title: "Cadastros", url: "/cadastros", icon: User },
-    { title: "Processos", url: "/processos", icon: Network },
+    { title: "Cadastros", url: "/cadastros", icon: CircleUser },
+    { title: "Processos", url: "/processos", icon: Atom },
     { title: "Compras", url: "#", icon: ShoppingBag },
     { title: "Estoque", url: "#", icon: Package },
     { title: "Financeiro", url: "#", icon: DollarSign },

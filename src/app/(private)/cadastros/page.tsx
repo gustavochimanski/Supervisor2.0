@@ -1,6 +1,6 @@
 "use client"
 import Tabs from "@/components/shared/tabs";
-import { BanknoteIcon, Building, HandCoins, LucideShoppingCart, Menu, Monitor, Mouse, User } from "lucide-react";
+import { BanknoteIcon, Building, CircleUser, HandCoins, List, LucideShoppingCart, Menu, Monitor, Mouse, Network, User } from "lucide-react";
 import ComponentUsuarios from "./components/tabs/usuarios/ComponentUsuarios";
 import ComponentProdutos from "./components/tabs/ComponentProdutos";
 import ComponentEmpresas from "./components/tabs/ComponentEmpresas";
@@ -8,6 +8,7 @@ import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMei
 import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
 import ComponentFiscal from "./components/tabs/ComponentFiscal";
 import ComponentMainCaixas from "./components/tabs/caixas/ComponentCaixas";
+import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
 
 const PageCadastros: React.FC = () => {
     const nestedTabItems = [
@@ -21,10 +22,19 @@ const PageCadastros: React.FC = () => {
         Component: ComponentMainCaixas,
       },
       {
+        value: "perfilPdv",
+        label: (
+          <span className="flex items-center gap-2">
+            <Network size={15} /> Perfil Pdv
+          </span>
+        ),
+        Component: ComponentPerfilDeCaixa
+      },
+      {
         value: "usuarios",
         label: (
           <span className="flex items-center gap-2">
-            <User size={15} /> Usuários
+            <CircleUser size={15} /> Usuários
           </span>
         ),
         Component: ComponentUsuarios
