@@ -3,7 +3,7 @@ import * as XLSX from "sheetjs-style"; // <-- Isso estava faltando
 import React from "react";
 
 interface ExportButtonProProps {
-  rows: any[];
+  rows: any[] ;
   children?: React.ReactNode;
 }
 

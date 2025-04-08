@@ -72,7 +72,7 @@ const ComponentPdvs = ({ setRowSelectedProp }: ComponentPdvsProps) => {
                     <ArrowRightCircle />Enviar Configuração
                   </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <ExportButtonPro rows={dataAllCaixas}>Excel</ExportButtonPro>
+                  <ExportButtonPro rows={dataAllCaixas ?? []}>Excel</ExportButtonPro>
                 </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
