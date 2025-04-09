@@ -14,7 +14,7 @@ const ComponentConfigCaixas = (data: any) => {
           <Settings size={15} /> Caixas
         </span>
       ),
-      Component: () => <TabConfigCaixas data={data} />,
+      Component: <TabConfigCaixas data={data} />,
     },
     {
       value: "sat",
@@ -23,7 +23,7 @@ const ComponentConfigCaixas = (data: any) => {
           <Settings2 size={15} /> Sat
         </span>
       ),
-      Component: TabConfigSat,
+      Component: <TabConfigSat/>,
     },
     {
       value: "diretivas",
@@ -32,7 +32,7 @@ const ComponentConfigCaixas = (data: any) => {
           <ListTodo size={15} /> Diretivas
         </span>
       ),
-      Component: TabConfigDiretivas,
+      Component: <TabConfigDiretivas/>,
     },
   ];
 

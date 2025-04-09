@@ -14,7 +14,6 @@ const ModalEnviarConfiguracao = () => {
 
   const [empresa, setEmpresa] = useState<string>("");
   const [caixa, setCaixa] = useState<string>("");
-  console.log(`Empresa: ${empresa} \n Caixa: ${caixa}`)
 
   if (!isEnviarConfiguracaoModalOpen) return null;
   

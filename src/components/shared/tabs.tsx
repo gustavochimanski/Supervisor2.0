@@ -6,7 +6,7 @@ import React from "react";
 interface TabItem {
   value: string;
   label: React.ReactNode; // ✅ aceita string ou JSX
-  Component: React.FC<any>;
+  Component: React.ReactNode; // ✅ aceita JSX direto
 }
 
 interface TabsProps {
@@ -56,7 +56,7 @@ const Tabs: React.FC<TabsProps> = ({
           className={`p-4 ${contentClassName || ""}`}
         >
           {/* Renderiza o componente associado à aba */}
-          <item.Component />
+          {item.Component }
         </TabsPrimitive.Content>
       ))}
     </TabsPrimitive.Root>

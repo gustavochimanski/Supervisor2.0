@@ -10,7 +10,7 @@ export const ComponentPerifericos: React.FC = () => {
             <Printer size={14} /> Impressora
           </span>
         ),
-        Component: () => <div>🖨️ Configurações de Impressora</div>
+        Component: <div>🖨️ Configurações de Impressora</div>
       },
       {
         value: "teclado",
@@ -19,7 +19,7 @@ export const ComponentPerifericos: React.FC = () => {
             <Keyboard size={14} /> Teclado
           </span>
         ),
-        Component: () => <div>⌨️ Configurações de Teclado</div>
+        Component:  <div>⌨️ Configurações de Teclado</div>
       },
       {
         value: "tela",
@@ -28,7 +28,7 @@ export const ComponentPerifericos: React.FC = () => {
             <Monitor size={14} /> Monitor
           </span>
         ),
-        Component: () => <div>⌨️ Configurações do Monitor</div>
+        Component: <div>⌨️ Configurações do Monitor</div>
       },
     ];
   

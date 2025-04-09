@@ -17,15 +17,15 @@ import { getCaixasColumns } from "./columns";
 
 interface ComponentPdvsProps {
   setRowSelectedProp: (row: TypeCaixas) => void;
+  caixasSSR: TypeCaixas[];
 }
 
-const ComponentPdvs = ({ setRowSelectedProp }: ComponentPdvsProps) => {
+const ComponentPdvs = ({ setRowSelectedProp, caixasSSR }: ComponentPdvsProps) => {
   // STATES locais se necessário para outros fins
   const [showModalIncluiCaixa, setShowModalIncluiCaixa] = useState(false);
   const { openEnviarConfig } = useModalStore();
   
   // FETCHING DATA
-  const {data: dataAllCaixas, refetch: refetchAllCaixas} = useFetchAllCaixas();
   const {data: dataByIdCaixa} = useFetchByIdCaixa("1");
     
 
@@ -47,7 +47,7 @@ const ComponentPdvs = ({ setRowSelectedProp }: ComponentPdvsProps) => {
             {/* ====================== TABELA ===================== */}
             {/* =================================================== */}
             <DataTableComponentMui 
-              rows={dataAllCaixas} 
+              rows={caixasSSR} 
               columns={caixasColumns}
               disableRowSelectionOnClick
               onRowClick={(rowData: any) => setRowSelectedProp(rowData)}
@@ -65,14 +65,11 @@ const ComponentPdvs = ({ setRowSelectedProp }: ComponentPdvsProps) => {
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Opções</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => refetchAllCaixas()}>
-                    <RefreshCcw />Atualizar
-                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={openEnviarConfig}>
                     <ArrowRightCircle />Enviar Configuração
                   </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <ExportButtonPro rows={dataAllCaixas ?? []}>Excel</ExportButtonPro>
+                  <ExportButtonPro rows={caixasSSR ?? []}>Excel</ExportButtonPro>
                 </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

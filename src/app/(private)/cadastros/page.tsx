@@ -1,16 +1,22 @@
-"use client"
 import Tabs from "@/components/shared/tabs";
 import { BanknoteIcon, Building, CircleUser, HandCoins, List, LucideShoppingCart, Menu, Monitor, Mouse, Network, User } from "lucide-react";
 import ComponentUsuarios from "./components/tabs/usuarios/ComponentUsuarios";
-import ComponentProdutos from "./components/tabs/ComponentProdutos";
-import ComponentEmpresas from "./components/tabs/ComponentEmpresas";
+import ComponentProdutos from "./components/tabs/produtos/ComponentProdutos";
+import ComponentEmpresas from "./components/tabs/empresas/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
 import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
-import ComponentFiscal from "./components/tabs/ComponentFiscal";
+import ComponentFiscal from "./components/tabs/fiscal/ComponentFiscal";
 import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
 import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
+import { fetchAllCaixasSSR } from "./services/CaixasServiceSSR";
+import { auth } from "@/auth";
+import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaServiceSSR";
 
-const PageCadastros: React.FC = () => {
+const PageCadastros = async () => {
+
+  const caixas = await fetchAllCaixasSSR();
+  const perfis = await fetchAllPerfisSSR(); // SSR perfis
+
     const nestedTabItems = [
       {
         value: "caixas",
@@ -19,7 +25,7 @@ const PageCadastros: React.FC = () => {
             <Monitor size={15} /> Caixas
           </span>
         ),
-        Component: ComponentMainCaixas,
+        Component: <ComponentMainCaixas caixasSSR={caixas} />, // ✅ JSX direto
       },
       {
         value: "perfilPdv",
@@ -28,7 +34,7 @@ const PageCadastros: React.FC = () => {
             <Network size={15} /> Perfil Pdv
           </span>
         ),
-        Component: ComponentPerfilDeCaixa
+        Component: <ComponentPerfilDeCaixa perfisSSR={perfis} />, // ✅ JSX direto
       },
       {
         value: "usuarios",
@@ -37,7 +43,7 @@ const PageCadastros: React.FC = () => {
             <CircleUser size={15} /> Usuários
           </span>
         ),
-        Component: ComponentUsuarios
+        Component: <ComponentUsuarios/>
       },
       {
           value: "produtos",
@@ -46,7 +52,7 @@ const PageCadastros: React.FC = () => {
               <LucideShoppingCart size={15} /> Produtos
             </span>
           ),
-          Component: ComponentProdutos,
+          Component: <ComponentProdutos/>,
         },
         {
           value: "empresas",
@@ -55,7 +61,7 @@ const PageCadastros: React.FC = () => {
               <Building size={15} /> Empresas
             </span>
           ),
-          Component: ComponentEmpresas
+          Component: <ComponentEmpresas/>
         },
       {
         value: "meios-de-pagamento",
@@ -64,7 +70,7 @@ const PageCadastros: React.FC = () => {
             <BanknoteIcon size={15} /> Meios de Pagamento
           </span>
         ),
-        Component: ComponentMeioPagamento,
+        Component: <ComponentMeioPagamento/>,
       },
       {
         value: "perifericos",
@@ -73,7 +79,7 @@ const PageCadastros: React.FC = () => {
             <Mouse size={15} /> Periféricos
           </span>
         ),
-        Component: ComponentPerifericos 
+        Component: <ComponentPerifericos/> 
       },
       {
         value: "fiscal",
@@ -82,7 +88,7 @@ const PageCadastros: React.FC = () => {
             <HandCoins size={15} /> Fiscal
           </span>
         ),
-        Component: ComponentFiscal,
+        Component: <ComponentFiscal/>,
       },
       {
         value: "outros",
@@ -91,7 +97,7 @@ const PageCadastros: React.FC = () => {
             <Menu size={15} /> Outros
           </span>
         ),
-        Component: () => <div>Outros</div>,
+        Component: <div>Outros</div>,
       }
     ];
   
