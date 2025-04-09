@@ -5,6 +5,7 @@ import Tabs from "@/components/shared/tabs";
 import ComponentComunicacao from "./components/comunicacao/ComponentComunicacao";
 import ComponentProcessamentos from "./components/processamentos/ComponentProcessamentos";
 import componentCentralNFCE from "./components/centralNFCE/ComponentCentralNFCE";
+import ComponentCentralNFCE from "./components/centralNFCE/ComponentCentralNFCE";
 
 const PageProcessos: React.FC = () => {
     const nestedTabItems = [
@@ -15,7 +16,7 @@ const PageProcessos: React.FC = () => {
             <Network size={14} /> Central NFCE
           </span>
         ),
-        Component: componentCentralNFCE,
+        Component: <ComponentCentralNFCE/>,
       },
       {
         value: "caixas",
@@ -24,7 +25,7 @@ const PageProcessos: React.FC = () => {
             <Waypoints size={14} /> Comunicação
           </span>
         ),
-        Component: ComponentComunicacao,
+        Component: <ComponentComunicacao/>,
       },
       {
         value: "processamentos",
@@ -33,7 +34,7 @@ const PageProcessos: React.FC = () => {
             <RefreshCcwDot size={14} /> Processamentos
           </span>
         ),
-        Component: ComponentProcessamentos,
+        Component: <ComponentProcessamentos/>,
       }
     ];
   

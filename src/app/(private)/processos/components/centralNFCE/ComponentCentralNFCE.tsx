@@ -35,7 +35,7 @@ const ComponentCentralNFCE = () => {
           <CardDescription />
         </CardHeader>
 
-        <CardContent className="font-semibold flex justify-between gap-4 pb-0 mb-0">
+        <CardContent className="font-semibold flex justify-between gap-4  mb-0">
           {/* Filtros */}
           <div className="flex gap-4">
             <div className="flex flex-col gap-1 w-20">
