@@ -1,3 +1,4 @@
+
 import Tabs from "@/components/shared/tabs";
 import { BanknoteIcon, Building, CircleUser, HandCoins, List, LucideShoppingCart, Menu, Monitor, Mouse, Network, User } from "lucide-react";
 import ComponentUsuarios from "./components/tabs/usuarios/ComponentUsuarios";
@@ -9,12 +10,11 @@ import ComponentFiscal from "./components/tabs/fiscal/ComponentFiscal";
 import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
 import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
 import { fetchAllCaixasSSR } from "./services/CaixasServiceSSR";
-import { auth } from "@/auth";
 import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaServiceSSR";
 
 const PageCadastros = async () => {
 
-  const caixas = await fetchAllCaixasSSR();
+  const caixasSSR = await fetchAllCaixasSSR();
   const perfis = await fetchAllPerfisSSR(); // SSR perfis
 
     const nestedTabItems = [
@@ -25,7 +25,7 @@ const PageCadastros = async () => {
             <Monitor size={15} /> Caixas
           </span>
         ),
-        Component: <ComponentMainCaixas caixasSSR={caixas} />, // ✅ JSX direto
+        Component: <ComponentMainCaixas caixasSSR={caixasSSR} />, // ✅ JSX direto
       },
       {
         value: "perfilPdv",

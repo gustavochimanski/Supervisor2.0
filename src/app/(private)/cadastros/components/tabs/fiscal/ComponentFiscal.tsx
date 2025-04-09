@@ -11,7 +11,7 @@ const ComponentFiscal = () => {
             <Printer size={14} /> Tributações
           </span>
         ),
-        Component: () => <div>🖨️ Tributações</div>
+        Component: <div>🖨️ Tributações</div>
       },
       {
         value: "outros",
@@ -20,7 +20,7 @@ const ComponentFiscal = () => {
             <Monitor size={14} /> Outros
           </span>
         ),
-        Component: () => <div>⌨️ Outros</div>
+        Component: <div>⌨️ Outros</div>
       },
     ];
 

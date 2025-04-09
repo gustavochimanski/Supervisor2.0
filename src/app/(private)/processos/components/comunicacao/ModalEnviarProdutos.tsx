@@ -13,7 +13,6 @@ const ModalEnviarProdutos = () => {
   
   const [empresa, setEmpresa] = useState<string>("");
   const [caixa, setCaixa] = useState<string>("");
-  console.log(`Empresa: ${empresa} \n Caixa: ${caixa}`)
 
   if (!isEnviarProdutosModalOpen) return null;
 
