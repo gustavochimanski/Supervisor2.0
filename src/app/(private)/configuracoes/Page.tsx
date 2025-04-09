@@ -12,7 +12,7 @@ export const ComponentConfiguracoes: React.FC = () => {
             <Monitor size={14} /> Caixas
           </span>
         ),
-        Component: ComponentCaixas,
+        Component: <div>Hello</div>,
       }
     ];
   
