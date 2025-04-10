@@ -5,7 +5,7 @@
 import LoaderComponent from "@/components/ui/loader";
 import { Suspense } from "react";
 
-const PageFrenteCaixa = () => {
+const PageFrenteCaixa = async () => {
   return (
     <div >
       <Suspense fallback={<LoaderComponent />}>

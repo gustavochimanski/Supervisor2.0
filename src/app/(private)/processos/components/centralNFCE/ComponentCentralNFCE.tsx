@@ -92,7 +92,7 @@ const ComponentCentralNFCE = ( { dados }: Props) => {
           </div>
 
           {/* Legenda */}
-          <div className="m-auto flex flex-col text-sm">
+          <div className="flex flex-col text-sm gap-2">
             <h1 className="font-semibold items-end mb-1">Legenda</h1>
             <div className="flex gap-x-4 gap-y-1">
               <div className="flex items-center gap-2">

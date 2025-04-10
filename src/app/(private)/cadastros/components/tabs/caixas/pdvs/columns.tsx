@@ -1,27 +1,33 @@
 // columns/caixasColumns.ts
 import { GridColDef } from "@mui/x-data-grid";
-import { ViewButton } from "@/components/shared/buttons/viewButton";
+import { IconButton } from "@mui/material";
+import { EditIcon } from "lucide-react";
 
 export const getCaixasColumns = (
-  setDadosSelecionados: (row: any) => void
+  setModalAberto: (aberto: boolean) => void
 ): GridColDef[] => [
   { field: 'id', headerName: 'ID', minWidth: 50, align: "center", headerAlign: 'center' },
   { field: 'descricao', headerName: 'Descrição', minWidth: 120, editable: true },
   {
     field: 'viewModal',
-    headerName: 'Ver',
+    headerName: 'Editar',
     align: "center",
     headerAlign: "center",
     minWidth: 70,
     sortable: false,
     filterable: false,
-    renderCell: (params) => (
-      <ViewButton onClick={() => setDadosSelecionados(params.row)} />
+    renderCell: () => (
+      <IconButton
+        color="primary"
+        onClick={() => setModalAberto(true)}
+      >
+        <EditIcon size={18} />
+      </IconButton>
     ),
   },
   { field: 'empresaId', headerName: 'Empresa', minWidth: 80, align: "center", headerAlign: 'center' },
-  { field: 'ip', headerName: 'IP', minWidth: 130, align: "center" , editable: true},
-  { field: 'tipoSat', headerName: 'Sat', minWidth: 90, align: "center", headerAlign: 'center', editable: true},
+  { field: 'ip', headerName: 'IP', minWidth: 130, align: "center", editable: true },
+  { field: 'tipoSat', headerName: 'Sat', minWidth: 90, align: "center", headerAlign: 'center', editable: true },
   {
     field: 'status',
     headerName: 'Status',
@@ -30,8 +36,8 @@ export const getCaixasColumns = (
     headerAlign: "center",
     renderCell: (params) => {
       const isAtivo = params.value === 'S';
-      const color = isAtivo ? '#16a34a' : '#dc2626'; // verde ou vermelho
-  
+      const color = isAtivo ? '#16a34a' : '#dc2626';
+
       return (
         <span
           style={{
@@ -41,10 +47,9 @@ export const getCaixasColumns = (
             borderRadius: '50%',
             backgroundColor: color,
           }}
-          title={isAtivo ? 'Ativo' : 'Inativo'} // opcional, mostra tooltip no hover
+          title={isAtivo ? 'Ativo' : 'Inativo'}
         />
       );
     },
   },
-  
 ];

@@ -41,13 +41,12 @@ import Link from "next/link";
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "/cadastros", icon: CircleUser },
     { title: "Processos", url: "/processos", icon: Atom },
-    { title: "Compras", url: "#", icon: ShoppingBag },
-    { title: "Estoque", url: "#", icon: Package },
-    { title: "Financeiro", url: "#", icon: DollarSign },
-    { title: "Automação", url: "#", icon: Sliders },
+    { title: "Compras", url: "/compras", icon: ShoppingBag },
+    { title: "Estoque", url: "/estoque", icon: Package },
+    { title: "Financeiro", url: "/financeiro", icon: DollarSign },
+    { title: "Automação", url: "/automacao", icon: Sliders },
     { title: "Frente Caixa", url: "/frenteCaixa", icon: MonitorUpIcon },
-    { title: "Calendário", url: "#", icon: Calendar },
-    { title: "Configuração", url: "/configuracao", icon: Settings },
+    { title: "Configuração", url: "/configuracoes", icon: Settings },
   ];
 
 

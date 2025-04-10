@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
-const HomePage = () => {
+const HomePage = async () => {
     return(
         <div>
             <h1>Home</h1>

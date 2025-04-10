@@ -4,7 +4,12 @@ import TabConfigSat from "./tabs/TabSat";
 import TabConfigDiretivas from "./tabs/TabDiretivas";
 import { ListTodo, Settings, Settings2 } from "lucide-react";
 
-const ComponentConfigCaixas = (data: any) => {
+interface Props {
+  data: any
+  modoEdicao: boolean
+  setModoEdicao: (ativo: boolean) => void;
+}
+const ComponentConfigCaixas = ({data, modoEdicao, setModoEdicao }: Props) => {
 
   const TabItems = [
     {
@@ -14,7 +19,12 @@ const ComponentConfigCaixas = (data: any) => {
           <Settings size={15} /> Caixas
         </span>
       ),
-      Component: <TabConfigCaixas data={data} />,
+      Component:         
+       <TabConfigCaixas 
+          data={data} 
+          modoEdicao={modoEdicao} 
+          setModoEdicao={setModoEdicao} 
+        />,
     },
     {
       value: "sat",

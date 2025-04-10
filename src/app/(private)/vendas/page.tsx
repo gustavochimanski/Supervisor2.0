@@ -1,7 +1,7 @@
-"use client";
 
 
-const PageVendas = () => {
+
+const PageVendas = async () => {
 
 
     return(

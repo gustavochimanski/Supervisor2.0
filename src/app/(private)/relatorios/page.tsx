@@ -1,8 +1,7 @@
 import { Monitor } from "lucide-react";
-import ComponentCaixas from "../cadastros/components/tabs/caixas/pdvs/ComponentPdvs";
 import Tabs from "@/components/shared/tabs";
 
-export const ComponentRelatorios: React.FC = () => {
+export const ComponentRelatorios: React.FC = async () => {
     const nestedTabItems = [
       {
         value: "caixas",

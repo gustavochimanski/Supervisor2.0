@@ -1,7 +1,7 @@
 
 import Tabs from "@/components/shared/tabs";
 import { BanknoteIcon, Building, CircleUser, HandCoins, List, LucideShoppingCart, Menu, Monitor, Mouse, Network, User } from "lucide-react";
-import ComponentUsuarios from "./components/tabs/usuarios/ComponentUsuarios";
+import { ComponentUsuarios } from "./components/tabs/usuarios/page";
 import ComponentProdutos from "./components/tabs/produtos/ComponentProdutos";
 import ComponentEmpresas from "./components/tabs/empresas/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
@@ -11,6 +11,7 @@ import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
 import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
 import { fetchAllCaixasSSR } from "./services/CaixasService";
 import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaService";
+import TabsWrapper from "@/components/shared/tabsWrapper";
 
 const PageCadastros = async () => {
 
@@ -103,12 +104,7 @@ const PageCadastros = async () => {
   
     return (
       <div className="flex-1 h-full ">
-        <Tabs
-          items={nestedTabItems}
-          containerClassName="w-full rounded-sm shadow h-full flex flex-col"
-          triggerClassName="transition-colors"
-          contentClassName="bg-sidebar rounded-sm flex-1 overflow-auto"
-        />
+        <TabsWrapper items={nestedTabItems}/>
       </div>
     );
   };

@@ -6,19 +6,24 @@ import { Input } from "@/components/ui/input"
 import { CardContent, CardHeader } from "@mui/material"
 import { CircleCheck, CircleX } from "lucide-react"
 
-const TabConfigCaixas = ({ data }: { data?: any }) => {
-  if (!data) return 
-  if (!data.data) return <div>Selecione um item para visualizar.</div>
-  
-  const confPerfil = data.data.perfilPdv?.confPerfil
+type Props = {
+  data?: any;
+  modoEdicao: boolean;
+  setModoEdicao: (ativo: boolean) => void;
+}
+
+const TabConfigCaixas = ({data, modoEdicao, setModoEdicao} : Props) => {
+  if (!data) return <div>Selecione um <strong>caixa</strong> para visualizar.</div>
+
+  console.log(modoEdicao)
+  const confPerfil = data.perfilPdv?.confPerfil
   if (!confPerfil || !Array.isArray(confPerfil)) {
     return <div>Nenhuma configuração encontrada.</div>
   }
 
   return (
     <Card className="text-muted-foreground">
-
-        <CardTitle className="p-4 pb-0">Configurações {data.data.descricao}</CardTitle>
+      <CardTitle className="p-4 pb-0">Configurações <strong>{data.descricao}</strong></CardTitle>
       <CardContent className="flex flex-wrap gap-4 text-xs">
         {confPerfil.map((config: any) => (
           <div
@@ -30,6 +35,7 @@ const TabConfigCaixas = ({ data }: { data?: any }) => {
               defaultValue={config.value}
               name={config.property}
               className="h-6"
+              disabled={!modoEdicao}
             />
           </div>
         ))}
@@ -39,7 +45,7 @@ const TabConfigCaixas = ({ data }: { data?: any }) => {
         <Button>
           <CircleCheck />Gravar
         </Button>
-        <Button variant="secondary">
+        <Button variant="secondary" onClick={() => setModoEdicao(false)}>
           <CircleX />Cancelar
         </Button>
       </CardFooter>

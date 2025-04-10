@@ -18,9 +18,10 @@ import { getCaixasColumns } from "./columns";
 interface ComponentPdvsProps {
   setRowSelectedProp: (row: TypeCaixas) => void;
   caixasSSR: TypeCaixas[];
+  setModoEdicao: (ativo: boolean) => void; // ⬅ novo prop
 }
 
-const ComponentPdvs = ({ setRowSelectedProp, caixasSSR }: ComponentPdvsProps) => {
+const ComponentPdvs = ({ setRowSelectedProp, caixasSSR, setModoEdicao }: ComponentPdvsProps) => {
   // STATES locais se necessário para outros fins
   const [showModalIncluiCaixa, setShowModalIncluiCaixa] = useState(false);
   const { openEnviarConfig } = useModalStore();
@@ -29,8 +30,8 @@ const ComponentPdvs = ({ setRowSelectedProp, caixasSSR }: ComponentPdvsProps) =>
   const {data: dataByIdCaixa} = useFetchByIdCaixa("1");
     
 
+  const columns = getCaixasColumns(() => setModoEdicao(true));
 
-  const caixasColumns = getCaixasColumns(setRowSelectedProp);
   
     return(
         <div className="flex flex-col h-full">
@@ -48,8 +49,7 @@ const ComponentPdvs = ({ setRowSelectedProp, caixasSSR }: ComponentPdvsProps) =>
             {/* =================================================== */}
             <DataTableComponentMui 
               rows={caixasSSR} 
-              columns={caixasColumns}
-              disableRowSelectionOnClick
+              columns={columns}
               onRowClick={(rowData: any) => setRowSelectedProp(rowData)}
             />
 

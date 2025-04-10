@@ -15,7 +15,6 @@
   import { Separator } from "@/components/ui/separator";
   import { Label } from "@/components/ui/label";
   import {
-    useFetchAllPerfil,
     useFetchByIdPerfil,
     useDelPerfil,
     usePostNewPerfil,
@@ -26,7 +25,7 @@
   import DataTableComponentMui from "@/components/shared/table/mui-data-table";
   import { SearchComponent } from "@/components/shared/searchComponent";
   import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-  import { ArrowRightCircle, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
+  import { ArrowRightCircle, CirclePlus, EllipsisVertical } from "lucide-react";
   import ConfirmModal from "@/components/shared/modals/modalConfirm";
   import { ExportButtonPro } from "@/components/shared/exportCsvButton";
   import { useModalStore } from "@/store/useModalStore";

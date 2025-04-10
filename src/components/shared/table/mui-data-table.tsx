@@ -88,7 +88,6 @@
           rowHeight={35}
           checkboxSelection
           disableRowSelectionOnClick
-          pageSizeOptions={[10, 20, 30]}
           localeText={defaultLocaleText}
           onRowSelectionModelChange={onRowSelectionModelChange}
           onRowClick={handleRowClick}

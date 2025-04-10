@@ -31,7 +31,7 @@ export const { auth, handlers } = NextAuth({
               name: authData.name || "Usuário",
               email: credentials.username,
               token: authData.token,
-              expiresAt: Math.floor(Date.now() / 1000) + 60 * 60, // ⏳ 1 hora
+              expiresAt: Math.floor(Date.now() / 1000) + 60 * 25, // 25 min
             } as any;
           }
 
@@ -48,24 +48,25 @@ export const { auth, handlers } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
+    // callbacks.jwt
     async jwt({ token, user }) {
+      const now = Math.floor(Date.now() / 1000);
+
       if (user) {
         token.accessToken = user.token;
-        token.expiresAt = user.expiresAt;
+        token.exp = now + 60 * 25; // define exp direto
       }
 
-      const now = Math.floor(Date.now() / 1000);
-      if (token.expiresAt && now > token.expiresAt) {
-        console.log("🔒 Sessão expirada pelo tempo configurado (60m)");
-        return {}; // limpa token, invalida sessão
+      if (token.exp && now > token.exp) {
+        console.log("🔒 Sessão expirada — token removido");
+        return {}; // ou { exp: 0 } se quiser manter o formato
       }
 
       return token;
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       session.accessToken = token.accessToken;
       return session;
-    },
-    authorized: async ({ auth }) => !!auth,
-  },
+    }
+  }
 });
