@@ -1,7 +1,13 @@
 
 import api from '@/app/api/api';
 import { PatchConfPerfilPayload, PerfilPdv } from '../types/typesPerfisDeCaixa';
+import { auth } from '@/auth';
+import apiSSR from '@/app/api/apiSSR';
 
+
+// ======================================================================================
+// ================================ CLIENT ==============================================
+// ======================================================================================
 
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============
@@ -50,3 +56,22 @@ export const patchAlteraDescricaoById = async (idPerfil: string, descricao: stri
   const response = await api.patch(`config/perfilpdv/${idPerfil}`, { descricao });
   return response.data;
 };
+
+
+
+// ======================================================================================
+// ================================== SSR ===============================================
+// ======================================================================================
+
+export const fetchAllPerfisSSR = async (): Promise<PerfilPdv[]> => {
+  const session = await auth();
+  const api = apiSSR(session?.accessToken ?? ""); // garante string, pode ser vazia
+
+  try {
+    const { data } = await api.get("/config/perfilpdv");
+    return data;
+  } catch (error) {
+    throw new Error("Erro ao buscar perfis de caixa");
+  }
+};
+
