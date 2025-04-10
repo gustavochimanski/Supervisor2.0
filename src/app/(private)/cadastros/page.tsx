@@ -15,7 +15,7 @@ import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaService";
 const PageCadastros = async () => {
 
   const caixasSSR = await fetchAllCaixasSSR();
-  const perfis = await fetchAllPerfisSSR();
+  const perfisSSR = await fetchAllPerfisSSR();
 
     const nestedTabItems = [
       {
@@ -34,7 +34,7 @@ const PageCadastros = async () => {
             <Network size={15} /> Perfil Pdv
           </span>
         ),
-        Component: <ComponentPerfilDeCaixa perfisSSR={perfis} />, // ✅ JSX direto
+        Component: <ComponentPerfilDeCaixa perfisSSR={perfisSSR} />, // ✅ JSX direto
       },
       {
         value: "usuarios",

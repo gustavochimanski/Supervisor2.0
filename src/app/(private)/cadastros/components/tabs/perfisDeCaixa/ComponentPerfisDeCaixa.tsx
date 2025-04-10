@@ -24,14 +24,13 @@
   } from "../../../hooks/usePerfisDeCaixa";
   import { PatchConfPerfilPayload, PerfilPdv } from "../../../types/typesPerfisDeCaixa";
   import DataTableComponentMui from "@/components/shared/table/mui-data-table";
-  import { GridColDef} from "@mui/x-data-grid";
   import { SearchComponent } from "@/components/shared/searchComponent";
   import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
   import { ArrowRightCircle, CirclePlus, EllipsisVertical, RefreshCcw } from "lucide-react";
   import ConfirmModal from "@/components/shared/modals/modalConfirm";
   import { ExportButtonPro } from "@/components/shared/exportCsvButton";
-  import { useStore } from "zustand";
   import { useModalStore } from "@/store/useModalStore";
+  import {columns} from "./columns"
   
   type Props = {
     perfisSSR: PerfilPdv[];
@@ -74,12 +73,6 @@
         setOriginalData(initialData);
       }
     }, [dataByIdPerfilPdv]);
-
-    // ============= COLUNAS ===============
-    const columns: GridColDef[] = [
-      {field: 'id', headerName: 'ID', width: 50, align: "center", headerAlign: 'center'},
-      {field: 'descricao', headerName: 'Descrição', width: 300, align: 'left', headerAlign: 'left'} // <-- alinha o título da coluna},
-    ]
 
     // ===== HANDLERS =====
     const handleVerConfig = (row: PerfilPdv) => {
