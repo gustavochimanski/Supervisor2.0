@@ -1,6 +1,6 @@
 // src/app/login/layout.tsx
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toastes";
 
 export default function PublicLayout({
   children,

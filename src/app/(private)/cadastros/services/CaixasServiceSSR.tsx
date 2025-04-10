@@ -1,13 +1,24 @@
-import { authorizedFetch } from "@/utils/authorizedFetch";
+// services/CaixasServiceSSR.ts
+import apiSSR from "@/app/api/apiSSR";// ou ajuste o caminho conforme sua estrutura
+import { auth } from "@/auth";
 import { TypeCaixas } from "../types/typesCaixas";
 
 export const fetchAllCaixasSSR = async (): Promise<TypeCaixas[]> => {
-  const res = await authorizedFetch("http://51.38.190.174:8087/v1/config/pdvs");
   console.log("[SSR] Buscando caixas via SSR...");
 
-  if (!res.ok) {
-    throw new Error("Erro ao buscar caixas");
+  const session = await auth();
+
+  if (!session?.accessToken) {
+    throw new Error("Token JWT ausente");
   }
 
-  return res.json();
+  const api = apiSSR(session.accessToken);
+
+  try {
+    const { data } = await api.get("/config/pdvs");
+    return data;
+  } catch (error) {
+    console.error("Erro ao buscar caixas (SSR):", error);
+    throw new Error("Erro ao buscar caixas");
+  }
 };

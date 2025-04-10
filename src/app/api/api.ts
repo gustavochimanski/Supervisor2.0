@@ -9,15 +9,20 @@ const api = axios.create({
   withCredentials: true, // Envia automaticamente os cookies
 });
 
+let cachedSession: any = null;
+
 // Interceptor de request com inclusão do JWT
 api.interceptors.request.use(
   async (config) => {
-    // Obtém a sessão atual do NextAuth
-    const session = await getSession();
-    if (session?.accessToken) {
-      // Adiciona o JWT no header Authorization
-      config.headers.Authorization = `Bearer ${session.accessToken}`;
+    // Usa cache se já tiver
+    if (!cachedSession) {
+      cachedSession = await getSession();
     }
+
+    if (cachedSession?.accessToken) {
+      config.headers.Authorization = `Bearer ${cachedSession.accessToken}`;
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -26,8 +31,11 @@ api.interceptors.request.use(
 // Interceptor de response
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response && error.response.status === 401) {
+      // Limpa o cache ao perder a sessão
+      cachedSession = null;
+
       logout();
       console.error("Não autorizado: 401", error);
     }

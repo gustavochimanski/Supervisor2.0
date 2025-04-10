@@ -1,15 +1,22 @@
 // services/PerfisDeCaixaServiceSSR.ts
-import { authorizedFetch } from "@/utils/authorizedFetch";
+import apiSSR from "@/app/api/apiSSR";
+import { auth } from "@/auth";
 import { PerfilPdv } from "../types/typesPerfisDeCaixa";
 
 export const fetchAllPerfisSSR = async (): Promise<PerfilPdv[]> => {
-  const res = await authorizedFetch("http://51.38.190.174:8087/v1/config/perfilpdv");
+  const session = await auth();
 
-  if (!res.ok) {
-    const errorText = await res.text();
-    console.error("Erro ao buscar perfis de caixa:", res.status, errorText);
-    throw new Error("Erro ao buscar perfis de caixa");
+  if (!session?.accessToken) {
+    throw new Error("Token JWT ausente");
   }
 
-  return res.json();
+  const api = apiSSR(session.accessToken);
+
+  try {
+    const { data } = await api.get("/config/perfilpdv");
+    return data;
+  } catch (error) {
+    console.error("Erro ao buscar perfis de caixa (SSR):", error);
+    throw new Error("Erro ao buscar perfis de caixa");
+  }
 };

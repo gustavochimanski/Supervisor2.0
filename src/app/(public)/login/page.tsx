@@ -9,7 +9,6 @@ import styles from "./button.module.css";
 import { loginService } from "@/services/Auth/authenticate";
 import "@/app/(private)/globals.css";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 type FormValues = {
@@ -21,7 +20,6 @@ export default function Login() {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -40,8 +38,6 @@ export default function Login() {
   
   const onSubmit = async (props: FormValues) => {
     setIsLoading(true);
-    setErrorMessage("");
-
     await loginService(props.username, props.password); // redireciona automaticamente
     setIsLoading(false);
   };

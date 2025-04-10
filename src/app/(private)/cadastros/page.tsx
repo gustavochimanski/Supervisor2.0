@@ -9,13 +9,13 @@ import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPer
 import ComponentFiscal from "./components/tabs/fiscal/ComponentFiscal";
 import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
 import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
-import { fetchAllCaixasSSR } from "./services/CaixasServiceSSR";
 import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaServiceSSR";
+import { fetchAllCaixasSSR } from "./services/CaixasServiceSSR";
 
 const PageCadastros = async () => {
 
   const caixasSSR = await fetchAllCaixasSSR();
-  const perfis = await fetchAllPerfisSSR(); // SSR perfis
+  const perfis = await fetchAllPerfisSSR();
 
     const nestedTabItems = [
       {
