@@ -12,11 +12,38 @@ import { Input } from "@/components/ui/input";
 import { Circle } from "lucide-react";
 
 import { nfceColumns, nfceColumnOrder } from "./columns";
-import mockCupons from "./mockCupons.json";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 
-const ComponentCentralNFCE = () => {
+// types/CupomNFCE.ts
+export type CupomNFCE = {
+  id: number;
+  empresa: string | number;
+  pdv: string;
+  dataMvto: string;
+  dataHoraEmitido: string;
+  dataHoraCancelado: string;
+  sit: string;
+  cupom: number;
+  dcto: string;
+  serie: string;
+  cnpjCpf: number;
+  chave: number;
+  protocolo: number;
+  protocoloCanc: string;
+  valor: number;
+  status: string;
+  motivo: string;
+  supCanc: string;
+  nomeSupCanc: string;
+};
+
+
+interface Props {
+  dados: CupomNFCE[];
+}
+
+const ComponentCentralNFCE = ( { dados }: Props) => {
   const [modalView, setModalView] = useState(false);
   const [dataModalView, setDataModalView] = useState<any>();
 
@@ -90,7 +117,7 @@ const ComponentCentralNFCE = () => {
 
         <CardContent className="p-0 flex-1 overflow-hidden">
           <DataTableComponentMui
-            rows={mockCupons}
+            rows={dados}
             columns={nfceColumns(handleOpenVisualizarModal)}
             columnOrder={nfceColumnOrder}
           />

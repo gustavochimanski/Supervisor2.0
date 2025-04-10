@@ -14,10 +14,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import ConfirmModal from "@/components/shared/modals/modalConfirm";
 import { GridColDef } from '@mui/x-data-grid';
-import { getErrorMessage } from "@/utils/getErrorMessage";
+import { getErrorMessage } from "@/lib/getErrorMessage";
 import { toast } from "sonner";
 import FormIncluirMeioPgto, {FormData} from "@/app/(private)/cadastros/schemas/formIncluiMpgto";
-import { useModalStore } from "@/store/useModalStore";
 
 export default function ComponentMeioPagamento() {
   // ==== MODAIS ======

@@ -1,3 +1,4 @@
+"use client"
 import CardInfoButton from "@/components/shared/Card/CardInfoButton";
 import { RefreshCcw } from "lucide-react";
 import ModalProcessarPdv from "./ModalProcessarPdv";

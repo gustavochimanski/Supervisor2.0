@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
-import LoaderComponent from "@/components/ui/loader";
+import Loading from "@/app/(private)/cadastros/loading";
 import styles from "./button.module.css";
 import { loginService } from "@/services/Auth/authenticate";
 import "@/app/(private)/globals.css";
@@ -88,7 +88,7 @@ export default function Login() {
             </div>
           </div>
 
-          {isLoading && <LoaderComponent />}
+          {isLoading && <Loading />}
 
           <div className="flex my-6 justify-center">
             <Button type="submit" disabled={isLoading} className={styles.button}>

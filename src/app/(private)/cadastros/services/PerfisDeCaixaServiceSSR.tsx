@@ -16,7 +16,6 @@ export const fetchAllPerfisSSR = async (): Promise<PerfilPdv[]> => {
     const { data } = await api.get("/config/perfilpdv");
     return data;
   } catch (error) {
-    console.error("Erro ao buscar perfis de caixa (SSR):", error);
     throw new Error("Erro ao buscar perfis de caixa");
   }
 };

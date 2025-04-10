@@ -18,7 +18,6 @@ const apiSSR = (token: string) => {
 
         if (status === 401) {
           console.error("[SSR] Erro 401 - Token inválido ou expirado.");
-          // Lançamos um erro customizado para ser tratado na camada que usa essa API
           throw new Error("Sessão expirada ou inválida. Faça login novamente.");
         }
 
