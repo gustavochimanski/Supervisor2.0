@@ -1,4 +1,4 @@
-import { useState } from "react";
+"use client"
 import CardInfoButton from "@/components/shared/Card/CardInfoButton";
 import { CircleArrowRight, Send } from "lucide-react";
 import ModalEnviarConfiguracao from "./ModalEnviarConfiguracoes";

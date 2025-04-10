@@ -23,6 +23,13 @@ const ComponentProcessamentos = () => {
             icon={<RefreshCcw size={16} />}
             onClick={openReprocessarPdv}
           />
+          <CardInfoButton
+            title="Processamento de Cupom"
+            description="Reprocessar cupons em caso de divergência de itens."
+            titleButton="Reprocessar"
+            icon={<RefreshCcw size={16} />}
+            onClick={openReprocessarPdv}
+          />
         </div>
   
         <ModalProcessarPdv />

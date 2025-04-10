@@ -11,17 +11,11 @@ import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
 import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
 import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaServiceSSR";
 import { fetchAllCaixasSSR } from "./services/CaixasServiceSSR";
-import { authRedirectSSR } from "@/lib/authRedirectSSR";
 
 const PageCadastros = async () => {
-  
 
-  // ✅ Usando o helper para redirecionar automaticamente em caso de sessão inválida
-  const { caixasSSR, perfisSSR } = await authRedirectSSR(async () => {
-    const caixasSSR = await fetchAllCaixasSSR();
-    const perfisSSR = await fetchAllPerfisSSR();
-    return { caixasSSR, perfisSSR };
-  });
+  const caixasSSR = await fetchAllCaixasSSR();
+  const perfis = await fetchAllPerfisSSR();
 
     const nestedTabItems = [
       {
@@ -40,7 +34,7 @@ const PageCadastros = async () => {
             <Network size={15} /> Perfil Pdv
           </span>
         ),
-        Component: <ComponentPerfilDeCaixa perfisSSR={perfisSSR} />, // ✅ JSX direto
+        Component: <ComponentPerfilDeCaixa perfisSSR={perfis} />, // ✅ JSX direto
       },
       {
         value: "usuarios",

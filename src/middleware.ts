@@ -61,6 +61,6 @@ export default auth(async (request: NextRequest) => {
 
 export const config: MiddlewareConfig = {
   matcher: [
-    "/((?!api|_next/|favicon.ico|sitemap.xml|robots.txt|logoNome.jpg|public).*)",
+    "/((?!api|_next/|favicon.ico|sitemap.xml|robots.txt|public).*)",
   ],
 };
