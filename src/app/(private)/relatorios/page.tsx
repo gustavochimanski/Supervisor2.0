@@ -1,7 +1,7 @@
 import { Monitor } from "lucide-react";
 import Tabs from "@/components/shared/tabs";
 
-export const ComponentRelatorios: React.FC = async () => {
+const ComponentRelatorios: React.FC = async () => {
     const nestedTabItems = [
       {
         value: "caixas",
@@ -25,3 +25,5 @@ export const ComponentRelatorios: React.FC = async () => {
       </div>
     );
   };
+
+  export default ComponentRelatorios

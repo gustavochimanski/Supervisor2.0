@@ -1,7 +1,7 @@
 // columns/caixasColumns.ts
 import { GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { EditIcon } from "lucide-react";
+import { Pencil } from "lucide-react";
 
 export const getCaixasColumns = (
   setModalAberto: (aberto: boolean) => void
@@ -21,7 +21,7 @@ export const getCaixasColumns = (
         color="primary"
         onClick={() => setModalAberto(true)}
       >
-        <EditIcon size={18} />
+        <Pencil size={15} />
       </IconButton>
     ),
   },

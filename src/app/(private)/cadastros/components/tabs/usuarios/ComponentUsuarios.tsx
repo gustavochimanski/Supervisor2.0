@@ -3,7 +3,7 @@
 import { User, Users } from "lucide-react";
 import TabsWrapper from "@/components/shared/tabsWrapper";
 
-export const ComponentUsuarios: React.FC = () => {
+const ComponentUsuarios: React.FC = () => {
     const nestedTabItems = [
       {
         value: "usuarios",
@@ -31,3 +31,5 @@ export const ComponentUsuarios: React.FC = () => {
       </div>
     );
   };
+
+  export default ComponentUsuarios

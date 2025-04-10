@@ -1,8 +1,6 @@
 
-import Tabs from "@/components/shared/tabs";
-import { BanknoteIcon, Building, CircleUser, HandCoins, List, LucideShoppingCart, Menu, Monitor, Mouse, Network, User } from "lucide-react";
-import { ComponentUsuarios } from "./components/tabs/usuarios/page";
-import ComponentProdutos from "./components/tabs/produtos/ComponentProdutos";
+
+import { BanknoteIcon, Building, CircleUser, HandCoins, LucideShoppingCart, Menu, Monitor, Mouse, Network } from "lucide-react";
 import ComponentEmpresas from "./components/tabs/empresas/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
 import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
@@ -12,13 +10,28 @@ import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPer
 import { fetchAllCaixasSSR } from "./services/CaixasService";
 import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaService";
 import TabsWrapper from "@/components/shared/tabsWrapper";
+import { fetchProdutos } from "./services/ProdutosService"
+import ComponentProdutos from "./components/tabs/produtos/ComponentProdutos";
+import ComponentUsuarios from "./components/tabs/usuarios/ComponentUsuarios";
+;
 
 const PageCadastros = async () => {
 
   const caixasSSR = await fetchAllCaixasSSR();
   const perfisSSR = await fetchAllPerfisSSR();
+  const produtosSSR = await fetchProdutos();
+
 
     const nestedTabItems = [
+      {
+        value: "produtos",
+        label: (
+          <span className="flex items-center gap-2">
+            <LucideShoppingCart size={15} /> Produtos
+          </span>
+        ),
+        Component: <ComponentProdutos produtosSSR={produtosSSR}/>
+        },
       {
         value: "caixas",
         label: (
@@ -46,15 +59,7 @@ const PageCadastros = async () => {
         ),
         Component: <ComponentUsuarios/>
       },
-      {
-          value: "produtos",
-          label: (
-            <span className="flex items-center gap-2">
-              <LucideShoppingCart size={15} /> Produtos
-            </span>
-          ),
-          Component: <ComponentProdutos/>,
-        },
+
         {
           value: "empresas",
           label: (

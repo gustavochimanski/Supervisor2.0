@@ -35,7 +35,7 @@
     "next-auth.d.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-, "src/app/(private)/cadastros/components/tabs/caixas/config/ComponentConfig.tsx"  ],
+, "src/app/(private)/cadastros/components/tabs/caixas/config/ComponentConfig.tsx", "src/app/(private)/cadastros/components/tabs/produtos/columns.tss"  ],
   "exclude": [
     "node_modules"
   ]
