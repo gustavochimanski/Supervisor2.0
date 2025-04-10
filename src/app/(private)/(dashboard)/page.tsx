@@ -1,7 +1,7 @@
-"use client";
+
 
 const PageDashboard = () => {
-
+    
     return(
        
             <div>   

@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const { auth, handlers } = NextAuth({
   pages: {
-    signIn: "/login",
+    signIn: "/",
     error: "/login",
     signOut: "/login",
   },
@@ -26,7 +26,7 @@ export const { auth, handlers } = NextAuth({
           });
 
           const authData = response.data;
-
+          
           if (authData?.token) {
             // Retorna o objeto usuário com o token recebido
             return {
@@ -35,6 +35,7 @@ export const { auth, handlers } = NextAuth({
               token: authData.token,
             } as any;
           }
+
           return null;
         } catch (error) {
           console.error("Erro na autenticação:", error);
@@ -60,4 +61,5 @@ export const { auth, handlers } = NextAuth({
     },
     authorized: async ({ auth }) => !!auth,
   },
+  
 });

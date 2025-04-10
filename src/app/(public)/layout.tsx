@@ -1,5 +1,7 @@
 // src/app/login/layout.tsx
 
+import { Toaster } from "@/components/ui/toaster";
+
 export default function PublicLayout({
   children,
 }: {
@@ -9,6 +11,7 @@ export default function PublicLayout({
     <html>
       <body>
         {children}
+        <Toaster className=""/>
       </body>
     </html>
   );
