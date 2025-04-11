@@ -1,10 +1,11 @@
 // app/seu-caminho/page.tsx (Server Component)
-import { Network, RefreshCcwDot, Waypoints } from "lucide-react";
+import { Barcode, Network, RefreshCcwDot, Waypoints } from "lucide-react";
 import ComponentComunicacao from "./components/comunicacao/ComponentComunicacao";
 import ComponentProcessamentos from "./components/processamentos/ComponentProcessamentos";
 import ComponentCentralNFCE from "./components/centralNFCE/ComponentCentralNFCE";
 import TabsWrapper from "@/components/shared/tabsWrapper";
 import { fetchDadosCentralNFCE } from "./hooks/fetchCentralNFCE";
+import ComponentEtiquetas from "./components/etiquetas/ComponentEtiquetas";
 
 const PageProcessos = async () => {
   const dadosCentralNFCE = await fetchDadosCentralNFCE();
@@ -18,6 +19,15 @@ const PageProcessos = async () => {
         </span>
       ),
       Component: <ComponentCentralNFCE  dados={dadosCentralNFCE}/>,
+    },
+    {
+      value: "etiquetas",
+      label: (
+        <span className="flex items-center gap-2">
+          <Barcode size={14} /> Etiquetas
+        </span>
+      ),
+      Component: <ComponentEtiquetas/>,
     },
     {
       value: "caixas",

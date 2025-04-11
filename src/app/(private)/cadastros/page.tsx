@@ -39,7 +39,7 @@ const PageCadastros = async () => {
             <Monitor size={15} /> Caixas
           </span>
         ),
-        Component: <ComponentMainCaixas caixasSSR={caixasSSR} />, // ✅ JSX direto
+        Component: <ComponentMainCaixas caixasSSR={caixasSSR} /> // ✅ JSX direto
       },
       {
         value: "perfilPdv",
@@ -48,7 +48,7 @@ const PageCadastros = async () => {
             <Network size={15} /> Perfil Pdv
           </span>
         ),
-        Component: <ComponentPerfilDeCaixa perfisSSR={perfisSSR} />, // ✅ JSX direto
+        Component: <ComponentPerfilDeCaixa perfisSSR={perfisSSR} /> // ✅ JSX direto
       },
       {
         value: "usuarios",
@@ -76,7 +76,7 @@ const PageCadastros = async () => {
             <BanknoteIcon size={15} /> Meios de Pagamento
           </span>
         ),
-        Component: <ComponentMeioPagamento/>,
+        Component: <ComponentMeioPagamento/>
       },
       {
         value: "perifericos",
@@ -94,7 +94,7 @@ const PageCadastros = async () => {
             <HandCoins size={15} /> Fiscal
           </span>
         ),
-        Component: <ComponentFiscal/>,
+        Component: <ComponentFiscal/>
       },
       {
         value: "outros",

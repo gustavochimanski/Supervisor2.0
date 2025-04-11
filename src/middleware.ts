@@ -3,8 +3,8 @@ import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 const publicRoutes = [
-  { path: "/login", whenAutheticate: "redirect" },
-  { path: "/unitec", whenAutheticate: "" },
+  { path: "/login", whenAutheticated: "redirect" },
+  { path: "/unitec", whenAutheticated: "" },
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATE_ROUTE = "/login";
@@ -50,7 +50,7 @@ export default auth(async (request: NextRequest) => {
   }
 
   // 🛑 Usuário autenticado tentando acessar rota como /login? Redireciona pra "/"
-  if (isAuthenticated && publicRoute?.whenAutheticate === "redirect") {
+  if (isAuthenticated && publicRoute?.whenAutheticated === "redirect") {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/";
     return NextResponse.redirect(redirectUrl);

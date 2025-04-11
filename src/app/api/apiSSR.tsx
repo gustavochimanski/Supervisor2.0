@@ -9,7 +9,6 @@ const apiSSR = (token: string) => {
     },
   });
 
-  // Interceptor de resposta para tratar erros comuns (como 401)
   instance.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -17,16 +16,15 @@ const apiSSR = (token: string) => {
         const status = error.response.status;
 
         if (status === 401) {
-          console.error("[SSR] Erro 401 - Token inválido ou expirado.");
-          throw new Error("Sessão expirada ou inválida. Faça login novamente.");
+          console.warn("[apiSSR] Token inválido (401).");
+        } else {
+          console.error(`[apiSSR] Erro ${status}:`, error.response.data);
         }
-
-        console.error(`[SSR] Erro ${status} ao fazer requisição:`, error.response.data);
       } else {
-        console.error("[SSR] Erro desconhecido ao fazer requisição:", error);
+        console.error("[apiSSR] Erro desconhecido:", error);
       }
 
-      return Promise.reject(error);
+      return Promise.reject(error); // <-- deixa o tratamento pro lado de fora
     }
   );
 

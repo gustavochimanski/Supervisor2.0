@@ -24,16 +24,16 @@ export const getProdutosColumns = (
       </IconButton>
     ),
   },
-  { field: 'Código', headerName: 'Código', minWidth: 80, align: "center", headerAlign: 'center' },
-  { field: 'Descrição', headerName: 'Descrição', minWidth: 160 },
+  { field: 'Código', headerName: 'Código', minWidth: 80, align: "center", headerAlign: 'center', type: "number" },
+  { field: 'Descrição', headerName: 'Descrição', minWidth: 160, editable: true },
   { field: 'Emp', headerName: 'Emp', minWidth: 60, align: "center", headerAlign: 'center' },
-  { field: 'Descrição Reduzida', headerName: 'Descrição Reduzida', minWidth: 140 },
-  { field: 'Comple', headerName: 'Complemento', minWidth: 120 },
-  { field: 'Cod. Categ.', headerName: 'Cod. Categ.', minWidth: 100, align: "center", headerAlign: 'center' },
+  { field: 'Descrição Reduzida', headerName: 'Descrição Reduzida', minWidth: 140, editable: true },
+  { field: 'Comple', headerName: 'Complemento', minWidth: 120, editable: true },
+  { field: 'Cod. Categ.', headerName: 'Cod. Categ.', minWidth: 100, align: "center", headerAlign: 'center', editable: true, type: "number" },
   { field: 'Catego', headerName: 'Categoria', minWidth: 120 },
-  { field: 'Cod. Marca', headerName: 'Cod. Marca', minWidth: 100, align: "center", headerAlign: 'center' },
+  { field: 'Cod. Marca', headerName: 'Cod. Marca', minWidth: 100, align: "center", headerAlign: 'center', editable: true, type: "number" },
   { field: 'Marca', headerName: 'Marca', minWidth: 120 },
-  { field: 'Diretiva', headerName: 'Diretiva', minWidth: 100 },
+  { field: 'Diretiva', headerName: 'Diretiva', minWidth: 100, editable: true },
   {
     field: 'Bal.',
     headerName: 'Balança',
@@ -41,9 +41,10 @@ export const getProdutosColumns = (
     align: "center",
     headerAlign: "center",
     renderCell: (params) => (params.value ? 'Sim' : 'Não'),
+    editable: true
   },
-  { field: 'Codigo Barras', headerName: 'Código Barras', minWidth: 140 },
-  { field: 'Codigo NCM', headerName: 'NCM', minWidth: 100 },
+  { field: 'Codigo Barras', headerName: 'Código Barras', minWidth: 140, editable: true, type: "number" },
+  { field: 'Codigo NCM', headerName: 'NCM', minWidth: 100, editable: true, type: "number" },
   {
     field: 'Vasilh.',
     headerName: 'Vasilhame',
@@ -51,21 +52,22 @@ export const getProdutosColumns = (
     align: "center",
     headerAlign: "center",
     renderCell: (params) => (params.value ? 'Sim' : 'Não'),
+    editable: true
   },
-  { field: 'CST', headerName: 'CST', minWidth: 70 },
-  { field: 'Cst Pis', headerName: 'CST PIS', minWidth: 80 },
-  { field: 'Pis', headerName: 'PIS (%)', minWidth: 80, align: "center", headerAlign: 'center' },
-  { field: 'Cst Cofins', headerName: 'CST COFINS', minWidth: 100 },
-  { field: 'Cofins', headerName: 'COFINS (%)', minWidth: 100, align: "center", headerAlign: 'center' },
-  { field: 'Cest', headerName: 'CEST', minWidth: 100 },
-  { field: 'CTS', headerName: 'CTS', minWidth: 80 },
+  { field: 'CST', headerName: 'CST', minWidth: 70, editable: true },
+  { field: 'Cst Pis', headerName: 'CST PIS', minWidth: 80, editable: true },
+  { field: 'Pis', headerName: 'PIS (%)', minWidth: 80, align: "center", headerAlign: 'center', editable: true },
+  { field: 'Cst Cofins', headerName: 'CST COFINS', minWidth: 100, editable: true },
+  { field: 'Cofins', headerName: 'COFINS (%)', minWidth: 100, align: "center", headerAlign: 'center', editable: true },
+  { field: 'Cest', headerName: 'CEST', minWidth: 100, editable: true },
+  { field: 'CTS', headerName: 'CTS', minWidth: 80, editable: true },
   {
     field: "Ativo",
     headerName: "Ativo",
     minWidth: 100,
     editable: true,
     align: "center",
-    headerAlign: "center",
+    headerAlign: "center", 
     renderCell: (params) => {
       const isAtivo = params.value === true;
       const color = isAtivo ? "#16a34a" : "#dc2626";
@@ -112,11 +114,12 @@ export const getProdutosColumns = (
     minWidth: 100,
     align: "center",
     headerAlign: "center",
-    renderCell: (params) => (params.value ? 'Sim' : 'Não'),
+    editable: true,
+    renderCell: (params) => (params.value ? 'Sim' : 'Não')
   },
-  { field: 'Pr. Venda', headerName: 'Pr Venda', minWidth: 100, },
-  { field: 'Pr. Venda 1', headerName: 'Pr Venda 1', minWidth: 110, },
-  { field: 'Pr. Venda 2', headerName: 'Pr Venda 2', minWidth: 110, },
+  { field: 'Pr. Venda', headerName: 'Pr Venda', minWidth: 100, editable: true, type: "number" },
+  { field: 'Pr. Venda 1', headerName: 'Pr Venda 1', minWidth: 110, editable: true, type: "number" },
+  { field: 'Pr. Venda 2', headerName: 'Pr Venda 2', minWidth: 110, editable: true, type: "number"},
 
 ];
 
@@ -131,7 +134,6 @@ export const nfceColumnOrder: string[] = [
   "Ativo",
   "Descricao Reduzida",
   "Codigo NCM",
-  "Cest",
   "CST",
   "Cst Pis",
   "Pis",
@@ -149,3 +151,4 @@ export const nfceColumnOrder: string[] = [
   "Comple",
   "CTS",
 ];
+
