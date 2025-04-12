@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { gerarPdfEtiquetas } from "@/lib/gerarPdfEtiquetasUsuarios"; 
 import { CirclePlus, CircleX, Download } from "lucide-react";
+import PdfPreview from "@/components/shared/pdfPreview";
+import saveAs from "file-saver";
+
 
 // Define o tipo de cada etiqueta
 type Etiqueta = {
@@ -45,6 +48,8 @@ const ComponentEtiquetasUsuarios = () => {
   // Estados para o formulário
   const [nome, setNome] = useState("");
   const [codigoUsuario, setCodigoUsuario] = useState("");
+
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   // Armazena as etiquetas geradas
   const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
@@ -87,10 +92,15 @@ const ComponentEtiquetasUsuarios = () => {
 
   // Chama a função que gera o PDF com todas as etiquetas
   const handleBaixarPdf = async () => {
-    if (etiquetas.length === 0) return;
-    await gerarPdfEtiquetas(etiquetas);
+    if (etiquetas.length === 0) {
+      alert("Nenhuma etiqueta para gerar.");
+      return;
+    }
+  
+    const blob = await gerarPdfEtiquetas(etiquetas);
+    saveAs(blob, "etiquetas_supervisores.pdf"); // 👈 força o download
   };
-
+  
     // Função para cancelar tudo, limpando todas as etiquetas, inputs e estado do barcode
     const handleCancelarTudo = () => {
       setEtiquetas([]);
@@ -134,9 +144,9 @@ const ComponentEtiquetasUsuarios = () => {
           <Button onClick={handleCancelarTudo}  variant={"destructive"}>
             <CircleX/> Cancelar 
           </Button>
-          <Button onClick={handleBaixarPdf} variant={"secondary"} >
+'          <Button onClick={handleBaixarPdf} variant={"secondary"} >
             <Download/> Baixar Pdf
-          </Button>
+          </Button>'
         </div>
       </Card>
 

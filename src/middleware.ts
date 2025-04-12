@@ -2,65 +2,69 @@ import { auth } from "@/auth";
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
+// Rotas públicas e comportamento para usuários autenticados
 const publicRoutes = [
-  { path: "/login", whenAutheticated: "redirect" },
-  { path: "/unitec", whenAutheticated: "" },
+  { path: "/login", whenAuthenticated: "redirect" },
+  { path: "/unitec", whenAuthenticated: "" },
 ] as const;
 
-const REDIRECT_WHEN_NOT_AUTHENTICATE_ROUTE = "/login";
+const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/login";
 
 export default auth(async (request: NextRequest) => {
   const path = request.nextUrl.pathname;
 
-  // Liberação geral de assets e arquivos públicos
+  // 🚫 Ignora arquivos estáticos
   if (
     path.startsWith("/_next") ||
-    path.startsWith("/favicon.ico") ||
-    path.startsWith("/sitemap.xml") ||
-    path.startsWith("/robots.txt") ||
+    path === "/favicon.ico" ||
+    path === "/sitemap.xml" ||
+    path === "/robots.txt" ||
     path.startsWith("/logoNome.jpg") ||
     path.startsWith("/public")
   ) {
     return NextResponse.next();
   }
 
-  const publicRoute = publicRoutes.find((route) => route.path === path);
+  // 🧠 Busca token e verifica expiração
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-
   const isTokenExpired = token?.exp && token.exp * 1000 < Date.now();
-  const isAuthenticated = token && !isTokenExpired;
+  const isAuthenticated = !!token && !isTokenExpired;
+  const publicRoute = publicRoutes.find((route) => route.path === path);
 
-  // 🔒 Token expirado? Redireciona para login
+  // 🚨 Token expirado → redireciona e remove cookies
   if (token && isTokenExpired) {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATE_ROUTE;
-    return NextResponse.redirect(redirectUrl);
+    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
+
+    const response = NextResponse.redirect(redirectUrl);
+    response.cookies.set("next-auth.session-token", "", { expires: new Date(0), path: "/" });
+    response.cookies.set("__Secure-next-auth.session-token", "", { expires: new Date(0), path: "/" });
+    return response;
   }
 
-  // ✅ Se rota for pública e não tiver token, permite
+  // 🔓 Rota pública → permite acesso sem token
   if (!token && publicRoute) {
     return NextResponse.next();
   }
 
-  // ❌ Se não tiver token e a rota for protegida, redireciona
+  // ❌ Rota protegida e sem token → redireciona
   if (!token && !publicRoute) {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATE_ROUTE;
+    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
     return NextResponse.redirect(redirectUrl);
   }
 
-  // 🛑 Usuário autenticado tentando acessar rota como /login? Redireciona pra "/"
-  if (isAuthenticated && publicRoute?.whenAutheticated === "redirect") {
+  // 🔁 Usuário autenticado tentando acessar /login → redireciona pra home
+  if (isAuthenticated && publicRoute?.whenAuthenticated === "redirect") {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/";
     return NextResponse.redirect(redirectUrl);
   }
 
+  // ✅ Passa normal
   return NextResponse.next();
 });
 
 export const config: MiddlewareConfig = {
-  matcher: [
-    "/((?!api|_next/|favicon.ico|sitemap.xml|robots.txt|public).*)",
-  ],
+  matcher: ["/((?!api|_next/|favicon.ico|sitemap.xml|robots.txt|public).*)"],
 };

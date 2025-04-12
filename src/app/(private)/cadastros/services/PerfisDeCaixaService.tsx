@@ -64,14 +64,8 @@ export const patchAlteraDescricaoById = async (idPerfil: string, descricao: stri
 // ======================================================================================
 
 export const fetchAllPerfisSSR = async (): Promise<PerfilPdv[]> => {
-  const session = await auth();
-  const api = apiSSR(session?.accessToken ?? ""); // garante string, pode ser vazia
-
-  try {
-    const { data } = await api.get("/config/perfilpdv");
-    return data;
-  } catch (error) {
-    throw new Error("Erro ao buscar perfis de caixa");
-  }
+  const api = await apiSSR(); // token já incluso
+  const response = await api.get('config/perfilpdv');
+  return response.data;
 };
 
