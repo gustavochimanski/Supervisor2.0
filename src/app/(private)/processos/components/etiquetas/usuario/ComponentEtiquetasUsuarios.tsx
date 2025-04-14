@@ -165,7 +165,18 @@ const ComponentEtiquetasUsuarios = () => {
 
       {/* Barcode invisível para captura do canvas */}
       <div className="invisible absolute -z-10" ref={barcodeRef}>
-        {barcodeTemp && <Barcode value={barcodeTemp} renderer="canvas" />}
+      {barcodeTemp && (
+  <Barcode
+    value={barcodeTemp}
+    renderer="canvas"
+    width={2} // aumenta a densidade (padrão é 1)
+    height={100} // deixa mais alto também
+    margin={0}
+    background="#ffffff"
+    displayValue={false}
+  />
+)}
+
       </div>
 
       {/* Pré-visualização (Quadrado) */}

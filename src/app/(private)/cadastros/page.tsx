@@ -1,5 +1,3 @@
-
-
 import { BanknoteIcon, Building, CircleUser, HandCoins, LucideShoppingCart, Menu, Monitor, Mouse, Network } from "lucide-react";
 import ComponentEmpresas from "./components/tabs/empresas/ComponentEmpresas";
 import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
@@ -12,7 +10,7 @@ import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaService";
 import TabsWrapper from "@/components/shared/tabsWrapper";
 import { fetchProdutos } from "./services/ProdutosService"
 import ComponentProdutos from "./components/tabs/produtos/ComponentProdutos";
-import ComponentUsuarios from "./components/tabs/usuarios/ComponentUsuarios";
+import ComponentMainUsuarios from "./components/tabs/usuarios/ComponentMainUsuarios";
 ;
 
 const PageCadastros = async () => {
@@ -57,7 +55,7 @@ const PageCadastros = async () => {
             <CircleUser size={15} /> Usuários
           </span>
         ),
-        Component: <ComponentUsuarios/>
+        Component: <ComponentMainUsuarios/>
       },
 
         {

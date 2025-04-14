@@ -96,19 +96,19 @@ const ComponentCentralNFCE = ( { dados }: Props) => {
             <h1 className="font-semibold items-end mb-1">Legenda</h1>
             <div className="flex gap-x-4 gap-y-1">
               <div className="flex items-center gap-2">
-                <Circle className="w-4 h-4 text-green-700 fill-green-700" />
+                <Circle className="w-4 h-4 text-green-500 fill-green-500" />
                 <span>Autorizado</span>
               </div>
               <div className="flex items-center gap-2">
-                <Circle className="w-4 h-4 text-yellow-300 fill-yellow-300" />
+                <Circle className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                 <span>Pendente</span>
               </div>
               <div className="flex items-center gap-2">
-                <Circle className="w-4 h-4 text-red-300 fill-red-300" />
+                <Circle className="w-4 h-4 text-red-500 fill-red-500" />
                 <span>Cancelado</span>
               </div>
               <div className="flex items-center gap-2">
-                <Circle className="w-4 h-4 text-orange-400 fill-orange-400" />
+                <Circle className="w-4 h-4 text-orange-500 fill-orange-500" />
                 <span>Inutilizado</span>
               </div>
             </div>

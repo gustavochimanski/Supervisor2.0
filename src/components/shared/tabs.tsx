@@ -28,7 +28,7 @@ const Tabs: React.FC<TabsProps> = ({
   return (
     <TabsPrimitive.Root
       defaultValue={defaultValue || items[0].value}
-      className={cn("flex flex-col ", containerClassName)}
+      className={cn("flex flex-col border border-input", containerClassName)}
     >
       {/* Estilo bonito para o grupo de abas */}
       <TabsPrimitive.List
@@ -55,7 +55,7 @@ const Tabs: React.FC<TabsProps> = ({
           key={item.value}
           value={item.value}
           className={cn(
-            "p-4 bg-background",
+            "p-4 bg-background ",
             contentClassName
           )}
         >
