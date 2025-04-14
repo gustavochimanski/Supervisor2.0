@@ -68,7 +68,7 @@
   }
 }
 
-.hideDefaultPasswordIcons :global(input[type="password"]::-ms-reveal),
+.hideDefaultPasswordIcons input[type="password"]::-ms-reveal
 .hideDefaultPasswordIcons :global(input[type="password"]::-ms-clear) {
   display: none !important;
 }

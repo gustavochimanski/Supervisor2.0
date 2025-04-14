@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import * as TabsPrimitive from "@radix-ui/react-tabs";
-import React from "react";
+import * as TabsPrimitive from "@radix-ui/react-tabs"
+import React from "react"
+import { cn } from "@/lib/utils"
 
 interface TabItem {
-  value: string;
-  label: React.ReactNode; // ✅ aceita string ou JSX
-  Component: React.ReactNode; // ✅ aceita JSX direto
+  value: string
+  label: React.ReactNode // ✅ aceita string ou JSX
+  Component: React.ReactNode // ✅ aceita JSX direto
 }
 
 interface TabsProps {
-  items: TabItem[];
-  defaultValue?: string;
-  containerClassName?: string;
-  triggerClassName?: string;
-  contentClassName?: string;
+  items: TabItem[]
+  defaultValue?: string
+  containerClassName?: string
+  triggerClassName?: string
+  contentClassName?: string
 }
-
 
 const Tabs: React.FC<TabsProps> = ({
   items,
@@ -27,40 +27,43 @@ const Tabs: React.FC<TabsProps> = ({
 }) => {
   return (
     <TabsPrimitive.Root
-      // Define o valor padrão da aba ativa. Se defaultValue não for informado, utiliza o primeiro item da lista.
       defaultValue={defaultValue || items[0].value}
-      className={`flex flex-col ${containerClassName || ''}`}
+      className={cn("flex flex-col ", containerClassName)}
     >
-      {/* Lista de gatilhos/abas */}
-      <TabsPrimitive.List className="flex font-sans rounded-xl">
+      {/* Estilo bonito para o grupo de abas */}
+      <TabsPrimitive.List
+        className={cn(
+          "border-none items-start font-sans bg-muted text-muted-foreground rounded-xl ",
+          triggerClassName
+        )}
+      >
         {items.map((item) => (
           <TabsPrimitive.Trigger
             key={item.value}
             value={item.value}
-            // Estilização básica do trigger, com possibilidade de customização via triggerClassName
-            className={` rounded-t-xl bg-slate-100 px-4 py-2 cursor-pointer text-xs font-bold data-[state=active]:text-sidebar-accent-foreground data-[state=active]:bg-card text-slate-400 hover:bg-gray-200 data-[state=active]:border-b-2 border-none ${
-              triggerClassName || ""
-            }`}
+            className={cn(
+              "hover:bg-background h-9 rounded-t-xl px-4 cursor-pointer text-xs font-bold data-[state=active]:text-primary data-[state=active]:bg-card data-[state=active]:border-b-2 border-none"
+            )}
           >
             {item.label}
           </TabsPrimitive.Trigger>
         ))}
       </TabsPrimitive.List>
 
-      {/* Conteúdo de cada aba */}
       {items.map((item) => (
         <TabsPrimitive.Content
           key={item.value}
           value={item.value}
-          // Estilização básica do conteúdo, com possibilidade de customização via contentClassName
-          className={`p-4 ${contentClassName || ""}`}
+          className={cn(
+            "p-4 bg-background",
+            contentClassName
+          )}
         >
-          {/* Renderiza o componente associado à aba */}
-          {item.Component }
+          {item.Component}
         </TabsPrimitive.Content>
       ))}
     </TabsPrimitive.Root>
-  );
-};
+  )
+}
 
-export default Tabs;
+export default Tabs

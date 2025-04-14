@@ -11,18 +11,36 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-		fontFamily:{
-			atkinson: ['"Atkinson Hyperlegible Next"', 'sans-serif'],
-			karla: ['Karla', 'sans-serif'],
-			lato: ['Lato', 'sans-serif'],
-			nunito: ['Nunito', 'sans-serif'],
-			robotoMono: ['"Roboto Mono"', 'monospace'],
-			ubuntu: ['Ubuntu', 'sans-serif'],
-		},
+  		fontFamily: {
+  			atkinson: [
+  				'Atkinson Hyperlegible Next"',
+  				'sans-serif'
+  			],
+  			karla: [
+  				'Karla',
+  				'sans-serif'
+  			],
+  			lato: [
+  				'Lato',
+  				'sans-serif'
+  			],
+  			nunito: [
+  				'Nunito',
+  				'sans-serif'
+  			],
+  			robotoMono: [
+  				'Roboto Mono"',
+  				'monospace'
+  			],
+  			ubuntu: [
+  				'Ubuntu',
+  				'sans-serif'
+  			]
+  		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-			'primary-gradient': "linear-gradient(90deg, hsl(207, 90%, 54%) 0%, hsl(291, 64%, 42%) 100%)",
+  			'primary-gradient': 'linear-gradient(90deg, hsl(207, 90%, 54%) 0%, hsl(291, 64%, 42%) 100%)'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -62,6 +80,7 @@ const config: Config = {
   			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
+  			inputValue: 'hsl(var(--inputValue))',
   			ring: 'hsl(var(--ring))',
   			chart: {
   				'1': 'hsl(var(--chart-1))',
@@ -77,7 +96,7 @@ const config: Config = {
   				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
   				accent: 'hsl(var(--sidebar-accent))',
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
+  				border: 'hsl(var(--sidebar-foreground))',
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		}

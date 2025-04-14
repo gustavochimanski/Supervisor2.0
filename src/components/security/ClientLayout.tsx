@@ -7,9 +7,10 @@ import { QueryClientProvider } from "react-query"
 import queryClient from "@/services/Query/QueryClient"
 import { useEffect, useState } from "react"
 import TopBarComponent from "../shared/app-topBar"
-import { Toaster } from "../ui/toastes"
+import { Toaster } from "../ui/toaster"
 import ModalEnviarConfiguracao from "@/app/(private)/processos/components/comunicacao/ModalEnviarConfiguracoes"
 import ModalEnviarProdutos from "@/app/(private)/processos/components/comunicacao/ModalEnviarProdutos"
+import { ThemeProvider } from "next-themes" 
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -28,6 +29,7 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
   }
 
   return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
     <QueryClientProvider client={queryClient}>
       <SidebarProvider defaultOpen={isSideBarOpen}>
         <AppSidebar />
@@ -47,5 +49,6 @@ export default function ClientLayout({ children, defaultOpen }: ClientLayoutProp
         <ModalEnviarProdutos />
       </SidebarProvider>
     </QueryClientProvider>
+    </ThemeProvider>
   )
 }

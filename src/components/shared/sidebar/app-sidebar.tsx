@@ -9,14 +9,12 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    useSidebar,
   } from "@/components/ui/sidebar"
   import {
     Home,
     ShoppingCart,
     Package,
     DollarSign,
-    Sliders,
     Settings,
     ShoppingBag,
     MonitorUpIcon,
@@ -48,7 +46,6 @@ import Link from "next/link";
 
   const AppSidebar = ()=> {
 
-  const { open } = useSidebar();
     
     return (
         <Sidebar collapsible="icon">

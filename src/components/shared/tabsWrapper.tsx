@@ -13,7 +13,7 @@ export default function TabsWrapper({ items }: TabsWrapperProps) {
       items={items}
       containerClassName="w-full rounded-sm shadow h-full flex flex-col"
       triggerClassName="transition-colors"
-      contentClassName="bg-sidebar rounded-sm flex-1 h-full overflow-hidden"
+      contentClassName=" rounded-sm flex-1 h-full overflow-hidden"
     />
   );
 }

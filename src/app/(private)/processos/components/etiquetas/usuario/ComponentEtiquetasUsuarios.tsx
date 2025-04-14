@@ -4,11 +4,11 @@ import { useRef, useState } from "react";
 import Barcode from "react-barcode";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { gerarPdfEtiquetas } from "@/lib/gerarPdfEtiquetasUsuarios"; 
-import { CirclePlus, CircleX, Download } from "lucide-react";
-import PdfPreview from "@/components/shared/pdfPreview";
+import { Card,CardContent,CardDescription,CardFooter,CardHeader, CardTitle } from "@/components/ui/card";
+import { gerarPdfEtiquetas } from "@/lib/pdf/gerarPdfEtiquetasUsuarios"; 
+import { CircleHelp, CirclePlus, CircleX, Download } from "lucide-react";
 import saveAs from "file-saver";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 
 
 // Define o tipo de cada etiqueta
@@ -114,40 +114,52 @@ const ComponentEtiquetasUsuarios = () => {
     <div className="p-2 flex flex-col md:flex-row gap-4 flex-1 h-full">
       {/* Formulário: Nome + Código */}
       <Card className="flex flex-col gap-4 flex-1 items-center justify-center">
+        <CardHeader className="flex flex-row gap-2 justify-center">
+          <CardTitle className="text-lg">Gerador de Códigos de Barras</CardTitle>
+          <Popover>
+            <PopoverTrigger><CircleHelp size={15}/></PopoverTrigger>
+            <PopoverContent> 
+              Este gerador permite criar etiquetas com <strong>código de barras no padrão EAN-13</strong>, associadas ao nome e código do usuário.
+              <br />
+              Você pode adicionar vários usuários e gerar um <strong>PDF</strong> com todas as etiquetas prontas para impressão.
+          </PopoverContent>
+          </Popover>
+        </CardHeader>
 
-          <div className="flex flex-col gap-2">
+         <CardContent className="flex flex-col w-2/5 gap-2 text-sm">
             <div className="flex flex-col gap-1">
               <label className="font-semibold">Nome do usuário</label>
               <Input
-                className="h-10"
-                value={nome}
+                className="h-9"
+                value={nome}  
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="Ex: João da Silva"
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="font-semibold">Código do usuário (4~5 dígitos)</label>
+              <label className="font-semibold">Código do usuário (4-5 dígitos)</label>
               <Input
-                className="h-10"
+                className="h-9"
                 type="number"
                 value={codigoUsuario}
                 onChange={(e) => setCodigoUsuario(e.target.value)}
                 placeholder="Ex: 1234"
               />
             </div>
-        </div>
+        </CardContent> 
 
-        <div className="mt-10 flex gap-3">
+        {/* ============ BUTTONS ============ */}
+        <CardFooter className="flex gap-3">
           <Button onClick={handleAdicionarEtiqueta}  >
             <CirclePlus/> Adcionar
           </Button>
           <Button onClick={handleCancelarTudo}  variant={"destructive"}>
             <CircleX/> Cancelar 
           </Button>
-'          <Button onClick={handleBaixarPdf} variant={"secondary"} >
+           <Button onClick={handleBaixarPdf} variant={"secondary"} >
             <Download/> Baixar Pdf
-          </Button>'
-        </div>
+          </Button>
+          </CardFooter>
       </Card>
 
 

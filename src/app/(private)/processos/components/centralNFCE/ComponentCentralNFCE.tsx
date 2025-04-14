@@ -56,7 +56,7 @@ const ComponentCentralNFCE = ( { dados }: Props) => {
   
   return (
     <div className="flex flex-col h-full">
-      <Card className="flex flex-col h-full">
+      <Card className=" flex flex-col h-full">
         <CardHeader>
           <CardTitle>Central NFCE</CardTitle>
           <CardDescription />
