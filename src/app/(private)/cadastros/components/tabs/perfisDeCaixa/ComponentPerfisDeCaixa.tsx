@@ -266,7 +266,7 @@
               <Button onClick={() => setShowModalPerfilById(false)} variant="outline">
                 Fechar
               </Button>
-              <Button onClick={handleSave} type="submit" variant={"gradient"}>
+              <Button onClick={handleSave} type="submit">
                 Salvar
               </Button>
             </CardFooter>
