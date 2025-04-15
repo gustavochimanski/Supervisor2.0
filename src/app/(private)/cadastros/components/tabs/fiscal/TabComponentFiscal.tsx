@@ -1,7 +1,7 @@
 import Tabs from "@/components/shared/tabs";
 import { Keyboard, Monitor, Printer } from "lucide-react";
 
-const ComponentFiscal = () => {
+const TabComponentFiscal = () => {
 
     const nestedTabItems = [
       {
@@ -36,4 +36,4 @@ const ComponentFiscal = () => {
   };
   
 
-export default ComponentFiscal
+export default TabComponentFiscal

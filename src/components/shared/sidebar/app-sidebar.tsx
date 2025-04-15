@@ -53,7 +53,7 @@ import Link from "next/link";
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
                 <SidebarGroupContent>
-                  <Image src="/logo.jpg" alt="Logo" className="mb-3 m-auto" width={20} height={20}/>
+                  <Image src="/logo.png" alt="Logo" className="mb-3 m-auto" width={20} height={20}/>
                     <SidebarMenu >
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title} >

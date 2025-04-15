@@ -18,7 +18,7 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 import { toast } from "sonner";
 import FormIncluirMeioPgto, {FormData} from "@/app/(private)/cadastros/schemas/formIncluiMpgto";
 
-export default function ComponentMeioPagamento() {
+export default function TabComponentMeioPagamento() {
   // ==== MODAIS ======
   const [showModalById, setShowModalById] = useState(false);
   const [showModalIncluirMpgto, setShowModalIncluirMpgto] = useState(false);

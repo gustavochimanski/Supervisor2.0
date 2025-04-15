@@ -1,7 +1,7 @@
 import Tabs from "@/components/shared/tabs";
 import { Keyboard, Monitor, Printer } from "lucide-react";
 
-export const ComponentPerifericos: React.FC = () => {
+export const TabComponentPerifericos: React.FC = () => {
     const nestedTabItems = [
       {
         value: "impressora",

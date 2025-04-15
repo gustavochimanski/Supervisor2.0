@@ -1,5 +1,5 @@
 
-const ComponentEmpresas = () => {
+const TabComponentEmpresas = () => {
     return(
         <div>
             <h1>Empresas</h1>
@@ -8,4 +8,4 @@ const ComponentEmpresas = () => {
 }
 
 
-export default ComponentEmpresas
+export default TabComponentEmpresas

@@ -7,46 +7,46 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Modal } from "@/components/ui/modal"
 import { SearchComponent } from "@/components/shared/searchComponent"
+import { useFetchProdutos } from "../../../hooks/useProdutos"
+import { CircleCheck } from "lucide-react"
+import { ExportButtonPro } from "@/components/shared/exportCsvButton"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-type ComponentProdutosProps = {
-    produtosSSR: any[];
-  };
+
   
-const ComponentProdutos = ({ produtosSSR }: ComponentProdutosProps) => {
+const TabComponentProdutos = () => {
     const [showModalConfig, setShowModalConfig] = useState(false)
-
-    console.log(showModalConfig)
+    const { data: dataProdutos } = useFetchProdutos()
 
     return(
         <div className="flex flex-col h-full">
         <Card className="flex flex-col h-full">
-            {/* =============== CONTAINER TOPO ============== */}
             {/* =================================================== */}
             {/* ==================== PESQUISAR  =================== */}
-            {/* =================================================== */}
             <CardHeader>
                 <CardTitle>Cadastro de Produtos</CardTitle>
                 <div>
-                <SearchComponent className="w-full md:w-60" />
+                   <SearchComponent className="w-full md:w-60" />
                 </div>
             </CardHeader>
                 <CardContent className="p-0 flex-1 overflow-hidden">
+                    
                     <DataTableComponentMui 
-                        rows={produtosSSR} 
+                        rows={dataProdutos} 
                         columns={getProdutosColumns(setShowModalConfig)}
                         getRowId={(row) => row["Código"]}
                         columnOrder={nfceColumnOrder}
                     />
                 </CardContent>
                 
-                <div className="flex justify-between pb-2 px-2">
-                    <Button>Incluir</Button>
-                    <Button>Hello</Button>
-                </div>
+                <CardFooter className="gap-4">
+                    <Button><CircleCheck/>Incluir</Button>
+                    <Button variant={"secondary"}>Hello</Button>
+                    <Button variant={"secondary"}>
+                        <ExportButtonPro rows={dataProdutos ?? []} columns={nfceColumnOrder}/>
+                    </Button>
+                </CardFooter>
             </Card>
-
-
-
 
 
             {showModalConfig && (
@@ -59,4 +59,4 @@ const ComponentProdutos = ({ produtosSSR }: ComponentProdutosProps) => {
 }
 
 
-export default ComponentProdutos
+export default TabComponentProdutos

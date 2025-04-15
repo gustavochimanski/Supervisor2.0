@@ -1,23 +1,21 @@
 import { BanknoteIcon, Building, CircleUser, HandCoins, LucideShoppingCart, Menu, Monitor, Mouse, Network } from "lucide-react";
-import ComponentEmpresas from "./components/tabs/empresas/ComponentEmpresas";
-import ComponentMeioPagamento from "./components/tabs/meioPagamento/ComponentMeioPag";
-import { ComponentPerifericos } from "./components/tabs/perifericos/ComponentPerifericos";
-import ComponentFiscal from "./components/tabs/fiscal/ComponentFiscal";
-import ComponentMainCaixas from "./components/tabs/caixas/ComponentMainCaixas";
-import ComponentPerfilDeCaixa from "./components/tabs/perfisDeCaixa/ComponentPerfisDeCaixa";
-import { fetchAllCaixasSSR } from "./services/CaixasService";
-import { fetchAllPerfisSSR } from "./services/PerfisDeCaixaService";
+
+import { TabComponentPerifericos } from "./components/tabs/perifericos/TabComponentPerifericos";
+import TabComponentMeioPagamento from "./components/tabs/meioPagamento/TabComponentMeioPag";
+import TabComponentEmpresas from "./components/tabs/empresas/TabComponentEmpresas";
+import TabComponentFiscal from "./components/tabs/fiscal/TabComponentFiscal";
+import TabComponentMainCaixas from "./components/tabs/caixas/TabComponentMainCaixas";
+import TabComponentProdutos from "./components/tabs/produtos/TabComponentProdutos";
+import TabComponentPerfilPdv from "./components/tabs/PerfilPdv/TabComponentPerfilPdv";
+import TabComponentUsuarios from "./components/tabs/usuarios/TabComponentMainUsuarios";
+
 import TabsWrapper from "@/components/shared/tabsWrapper";
-import { fetchProdutos } from "./services/ProdutosService"
-import ComponentProdutos from "./components/tabs/produtos/ComponentProdutos";
-import ComponentMainUsuarios from "./components/tabs/usuarios/ComponentMainUsuarios";
-;
+
+import { fetchAllCaixasSSR } from "./services/CaixasService";
 
 const PageCadastros = async () => {
 
   const caixasSSR = await fetchAllCaixasSSR();
-  const perfisSSR = await fetchAllPerfisSSR();
-  const produtosSSR = await fetchProdutos();
 
 
     const nestedTabItems = [
@@ -28,7 +26,7 @@ const PageCadastros = async () => {
             <LucideShoppingCart size={15} /> Produtos
           </span>
         ),
-        Component: <ComponentProdutos produtosSSR={produtosSSR}/>
+        Component: <TabComponentProdutos />
         },
       {
         value: "caixas",
@@ -37,7 +35,7 @@ const PageCadastros = async () => {
             <Monitor size={15} /> Caixas
           </span>
         ),
-        Component: <ComponentMainCaixas caixasSSR={caixasSSR} /> // ✅ JSX direto
+        Component: <TabComponentMainCaixas caixasSSR={caixasSSR} /> 
       },
       {
         value: "perfilPdv",
@@ -46,7 +44,7 @@ const PageCadastros = async () => {
             <Network size={15} /> Perfil Pdv
           </span>
         ),
-        Component: <ComponentPerfilDeCaixa perfisSSR={perfisSSR} /> // ✅ JSX direto
+        Component: <TabComponentPerfilPdv  /> 
       },
       {
         value: "usuarios",
@@ -55,7 +53,7 @@ const PageCadastros = async () => {
             <CircleUser size={15} /> Usuários
           </span>
         ),
-        Component: <ComponentMainUsuarios/>
+        Component: <TabComponentUsuarios/>
       },
 
         {
@@ -65,7 +63,7 @@ const PageCadastros = async () => {
               <Building size={15} /> Empresas
             </span>
           ),
-          Component: <ComponentEmpresas/>
+          Component: <TabComponentEmpresas/>
         },
       {
         value: "meios-de-pagamento",
@@ -74,7 +72,7 @@ const PageCadastros = async () => {
             <BanknoteIcon size={15} /> Meios de Pagamento
           </span>
         ),
-        Component: <ComponentMeioPagamento/>
+        Component: <TabComponentMeioPagamento/>
       },
       {
         value: "perifericos",
@@ -83,7 +81,7 @@ const PageCadastros = async () => {
             <Mouse size={15} /> Periféricos
           </span>
         ),
-        Component: <ComponentPerifericos/> 
+        Component: <TabComponentPerifericos/> 
       },
       {
         value: "fiscal",
@@ -92,7 +90,7 @@ const PageCadastros = async () => {
             <HandCoins size={15} /> Fiscal
           </span>
         ),
-        Component: <ComponentFiscal/>
+        Component: <TabComponentFiscal/>
       },
       {
         value: "outros",

@@ -1,29 +1,30 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardFooter, CardTitle } from "@/components/ui/card"
+import { Card, CardFooter, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { CardContent, CardHeader } from "@mui/material"
+import { CardContent } from "@mui/material"
 import { CircleCheck, CircleX } from "lucide-react"
 
 type Props = {
-  data?: any;
-  modoEdicao: boolean;
-  setModoEdicao: (ativo: boolean) => void;
+  dataSSR: any;
+  modoEdicao?: boolean;
+  setModoEdicao?: (ativo: boolean) => void;
 }
 
-const TabConfigCaixas = ({data, modoEdicao, setModoEdicao} : Props) => {
-  if (!data) return <div>Selecione um <strong>caixa</strong> para visualizar.</div>
+const ComponentConfigPerfilPDV = ({dataSSR, modoEdicao, setModoEdicao} : Props) => {
+  if (!dataSSR) return <div>Selecione um <strong>caixa</strong> para visualizar.</div>
 
   console.log(modoEdicao)
-  const confPerfil = data.perfilPdv?.confPerfil
+  const confPerfil = dataSSR.perfilPdv?.confPerfil
   if (!confPerfil || !Array.isArray(confPerfil)) {
     return <div>Nenhuma configuração encontrada.</div>
   }
+  
 
   return (
     <Card className="text-muted-foreground">
-      <CardTitle className="p-4 pb-0">Configurações <strong>{data.descricao}</strong></CardTitle>
+      <CardTitle className="p-4 pb-0">Configurações <strong>{dataSSR.descricao}</strong></CardTitle>
       <CardContent className="flex flex-wrap gap-4 text-xs">
         {confPerfil.map((config: any) => (
           <div
@@ -45,7 +46,7 @@ const TabConfigCaixas = ({data, modoEdicao, setModoEdicao} : Props) => {
         <Button>
           <CircleCheck />Gravar
         </Button>
-        <Button variant="secondary" onClick={() => setModoEdicao(false)}>
+        <Button variant="secondary" onClick={() => setModoEdicao!(false)}>
           <CircleX />Cancelar
         </Button>
       </CardFooter>
@@ -53,4 +54,4 @@ const TabConfigCaixas = ({data, modoEdicao, setModoEdicao} : Props) => {
   )
 }
 
-export default TabConfigCaixas
+export default ComponentConfigPerfilPDV
