@@ -23,7 +23,7 @@ const TopBarComponent = () => {
       <div className="flex items-center gap-4 justify-end mr-2 ">
         {isMobile && (
           <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="logo"
             className=" m-auto"
             width={20}
@@ -36,7 +36,7 @@ const TopBarComponent = () => {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={"secondary"}>
+            <Button variant={"outline"}>
               <User />
             </Button>
           </DropdownMenuTrigger>

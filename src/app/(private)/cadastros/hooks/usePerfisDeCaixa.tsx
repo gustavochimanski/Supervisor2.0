@@ -7,13 +7,13 @@ import {
   postNewPerfilByDescricao,
   putConfPerfilById,
   patchAlteraDescricaoById, } from "../services/PerfisDeCaixaService"
-import { PatchConfPerfilPayload, PerfilPdv} from '../types/typesPerfisDeCaixa';
+import { PatchConfPerfilPayload, TypePerfilPdv} from '../types/typesPerfisDeCaixa';
 
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============
 //====================================================
 export const useFetchAllPerfil = () => {
-  return useQuery<PerfilPdv[]>('fetchAllPerfilPdvs', fetchAllPerfis, {
+  return useQuery<TypePerfilPdv[]>('fetchAllPerfilPdvs', fetchAllPerfis, {
     staleTime: 60 * 1000,
   });
 };
@@ -22,7 +22,7 @@ export const useFetchAllPerfil = () => {
 //============== BUSCA PERFIL POR ID =================
 //====================================================
 export const useFetchByIdPerfil = (id: string | undefined) => {
-  return useQuery<PerfilPdv>(
+  return useQuery<TypePerfilPdv>(
     ['fetchPerfilPdvById', id],
     () => fetchPerfilById(id!),
     {

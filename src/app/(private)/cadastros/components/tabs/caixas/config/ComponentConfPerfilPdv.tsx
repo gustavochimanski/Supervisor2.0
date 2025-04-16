@@ -23,11 +23,12 @@ const CardConfigPerfilPdv = ({
   setIdPerfilSelected,
   setRowSelected
 }: Props) => {
-  if (!dataSSR) return <div className="mx-6">Selecione um <strong>caixa</strong> para visualizar.</div>;
 
   const { data: dataAllPerfilPdv } = useFetchAllPerfil();
-  const confPerfil = dataSSR.perfilPdv?.confPerfil;
 
+  if (!dataSSR) return <div className="mx-6">Selecione um <strong>caixa</strong> para visualizar.</div>;
+  
+  const confPerfil = dataSSR.perfilPdv?.confPerfil;
   if (!confPerfil || !Array.isArray(confPerfil)) {
     return <div>Nenhuma configuração encontrada.</div>;
   }
@@ -45,9 +46,9 @@ const CardConfigPerfilPdv = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <CardHeader className="flex flex-row gap-4">
-        <Input disabled value={idPerfilSelected} className="w-10" />
+        <Input disabled value={idPerfilSelected} className="w-12 mt-2 bg-foreground/30 text-center" />
 
         <Select value={idPerfilSelected} onValueChange={handlePerfilChange}>
           <SelectTrigger className="w-[180px]">
@@ -63,7 +64,7 @@ const CardConfigPerfilPdv = ({
         </Select>
       </CardHeader>
 
-      <CardContent className="flex flex-wrap gap-4 text-xs">
+      <CardContent className="flex flex-wrap gap-4 text-xs h-full">
         {confPerfil.map((config: any) => (
           <div
             key={config.id}
@@ -73,7 +74,7 @@ const CardConfigPerfilPdv = ({
             <Input
               defaultValue={config.value}
               name={config.property}
-              className="h-6"
+              className="h-8"
               disabled={!modoEdicao}
             />
           </div>

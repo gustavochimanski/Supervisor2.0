@@ -1,18 +1,18 @@
 // types.ts
-export interface PerfilPdv {
+export type TypePerfilPdv = {
     id: string;
     descricao: string;
     confPerfil: PatchConfPerfilPayload[]
   }
   
-  export interface PatchConfPerfilPayload {
+  export type PatchConfPerfilPayload = {
     id: number;
     property: string;
     value: string;
     perfilId: number;
   }
   
-  export interface PutConfPerfilParams {
+  export type PutConfPerfilParams = {
     idPerfil: string;
     payload: PatchConfPerfilPayload | '';
   }

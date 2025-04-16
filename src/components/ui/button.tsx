@@ -13,10 +13,12 @@ const buttonVariants = cva(
           "bg-primary text-primary-foreground shadow hover:bg-primary/80",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/80",
+        secondaryDestructive:
+          "bg-background border border-input text-destructive shadow-sm hover:bg-foreground/10",
         outline:
           "bg-background border border-input text-secondary-foreground shadow-sm hover:bg-foreground/10",
         secondary:
-          "bg-background border border-input text-secondary-foreground shadow-sm hover:bg-foreground/10",
+          "bg-background border border-input text-primary shadow-sm hover:bg-foreground/10",
           sidebarTrigger:
           " bg-sidebar py-[25px] rounded-[50%] border-none border-0 hover:text-accent-foreground text-primary ",
         ghost: "hover:bg-accent hover:text-accent-foreground",

@@ -1,3 +1,4 @@
+import { ViewButton } from "@/components/shared/table/buttons/viewButton";
 import { Button } from "@/components/ui/button";
 import { GridColDef } from "@mui/x-data-grid";
 import { Eye } from "lucide-react";
@@ -71,23 +72,21 @@ export const nfceColumns = (
     { field: "motivo", headerName: "Motivo", minWidth: 160 },
     { field: "supCanc", headerName: "Sup. Canc", minWidth: 90 },
     { field: "nomeSupCanc", headerName: "Sup. Canc", minWidth: 100 },
-    {field: "viewModal",
-    headerName: "Ver",
-    align: "center",
-    headerAlign: "center",
-    minWidth: 50,
-    sortable: false,
-    filterable: false,
-    renderCell: (params) => (
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => handleOpenVisualizarModal?.(params.row)}
-        className=" text-blue-700"
-      >
-        <Eye size={18} />
-      </Button>
-    )},
+    {
+      field: "viewModal",
+      headerName: "Ver",
+      align: "center",
+      headerAlign: "center",
+      minWidth: 60,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <ViewButton
+          onClick={() => handleOpenVisualizarModal?.(params.row)}
+        />
+      ),
+    }
+    
   ];
 
   return baseColumns;

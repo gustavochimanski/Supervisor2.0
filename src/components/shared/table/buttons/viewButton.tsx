@@ -1,4 +1,6 @@
 // components/ViewButton.tsx
+"use client";
+
 import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,9 +13,12 @@ export const ViewButton = ({ onClick, className }: ViewButtonProps) => (
   <Button
     variant="ghost"
     size="icon"
-    onClick={onClick}
-    className={`text-blue-700 ${className ?? ""}`}
+    onClick={(e) => {
+      e.stopPropagation(); // 👈 bloqueia o clique de afetar a linha
+      onClick();
+    }}
+    className="text-primary"
   >
-    <Eye size={18} />
+    <Eye size={15} />
   </Button>
 );

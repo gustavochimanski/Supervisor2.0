@@ -6,8 +6,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { getColumnsUsuarios, getPermissaoUsuarioColumns } from "./columnsUsuarios";
 import { Button } from "@/components/ui/button";
+import { CircleCheck, CirclePlus, CircleX } from "lucide-react";
 
 const ComponentUsuarios = () => {
+  const [editModel, setEditModel] = useState<any>(null);
+
+
   const [usuarios, setUsuarios] = useState([
     { codigo: 1, nome: "João da Silva" },
     { codigo: 2, nome: "Maria Oliveira" },
@@ -20,8 +24,10 @@ const ComponentUsuarios = () => {
   ]);
 
   const handleEditar = (id: number) => {
-    console.log("Editar usuário", id);
+    const usuario = usuarios.find((u) => u.codigo === id);
+    setEditModel(usuario || null);
   };
+  
 
   const handleExcluirUsuario = (id: number) => {
     console.log("Excluir usuário", id);
@@ -33,7 +39,8 @@ const ComponentUsuarios = () => {
     setPermissoes((prev) => prev.filter((p) => p.id !== id));
   };
 
-  const usuarioColumns = getColumnsUsuarios(handleEditar, handleExcluirUsuario);
+  const usuarioColumns = getColumnsUsuarios(handleEditar, handleExcluirUsuario, setEditModel);
+
   const permissaoColumns = getPermissaoUsuarioColumns(handleExcluirPermissao);
 
   return (
@@ -56,7 +63,11 @@ const ComponentUsuarios = () => {
       </Card>
 
       {/* Card: Permissões */}
-      <Card  className="flex-1 h-full ">
+      <Card
+        className={`flex-1 h-full ${
+          !editModel ? "opacity-60 pointer-events-none select-none" : ""
+        }`}
+      >
         <CardHeader>
           <CardTitle>Permissões do Usuário</CardTitle>
         </CardHeader>
@@ -67,10 +78,13 @@ const ComponentUsuarios = () => {
             getRowId={(row) => row.id}
           />
         </CardContent>
-        <CardFooter>
-          <Button>Adicionar Permissão</Button>
+        <CardFooter className="gap-4">
+          <Button variant={"secondary"} disabled={!editModel}><CirclePlus/>Adicionar</Button>
+          <Button variant={"secondaryDestructive"} disabled={!editModel} onClick={() => setEditModel(false)}><CircleX/>Cancelar</Button>
+          <Button disabled={!editModel}><CircleCheck/>Gravar</Button>
         </CardFooter>
       </Card>
+
     </div>
   );
 };

@@ -17,7 +17,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 const TabComponentProdutos = () => {
     const [showModalConfig, setShowModalConfig] = useState(false)
     const { data: dataProdutos } = useFetchProdutos()
-
+    
     return(
         <div className="flex flex-col h-full">
         <Card className="flex flex-col h-full">
@@ -42,9 +42,7 @@ const TabComponentProdutos = () => {
                 <CardFooter className="gap-4">
                     <Button><CircleCheck/>Incluir</Button>
                     <Button variant={"secondary"}>Hello</Button>
-                    <Button variant={"secondary"}>
-                        <ExportButtonPro rows={dataProdutos ?? []} columns={nfceColumnOrder}/>
-                    </Button>
+                    <ExportButtonPro rows={dataProdutos ?? []} columns={nfceColumnOrder}/>
                 </CardFooter>
             </Card>
 

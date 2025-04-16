@@ -1,7 +1,6 @@
 
 import api from '@/app/api/api';
-import { PatchConfPerfilPayload, PerfilPdv } from '../types/typesPerfisDeCaixa';
-import { auth } from '@/auth';
+import { PatchConfPerfilPayload, TypePerfilPdv } from '../types/typesPerfisDeCaixa';
 import apiSSR from '@/app/api/apiSSR';
 
 
@@ -12,7 +11,7 @@ import apiSSR from '@/app/api/apiSSR';
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============
 //====================================================
-export const fetchAllPerfis = async (): Promise<PerfilPdv[]> => {
+export const fetchAllPerfis = async (): Promise<TypePerfilPdv[]> => {
   const response = await api.get('config/perfilpdv');
   return response.data;
 };
@@ -20,7 +19,7 @@ export const fetchAllPerfis = async (): Promise<PerfilPdv[]> => {
 //====================================================
 //============== BUSCA PERFIL POR ID =================
 //====================================================
-export const fetchPerfilById = async (id: string): Promise<PerfilPdv> => {
+export const fetchPerfilById = async (id: string): Promise<TypePerfilPdv> => {
   const response = await api.get(`config/perfilpdv/${id}`);
   return response.data;
 };
@@ -63,7 +62,7 @@ export const patchAlteraDescricaoById = async (idPerfil: string, descricao: stri
 // ================================== SSR ===============================================
 // ======================================================================================
 
-export const fetchAllPerfisSSR = async (): Promise<PerfilPdv[]> => {
+export const fetchAllPerfisSSR = async (): Promise<TypePerfilPdv[]> => {
   const api = await apiSSR(); // token já incluso
   const response = await api.get('config/perfilpdv');
   return response.data;

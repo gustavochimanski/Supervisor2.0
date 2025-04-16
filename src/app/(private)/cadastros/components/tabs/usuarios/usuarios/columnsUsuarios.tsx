@@ -5,7 +5,8 @@ import { Pencil, Trash2 } from "lucide-react";
 
 export const getColumnsUsuarios = (
   onEditar: (id: number) => void,
-  onExcluir: (id: number) => void
+  onExcluir: (id: number) => void,
+  setEditModel?: (usuario: any) => void
 ): GridColDef[] => [
   {
     field: "codigo",
@@ -13,13 +14,13 @@ export const getColumnsUsuarios = (
     type: "number",
     minWidth: 100,
     align: "center",
-    headerAlign: "center"
+    headerAlign: "center",
   },
   {
     field: "nome",
     headerName: "Nome",
     minWidth: 200,
-    flex: 1
+    flex: 1,
   },
   {
     field: "editar",
@@ -30,10 +31,16 @@ export const getColumnsUsuarios = (
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <IconButton color="primary" onClick={() => onEditar(params.row.codigo)}>
+      <IconButton
+        color="primary"
+        onClick={() => {
+          onEditar(params.row.codigo);
+          setEditModel?.(params.row); // seta o model no pai
+        }}
+      >
         <Pencil size={18} />
       </IconButton>
-    )
+    ),
   },
   {
     field: "excluir",
@@ -44,11 +51,14 @@ export const getColumnsUsuarios = (
     sortable: false,
     filterable: false,
     renderCell: (params) => (
-      <IconButton color="error" onClick={() => onExcluir(params.row.codigo)}>
+      <IconButton
+        color="error"
+        onClick={() => onExcluir(params.row.codigo)}
+      >
         <Trash2 size={18} />
       </IconButton>
-    )
-  }
+    ),
+  },
 ];
 
 

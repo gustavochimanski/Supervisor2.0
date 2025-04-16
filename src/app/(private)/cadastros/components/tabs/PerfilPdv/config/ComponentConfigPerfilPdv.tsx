@@ -1,41 +1,47 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardFooter, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { CardContent } from "@mui/material"
-import { CircleCheck, CircleX } from "lucide-react"
+import { TypePerfilPdv } from "@/app/(private)/cadastros/types/typesPerfisDeCaixa";
+import { Button } from "@/components/ui/button";
+import { CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { CardContent } from "@mui/material";
+import { CircleCheck, CircleX } from "lucide-react";
 
 type Props = {
-  dataSSR: any;
+  data: TypePerfilPdv;
   modoEdicao?: boolean;
   setModoEdicao?: (ativo: boolean) => void;
-}
+};
 
-const ComponentConfigPerfilPDV = ({dataSSR, modoEdicao, setModoEdicao} : Props) => {
-  if (!dataSSR) return <div>Selecione um <strong>caixa</strong> para visualizar.</div>
+const ComponentConfigPerfilPDV = ({ data, modoEdicao, setModoEdicao }: Props) => {
+  if (!data) return <div className="mx-6">Selecione um <strong>caixa</strong> para visualizar.</div>;
 
-  console.log(modoEdicao)
-  const confPerfil = dataSSR.perfilPdv?.confPerfil
+  const confPerfil = data.confPerfil;
+  console.log(data)
+
   if (!confPerfil || !Array.isArray(confPerfil)) {
-    return <div>Nenhuma configuração encontrada.</div>
+    return <div className="mx-6">Nenhuma configuração encontrada para <strong>{data.descricao}</strong>.</div>;
   }
-  
 
   return (
-    <Card className="text-muted-foreground">
-      <CardTitle className="p-4 pb-0">Configurações <strong>{dataSSR.descricao}</strong></CardTitle>
-      <CardContent className="flex flex-wrap gap-4 text-xs">
+    <div className="flex flex-col h-full">
+      <CardHeader>
+        <CardTitle>Configurações do Perfil de Hardware</CardTitle>
+        <CardDescription><strong>{data.descricao}</strong></CardDescription>
+      </CardHeader>
+
+      <CardContent className="flex flex-wrap gap-4 text-xs flex-1 h-full">
         {confPerfil.map((config: any) => (
           <div
             key={config.id}
-            className="flex flex-col w-[calc(50%-0.5rem)] min-w-[50px] max-w-[100px]"
+            className="flex flex-col w-[calc(50%-0.5rem)] max-w-[150px] min-w-[50px]"
+
           >
             <label className="font-semibold">{config.property}</label>
             <Input
               defaultValue={config.value}
               name={config.property}
-              className="h-6"
+              className="h-8"
               disabled={!modoEdicao}
             />
           </div>
@@ -43,15 +49,19 @@ const ComponentConfigPerfilPDV = ({dataSSR, modoEdicao, setModoEdicao} : Props) 
       </CardContent>
 
       <CardFooter className="flex justify-between">
-        <Button>
-          <CircleCheck />Gravar
+        <Button disabled={!modoEdicao}>
+          <CircleCheck className="mr-2" /> Gravar
         </Button>
-        <Button variant="secondary" onClick={() => setModoEdicao!(false)}>
-          <CircleX />Cancelar
+        <Button
+          variant="secondary"
+          onClick={() => setModoEdicao?.(false)}
+          disabled={!modoEdicao}
+        >
+          <CircleX className="mr-2" /> Cancelar
         </Button>
       </CardFooter>
-    </Card>
-  )
-}
+    </div>
+  );
+};
 
-export default ComponentConfigPerfilPDV
+export default ComponentConfigPerfilPDV;
