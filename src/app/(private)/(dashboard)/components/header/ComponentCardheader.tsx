@@ -27,8 +27,7 @@ type Props = {
 }
 
 const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
-  const { mutate, isLoading, data: dataDashboard, isSuccess, isError } =
-    usePostHeaderDashboard()
+  const { mutate, isLoading, data: dataDashboard, isSuccess, isError } = usePostHeaderDashboard()
 
   /* estados controlados pelo usuário */
   const [currentPayload, setCurrentPayload] =
@@ -176,8 +175,7 @@ const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
             className="mx-4 mt-auto"
             variant="outline"
           >
-            <Search className="mr-1 h-4 w-4" />
-            {isLoading ? "Carregando..." : "Buscar"}
+            <Search className="mr-1 h-4 w-4" />Buscar
           </Button>
         </div>
       </CardHeader>
