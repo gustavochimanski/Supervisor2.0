@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { postHeaderDashboard } from "../services/serviceDashboard";
 import { TypeDashboardHeader, TypeFiltroRelatorio } from "../types/typeCardHeader";
 
-export const usePostHeaderDashboard = () => {
+export const usePostDashboard = () => {
   const queryClient = useQueryClient();
 
   return useMutation<TypeDashboardHeader, Error, TypeFiltroRelatorio>(

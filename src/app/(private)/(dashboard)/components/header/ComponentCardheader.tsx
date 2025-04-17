@@ -1,131 +1,119 @@
-/* components/dashboard/ComponentCardHeader.tsx */
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar } from "@/components/ui/calendar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { CalendarIcon, Search } from "lucide-react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Label } from "@/components/ui/label"
-import { usePostHeaderDashboard } from "../../hooks/useCardHeader"
-import {
-  TypeDashboardHeader,
-  TypeFiltroRelatorio,
-} from "../../types/typeCardHeader"
+import { useState } from "react";
+import { CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { CalendarIcon, Search } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Label } from "@/components/ui/label";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { TypeFiltroRelatorio } from "../../types/typeCardHeader";
 
-const formatDate = (d: Date) => d.toISOString().slice(0, 10)
+const formatDate = (d: Date) => d.toISOString().slice(0, 10);
 const formatDisplayDate = (d: Date) =>
   `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1)
     .toString()
-    .padStart(2, "0")}/${d.getFullYear()}`
+    .padStart(2, "0")}/${d.getFullYear()}`;
 
+// Recebemos somente a callback para comunicar o payload ao pai, de forma opcional
 type Props = {
-  payload: TypeFiltroRelatorio
-  onDataReceived?: (d: TypeDashboardHeader) => void
-}
+  onChangePayload: (payload: TypeFiltroRelatorio) => void;
+};
 
-const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
-  const { mutate, isLoading, data: dataDashboard, isSuccess, isError } = usePostHeaderDashboard()
+export default function ComponentCardHeader({ onChangePayload }: Props) {
+  const isMobile = useIsMobile();
 
-  /* estados controlados pelo usuário */
-  const [currentPayload, setCurrentPayload] =
-    useState<TypeFiltroRelatorio>(payload)
-  const [empresaInput, setEmpresaInput] = useState(
-    (payload as any).empresa ?? ""
-  )
-  const [startDateInput, setStartDateInput] = useState(
-    formatDisplayDate(new Date(payload.dataInicial))
-  )
-  const [endDateInput, setEndDateInput] = useState(
-    formatDisplayDate(new Date(payload.dataFinal))
-  )
+  // Estado interno
+  const [empresa, setEmpresa] = useState("001");
+  const [dataInicial, setDataInicial] = useState<Date>(new Date());
+  const [dataFinal, setDataFinal] = useState<Date>(new Date());
 
-  /* sincroniza e faz a primeira chamada */
-  useEffect(() => {
-    setCurrentPayload(payload)
-    setEmpresaInput((payload as any).empresa ?? "")
-    setStartDateInput(formatDisplayDate(new Date(payload.dataInicial)))
-    setEndDateInput(formatDisplayDate(new Date(payload.dataFinal)))
-    mutate(payload)
-  }, [])
+  // Inputs de texto para exibir data dd/mm/aaaa
+  const [startDateInput, setStartDateInput] = useState(formatDisplayDate(dataInicial));
+  const [endDateInput, setEndDateInput] = useState(formatDisplayDate(dataFinal));
 
-  useEffect(() => {
-    if (isSuccess && dataDashboard) onDataReceived?.(dataDashboard)
-  }, [isSuccess, dataDashboard, onDataReceived])
+  // Somente enviamos o payload ao pai quando clicamos em "Buscar"
+  const handleSearch = () => {
+    const payload: TypeFiltroRelatorio = {
+      empresa,
+      dataInicial: formatDate(dataInicial),
+      dataFinal: formatDate(dataFinal),
+    };
+    onChangePayload(payload);
+  };
 
-  useEffect(() => {
-    if (isError) console.error("Erro ao buscar header dashboard")
-  }, [isError])
+  // Ao digitar na input da empresa
+  const handleEmpresaChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setEmpresa(evt.target.value);
+  };
 
-  /* handlers */
-  const handleEmpresaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setEmpresaInput(value)
-    setCurrentPayload({ ...currentPayload, empresa: value } as any)
-  }
+  // Seleciona data inicial no calendário -> forçamos dataFinal = dataInicial
+  const handleStartDateSelect = (selected?: Date) => {
+    if (!selected) return;
+    setDataInicial(selected);
+    setStartDateInput(formatDisplayDate(selected));
 
-  const handleStartDateSelect = (d?: Date) => {
-    if (!d) return
-    const iso = formatDate(d)
-    const newPayload = {
-      ...currentPayload,
-      dataInicial: iso,
-      dataFinal:
-        currentPayload.dataFinal === currentPayload.dataInicial
-          ? iso
-          : currentPayload.dataFinal,
-    }
-    setCurrentPayload(newPayload)
-    setStartDateInput(formatDisplayDate(d))
-    if (currentPayload.dataFinal === currentPayload.dataInicial)
-      setEndDateInput(formatDisplayDate(d))
-  }
+    // Sincroniza dataFinal igual à dataInicial
+    setDataFinal(selected);
+    setEndDateInput(formatDisplayDate(selected));
+  };
 
+  // Seleciona data final no calendário
   const handleEndDateSelect = (d?: Date) => {
-    if (!d) return
-    const iso = formatDate(d)
-    setCurrentPayload({ ...currentPayload, dataFinal: iso })
-    setEndDateInput(formatDisplayDate(d))
-  }
-
-  const handleStartInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setStartDateInput(e.target.value)
-  const handleEndInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setEndDateInput(e.target.value)
-
-  const handleSearch = () => mutate(currentPayload)
+    if (!d) return;
+    setDataFinal(d);
+    setEndDateInput(formatDisplayDate(d));
+  };
 
   return (
     <div className="bg-primary/90 rounded-t-[var(--radius)] font-sans">
-      <CardHeader className="flex flex-row items-center justify-between p-0 pb-1">
-        <CardTitle className="m-4 text-white">Dashboard</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between p-0 pb-2 px-2">
+        {!isMobile && (
+          <CardTitle className="m-4 text-white">Dashboard</CardTitle>
+        )}
 
-        <div className="flex flex-row flex-wrap items-end gap-4 text-sm">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 p-2 md:p-0 text-sm">
           {/* Empresa */}
-          <div className="flex flex-col gap-1">
-            <Label className="text-white">Empresa</Label>
-            <Input
-              value={empresaInput}
-              onChange={handleEmpresaChange}
-              className="h-7 bg-background"
-              placeholder="Nome ou código"
-            />
-          </div>
-
-          {/* Data Inicial */}
-          <div className="flex flex-col gap-1">
-            <Label className="text-white">Data Inicial</Label>
+          <div className="flex flex-col">
+            <Label className="text-white text-xs font-semibold">Empresa</Label>
             <div className="flex items-center gap-4">
               <Input
-                value={startDateInput}
-                onChange={handleStartInputChange}
+                value={empresa}
+                onChange={handleEmpresaChange}
                 className="h-7 bg-background"
+                placeholder="Nome ou código"
+              />
+            </div>
+          </div>
+
+          {/* Botão Buscar (aparece no mobile) */}
+          {isMobile && (
+            <Button
+              onClick={handleSearch}
+              className="mt-auto h-7"
+              variant="outline"
+            >
+              <Search />
+              Buscar
+            </Button>
+          )}
+
+          {/* Data Inicial */}
+          <div className="flex flex-col">
+            <Label className="text-white text-xs font-semibold pl-1">
+              Data Inicial
+            </Label>
+            <div className="flex items-center gap-2">
+              <Input
+                value={startDateInput}
+                onChange={(e) => setStartDateInput(e.target.value)}
+                className="h-7 bg-background text-center"
                 placeholder="DD/MM/AAAA"
               />
               <Popover>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild className="h-7">
                   <Button variant="outline">
                     <CalendarIcon />
                   </Button>
@@ -133,7 +121,7 @@ const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
                 <PopoverContent className="p-0">
                   <Calendar
                     mode="single"
-                    selected={new Date(currentPayload.dataInicial)}
+                    selected={dataInicial}
                     onSelect={handleStartDateSelect}
                   />
                 </PopoverContent>
@@ -142,17 +130,19 @@ const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
           </div>
 
           {/* Data Final */}
-          <div className="flex flex-col gap-1">
-            <Label className="text-white">Data Final</Label>
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col">
+            <Label className="text-white text-xs font-semibold pl-1">
+              Data Final
+            </Label>
+            <div className="flex items-center gap-2">
               <Input
                 value={endDateInput}
-                onChange={handleEndInputChange}
-                className="h-7 bg-background"
+                onChange={(e) => setEndDateInput(e.target.value)}
+                className="h-7 bg-background text-center"
                 placeholder="DD/MM/AAAA"
               />
               <Popover>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild className="h-7">
                   <Button variant="outline">
                     <CalendarIcon />
                   </Button>
@@ -160,7 +150,7 @@ const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
                 <PopoverContent className="p-0">
                   <Calendar
                     mode="single"
-                    selected={new Date(currentPayload.dataFinal)}
+                    selected={dataFinal}
                     onSelect={handleEndDateSelect}
                   />
                 </PopoverContent>
@@ -168,19 +158,18 @@ const ComponentCardHeader = ({ payload, onDataReceived }: Props) => {
             </div>
           </div>
 
-          {/* Botão Buscar */}
-          <Button
-            onClick={handleSearch}
-            disabled={isLoading}
-            className="mx-4 mt-auto"
-            variant="outline"
-          >
-            <Search className="mr-1 h-4 w-4" />Buscar
-          </Button>
+          {/* Botão Buscar (aparece em telas maiores) */}
+          {!isMobile && (
+            <Button
+              onClick={handleSearch}
+              className="h-7 mt-auto bg-background hover:bg-background/60"
+            >
+              <Search className="mr-1 h-4 w-4 text-foreground" />
+              <span className="text-foreground">Buscar</span>
+            </Button>
+          )}
         </div>
       </CardHeader>
     </div>
-  )
+  );
 }
-
-export default ComponentCardHeader

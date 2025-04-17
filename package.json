@@ -61,7 +61,7 @@
     "react-responsive": "^10.0.0",
     "react-router-dom": "^7.2.0",
     "react-toastify": "^11.0.3",
-    "recharts": "^2.15.0",
+    "recharts": "^2.15.2",
     "sheetjs-style": "^0.15.8",
     "sonner": "^2.0.1",
     "styled-components": "^6.1.15",

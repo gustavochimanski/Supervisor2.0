@@ -1,37 +1,30 @@
-"use client"
+import { postHeaderDashboard } from "./services/serviceDashboard";
+import PageDashboardClient from "./ClientComponetDashboard";
+import { TypeFiltroRelatorio } from "./types/typeCardHeader";
+import { formatDateToYYYYMMDD } from "@/lib/formatDateyyyymmdd";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import ComponentCardHeader from "./components/header/ComponentCardheader";
-import { TypeDashboardHeader, TypeFiltroRelatorio } from "./types/typeCardHeader";
-import { useState } from "react";
-import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
+// Este componente segue como um server component (sem "use client")
+const PageDashboard = async () => {
+  // Obtemos a data de hoje
+  const today = new Date();
 
-const formatDate = (d: Date) => d.toISOString().slice(0, 10);
-
-const PageDashboard = () => {
-  const [dashboardData, setDashboardData] = useState<TypeDashboardHeader | null>(null);
-
-  const initialPayload: TypeFiltroRelatorio = {
+  // Payload padrão, iniciando com o dia atual
+  const defaultPayload: TypeFiltroRelatorio = {
     empresa: "001",
-    dataInicial: formatDate(new Date()),
-    dataFinal: formatDate(new Date()),
+    dataInicial: formatDateToYYYYMMDD(today),
+    dataFinal: formatDateToYYYYMMDD(today),
   };
 
-  console.log(dashboardData)
+  // Busca inicial de dados no servidor
+  const dashboardData = await postHeaderDashboard(defaultPayload);
+
+  // Passa o payload e dados para o Client Component
   return (
-    <Card>
-      <CardHeader className="p-0">
-        <ComponentCardHeader
-          payload={initialPayload}
-          onDataReceived={setDashboardData}
-        />
-      </CardHeader>
-
-      <CardContent className="p-4">
-        {dashboardData && <DashboardMetricCards data={dashboardData} />}
-      </CardContent>
-    </Card>
+    <PageDashboardClient
+      defaultPayload={defaultPayload}
+      serverData={dashboardData}
+    />
   );
-};
+}
 
-export default PageDashboard;
+export default PageDashboard
