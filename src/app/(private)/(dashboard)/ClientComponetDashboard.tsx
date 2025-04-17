@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { TypeDashboardHeader, TypeFiltroRelatorio } from "./types/typeCardHeader";
 import ComponentCardHeader from "./components/header/ComponentCardheader";
 import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
-import { usePostDashboard } from "./hooks/useCardHeader";
+import { usePostDashboard } from "./hooks/useDashboard";
 
 type Props = {
   defaultPayload: TypeFiltroRelatorio;
