@@ -36,7 +36,7 @@ const TopBarComponent = () => {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={"outline"}>
+            <Button variant={"outline"} className="h-9 w-9">
               <User />
             </Button>
           </DropdownMenuTrigger>

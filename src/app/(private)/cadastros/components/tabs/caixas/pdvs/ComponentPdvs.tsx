@@ -27,8 +27,6 @@ const ComponentPdvs = ({ setRowSelectedProp, caixasSSR, setModoEdicao }: Compone
   const { openEnviarConfig } = useModalStore();
   
   // FETCHING DATA
-  const {data: dataByIdCaixa} = useFetchByIdCaixa("1");
-    
 
   const columns = getCaixasColumns(() => setModoEdicao(true));
 

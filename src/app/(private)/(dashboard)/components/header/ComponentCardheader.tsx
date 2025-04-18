@@ -1,168 +1,276 @@
 "use client";
 
-import { useState } from "react";
-import { CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { format } from "date-fns";
+import {
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  Button,
+  buttonVariants,
+} from "@/components/ui/button";
 import { CalendarIcon, Search } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { TypeFiltroRelatorio } from "../../types/typeCardHeader";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectValue,
+  SelectItem,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { TypeFiltroRelatorio } from "../../types/typeDashboard";
 
-const formatDate = (d: Date) => d.toISOString().slice(0, 10);
+// -----------------------------------------------------------------------------
+// Constantes utilitárias
+// -----------------------------------------------------------------------------
+const TODAS_EMPRESAS = ["001", "002", "003", "004", "005"] as const;
+
+const formatDateISO = (d: Date) => format(d, "yyyy-MM-dd");
 const formatDisplayDate = (d: Date) =>
   `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1)
     .toString()
     .padStart(2, "0")}/${d.getFullYear()}`;
 
-// Recebemos somente a callback para comunicar o payload ao pai, de forma opcional
-type Props = {
-  onChangePayload: (payload: TypeFiltroRelatorio) => void;
-};
+// -----------------------------------------------------------------------------
+// Zod + RHF Schema
+// -----------------------------------------------------------------------------
+const schema = z
+  .object({
+    empresas: z.array(z.string()),
+    dataInicial: z.date(),
+    dataFinal: z.date(),
+  })
+  .refine((v) => v.dataFinal >= v.dataInicial, {
+    path: ["dataFinal"],
+    message: "Data final não pode ser anterior à inicial",
+  });
 
-export default function ComponentCardHeader({ onChangePayload }: Props) {
+export type FormFiltro = z.infer<typeof schema>;
+
+// -----------------------------------------------------------------------------
+// Componente
+// -----------------------------------------------------------------------------
+interface Props {
+  initialPayload: TypeFiltroRelatorio;
+  onChangePayload: (p: TypeFiltroRelatorio) => void;
+}
+
+export default function ComponentCardHeader({
+  initialPayload,
+  onChangePayload,
+}: Props) {
   const isMobile = useIsMobile();
 
-  // Estado interno
-  const [empresa, setEmpresa] = useState("001");
-  const [dataInicial, setDataInicial] = useState<Date>(new Date());
-  const [dataFinal, setDataFinal] = useState<Date>(new Date());
+  // ---------------------------------------------------------------------------
+  // React‑Hook‑Form
+  // ---------------------------------------------------------------------------
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFiltro>({
+    defaultValues: {
+      empresas:
+        initialPayload.empresas.length === TODAS_EMPRESAS.length
+          ? [...TODAS_EMPRESAS]
+          : initialPayload.empresas,
+      dataInicial: new Date(initialPayload.dataInicio),
+      dataFinal: new Date(initialPayload.dataFinal),
+    },
+    resolver: zodResolver(schema),
+  });
 
-  // Inputs de texto para exibir data dd/mm/aaaa
-  const [startDateInput, setStartDateInput] = useState(formatDisplayDate(dataInicial));
-  const [endDateInput, setEndDateInput] = useState(formatDisplayDate(dataFinal));
-
-  // Somente enviamos o payload ao pai quando clicamos em "Buscar"
-  const handleSearch = () => {
-    const payload: TypeFiltroRelatorio = {
-      empresa,
-      dataInicial: formatDate(dataInicial),
-      dataFinal: formatDate(dataFinal),
-    };
-    onChangePayload(payload);
+  const submit = (data: FormFiltro) => {
+    onChangePayload({
+      empresas: data.empresas,
+      dataInicio: formatDateISO(data.dataInicial),
+      dataFinal: formatDateISO(data.dataFinal),
+    });
   };
 
-  // Ao digitar na input da empresa
-  const handleEmpresaChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setEmpresa(evt.target.value);
+  // ---------------------------------------------------------------------------
+  // Helpers de UI
+  // ---------------------------------------------------------------------------
+  const parseInput = (str: string): Date | null => {
+    const [dd, mm, yyyy] = str.split("/");
+    const date = new Date(+yyyy, +mm - 1, +dd);
+    return isNaN(date.getTime()) ? null : date;
   };
 
-  // Seleciona data inicial no calendário -> forçamos dataFinal = dataInicial
-  const handleStartDateSelect = (selected?: Date) => {
-    if (!selected) return;
-    setDataInicial(selected);
-    setStartDateInput(formatDisplayDate(selected));
-
-    // Sincroniza dataFinal igual à dataInicial
-    setDataFinal(selected);
-    setEndDateInput(formatDisplayDate(selected));
+  const buildEmpresaSelectValue = (empresas: string[]) => {
+    if (empresas.length === TODAS_EMPRESAS.length) return "Todas";
+    return empresas[0] ?? "__vazio__";
   };
 
-  // Seleciona data final no calendário
-  const handleEndDateSelect = (d?: Date) => {
-    if (!d) return;
-    setDataFinal(d);
-    setEndDateInput(formatDisplayDate(d));
-  };
-
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
   return (
-    <div className="bg-primary/90 rounded-t-[var(--radius)] font-sans">
-      <CardHeader className="flex flex-row items-center justify-between p-0 pb-2 px-2">
+    <form onSubmit={handleSubmit(submit)}>
+      <CardHeader className="flex flex-row justify-between p-1 bg-primary/90 rounded-t-[var(--radius)] font-sans">
         {!isMobile && (
-          <CardTitle className="m-4 text-white">Dashboard</CardTitle>
+          <CardTitle className="text-white m-2">Dashboard</CardTitle>
         )}
 
-        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 p-2 md:p-0 text-sm">
-          {/* Empresa */}
-          <div className="flex flex-col">
-            <Label className="text-white text-xs font-semibold">Empresa</Label>
-            <div className="flex items-center gap-4">
-              <Input
-                value={empresa}
-                onChange={handleEmpresaChange}
-                className="h-7 bg-background"
-                placeholder="Nome ou código"
-              />
-            </div>
-          </div>
 
-          {/* Botão Buscar (aparece no mobile) */}
-          {isMobile && (
-            <Button
-              onClick={handleSearch}
-              className="mt-auto h-7"
-              variant="outline"
+        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 pb-1 text-sm">
+          {/* ------------------------- Empresa Select ------------------------- */}
+          <Controller
+            name="empresas"
+            control={control}
+            render={({ field }) => {
+              const selectValue = buildEmpresaSelectValue(field.value);
+              return (
+                <div className="flex mt-auto ">
+                  <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
+                    <Label className="pointer-events-none select-none">
+                      Empresa
+                    </Label>
+                  </div>
+
+                  <div></div>
+                  <Select
+                    value={selectValue}
+                    onValueChange={(valor) => {
+                      if (valor === "Todas") field.onChange([...TODAS_EMPRESAS]);
+                      else if (valor === "__vazio__") field.onChange([]);
+                      else field.onChange([valor]);
+                    }}
+                  >
+                    <SelectTrigger className="-7 bg-background text-center rounded-l-none border-none shadow-none">
+                      <SelectValue placeholder="Selecione…" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__vazio__">Selecione…</SelectItem>
+                      <SelectItem value="Todas">Todas</SelectItem>
+                      {TODAS_EMPRESAS.map((cod) => (
+                        <SelectItem key={cod} value={cod}>
+                          {cod}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
+            }}
+          />
+
+
+        {isMobile && (
+          <Button
+              type="submit"
+              className="h-7 bg-background hover:bg-background/60 mt-auto"
             >
-              <Search />
-              Buscar
-            </Button>
+            <Search className="mr-1 h-4 w-4 text-foreground" />
+            <span className="text-foreground">Buscar</span>
+          </Button>
           )}
 
-          {/* Data Inicial */}
-          <div className="flex flex-col">
-            <Label className="text-white text-xs font-semibold pl-1">
-              Data Inicial
-            </Label>
-            <div className="flex items-center gap-2">
-              <Input
-                value={startDateInput}
-                onChange={(e) => setStartDateInput(e.target.value)}
-                className="h-7 bg-background text-center"
-                placeholder="DD/MM/AAAA"
-              />
-              <Popover>
-                <PopoverTrigger asChild className="h-7">
-                  <Button variant="outline">
-                    <CalendarIcon />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0">
-                  <Calendar
-                    mode="single"
-                    selected={dataInicial}
-                    onSelect={handleStartDateSelect}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
 
-          {/* Data Final */}
-          <div className="flex flex-col">
-            <Label className="text-white text-xs font-semibold pl-1">
-              Data Final
-            </Label>
-            <div className="flex items-center gap-2">
-              <Input
-                value={endDateInput}
-                onChange={(e) => setEndDateInput(e.target.value)}
-                className="h-7 bg-background text-center"
-                placeholder="DD/MM/AAAA"
-              />
-              <Popover>
-                <PopoverTrigger asChild className="h-7">
-                  <Button variant="outline">
-                    <CalendarIcon />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0">
-                  <Calendar
-                    mode="single"
-                    selected={dataFinal}
-                    onSelect={handleEndDateSelect}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
+          {/* -------------------------- Data Inicial -------------------------- */}
+          <Controller
+            name="dataInicial"
+            control={control}
+            render={({ field }) => (
+              <div className="flex mt-auto text-center">
+                <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
+                  <Label className="pointer-events-none select-none">
+                    Data Inicial
+                  </Label>
+                </div>
 
-          {/* Botão Buscar (aparece em telas maiores) */}
-          {!isMobile && (
-            <Button
-              onClick={handleSearch}
-              className="h-7 mt-auto bg-background hover:bg-background/60"
+                <div className="flex gap-2 ">
+                  <Input
+                    value={formatDisplayDate(field.value)}
+                    onChange={(e) => {
+                      const d = parseInput(e.target.value);
+                      if (d) field.onChange(d);
+                    }}
+                    className="h-7 bg-background text-center rounded-l-none border-none shadow-none"
+                    placeholder="DD/MM/AAAA"
+                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="h-7">
+                        <CalendarIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(d) => d && field.onChange(d)}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+            )}
+          />
+
+          {/* -------------------------- Data Final --------------------------- */}
+          <Controller
+            name="dataFinal"
+            control={control}
+            render={({ field }) => (
+              <div className="flex mt-auto text-center">
+                <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
+                  <Label className="pointer-events-none select-none">
+                    Data Final
+                  </Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Input
+                    value={formatDisplayDate(field.value)}
+                    onChange={(e) => {
+                      const d = parseInput(e.target.value);
+                      if (d) field.onChange(d);
+                    }}
+                    className="h-7 bg-background text-center rounded-l-none border-none shadow-none"
+                    placeholder="DD/MM/AAAA"
+                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="h-7">
+                        <CalendarIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(d) => d && field.onChange(d)}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                {errors.dataFinal && (
+                  <span className="text-red-500 text-xs mt-1">
+                    {errors.dataFinal.message}
+                  </span>
+                )}
+              </div>
+            )}
+          />
+
+          {/* ---------------------------- Botão ----------------------------- */}
+          {!isMobile&& (
+              <Button
+              type="submit"
+              className="h-7 bg-background hover:bg-background/60 mt-auto"
             >
               <Search className="mr-1 h-4 w-4 text-foreground" />
               <span className="text-foreground">Buscar</span>
@@ -170,6 +278,6 @@ export default function ComponentCardHeader({ onChangePayload }: Props) {
           )}
         </div>
       </CardHeader>
-    </div>
+    </form>
   );
 }

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { postHeaderDashboard } from "../services/serviceDashboard";
-import { TypeDashboardHeader, TypeFiltroRelatorio } from "../types/typeCardHeader";
+import { TypeDashboardHeader, TypeFiltroRelatorio } from "../types/typeDashboard";
 
 export const usePostDashboard = () => {
   const queryClient = useQueryClient();

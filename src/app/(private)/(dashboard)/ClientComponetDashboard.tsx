@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { TypeDashboardHeader, TypeFiltroRelatorio } from "./types/typeCardHeader";
+import { TypeDashboardHeader, TypeFiltroRelatorio } from "./types/typeDashboard";
 import ComponentCardHeader from "./components/header/ComponentCardheader";
 import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
 import { usePostDashboard } from "./hooks/useDashboard";
@@ -41,10 +41,12 @@ export default function PageDashboardClient({ defaultPayload, serverData }: Prop
     setPayload(newPayload);
   };
 
+  console.log(payload)
+
   return (
     <Card>
       <CardHeader className="p-0">
-        <ComponentCardHeader onChangePayload={handleChangePayload} />
+        <ComponentCardHeader onChangePayload={handleChangePayload} initialPayload={payload}/>
       </CardHeader>
       <CardContent className="p-4">
 
