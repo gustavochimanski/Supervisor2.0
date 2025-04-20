@@ -188,7 +188,7 @@ const ComponentEtiquetasUsuarios = () => {
             <div className="grid grid-cols-3 gap-4 p-4 ">
               {etiquetas.map((etiqueta, index) => (
                 <div key={index} className="flex flex-col items-center border p-2 rounded">
-                  <Image
+                  <img
                     src={etiqueta.base64}
                     alt={`Código ${etiqueta.codigo}`}
                     className="w-full object-contain"
