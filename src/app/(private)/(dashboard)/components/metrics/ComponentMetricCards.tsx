@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/card";
 import { TypeDashboardHeader } from "../../types/typeDashboard";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Info } from "lucide-react"; // ícone ℹ️
+import { Info } from "lucide-react";
+import { TotaisGeraisMeta } from "../../types/typeMetas";
 
 type Props = { data: TypeDashboardHeader };
 
@@ -24,7 +25,7 @@ const formatInt = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-// Define a cor baseada no progresso
+// Cores normais para progresso positivo (ex: metas de venda)
 const getProgressColor = (percentual: number) => {
   if (percentual >= 100) return "bg-green-500";
   if (percentual >= 60) return "bg-blue-500";
@@ -32,15 +33,23 @@ const getProgressColor = (percentual: number) => {
   return "bg-red-500";
 };
 
-// barra de progresso baseada no progresso
-const getProgressBar = (progresso: number) => {
+// Cores invertidas para metas negativas (ex: limite de compra)
+const getProgressColorInverted = (percentual: number) => {
+  if (percentual >= 95) return "bg-red-500";
+  if (percentual >= 70) return "bg-yellow-500";
+  if (percentual >= 40) return "bg-blue-500";
+  return "bg-green-500";
+};
+
+// barra de progresso, com controle de inversão
+const getProgressBar = (progresso: number, labelProgress: string, invertido = false) => {
   const percentual = Math.min(Math.round(progresso * 100), 999);
-  const cor = getProgressColor(percentual);
+  const cor = invertido ? getProgressColorInverted(percentual) : getProgressColor(percentual);
 
   return (
     <div className="mt-2 w-full">
       <div className="flex justify-between text-xs mb-1">
-        <span className="text-muted-foreground">Progresso da Meta</span>
+        <span className="text-muted-foreground">{labelProgress}</span>
         <span className="font-medium">{percentual}%</span>
       </div>
       <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
@@ -53,15 +62,33 @@ const getProgressBar = (progresso: number) => {
   );
 };
 
-// ...imports e funções auxiliares permanecem iguais
+// Pega valor da meta por tipo
+const getMetaValor = (metas: TotaisGeraisMeta[], tipo: TotaisGeraisMeta["tipo"]) => {
+  return metas.find((meta) => meta.tipo === tipo)?.valorMeta ?? 0;
+};
 
 const DashboardMetricCards = ({ data }: Props) => {
   const total = data.total_geral;
   const metas = data.metas;
+  const compras = data.compras;
 
-  const progressoMeta = metas.total_geral.valorMeta > 0
-    ? total.total_vendas / metas.total_geral.valorMeta
+  const metaVendaValor = getMetaValor(metas.totais_gerais, "metaVenda");
+  const metaMargem = getMetaValor(metas.totais_gerais, "metaMargem")
+  const limiteCompraValor = getMetaValor(metas.totais_gerais, "limiteCompra");
+
+  const progressoMetaVenda = metaVendaValor > 0
+    ? total.total_vendas / metaVendaValor
     : 0;
+    
+  const progressoMetaMargem = metaMargem > 0
+    ? total.margem / metaMargem
+    : 0;
+
+  const progressoMetaCompra = limiteCompraValor > 0
+    ? compras.valorTotal / limiteCompraValor
+    : 0;
+
+  const relacaoCompraVenda = total.total_vendas - compras.valorTotal
 
   const cards = [
     {
@@ -76,24 +103,31 @@ const DashboardMetricCards = ({ data }: Props) => {
     },
     {
       label: "Margem",
-      value: formatCurrency(total.margem),
-      explicacao: "Média de vendas por cupom (proporcional).",
+      value: `${total.margem.toFixed(2)} %`,
+      explicacao: "Percentual de margem de lucro sobre as vendas.",
+      barra: getProgressBar(progressoMetaMargem, `Meta: ${metaMargem} %`)
     },
     {
       label: "Total de Compras",
-      value: formatCurrency(total.margem),
-      explicacao: "Valor total gasto com compras no período.",
+      value: formatCurrency(compras.valorTotal),
+      barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true), // ← cor invertida
+      explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
     },
     {
       label: "Total de Vendas",
       value: formatCurrency(total.total_vendas),
-      barra: getProgressBar(progressoMeta),
-      explicacao: "Soma total das vendas realizadas.",
+      barra: getProgressBar(progressoMetaVenda, `Meta: ${formatCurrency(metaVendaValor)}`),
+      explicacao: "Soma total das vendas realizadas em relação à meta.",
+    },
+    {
+      label: "Relação Compra e Venda",
+      value: formatCurrency(relacaoCompraVenda),
+      explicacao: "Relação Compra e Venda | Venda - Compra",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
       {cards.map((item, index) => (
         <Card key={index} className="hover:scale-105 transition-transform p-2 gap-1">
           <div className="flex items-center justify-between pr-2">

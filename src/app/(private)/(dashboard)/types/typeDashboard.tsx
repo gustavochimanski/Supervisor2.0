@@ -1,3 +1,6 @@
+import { TypeComprasPeriodo } from "./typeCompras";
+import { TypeDashboardMetaHeader } from "./typeMetas";
+
 /**
  * Totais por empresa retornados pela API do dashboard de vendas
  */
@@ -27,6 +30,7 @@ export type TypeDashboardHeader = {
   total_geral: TotaisGerais;
   total_geral_somado_empresas?: number;
   metas: TypeDashboardMetaHeader;
+  compras: TypeComprasPeriodo; // ✅ agora incluído no tipo
 };
 
 /**
@@ -39,27 +43,4 @@ export type TypeFiltroRelatorio = {
   situacao?: string;
   status_venda?: string;
   cod_vendedor?: string;
-};
-
-/**
- * Totais de metas por empresa
- */
-export type TotaisPorEmpresaMeta = {
-  codempresa: string;
-  valorMeta: number;
-};
-
-/**
- * Totais gerais de metas
- */
-export type TotaisGeraisMeta = {
-  valorMeta: number;
-};
-
-/**
- * Header do dashboard de metas
- */
-export type TypeDashboardMetaHeader = {
-  totais_por_empresa: TotaisPorEmpresaMeta[];
-  total_geral: TotaisGeraisMeta;
 };
