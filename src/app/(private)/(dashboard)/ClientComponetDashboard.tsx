@@ -41,7 +41,6 @@ export default function PageDashboardClient({ defaultPayload, serverData }: Prop
     setPayload(newPayload);
   };
 
-  console.log(payload)
 
   return (
     <Card>

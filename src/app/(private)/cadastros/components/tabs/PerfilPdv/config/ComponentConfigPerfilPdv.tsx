@@ -17,11 +17,8 @@ const ComponentConfigPerfilPDV = ({ data, modoEdicao, setModoEdicao }: Props) =>
   if (!data) return <div className="mx-6">Selecione um <strong>caixa</strong> para visualizar.</div>;
 
   const confPerfil = data.confPerfil;
-  console.log(data)
 
-  if (!confPerfil || !Array.isArray(confPerfil)) {
-    return <div className="mx-6">Nenhuma configuração encontrada para <strong>{data.descricao}</strong>.</div>;
-  }
+
 
   return (
     <div className="flex flex-col h-full">

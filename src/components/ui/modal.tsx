@@ -30,9 +30,10 @@ export function Modal({ children, onClose, style }: ModalProps) {
         </Button>
 
         {/* Conteúdo com scroll, se necessário */}
-        <div className="overflow-auto">
-          {children}
-        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+  {children}
+</div>
+
       </div>
     </div>
   );

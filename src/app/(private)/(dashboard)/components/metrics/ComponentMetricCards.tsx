@@ -65,17 +65,7 @@ const DashboardMetricCards = ({ data }: Props) => {
 
   const cards = [
     {
-      label: "Total de Compras",
-      value: formatCurrency(total.margem),
-      explicacao: "Valor total gasto com compras no período.",
-    },
-    {
-      label: "Limite de Compras",
-      value: formatCurrency(total.margem),
-      explicacao: "Limite máximo permitido para compras.",
-    },
-    {
-      label: "Total de Cupons",
+      label: "Cupons",
       value: formatInt(total.total_cupons),
       explicacao: "Quantidade total de cupons emitidos.",
     },
@@ -88,6 +78,11 @@ const DashboardMetricCards = ({ data }: Props) => {
       label: "Margem",
       value: formatCurrency(total.margem),
       explicacao: "Média de vendas por cupom (proporcional).",
+    },
+    {
+      label: "Total de Compras",
+      value: formatCurrency(total.margem),
+      explicacao: "Valor total gasto com compras no período.",
     },
     {
       label: "Total de Vendas",

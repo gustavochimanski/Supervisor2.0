@@ -86,11 +86,12 @@ export default function ComponentCardHeader({
         initialPayload.empresas.length === TODAS_EMPRESAS.length
           ? [...TODAS_EMPRESAS]
           : initialPayload.empresas,
-      dataInicial: new Date(initialPayload.dataInicio),
-      dataFinal: new Date(initialPayload.dataFinal),
+      dataInicial: new Date(`${initialPayload.dataInicio}T00:00:00`),
+      dataFinal: new Date(`${initialPayload.dataFinal}T00:00:00`),
     },
     resolver: zodResolver(schema),
   });
+  
 
   const submit = (data: FormFiltro) => {
     onChangePayload({

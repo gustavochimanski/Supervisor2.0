@@ -4,7 +4,7 @@ import {
   fetchAllPerfis,
   fetchPerfilById,
   deletePerfilById,
-  postNewPerfilByDescricao,
+  postNewPerfilPdv,
   putConfPerfilById,
   patchAlteraDescricaoById, } from "../services/PerfisDeCaixaService"
 import { PatchConfPerfilPayload, TypePerfilPdv} from '../types/typesPerfisDeCaixa';
@@ -33,16 +33,20 @@ export const useFetchByIdPerfil = (id: string | undefined) => {
 };
 
 //====================================================
-//=========== INSERIR PERFIL POR DESCRICAO ===========
+//=========== INSERIR PERFIL DE PDV ====== ===========
 //====================================================
 export const usePostNewPerfil = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(postNewPerfilByDescricao, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('fetchAllPerfilPdvs'); // Atualiza a lista após a inserção
-    },
-  });
+  return useMutation(
+    ( descricao: string ) =>
+      postNewPerfilPdv(descricao),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["fetchAllPerfilPdvs"]);
+      },
+    }
+  );
 };
 
 //====================================================

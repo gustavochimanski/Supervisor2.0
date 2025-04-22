@@ -22,6 +22,7 @@ import {
     PieChart,
     CircleUser,
     Atom,
+    Target,
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -33,6 +34,7 @@ import Link from "next/link";
   const items = [
     { title: "Home", url: "/home", icon: Home },
     { title: "Dashboard", url: "/", icon: PieChart },
+    { title: "Metas", url: "/metas", icon: Target },
     { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "/cadastros", icon: CircleUser },
     { title: "Processos", url: "/processos", icon: Atom },

@@ -27,8 +27,15 @@ export const fetchPerfilById = async (id: string): Promise<TypePerfilPdv> => {
 //====================================================
 //=========== INSERIR PERFIL POR DESCRICAO ===========
 //====================================================
-export const postNewPerfilByDescricao = async (descricao: string) => {
-  const response = await api.post('config/perfilpdv', { descricao });
+export const postNewPerfilPdv = async (
+  descricao: string,
+) => {
+  const payload = {
+    id: 0, // ou null, depende se a API ignora esse campo pra criação
+    descricao,
+  };
+
+  const response = await api.post("config/perfilpdv", payload);
   return response.data;
 };
 

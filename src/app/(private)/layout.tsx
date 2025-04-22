@@ -6,22 +6,15 @@ import { redirect } from "next/navigation"; // ← redireciona se não logado
 import "./globals.css";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  const session = await auth(); // ← Aqui você verifica o login
-
-  if (!session) {
-    redirect("/login"); // ← Redireciona se não autenticado
-  }
-
-  const cookieStore = cookies();
-  const defaultOpen = (await cookieStore).get("sidebar:state")?.value === "true";
+  const session = await auth();
+  if (!session) redirect("/login");
 
   return (
     <html>
       <body>
-        <ClientLayout defaultOpen={defaultOpen}>
-          {children}
-        </ClientLayout>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
 }
+

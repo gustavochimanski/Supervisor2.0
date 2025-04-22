@@ -2,6 +2,8 @@ import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPerfilCaixaColumns } from "./columns";
+import ModalIncluiPerfilPdv from "./ModalIncluirPerfilpdv";
+import { useState } from "react";
 
 type Props = {
   data: any;
@@ -14,7 +16,8 @@ const ComponentPerfilPdv = ({
   setRowSelected,
   setModoEdicao,
 }: Props) => {
-    const columns = getPerfilCaixaColumns(setRowSelected, setModoEdicao);
+  const [modalIncuiPerfilOpen, setModalIncuiPerfilOpen] = useState(false)
+  const columns = getPerfilCaixaColumns(setRowSelected, setModoEdicao);
 
 
   return (
@@ -35,9 +38,16 @@ const ComponentPerfilPdv = ({
       </CardContent>
 
       <CardFooter className="flex justify-between">
-        <Button >Incluir</Button>
+        <Button onClick={() => setModalIncuiPerfilOpen(true)}>Incluir</Button>
         <Button  variant="secondary">Opções</Button>
       </CardFooter>
+
+
+
+      {/* ========== MODALS ========== */}
+      {modalIncuiPerfilOpen && (
+        <ModalIncluiPerfilPdv onClose={() => setModalIncuiPerfilOpen(false)}/>
+      )}
     </div>
   );
 };

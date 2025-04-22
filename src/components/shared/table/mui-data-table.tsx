@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useMemo } from "react";
 import {
   DataGrid,
   GridColDef,
@@ -6,6 +6,9 @@ import {
   GridRowParams,
   useGridApiRef,
   GridRowSelectionModel,
+  GridCellEditStopParams,
+  GridRowModel,
+  GridCellEditStopReasons,
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 
@@ -13,13 +16,13 @@ export interface DataTableComponentProps
   extends Omit<DataGridProps, "rows" | "columns" | "localeText"> {
   rows: any[] | undefined;
   columns: GridColDef[];
-  columnOrder?: string[]; // Reordena as colunas
+  columnOrder?: string[];
   onRowClick?: (rowData: any) => void;
   onRowSelectionModelChange?: (ids: GridRowSelectionModel) => void;
+  onRowEditConfirm?: (newRow: GridRowModel, foiComEnter: boolean) => void;
   apiRef?: ReturnType<typeof useGridApiRef>;
 }
 
-// Tradução dos textos padrão do DataGrid
 const defaultLocaleText: DataGridProps["localeText"] = {
   columnMenuLabel: "Menu da Coluna",
   columnMenuSortAsc: "Ordenar Crescente",
@@ -29,7 +32,6 @@ const defaultLocaleText: DataGridProps["localeText"] = {
   columnMenuShowColumns: "Mostrar Colunas",
   columnMenuManageColumns: "Definir Colunas",
   footerTotalRows: "Total de linhas:",
-  // Pagination buttons
   MuiTablePagination: {
     labelRowsPerPage: "Linhas por página",
     labelDisplayedRows: ({ from, to, count }) => `${from}–${to} de ${count}`,
@@ -40,28 +42,42 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
   rows,
   columns,
   onRowClick,
-  apiRef, // <- vem do pai
   onRowSelectionModelChange,
+  onRowEditConfirm,
+  apiRef,
   columnOrder,
   ...rest
 }) => {
+  const editReasonRef = useRef<GridCellEditStopReasons | null>(null);
+
   const handleRowClick = (params: GridRowParams) => {
-    if (onRowClick) {
-      onRowClick(params.row);
-    }
+    if (onRowClick) onRowClick(params.row);
   };
 
-  // Reordena e aplica headerAlign e align CENTER como padrão
-  const orderedColumns = React.useMemo(() => {
+  const handleCellEditStop = (params: GridCellEditStopParams) => {
+    editReasonRef.current = params.reason ?? null;
+
+  };
+
+  const handleProcessRowUpdate = (newRow: GridRowModel, oldRow: GridRowModel) => {
+    const foiComEnter = editReasonRef.current === GridCellEditStopReasons.enterKeyDown;
+
+    if (onRowEditConfirm) {
+      onRowEditConfirm(newRow, foiComEnter);
+    }
+
+    return foiComEnter ? newRow : oldRow;
+  };
+
+  const orderedColumns = useMemo(() => {
     const enhanceColumn = (col: GridColDef): GridColDef => ({
       ...col,
-      headerAlign: col.headerAlign ?? "center", // só aplica se não tiver
-      align: col.align ?? "center", // só aplica se não tiver
-      flex: col.flex ?? 1, // padrão flex: 1
+      headerAlign: col.headerAlign ?? "center",
+      align: col.align ?? "center",
+      flex: col.flex ?? 1,
     });
 
     const finalColumns = columns.map(enhanceColumn);
-
     if (!columnOrder) return finalColumns;
 
     const map = new Map(finalColumns.map((col) => [col.field, col]));
@@ -76,7 +92,7 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
         flexDirection: "column",
         height: "100%",
         width: "100%",
-        overflow: "hidden", // <- importante
+        overflow: "hidden",
       }}
     >
       <DataGrid
@@ -86,9 +102,12 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
         rowHeight={35}
         checkboxSelection
         disableRowSelectionOnClick
+        editMode="cell"
         localeText={defaultLocaleText}
-        onRowSelectionModelChange={onRowSelectionModelChange}
         onRowClick={handleRowClick}
+        onRowSelectionModelChange={onRowSelectionModelChange}
+        onCellEditStop={handleCellEditStop}
+        processRowUpdate={handleProcessRowUpdate}
         sx={{
           flex: 1,
           minHeight: 0,
@@ -97,7 +116,6 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           backgroundColor: "hsl(var(--card))",
           color: "hsl(var(--foreground))",
 
-          // HEADER DA TABELA
           "& .MuiDataGrid-columnHeaders": {
             color: "hsl(var(--muted-foreground))",
             borderBottom: "1px solid hsl(var(--border))",
@@ -111,15 +129,13 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           "& .MuiDataGrid-columnHeader": {
             backgroundColor: "hsl(var(--muted))",
             fontWeight: 600,
-            fontSize: "0.75rem", // text-xs (~12px)
+            fontSize: "0.75rem",
             textTransform: "uppercase",
             letterSpacing: "0.02em",
           },
           "& .MuiDataGrid-columnHeaderTitle": {
             fontWeight: 600,
           },
-
-          // LINHAS
           "& .MuiDataGrid-row:nth-of-type(odd)": {
             backgroundColor: "hsl(var(--background))",
           },
@@ -129,33 +145,23 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           "& .MuiDataGrid-row:hover": {
             backgroundColor: "hsl(var(--input))",
           },
-
-          // CÉLULAS
           "& .MuiDataGrid-cell": {
-            fontSize: "0.75rem", // text-xs
+            fontSize: "0.75rem",
             border: "none",
             color: "hsl(var(--inputValue))",
           },
-
-          // FOOTER
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: "hsl(var(--card))",
             borderTop: "1px solid hsl(var(--border))",
             color: "hsl(var(--muted-foreground))",
             fontSize: "0.75rem",
           },
-
-          // Foco
           "& .MuiDataGrid-cell:focus, & .MuiDataGrid-columnHeader:focus": {
             outline: "none",
           },
-
-          // Border geral
           "& .MuiDataGrid-root": {
             border: "none",
           },
-
-          // Status custom
           "& .cell-status-ativo": {
             color: "hsl(var(--chart-2))",
             fontWeight: 600,
@@ -164,8 +170,6 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
             color: "hsl(var(--destructive))",
             fontWeight: 600,
           },
-
-          // Estilização da paginação
           "& .MuiTablePagination-root": {
             color: "hsl(var(--muted-foreground))",
             fontSize: "0.75rem",
@@ -181,8 +185,6 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           "& .MuiSvgIcon-root": {
             color: "hsl(var(--foreground))",
           },
-
-          // Checkbox (ícone SVG)
           "& .MuiCheckbox-root .MuiSvgIcon-root": {
             fontSize: "1rem",
           },
