@@ -11,7 +11,7 @@ export default function PublicLayout({
     <html>
       <body>
         {children}
-        <Toaster className=""/>
+        <Toaster />
       </body>
     </html>
   );
