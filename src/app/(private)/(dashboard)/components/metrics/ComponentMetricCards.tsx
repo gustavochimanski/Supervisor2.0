@@ -73,7 +73,7 @@ const DashboardMetricCards = ({ data }: Props) => {
   const compras = data.compras;
 
   const metaVendaValor = getMetaValor(metas.total_geral, "metaVenda");
-  const metaMargem = getMetaValor(metas.total_geral, "metaMargem")
+  // const metaMargem = getMetaValor(metas.total_geral, "metaMargem")
   const limiteCompraValor = getMetaValor(metas.total_geral, "limiteCompra");
 
   const progressoMetaVenda = metaVendaValor > 0
@@ -81,11 +81,11 @@ const DashboardMetricCards = ({ data }: Props) => {
     : 0;
     
 
-  // const progressoMetaCompra = limiteCompraValor > 0
-  //   ? compras.valorTotal / limiteCompraValor
-  //   : 0;
+  const progressoMetaCompra = limiteCompraValor > 0
+    ? compras.total_geral / limiteCompraValor
+    : 0;
 
-  // const relacaoCompraVenda = total.total_vendas - compras.valorTotal
+  const relacaoCompraVenda = total.total_vendas - compras.total_geral
 
   const cards = [
     {
@@ -98,12 +98,12 @@ const DashboardMetricCards = ({ data }: Props) => {
       value: formatCurrency(total.ticket_medio),
       explicacao: "Média de valor gasto por cupom.",
     },
-    // {
-    //   label: "Total de Compras",
-    //   value: formatCurrency(compras.valorTotal),
-    //   barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true), // ← cor invertida
-    //   explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
-    // },
+    {
+      label: "Total de Compras",
+      value: formatCurrency(compras.total_geral),
+      barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true),
+      explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
+    },
     {
       label: "Total de Vendas",
       value: formatCurrency(total.total_vendas),
@@ -112,7 +112,7 @@ const DashboardMetricCards = ({ data }: Props) => {
     },
     {
       label: "Relação Compra e Venda",
-      value: formatCurrency(9999999),
+      value: formatCurrency(relacaoCompraVenda),
       explicacao: "Relação Compra e Venda | Venda - Compra",
     },
   ];

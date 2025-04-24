@@ -1,4 +1,4 @@
-import { TypeComprasPeriodo } from "./typeCompras";
+import { TypeComprasGeralResponse } from "./typeCompras";
 import { TypeDashboardMetaHeader } from "./typeMetas";
 
 /**
@@ -28,7 +28,7 @@ export type TypeDashboardHeader = {
   total_geral: TotaisGerais;
   total_geral_somado_empresas?: number;
   metas: TypeDashboardMetaHeader;
-  compras: TypeComprasPeriodo; 
+  compras: TypeComprasGeralResponse; 
 };
 
 /**

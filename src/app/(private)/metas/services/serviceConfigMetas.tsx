@@ -4,7 +4,7 @@ import { TypeIncluiMetaResponse, TypeIncluirMetaRequest } from "../types/typeCon
 export const postNewMeta = async (payload: TypeIncluirMetaRequest): Promise<TypeIncluiMetaResponse> => {
   try {
     const { data } = await axios.post<TypeIncluiMetaResponse>(
-      "http://localhost:8000/metas",
+      "http://localhost:8000/metas/insert",
       payload, // aqui o body da requisição
       {
         headers: {
