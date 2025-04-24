@@ -20,6 +20,6 @@ export type TotaisPorEmpresaMeta = {
    */
   export type TypeDashboardMetaHeader = {
     totais_por_empresa: TotaisPorEmpresaMeta[];
-    totais_gerais: TotaisGeraisMeta[];
+    total_geral: TotaisGeraisMeta[];
   };
   

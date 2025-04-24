@@ -127,11 +127,10 @@ const ComponentEtiquetasUsuarios = () => {
           </Popover>
         </CardHeader>
 
-         <CardContent className="flex flex-col w-2/5 gap-2 text-sm">
+         <CardContent className="flex flex-col w-2/5 gap-2 text-sm mb-8">
             <div className="flex flex-col gap-1">
               <label className="font-semibold">Nome do usuário</label>
               <Input
-                className="h-9"
                 value={nome}  
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="Ex: João da Silva"
@@ -140,7 +139,6 @@ const ComponentEtiquetasUsuarios = () => {
             <div className="flex flex-col gap-1">
               <label className="font-semibold">Código do usuário (4-5 dígitos)</label>
               <Input
-                className="h-9"
                 type="number"
                 value={codigoUsuario}
                 onChange={(e) => setCodigoUsuario(e.target.value)}

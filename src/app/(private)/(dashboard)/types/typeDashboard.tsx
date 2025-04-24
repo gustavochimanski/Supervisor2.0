@@ -9,7 +9,6 @@ export type TotaisPorEmpresa = {
   total_cupons: number;
   total_vendas: number;
   ticket_medio: number;
-  margem: number;
 };
 
 /**
@@ -19,7 +18,6 @@ export type TotaisGerais = {
   total_cupons: number;
   total_vendas: number;
   ticket_medio: number;
-  margem: number;
 };
 
 /**
@@ -30,7 +28,7 @@ export type TypeDashboardHeader = {
   total_geral: TotaisGerais;
   total_geral_somado_empresas?: number;
   metas: TypeDashboardMetaHeader;
-  compras: TypeComprasPeriodo; // ✅ agora incluído no tipo
+  compras: TypeComprasPeriodo; 
 };
 
 /**

@@ -72,23 +72,20 @@ const DashboardMetricCards = ({ data }: Props) => {
   const metas = data.metas;
   const compras = data.compras;
 
-  const metaVendaValor = getMetaValor(metas.totais_gerais, "metaVenda");
-  const metaMargem = getMetaValor(metas.totais_gerais, "metaMargem")
-  const limiteCompraValor = getMetaValor(metas.totais_gerais, "limiteCompra");
+  const metaVendaValor = getMetaValor(metas.total_geral, "metaVenda");
+  const metaMargem = getMetaValor(metas.total_geral, "metaMargem")
+  const limiteCompraValor = getMetaValor(metas.total_geral, "limiteCompra");
 
   const progressoMetaVenda = metaVendaValor > 0
     ? total.total_vendas / metaVendaValor
     : 0;
     
-  const progressoMetaMargem = metaMargem > 0
-    ? total.margem / metaMargem
-    : 0;
 
-  const progressoMetaCompra = limiteCompraValor > 0
-    ? compras.valorTotal / limiteCompraValor
-    : 0;
+  // const progressoMetaCompra = limiteCompraValor > 0
+  //   ? compras.valorTotal / limiteCompraValor
+  //   : 0;
 
-  const relacaoCompraVenda = total.total_vendas - compras.valorTotal
+  // const relacaoCompraVenda = total.total_vendas - compras.valorTotal
 
   const cards = [
     {
@@ -101,18 +98,12 @@ const DashboardMetricCards = ({ data }: Props) => {
       value: formatCurrency(total.ticket_medio),
       explicacao: "Média de valor gasto por cupom.",
     },
-    {
-      label: "Margem",
-      value: `${total.margem.toFixed(2)} %`,
-      explicacao: "Percentual de margem de lucro sobre as vendas.",
-      barra: getProgressBar(progressoMetaMargem, `Meta: ${metaMargem} %`)
-    },
-    {
-      label: "Total de Compras",
-      value: formatCurrency(compras.valorTotal),
-      barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true), // ← cor invertida
-      explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
-    },
+    // {
+    //   label: "Total de Compras",
+    //   value: formatCurrency(compras.valorTotal),
+    //   barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true), // ← cor invertida
+    //   explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
+    // },
     {
       label: "Total de Vendas",
       value: formatCurrency(total.total_vendas),
@@ -121,7 +112,7 @@ const DashboardMetricCards = ({ data }: Props) => {
     },
     {
       label: "Relação Compra e Venda",
-      value: formatCurrency(relacaoCompraVenda),
+      value: formatCurrency(9999999),
       explicacao: "Relação Compra e Venda | Venda - Compra",
     },
   ];

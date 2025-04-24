@@ -1,76 +1,161 @@
 "use client";
-import { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+import { useForm } from "react-hook-form";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FloatInput } from "@/components/shared/Inputs/floatInput";
+import { usePostNewMeta } from "../hooks/useConfigMetas";
+import { format } from "date-fns";
+import { TipoMeta } from "../types/typeConfigMetas";
+import { useToast } from "@/hooks/use-toast";
+import { formatDateToYYYYMMDD } from "@/lib/formatDateyyyymmdd";
+import { CalendarIcon, CircleCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+const EMPRESAS = [
+  { label: "Empresa 01", value: "01" },
+  { label: "Empresa 02", value: "02" },
+  { label: "Empresa 03", value: "03" },
+];
 
 const TabComponentConfigMetas = () => {
-  const [dataInicio, setDataInicio] = useState<Date | undefined>();
-  const [dataFinal, setDataFinal] = useState<Date | undefined>();
-  const [valorMeta, setValorMeta] = useState("");
+  const form = useForm();
+  const { toast } = useToast();
+  const { mutateAsync: inserirNovaMeta } = usePostNewMeta();
 
-  const handleSalvar = () => {
-    if (!dataInicio || !dataFinal || !valorMeta) {
-      alert("Preencha todos os campos antes de salvar.");
+  const handleSubmit = async (data: any) => {
+    if (!data.empresa || !data.data || !data.valorMeta || !data.tipoMeta) {
+      toast({
+        variant: "destructive",
+        title: "Campos obrigatórios",
+        description: "Preencha todos os campos antes de salvar.",
+      });
       return;
     }
-    console.log({
-      dataInicio,
-      dataFinal,
-      valorMeta: parseFloat(valorMeta.replace(",", ".")),
-    });
-    // aqui você pode chamar um mutate do React Query ou API
+
+    try {
+      const response = await inserirNovaMeta({
+        data: formatDateToYYYYMMDD(data.data),
+        tipo: data.tipoMeta,
+        valor: data.valorMeta,
+        empresa: data.empresa,
+      });
+
+      toast({
+        variant: "default",
+        title: response?.mensagem,
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erro ao salvar meta",
+        description: error?.message || "Entre em contato com o Suporte! ",
+      });
+    }
   };
 
   return (
     <div className="flex-1 h-full">
       <CardHeader>
         <CardTitle>Configurações de Metas</CardTitle>
-        <CardDescription>Defina o período e o valor da meta a ser alcançada.</CardDescription>
+        <CardDescription>
+          Defina o tipo, data, valor e empresa da meta.
+        </CardDescription>
       </CardHeader>
 
-      <CardContent className="mx-4 flex gap-4">
-        <div>
-          <Label>Data de Início</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Input readOnly value={dataInicio?.toLocaleDateString() || ""} />
-            </PopoverTrigger>
-            <PopoverContent>
-              <Calendar mode="single" selected={dataInicio} onSelect={setDataInicio} />
-            </PopoverContent>
-          </Popover>
-        </div>
+      <CardContent className="mx-4 flex gap-4 flex-wrap">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex gap-4 flex-wrap">
+          <div className="flex flex-col gap-2">
+            <Label>Data da Meta</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-[200px] rounded text-left font-semibold",
+                    !form.watch("data") && "text-muted-foreground"
+                  )}
+                >
+                  {form.watch("data") ? format(form.watch("data"), "dd-MM-yyyy") : <span>Selecione uma data</span>}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto " align="start">
+                <Calendar
+                  mode="single"
+                  selected={form.watch("data")}
+                  onSelect={(date) => form.setValue("data", date)}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
 
-        <div>
-          <Label>Data Final</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Input readOnly value={dataFinal?.toLocaleDateString() || ""} />
-            </PopoverTrigger>
-            <PopoverContent>
-              <Calendar mode="single" selected={dataFinal} onSelect={setDataFinal} />
-            </PopoverContent>
-          </Popover>
-        </div>
+          <div className="w-52">
+            <Label>Empresa</Label>
+            <Select value={form.watch("empresa")} onValueChange={(val) => form.setValue("empresa", val)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione a empresa" />
+              </SelectTrigger>
+              <SelectContent>
+                {EMPRESAS.map((emp) => (
+                  <SelectItem key={emp.value} value={emp.value}>
+                    {emp.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-        <div>
-          <Label>Valor da Meta</Label>
-          <Input
-            type="text"
-            value={valorMeta}
-            onChange={(e) => setValorMeta(e.target.value)}
-            placeholder="Ex: 100000,00"
+          <div>
+            <Label>Tipo da Meta</Label>
+            <Select value={form.watch("tipoMeta")} onValueChange={(val: TipoMeta) => form.setValue("tipoMeta", val)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione o tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="metaVenda">Meta de Venda</SelectItem>
+                <SelectItem value="metaMargem">Meta de Margem</SelectItem>
+                <SelectItem value="limiteCompra">Limite de Compra</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label>Valor da Meta</Label>
+            <FloatInput
+              type="text"
+              value={form.watch("valorMeta")}
+              onChangeValue={(val) => form.setValue("valorMeta", val)}
             />
-        </div>
-        <Button onClick={handleSalvar} className="mt-auto">
-            Salvar
-        </Button>
-      </CardContent>
+          </div>
 
+          <Button type="submit" className="mt-auto">
+            <CircleCheck /> Salvar
+          </Button>
+        </form>
+      </CardContent>
     </div>
   );
 };
