@@ -1,14 +1,12 @@
 
 import api from '@/app/api/api';
-import { PatchConfPerfilPayload, TypePerfilPdv } from '../types/typesPerfisDeCaixa';
 import apiSSR from '@/app/api/apiSSR';
+import { PatchConfPerfilPayload, TypePerfilPdv } from '../types/typesPDVS';
 
 
 // ======================================================================================
 // ================================ CLIENT ==============================================
-// ======================================================================================
 
-//====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============
 //====================================================
 export const fetchAllPerfis = async (): Promise<TypePerfilPdv[]> => {
@@ -16,7 +14,6 @@ export const fetchAllPerfis = async (): Promise<TypePerfilPdv[]> => {
   return response.data;
 };
 
-//====================================================
 //============== BUSCA PERFIL POR ID =================
 //====================================================
 export const fetchPerfilById = async (id: string): Promise<TypePerfilPdv> => {
@@ -24,7 +21,6 @@ export const fetchPerfilById = async (id: string): Promise<TypePerfilPdv> => {
   return response.data;
 };
 
-//====================================================
 //=========== INSERIR PERFIL POR DESCRICAO ===========
 //====================================================
 export const postNewPerfilPdv = async (
@@ -39,7 +35,6 @@ export const postNewPerfilPdv = async (
   return response.data;
 };
 
-//====================================================
 //============== DELETE PERFIL POR ID  ===============
 //====================================================
 export const deletePerfilById = async (id: string) => {
@@ -47,7 +42,6 @@ export const deletePerfilById = async (id: string) => {
   return response.data;
 };
 
-//====================================================
 //============ ATUALIZA CONFIGS POR ID ===============
 //====================================================
 export const putConfPerfilById = async (idPerfil: string, payload: PatchConfPerfilPayload) => {
@@ -55,7 +49,6 @@ export const putConfPerfilById = async (idPerfil: string, payload: PatchConfPerf
   return response.data;
 };
 
-//====================================================
 //================ ATUALIZA DESCRICAO ================
 //====================================================
 export const patchAlteraDescricaoById = async (idPerfil: string, descricao: string) => {

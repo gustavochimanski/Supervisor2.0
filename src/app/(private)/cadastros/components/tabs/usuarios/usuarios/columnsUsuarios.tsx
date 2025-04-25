@@ -9,10 +9,10 @@ export const getColumnsUsuarios = (
   setEditModel?: (usuario: any) => void
 ): GridColDef[] => [
   {
-    field: "codigo",
-    headerName: "Código",
+    field: "id",
+    headerName: "ID",
     type: "number",
-    minWidth: 100,
+    minWidth: 80,
     align: "center",
     headerAlign: "center",
   },
@@ -21,6 +21,25 @@ export const getColumnsUsuarios = (
     headerName: "Nome",
     minWidth: 200,
     flex: 1,
+  },
+  {
+    field: "empresaId",
+    headerName: "Empresa ID",
+    type: "number",
+    minWidth: 100,
+    align: "center",
+    headerAlign: "center",
+  },
+  {
+    field: "perfilsUsuario",
+    headerName: "Perfis",
+    minWidth: 200,
+    flex: 1,
+    renderCell: (params) => {
+      const perfis = params.row.perfilsUsuario || [];
+      if (perfis.length === 0) return "-";
+      return perfis.map((perfil: any) => perfil.nome ?? "Sem Nome").join(", ");
+    },
   },
   {
     field: "editar",
@@ -34,7 +53,7 @@ export const getColumnsUsuarios = (
       <IconButton
         color="primary"
         onClick={() => {
-          onEditar(params.row.codigo);
+          onEditar(params.row.id);
           setEditModel?.(params.row); // seta o model no pai
         }}
       >
@@ -53,13 +72,14 @@ export const getColumnsUsuarios = (
     renderCell: (params) => (
       <IconButton
         color="error"
-        onClick={() => onExcluir(params.row.codigo)}
+        onClick={() => onExcluir(params.row.id)}
       >
         <Trash2 size={18} />
       </IconButton>
     ),
   },
 ];
+
 
 
 export const getPermissaoUsuarioColumns = (

@@ -6,8 +6,8 @@ import {
   deletePerfilById,
   postNewPerfilPdv,
   putConfPerfilById,
-  patchAlteraDescricaoById, } from "../services/PerfisDeCaixaService"
-import { PatchConfPerfilPayload, TypePerfilPdv} from '../types/typesPerfisDeCaixa';
+  patchAlteraDescricaoById, } from "../services/PerfilDeCaixaService"
+import { PatchConfPerfilPayload, TypePerfilPdv} from '../types/typesPDVS';
 
 //====================================================
 //=========== BUSCA TODOS PERFIS DE CAIXA ============

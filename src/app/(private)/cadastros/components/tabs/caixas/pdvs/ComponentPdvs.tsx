@@ -4,7 +4,7 @@ import { useFetchAllCaixas, useFetchByIdCaixa } from "../../../../hooks/useCaixa
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { TypeCaixas } from "../../../../types/typesCaixas";
+import { TypeCaixas } from "../../../../types/typesPDVS";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { SearchComponent } from "@/components/shared/searchComponent";
 import { Button } from "@/components/ui/button";

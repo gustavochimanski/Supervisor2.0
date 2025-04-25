@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TypeCaixas } from "../../../types/typesCaixas";
+import { TypeCaixas } from "../../../types/typesPDVS";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ComponentPdvs from "./pdvs/ComponentPdvs";
 import CardConfigPerfilPdv from "./config/ComponentConfPerfilPdv";

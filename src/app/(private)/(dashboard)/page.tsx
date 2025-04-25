@@ -1,7 +1,7 @@
 import { postHeaderDashboard } from "./services/serviceDashboard";
 import PageDashboardClient from "./ClientComponetDashboard";
 import { TypeFiltroRelatorio } from "./types/typeDashboard";
-import { formatDateToYYYYMMDD } from "@/lib/formatDateyyyymmdd";
+import { formatDateToYYYYMMDD } from "@/lib/format/formatDateyyyymmdd";
 
 // Este componente segue como um server component (sem "use client")
 const PageDashboard = async () => {

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
-import { TypeCaixas } from "../types/typesCaixas"
-import { fetchAllCaixas, fetchByIdCaixas } from "../services/CaixasService"
+import { TypeCaixas } from "../types/typesPDVS"
+import { fetchAllCaixas, fetchByIdCaixas } from "../services/PdvsService"
 
 // Hook para Buscar Todos os Caixas
 export const useFetchAllCaixas = () => {

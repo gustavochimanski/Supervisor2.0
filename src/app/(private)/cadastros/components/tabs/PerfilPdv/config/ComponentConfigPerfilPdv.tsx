@@ -1,6 +1,6 @@
 "use client";
 
-import { TypePerfilPdv } from "@/app/(private)/cadastros/types/typesPerfisDeCaixa";
+import { TypePerfilPdv } from "@/app/(private)/cadastros/types/typesPDVS";
 import { Button } from "@/components/ui/button";
 import { CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

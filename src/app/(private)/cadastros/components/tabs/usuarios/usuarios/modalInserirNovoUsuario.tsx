@@ -1,21 +1,21 @@
-"use client";
-
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { usePostNewUser } from "@/app/(private)/cadastros/hooks/useUsuarios";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Modal } from "@/components/ui/modal"; // ajuste o caminho conforme onde você colocou o Modal base
-import { CircleCheck, CircleX } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { Modal } from "@/components/ui/modal";
+import { CircleCheck, CircleX } from "lucide-react";
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+interface Props {
+  onClose: () => void
+}
 
-const ModalIncluirPdv = ({ open, onClose }: Props) => {
-  if (!open) return null;
+const ModalInserirNovoUsuario = ({onClose}: Props) => {
 
-  return (
+const {mutateAsync: InserirNovoUsuario} = usePostNewUser();
+
+
+  return(
     <Modal onClose={onClose} style={{ width: "300px" }}>
       <Card className="h-72">
         <CardHeader>
@@ -25,11 +25,11 @@ const ModalIncluirPdv = ({ open, onClose }: Props) => {
         <CardContent className="p-6 gap-2 flex flex-col flex-1">
             <div>
                 <Label>Descrição</Label>
-                <Input placeholder="..." />
+                <Input />
             </div>
             <div>
                 <Label>Empresa</Label>
-                <Input placeholder="..." />
+                <Input  />
             </div>
         </CardContent>
 
@@ -43,7 +43,7 @@ const ModalIncluirPdv = ({ open, onClose }: Props) => {
         </CardFooter>
       </Card>
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalIncluirPdv;
+export default ModalInserirNovoUsuario

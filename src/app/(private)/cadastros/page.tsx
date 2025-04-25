@@ -11,7 +11,7 @@ import TabComponentUsuarios from "./components/tabs/usuarios/TabComponentMainUsu
 
 import TabsWrapper from "@/components/shared/tabsWrapper";
 
-import { fetchAllCaixasSSR } from "./services/CaixasService";
+import { fetchAllCaixasSSR } from "./services/PdvsService";
 
 const PageCadastros = async () => {
 

@@ -1,8 +1,7 @@
-import { cookies } from "next/headers";
+// src/app/(private)/layout.tsx
 import ClientLayout from "@/components/security/ClientLayout";
-import { auth } from "@/auth"; // ← verifica sessão
-import { redirect } from "next/navigation"; // ← redireciona se não logado
-
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import "./globals.css";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
@@ -10,11 +9,11 @@ export default async function Layout({ children }: { children: React.ReactNode }
   if (!session) redirect("/login");
 
   return (
-    <html>
-      <body>
+    <html lang="pt-BR">
+      {/* aqui é o pulo do gato */}
+      <body suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
 }
-

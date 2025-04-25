@@ -27,7 +27,7 @@ import { usePostNewMeta } from "../hooks/useConfigMetas";
 import { format } from "date-fns";
 import { TipoMeta } from "../types/typeConfigMetas";
 import { useToast } from "@/hooks/use-toast";
-import { formatDateToYYYYMMDD } from "@/lib/formatDateyyyymmdd";
+import { formatDateToYYYYMMDD } from "@/lib/format/formatDateyyyymmdd";
 import { CalendarIcon, CircleCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";

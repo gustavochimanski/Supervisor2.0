@@ -10,20 +10,9 @@ import { TypeDashboardHeader } from "../../types/typeDashboard";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Info } from "lucide-react";
 import { TotaisGeraisMeta } from "../../types/typeMetas";
+import { formatCurrency, formatInt } from "@/lib/format/formatNumber";
 
 type Props = { data: TypeDashboardHeader };
-
-const formatCurrency = (value: number) =>
-  new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    maximumFractionDigits: 2,
-  }).format(value);
-
-const formatInt = (value: number) =>
-  new Intl.NumberFormat("pt-BR", {
-    maximumFractionDigits: 0,
-  }).format(value);
 
 // Cores normais para progresso positivo (ex: metas de venda)
 const getProgressColor = (percentual: number) => {

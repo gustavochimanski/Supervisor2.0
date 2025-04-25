@@ -7,15 +7,14 @@ import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import { getColumnsUsuarios, getPermissaoUsuarioColumns } from "./columnsUsuarios";
 import { Button } from "@/components/ui/button";
 import { CircleCheck, CirclePlus, CircleX } from "lucide-react";
+import { useFetchAllUsers } from "@/app/(private)/cadastros/hooks/useUsuarios";
+import ModalInserirNovoUsuario from "./modalInserirNovoUsuario";
 
 const ComponentUsuarios = () => {
+  // ======= ESTADOS ========
   const [editModel, setEditModel] = useState<any>(null);
-
-
-  const [usuarios, setUsuarios] = useState([
-    { codigo: 1, nome: "João da Silva" },
-    { codigo: 2, nome: "Maria Oliveira" },
-  ]);
+  const [ modalIncluirUsuario, setModalIncluirUsuario ] = useState(false)
+  const { data: dataAllUsuarios } = useFetchAllUsers() // DADOS DOS USUÁRIOS
 
   const [permissoes, setPermissoes] = useState([
     { id: 1, nome: "Administrador" },
@@ -24,14 +23,12 @@ const ComponentUsuarios = () => {
   ]);
 
   const handleEditar = (id: number) => {
-    const usuario = usuarios.find((u) => u.codigo === id);
-    setEditModel(usuario || null);
+    console.log("Editar")
   };
   
 
   const handleExcluirUsuario = (id: number) => {
     console.log("Excluir usuário", id);
-    setUsuarios((prev) => prev.filter((u) => u.codigo !== id));
   };
 
   const handleExcluirPermissao = (id: number) => {
@@ -44,27 +41,27 @@ const ComponentUsuarios = () => {
   const permissaoColumns = getPermissaoUsuarioColumns(handleExcluirPermissao);
 
   return (
-    <div className="flex flex-row md:flex-row w-full overflow-auto h-full gap-4">
+    <div className="flex flex-row w-full overflow-auto h-full gap-4">
       {/* Card: Usuários */}
-      <Card className="flex-1 h-full">
+      <Card className="flex-1 ">
         <CardHeader>
           <CardTitle>Cadastro de Usuários</CardTitle>
         </CardHeader>
         <CardContent className="flex-1 h-full">
           <DataTableComponentMui
-            rows={usuarios}
+            rows={dataAllUsuarios}
             columns={usuarioColumns}
-            getRowId={(row) => row.codigo}
+            getRowId={(row) => row.id}
           />
         </CardContent>
-        <CardFooter>
-          <Button>Adicionar Usuário</Button>
-        </CardFooter>
+        <CardFooter className="gap-4">
+          <Button onClick={() => setModalIncluirUsuario(true)} variant={"secondary"}><CirclePlus/>Adicionar Usuário</Button>
+          </CardFooter>
       </Card>
 
       {/* Card: Permissões */}
       <Card
-        className={`flex-1 h-full ${
+        className={`flex-1 w-1/4 ${
           !editModel ? "opacity-60 pointer-events-none select-none" : ""
         }`}
       >
@@ -79,12 +76,16 @@ const ComponentUsuarios = () => {
           />
         </CardContent>
         <CardFooter className="gap-4">
-          <Button variant={"secondary"} disabled={!editModel}><CirclePlus/>Adicionar</Button>
+          <Button variant={"secondary"} disabled={!editModel}><CirclePlus/>Adicionar Permissão</Button>
           <Button variant={"secondaryDestructive"} disabled={!editModel} onClick={() => setEditModel(false)}><CircleX/>Cancelar</Button>
-          <Button disabled={!editModel}><CircleCheck/>Gravar</Button>
         </CardFooter>
       </Card>
+      
 
+      
+      {/* ============================================= */}
+      {/* =================== MODALS ===================*/}
+      { modalIncluirUsuario && ( <ModalInserirNovoUsuario onClose={() => setModalIncluirUsuario(false)}/>)}
     </div>
   );
 };
