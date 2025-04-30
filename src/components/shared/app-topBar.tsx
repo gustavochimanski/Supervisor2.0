@@ -19,20 +19,21 @@ const TopBarComponent = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <div className="fixed right-0 h-10 w-full bg-sidebar z-0 flex items-center justify-end ">
-      <div className="flex items-center gap-4 justify-end mr-2 ">
+    <div className="fixed right-0 gap-4 m-2 h-10 w-full bg-background z-10 flex items-center md:justify-end ">
         {isMobile && (
           <Image
             src="/logo.png"
             alt="logo"
-            className=" m-auto"
+            className=" ml-4"
             width={20}
             height={20}
           />
         )}
-        <SearchComponent className="flex gap-4  md:w-1/2" />
-
-        <ThemeToggle /> {/* <-- BOTÃO DE TEMA AQUI */}
+        <SearchComponent className="flex gap-4 w-full  md:w-1/4" />
+        
+        <div className="">
+          <ThemeToggle  /> {/* <-- BOTÃO DE TEMA AQUI */}
+        </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -54,7 +55,6 @@ const TopBarComponent = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
   );
 };
 

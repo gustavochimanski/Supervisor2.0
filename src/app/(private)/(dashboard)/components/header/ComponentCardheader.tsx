@@ -31,11 +31,12 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { TypeFiltroRelatorio } from "../../types/typeDashboard";
+import { toast } from "sonner";
 
 // -----------------------------------------------------------------------------
 // Constantes utilitárias
 // -----------------------------------------------------------------------------
-const TODAS_EMPRESAS = ["001", "002", "003", "004", "005"] as const;
+const TODAS_EMPRESAS = ["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "013", "014"] as const;
 
 const formatDateISO = (d: Date) => format(d, "yyyy-MM-dd");
 const formatDisplayDate = (d: Date) =>
@@ -98,6 +99,7 @@ export default function ComponentCardHeader({
       empresas: data.empresas,
       dataInicio: formatDateISO(data.dataInicial),
       dataFinal: formatDateISO(data.dataFinal),
+      situacao: "N"
     });
   };
 
@@ -115,18 +117,121 @@ export default function ComponentCardHeader({
     return empresas[0] ?? "__vazio__";
   };
 
+  const handleError = (errors: any) => {
+    if (errors?.dataFinal?.message) {
+      toast.error(errors.dataFinal.message);
+    }
+  
+    // Caso queira exibir qualquer outro erro do form também:
+    const allErrors = Object.values(errors).filter((e: any) => e?.message && e?.path?.[0] !== "dataFinal");
+    allErrors.forEach((err: any) => toast.error(err.message));
+  };
+  
+
   // ---------------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------------
   return (
-    <form onSubmit={handleSubmit(submit)}>
+    <form onSubmit={handleSubmit(submit, handleError)}>
+
       <CardHeader className="flex flex-row justify-between p-1 bg-primary/90 rounded-t-[var(--radius)] font-sans">
         {!isMobile && (
           <CardTitle className="text-white m-2">Dashboard</CardTitle>
         )}
 
 
-        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 pb-1 text-sm">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 pb-1 text-sm w-full md:justify-end">
+
+                    {/* -------------------------- Data Inicial -------------------------- */}
+                    <Controller
+            name="dataInicial"
+            control={control}
+            render={({ field }) => (
+              <div className="flex mt-auto text-center">
+                <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3 w-full md:w-20">
+                  <Label className="pointer-events-none select-none">
+                    Data Inicial
+                  </Label>
+                </div>
+
+                <div className="flex gap-2  ">
+                  {!isMobile && ( 
+                    <Input
+                      disabled
+                      value={formatDisplayDate(field.value)}
+                      onChange={(e) => {
+                        const d = parseInput(e.target.value);
+                        if (d) field.onChange(d);
+                      }}
+                      className="h-7 !bg-background !opacity-100 text-center rounded-l-none border-none shadow-none"
+                      placeholder="DD/MM/AAAA"
+                    />
+                  )}
+                  <Popover>
+                    <PopoverTrigger asChild className="rounded-l-none md:rounded">
+                      <Button variant="outline" className="h-7">
+                        <CalendarIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={(d) => d && field.onChange(d)}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+            )}
+          />
+
+          {/* -------------------------- Data Final --------------------------- */}
+          <Controller
+            name="dataFinal"
+            control={control}
+            render={({ field }) => (
+              <div className="flex mt-auto text-center ">
+                <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3 w-full md:w-20">
+                  <Label className="pointer-events-none select-none">
+                    Data Final
+                  </Label>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                {!isMobile && ( 
+                  <Input
+                    disabled
+                    value={formatDisplayDate(field.value)}
+                    onChange={(e) => {
+                      const d = parseInput(e.target.value);
+                      if (d) field.onChange(d);
+                    }}
+                    className="h-7 !bg-background !opacity-100  text-center rounded-l-none border-none shadow-none"
+                    placeholder="DD/MM/AAAA"
+                  />
+                  )}
+                  <div>
+                    <Popover>
+                      <PopoverTrigger asChild className="rounded-l-none md:rounded"> 
+                        <Button variant="outline" className="h-7">
+                          <CalendarIcon />
+                        </Button>
+                      </PopoverTrigger >
+                      <PopoverContent className="p-0">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={(d) => d && field.onChange(d)}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
+              
+              </div>
+            )}
+          />
           {/* ------------------------- Empresa Select ------------------------- */}
           <Controller
             name="empresas"
@@ -150,7 +255,7 @@ export default function ComponentCardHeader({
                       else field.onChange([valor]);
                     }}
                   >
-                    <SelectTrigger className="-7 bg-background text-center rounded-l-none border-none shadow-none">
+                    <SelectTrigger className="h-7 bg-background text-center rounded-l-none border-none shadow-none">
                       <SelectValue placeholder="Selecione…" />
                     </SelectTrigger>
                     <SelectContent>
@@ -172,7 +277,7 @@ export default function ComponentCardHeader({
         {isMobile && (
           <Button
               type="submit"
-              className="h-7 bg-background hover:bg-background/60 mt-auto"
+              className="bg-background hover:bg-background/60 mt-auto"
             >
             <Search className="mr-1 h-4 w-4 text-foreground" />
             <span className="text-foreground">Buscar</span>
@@ -180,92 +285,7 @@ export default function ComponentCardHeader({
           )}
 
 
-          {/* -------------------------- Data Inicial -------------------------- */}
-          <Controller
-            name="dataInicial"
-            control={control}
-            render={({ field }) => (
-              <div className="flex mt-auto text-center">
-                <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
-                  <Label className="pointer-events-none select-none">
-                    Data Inicial
-                  </Label>
-                </div>
 
-                <div className="flex gap-2 ">
-                  <Input
-                    value={formatDisplayDate(field.value)}
-                    onChange={(e) => {
-                      const d = parseInput(e.target.value);
-                      if (d) field.onChange(d);
-                    }}
-                    className="h-7 bg-background text-center rounded-l-none border-none shadow-none"
-                    placeholder="DD/MM/AAAA"
-                  />
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" className="h-7">
-                        <CalendarIcon />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(d) => d && field.onChange(d)}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-            )}
-          />
-
-          {/* -------------------------- Data Final --------------------------- */}
-          <Controller
-            name="dataFinal"
-            control={control}
-            render={({ field }) => (
-              <div className="flex mt-auto text-center">
-                <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
-                  <Label className="pointer-events-none select-none">
-                    Data Final
-                  </Label>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Input
-                    value={formatDisplayDate(field.value)}
-                    onChange={(e) => {
-                      const d = parseInput(e.target.value);
-                      if (d) field.onChange(d);
-                    }}
-                    className="h-7 bg-background text-center rounded-l-none border-none shadow-none"
-                    placeholder="DD/MM/AAAA"
-                  />
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" className="h-7">
-                        <CalendarIcon />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(d) => d && field.onChange(d)}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                {errors.dataFinal && (
-                  <span className="text-red-500 text-xs mt-1">
-                    {errors.dataFinal.message}
-                  </span>
-                )}
-              </div>
-            )}
-          />
 
           {/* ---------------------------- Botão ----------------------------- */}
           {!isMobile&& (

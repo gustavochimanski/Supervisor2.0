@@ -20,14 +20,19 @@ export type TotaisGerais = {
   ticket_medio: number;
 };
 
+type TypeRelacao = {
+  relacaoValue: number
+  relacaoPorcentagem: number
+}
+
 /**
  * Header do dashboard de vendas
  */
 export type TypeDashboardHeader = {
   totais_por_empresa: TotaisPorEmpresa[];
   total_geral: TotaisGerais;
-  total_geral_somado_empresas?: number;
   metas: TypeDashboardMetaHeader;
+  relacao: TypeRelacao
   compras: TypeComprasGeralResponse; 
 };
 

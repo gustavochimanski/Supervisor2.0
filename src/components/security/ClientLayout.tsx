@@ -10,6 +10,8 @@ import { Toaster } from "@/components/ui/toaster"
 import ModalEnviarConfiguracao from "@/app/(private)/processos/components/comunicacao/ModalEnviarConfiguracoes"
 import ModalEnviarProdutos from "@/app/(private)/processos/components/comunicacao/ModalEnviarProdutos"
 import { ThemeProvider } from "next-themes"
+import { useMediaQuery, useTheme } from "@mui/material"
+
 
 interface ClientLayoutProps {
   children: React.ReactNode
@@ -17,6 +19,9 @@ interface ClientLayoutProps {
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
   const [isSideBarOpen, setIsSidebarOpen] = useState<boolean | null>(null)
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const cookieValue = document.cookie
@@ -40,7 +45,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
             <SidebarTrigger variant="sidebarTrigger" />
             <div className="flex-1 flex flex-col overflow-hidden w-full">
               <TopBarComponent />
-              <div className="flex-1 overflow-auto w-full p-4 pt-14">
+              <div className={`flex-1 overflow-auto w-full pt-14 ${isMobile ? "p-0 " : "p-4"}`}>
                 {children}
               </div>
             </div>

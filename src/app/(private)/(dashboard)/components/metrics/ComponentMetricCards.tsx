@@ -11,10 +11,12 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { Info } from "lucide-react";
 import { TotaisGeraisMeta } from "../../types/typeMetas";
 import { formatCurrency, formatInt } from "@/lib/format/formatNumber";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+
 
 type Props = { data: TypeDashboardHeader };
 
-// Cores normais para progresso positivo (ex: metas de venda)
+// Cores normais para progresso positivo
 const getProgressColor = (percentual: number) => {
   if (percentual >= 100) return "bg-green-500";
   if (percentual >= 60) return "bg-blue-500";
@@ -22,7 +24,7 @@ const getProgressColor = (percentual: number) => {
   return "bg-red-500";
 };
 
-// Cores invertidas para metas negativas (ex: limite de compra)
+// Cores invertidas para metas negativas
 const getProgressColorInverted = (percentual: number) => {
   if (percentual >= 95) return "bg-red-500";
   if (percentual >= 70) return "bg-yellow-500";
@@ -30,7 +32,15 @@ const getProgressColorInverted = (percentual: number) => {
   return "bg-green-500";
 };
 
-// barra de progresso, com controle de inversão
+// Cores normais para progresso positivo
+const getProgressColorLucro = (percentual: number) => {
+  if (percentual >= 35) return "bg-green-500";
+  if (percentual >= 25) return "bg-blue-500";
+  if (percentual >= 15) return "bg-yellow-500";
+  return "bg-red-500";
+};
+
+// Barra de progresso
 const getProgressBar = (progresso: number, labelProgress: string, invertido = false) => {
   const percentual = Math.min(Math.round(progresso * 100), 999);
   const cor = invertido ? getProgressColorInverted(percentual) : getProgressColor(percentual);
@@ -52,7 +62,7 @@ const getProgressBar = (progresso: number, labelProgress: string, invertido = fa
 };
 
 // Pega valor da meta por tipo
-const getMetaValor = (metas: TotaisGeraisMeta[], tipo: TotaisGeraisMeta["tipo"]) => {
+const getProgressValue = (metas: TotaisGeraisMeta[], tipo: TotaisGeraisMeta["tipo"]) => {
   return metas.find((meta) => meta.tipo === tipo)?.valorMeta ?? 0;
 };
 
@@ -60,58 +70,85 @@ const DashboardMetricCards = ({ data }: Props) => {
   const total = data.total_geral;
   const metas = data.metas;
   const compras = data.compras;
+  const relacao = data.relacao;
 
-  const metaVendaValor = getMetaValor(metas.total_geral, "metaVenda");
-  // const metaMargem = getMetaValor(metas.total_geral, "metaMargem")
-  const limiteCompraValor = getMetaValor(metas.total_geral, "limiteCompra");
+  const metaVendaValor = getProgressValue(metas.total_geral, "metaVenda");
+  const limiteCompraValor = getProgressValue(metas.total_geral, "limiteCompra");
 
-  const progressoMetaVenda = metaVendaValor > 0
-    ? total.total_vendas / metaVendaValor
-    : 0;
-    
-
-  const progressoMetaCompra = limiteCompraValor > 0
-    ? compras.total_geral / limiteCompraValor
-    : 0;
-
-  const relacaoCompraVenda = total.total_vendas - compras.total_geral
+  const progressoMetaVenda = metaVendaValor > 0 ? total.total_vendas / metaVendaValor : 0;
+  const progressoMetaCompra = limiteCompraValor > 0 ? compras.total_geral / limiteCompraValor : 0;
+  const progressoRelacao = relacao.relacaoPorcentagem > 0 ? relacao.relacaoPorcentagem / 100 : 0;
 
   const cards = [
     {
-      label: "Cupons",
-      value: formatInt(total.total_cupons),
-      explicacao: "Quantidade total de cupons emitidos.",
-    },
-    {
-      label: "Ticket Médio",
-      value: formatCurrency(total.ticket_medio),
-      explicacao: "Média de valor gasto por cupom.",
+      label: "Total de Vendas",
+      value: formatCurrency(total.total_vendas),
+      barra: getProgressBar(progressoMetaVenda, `Meta: ${formatCurrency(metaVendaValor)}`),
+      explicacao: "Soma total das vendas realizadas em relação à meta.",
+      gradientFrom: "from-indigo-700",
+      gradientTo: "to-indigo-300",
     },
     {
       label: "Total de Compras",
       value: formatCurrency(compras.total_geral),
       barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true),
       explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
+      gradientFrom: "from-red-700",
+      gradientTo: "to-red-300",
     },
     {
-      label: "Total de Vendas",
-      value: formatCurrency(total.total_vendas),
-      barra: getProgressBar(progressoMetaVenda, `Meta: ${formatCurrency(metaVendaValor)}`),
-      explicacao: "Soma total das vendas realizadas em relação à meta.",
-    },
-    {
-      label: "Relação Compra e Venda",
-      value: formatCurrency(relacaoCompraVenda),
+      label: "Lucro Bruto",
+      value: formatCurrency(relacao.relacaoValue),
       explicacao: "Relação Compra e Venda | Venda - Compra",
+      barra: getProgressBar(progressoRelacao, `${relacao.relacaoPorcentagem.toPrecision(4)} %`),
+      gradientFrom: relacao.relacaoValue >= 0 ? "from-green-700" : "from-red-700",
+      gradientTo: relacao.relacaoValue >= 0 ? "to-green-300" : "to-red-300",
+    },
+    {
+      label: "Cupons",
+      explicacao: "Quantidade de cupons emitidos e o ticket médio (valor médio por cupom).",
+      subvalores: [
+        { label: "Quantidade", value1: formatInt(total.total_cupons) },
+        { label: "Ticket Médio", value1: formatCurrency(total.ticket_medio) },
+        { label: "Ticket Máximo", value1: 649.99 },
+      ],
+      gradientFrom: "from-indigo-700",
+      gradientTo: "to-indigo-300",
+    },
+    {
+      label: "Pdvs",
+      explicacao:
+        "⚠️ Atenção: Se algum PDV estiver offline, as vendas registradas nele não serão enviadas para o sistema até que a conexão seja restabelecida.",
+      subvalores: [
+        {
+          label: "Conectado",
+          value1: 25,
+          value2: <span className="inline-block w-3 h-3 rounded-full bg-green-700" />,
+        },
+        {
+          label: "Operando",
+          value1: 15,
+          value2: <span className="inline-block w-3 h-3 rounded-full bg-indigo-700" />,
+        },
+        {
+          label: "Offline",
+          value1: 2,
+          value2: <span className="inline-block w-3 h-3 rounded-full bg-red-700" />,
+        },
+      ],
+      gradientFrom: "from-indigo-700",
+      gradientTo: "to-indigo-300",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 flex-1">
       {cards.map((item, index) => (
-        <Card key={index} className="hover:scale-105 transition-transform p-2 gap-1">
+        <Card key={index} className="relative overflow-hidden hover:scale-105 transition-transform p-2 gap-1">
+          {/* Linha de degradê no topo */}
+          <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${item.gradientFrom} ${item.gradientTo}`} />
           <div className="flex items-center justify-between pr-2">
-            <CardTitle className="text-base">{item.label}</CardTitle>
+            <CardTitle className="text-base font-semibold">{item.label}</CardTitle>
             <Popover>
               <PopoverTrigger asChild>
                 <Info className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-primary" />
@@ -122,8 +159,24 @@ const DashboardMetricCards = ({ data }: Props) => {
             </Popover>
           </div>
           <CardContent>
-            <p className="text-xl font-semibold">{item.value}</p>
-            {item.barra && item.barra}
+            {item.subvalores ? (
+              <Table>
+                <TableBody>
+                  {item.subvalores.map((sub, i) => (
+                    <TableRow key={i}>
+                      <TableCell className="font-medium p-1">{sub.label}</TableCell>
+                      <TableCell className="p-1 text-right">{sub.value1}</TableCell>
+                      <TableCell className="p-1 text-right">{sub.value2}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <>
+                <p className="text-xl font-semibold">{item.value}</p>
+                {item.barra && item.barra}
+              </>
+            )}
           </CardContent>
         </Card>
       ))}

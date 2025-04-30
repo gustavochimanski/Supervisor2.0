@@ -50,7 +50,7 @@ import Link from "next/link";
 
     
     return (
-        <Sidebar collapsible="icon">
+        <Sidebar collapsible="icon" className="z-50">
             <SidebarContent className="justify-between">
                 <SidebarGroup>
                 <SidebarGroupLabel>Aplicações</SidebarGroupLabel>

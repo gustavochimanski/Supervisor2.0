@@ -22,4 +22,3 @@ export type TotaisPorEmpresaMeta = {
     totais_por_empresa: TotaisPorEmpresaMeta[];
     total_geral: TotaisGeraisMeta[];
   };
-  
