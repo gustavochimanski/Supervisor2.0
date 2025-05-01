@@ -10,6 +10,7 @@ export type TypeCaixas = {
 export type TypePerfilPdv = {
     id: string;
     descricao: string;
+    confPerfil: PatchConfPerfilPayload[]
   }
   
   export type PatchConfPerfilPayload = {

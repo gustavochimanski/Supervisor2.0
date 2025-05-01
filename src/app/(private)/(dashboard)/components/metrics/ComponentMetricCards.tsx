@@ -16,6 +16,23 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 type Props = { data: TypeDashboardHeader };
 
+type Subvalor = {
+  label: string;
+  value1: string | number | React.ReactNode;
+  value2?: React.ReactNode;
+};
+
+type CardProps = {
+  label: string;
+  value?: string | number;
+  barra?: React.ReactNode;
+  explicacao: string;
+  gradientFrom: string;
+  gradientTo: string;
+  subvalores?: Subvalor[];
+};
+
+
 // Cores normais para progresso positivo
 const getProgressColor = (percentual: number) => {
   if (percentual >= 100) return "bg-green-500";
@@ -79,7 +96,7 @@ const DashboardMetricCards = ({ data }: Props) => {
   const progressoMetaCompra = limiteCompraValor > 0 ? compras.total_geral / limiteCompraValor : 0;
   const progressoRelacao = relacao.relacaoPorcentagem > 0 ? relacao.relacaoPorcentagem / 100 : 0;
 
-  const cards = [
+  const cards: CardProps[] = [
     {
       label: "Total de Vendas",
       value: formatCurrency(total.total_vendas),
@@ -95,6 +112,14 @@ const DashboardMetricCards = ({ data }: Props) => {
       explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
       gradientFrom: "from-red-700",
       gradientTo: "to-red-300",
+    },
+    {
+      label: "Lucro Bruto",
+      value: formatCurrency(relacao.relacaoValue),
+      explicacao: "Relação Compra e Venda | Venda - Compra",
+      barra: getProgressBar(progressoRelacao, `${relacao.relacaoPorcentagem.toPrecision(4)} %`),
+      gradientFrom: relacao.relacaoValue >= 0 ? "from-green-700" : "from-red-700",
+      gradientTo: relacao.relacaoValue >= 0 ? "to-green-300" : "to-red-300",
     },
     {
       label: "Lucro Bruto",

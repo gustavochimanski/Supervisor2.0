@@ -44,7 +44,7 @@ export default function PageDashboardClient({ defaultPayload, serverData }: Prop
 
   return (
     <Card>
-      <CardHeader className="p-0">
+      <CardHeader className="p-0 sticky">
         <ComponentCardHeader onChangePayload={handleChangePayload} initialPayload={payload}/>
       </CardHeader>
       <CardContent className="p-4">

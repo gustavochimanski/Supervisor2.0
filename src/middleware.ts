@@ -54,12 +54,16 @@ export default auth(async (request: NextRequest) => {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // 🔁 Usuário autenticado tentando acessar /login → redireciona pra home
-  if (isAuthenticated && publicRoute?.whenAuthenticated === "redirect") {
+  if (
+    isAuthenticated &&
+    publicRoute?.whenAuthenticated === "redirect" &&
+    request.method === "GET"
+  ) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/";
     return NextResponse.redirect(redirectUrl);
   }
+  
 
   // ✅ Passa normal
   return NextResponse.next();

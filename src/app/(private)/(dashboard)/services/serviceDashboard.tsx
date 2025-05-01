@@ -7,7 +7,7 @@ export const postHeaderDashboard = async (
 ): Promise<TypeDashboardHeader> => {
   try {
     const { data } = await axios.post<TypeDashboardHeader>(
-      " http://localhost:8000/dashboard/periodo",
+      " http://192.168.15.161:8000/dashboard/periodo",
       payload
     );
     return data;
