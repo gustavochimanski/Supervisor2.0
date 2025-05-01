@@ -5,7 +5,7 @@ import Barcode from "react-barcode";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card,CardContent,CardDescription,CardFooter,CardHeader, CardTitle } from "@/components/ui/card";
-import { gerarPdfEtiquetas } from "@/lib/pdf/gerarPdfEtiquetasUsuarios"; 
+import { gerarPdfEtiquetas } from "@/utils/pdf/gerarPdfEtiquetasUsuarios"; 
 import { CircleHelp, CirclePlus, CircleX, Download } from "lucide-react";
 import saveAs from "file-saver";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";

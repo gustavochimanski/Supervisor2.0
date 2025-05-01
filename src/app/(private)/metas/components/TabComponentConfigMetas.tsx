@@ -27,16 +27,15 @@ import { usePostNewMeta } from "../hooks/useConfigMetas";
 import { format } from "date-fns";
 import { TipoMeta } from "../types/typeConfigMetas";
 import { useToast } from "@/hooks/use-toast";
-import { formatDateToYYYYMMDD } from "@/lib/format/formatDateyyyymmdd";
+import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
 import { CalendarIcon, CircleCheck } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
+import { cn } from "@/utils/utils";
 import { Label } from "@/components/ui/label";
 
 const EMPRESAS = [
-  { label: "Empresa 01", value: "01" },
-  { label: "Empresa 02", value: "02" },
-  { label: "Empresa 03", value: "03" },
+  { label: "Empresa 01", value: "001" },
+  { label: "Empresa 02", value: "002" },
+  { label: "Empresa 03", value: "003" },
 ];
 
 const TabComponentConfigMetas = () => {
@@ -143,7 +142,7 @@ const TabComponentConfigMetas = () => {
           </div>
 
           <div>
-            <Label>Valor da Meta</Label>
+            <Label>Valor</Label>
             <FloatInput
               type="text"
               value={form.watch("valorMeta")}

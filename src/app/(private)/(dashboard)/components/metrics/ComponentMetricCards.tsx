@@ -1,3 +1,4 @@
+// src/components/DashboardMetricCards.tsx
 "use client";
 
 import React from "react";
@@ -6,15 +7,18 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
-import { TypeDashboardHeader } from "../../types/typeDashboard";
+import { TypeDashboardResponse } from "../../types/typeDashboard";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Info } from "lucide-react";
 import { TotaisGeraisMeta } from "../../types/typeMetas";
-import { formatCurrency, formatInt } from "@/lib/format/formatNumber";
+import { formatCurrency, formatInt } from "@/utils/format/formatNumber";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import {
+  getProgressBar,
+  getProgressValue,
+} from "@/utils/progress/getProgressColor";
 
-
-type Props = { data: TypeDashboardHeader };
+type Props = { data: TypeDashboardResponse };
 
 type Subvalor = {
   label: string;
@@ -32,69 +36,19 @@ type CardProps = {
   subvalores?: Subvalor[];
 };
 
-
-// Cores normais para progresso positivo
-const getProgressColor = (percentual: number) => {
-  if (percentual >= 100) return "bg-green-500";
-  if (percentual >= 60) return "bg-blue-500";
-  if (percentual >= 30) return "bg-yellow-500";
-  return "bg-red-500";
-};
-
-// Cores invertidas para metas negativas
-const getProgressColorInverted = (percentual: number) => {
-  if (percentual >= 95) return "bg-red-500";
-  if (percentual >= 70) return "bg-yellow-500";
-  if (percentual >= 40) return "bg-blue-500";
-  return "bg-green-500";
-};
-
-// Cores normais para progresso positivo
-const getProgressColorLucro = (percentual: number) => {
-  if (percentual >= 35) return "bg-green-500";
-  if (percentual >= 25) return "bg-blue-500";
-  if (percentual >= 15) return "bg-yellow-500";
-  return "bg-red-500";
-};
-
-// Barra de progresso
-const getProgressBar = (progresso: number, labelProgress: string, invertido = false) => {
-  const percentual = Math.min(Math.round(progresso * 100), 999);
-  const cor = invertido ? getProgressColorInverted(percentual) : getProgressColor(percentual);
-
-  return (
-    <div className="mt-2 w-full">
-      <div className="flex justify-between text-xs mb-1">
-        <span className="text-muted-foreground">{labelProgress}</span>
-        <span className="font-medium">{percentual}%</span>
-      </div>
-      <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-        <div
-          className={`h-full ${cor} transition-all duration-500 ease-in-out`}
-          style={{ width: `${Math.min(percentual, 100)}%` }}
-        />
-      </div>
-    </div>
-  );
-};
-
-// Pega valor da meta por tipo
-const getProgressValue = (metas: TotaisGeraisMeta[], tipo: TotaisGeraisMeta["tipo"]) => {
-  return metas.find((meta) => meta.tipo === tipo)?.valorMeta ?? 0;
-};
-
 const DashboardMetricCards = ({ data }: Props) => {
   const total = data.total_geral;
   const metas = data.metas;
   const compras = data.compras;
-  const relacao = data.relacao;
+  const relacao = data.relacao
 
   const metaVendaValor = getProgressValue(metas.total_geral, "metaVenda");
   const limiteCompraValor = getProgressValue(metas.total_geral, "limiteCompra");
+  const metaMargemValor = getProgressValue(metas.total_geral, "metaMargem");
 
   const progressoMetaVenda = metaVendaValor > 0 ? total.total_vendas / metaVendaValor : 0;
   const progressoMetaCompra = limiteCompraValor > 0 ? compras.total_geral / limiteCompraValor : 0;
-  const progressoRelacao = relacao.relacaoPorcentagem > 0 ? relacao.relacaoPorcentagem / 100 : 0;
+  const progressoRelacao = metaMargemValor > 0 ? relacao.relacaoPorcentagem / metaMargemValor : 0;
 
   const cards: CardProps[] = [
     {
@@ -110,25 +64,22 @@ const DashboardMetricCards = ({ data }: Props) => {
       value: formatCurrency(compras.total_geral),
       barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true),
       explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
-      gradientFrom: "from-red-700",
-      gradientTo: "to-red-300",
+      gradientFrom: "from-indigo-700",
+      gradientTo: "to-indigo-300",
     },
     {
       label: "Lucro Bruto",
       value: formatCurrency(relacao.relacaoValue),
-      explicacao: "Relação Compra e Venda | Venda - Compra",
-      barra: getProgressBar(progressoRelacao, `${relacao.relacaoPorcentagem.toPrecision(4)} %`),
-      gradientFrom: relacao.relacaoValue >= 0 ? "from-green-700" : "from-red-700",
-      gradientTo: relacao.relacaoValue >= 0 ? "to-green-300" : "to-red-300",
-    },
-    {
-      label: "Lucro Bruto",
-      value: formatCurrency(relacao.relacaoValue),
-      explicacao: "Relação Compra e Venda | Venda - Compra",
-      barra: getProgressBar(progressoRelacao, `${relacao.relacaoPorcentagem.toPrecision(4)} %`),
-      gradientFrom: relacao.relacaoValue >= 0 ? "from-green-700" : "from-red-700",
-      gradientTo: relacao.relacaoValue >= 0 ? "to-green-300" : "to-red-300",
-    },
+      explicacao: `Relação entre Venda e Compra. Meta de margem: ${metaMargemValor.toFixed(2)}%`,
+      barra: getProgressBar(
+        progressoRelacao,
+        `Meta: ${metaMargemValor.toFixed(2)}% | Real: ${relacao.relacaoPorcentagem.toFixed(2)}%`,
+        false,
+        true
+      ),
+      gradientFrom: "from-indigo-700",
+      gradientTo: "to-indigo-300",
+    },    
     {
       label: "Cupons",
       explicacao: "Quantidade de cupons emitidos e o ticket médio (valor médio por cupom).",
@@ -170,8 +121,7 @@ const DashboardMetricCards = ({ data }: Props) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 flex-1">
       {cards.map((item, index) => (
         <Card key={index} className="relative overflow-hidden hover:scale-105 transition-transform p-2 gap-1">
-          {/* Linha de degradê no topo */}
-          <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${item.gradientFrom} ${item.gradientTo}`} />
+          <div className={`absolute top-0 left-0 w-full h-1 `} />
           <div className="flex items-center justify-between pr-2">
             <CardTitle className="text-base font-semibold">{item.label}</CardTitle>
             <Popover>

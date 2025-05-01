@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import { Input } from "@/components/ui/input";
 
 interface LeftZeroInputProps

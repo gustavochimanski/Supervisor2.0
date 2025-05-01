@@ -8,15 +8,17 @@ import Head from "next/head";
 export const metadata = {
   title: "Unitec",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/icon-192x192.png",
+    apple: "/icon-192x192.png", 
+  },
   appleWebApp: {
     capable: true,
     title: "Unitec",
     statusBarStyle: "black-translucent"
-  },
-  icons: {
-    icon: "/icon-192x192.png"
   }
 };
+
 
 export function generateViewport() {
   return {
@@ -29,9 +31,6 @@ export function generateViewport() {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <Head>
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-      </Head>
       <body suppressHydrationWarning>
         <SessionProvider>
           <ProtectedRoute>

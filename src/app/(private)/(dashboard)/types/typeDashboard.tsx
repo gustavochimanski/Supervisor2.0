@@ -28,7 +28,7 @@ type TypeRelacao = {
 /**
  * Header do dashboard de vendas
  */
-export type TypeDashboardHeader = {
+export type TypeDashboardResponse = {
   totais_por_empresa: TotaisPorEmpresa[];
   total_geral: TotaisGerais;
   metas: TypeDashboardMetaHeader;
@@ -39,7 +39,7 @@ export type TypeDashboardHeader = {
 /**
  * Filtros usados no dashboard (payload enviado)
  */
-export type TypeFiltroRelatorio = {
+export type TypeFiltroDashboard = {
   empresas: string[];
   dataInicio: string;
   dataFinal: string;

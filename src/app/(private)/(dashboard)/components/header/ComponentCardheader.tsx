@@ -1,161 +1,54 @@
+// src/components/ComponentCardHeader.tsx
 "use client";
 
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { format } from "date-fns";
-import {
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Controller } from "react-hook-form";
+import { CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Button,
-  buttonVariants,
-} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { CalendarIcon, Search } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectValue,
-  SelectItem,
-} from "@/components/ui/select";
+import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { TypeFiltroRelatorio } from "../../types/typeDashboard";
-import { toast } from "sonner";
+import { TypeFiltroDashboard } from "../../types/typeDashboard";
+import { TODAS_EMPRESAS } from "../../schema/schemaFiltroDashboard";
+import { useFiltroDashboard } from "../../hooks/useFiltroDashboard";
+import { formatDisplayDate } from "@/utils/format/formatDate";
 
-// -----------------------------------------------------------------------------
-// Constantes utilitárias
-// -----------------------------------------------------------------------------
-const TODAS_EMPRESAS = ["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "013", "014"] as const;
-
-const formatDateISO = (d: Date) => format(d, "yyyy-MM-dd");
-const formatDisplayDate = (d: Date) =>
-  `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}/${d.getFullYear()}`;
-
-// -----------------------------------------------------------------------------
-// Zod + RHF Schema
-// -----------------------------------------------------------------------------
-const schema = z
-  .object({
-    empresas: z.array(z.string()),
-    dataInicial: z.date(),
-    dataFinal: z.date(),
-  })
-  .refine((v) => v.dataFinal >= v.dataInicial, {
-    path: ["dataFinal"],
-    message: "Data final não pode ser anterior à inicial",
-  });
-
-export type FormFiltro = z.infer<typeof schema>;
-
-// -----------------------------------------------------------------------------
-// Componente
-// -----------------------------------------------------------------------------
 interface Props {
-  initialPayload: TypeFiltroRelatorio;
-  onChangePayload: (p: TypeFiltroRelatorio) => void;
+  initialPayload: TypeFiltroDashboard;
+  onChangePayload: (p: TypeFiltroDashboard) => void;
 }
 
-export default function ComponentCardHeader({
-  initialPayload,
-  onChangePayload,
-}: Props) {
+export default function ComponentCardHeader({ initialPayload, onChangePayload }: Props) {
   const isMobile = useIsMobile();
 
-  // ---------------------------------------------------------------------------
-  // React‑Hook‑Form
-  // ---------------------------------------------------------------------------
   const {
     control,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormFiltro>({
-    defaultValues: {
-      empresas:
-        initialPayload.empresas.length === TODAS_EMPRESAS.length
-          ? [...TODAS_EMPRESAS]
-          : initialPayload.empresas,
-      dataInicial: new Date(`${initialPayload.dataInicio}T00:00:00`),
-      dataFinal: new Date(`${initialPayload.dataFinal}T00:00:00`),
-    },
-    resolver: zodResolver(schema),
-  });
-  
+    parseInput,
+    buildEmpresaValue,
+  } = useFiltroDashboard(initialPayload, onChangePayload);
 
-  const submit = (data: FormFiltro) => {
-    onChangePayload({
-      empresas: data.empresas,
-      dataInicio: formatDateISO(data.dataInicial),
-      dataFinal: formatDateISO(data.dataFinal),
-      situacao: "N"
-    });
-  };
-
-  // ---------------------------------------------------------------------------
-  // Helpers de UI
-  // ---------------------------------------------------------------------------
-  const parseInput = (str: string): Date | null => {
-    const [dd, mm, yyyy] = str.split("/");
-    const date = new Date(+yyyy, +mm - 1, +dd);
-    return isNaN(date.getTime()) ? null : date;
-  };
-
-  const buildEmpresaSelectValue = (empresas: string[]) => {
-    if (empresas.length === TODAS_EMPRESAS.length) return "Todas";
-    return empresas[0] ?? "__vazio__";
-  };
-
-  const handleError = (errors: any) => {
-    if (errors?.dataFinal?.message) {
-      toast.error(errors.dataFinal.message);
-    }
-  
-    // Caso queira exibir qualquer outro erro do form também:
-    const allErrors = Object.values(errors).filter((e: any) => e?.message && e?.path?.[0] !== "dataFinal");
-    allErrors.forEach((err: any) => toast.error(err.message));
-  };
-  
-
-  // ---------------------------------------------------------------------------
-  // Render
-  // ---------------------------------------------------------------------------
   return (
-    <form onSubmit={handleSubmit(submit, handleError)}>
-
+    <form onSubmit={handleSubmit}>
       <CardHeader className="flex flex-row justify-between p-1 bg-primary/90 rounded-t-[var(--radius)] font-sans">
-        {!isMobile && (
-          <CardTitle className="text-white m-2">Dashboard</CardTitle>
-        )}
-
+        {!isMobile && <CardTitle className="text-white m-2">Dashboard</CardTitle>}
 
         <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 pb-1 text-sm w-full md:justify-end">
-
-                    {/* -------------------------- Data Inicial -------------------------- */}
-                    <Controller
+          {/* Data Inicial */}
+          <Controller
             name="dataInicial"
             control={control}
             render={({ field }) => (
               <div className="flex mt-auto text-center">
                 <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3 w-full md:w-20">
-                  <Label className="pointer-events-none select-none">
-                    Data Inicial
-                  </Label>
+                  <Label className="pointer-events-none select-none">Data Inicial</Label>
                 </div>
-
-                <div className="flex gap-2  ">
-                  {!isMobile && ( 
+                <div className="flex gap-2">
+                  {!isMobile && (
                     <Input
                       disabled
                       value={formatDisplayDate(field.value)}
@@ -174,11 +67,7 @@ export default function ComponentCardHeader({
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="p-0">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(d) => d && field.onChange(d)}
-                      />
+                      <Calendar mode="single" selected={field.value} onSelect={(d) => d && field.onChange(d)} />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -186,67 +75,54 @@ export default function ComponentCardHeader({
             )}
           />
 
-          {/* -------------------------- Data Final --------------------------- */}
+          {/* Data Final */}
           <Controller
             name="dataFinal"
             control={control}
             render={({ field }) => (
-              <div className="flex mt-auto text-center ">
+              <div className="flex mt-auto text-center">
                 <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3 w-full md:w-20">
-                  <Label className="pointer-events-none select-none">
-                    Data Final
-                  </Label>
+                  <Label className="pointer-events-none select-none">Data Final</Label>
                 </div>
-                
                 <div className="flex items-center gap-2">
-                {!isMobile && ( 
-                  <Input
-                    disabled
-                    value={formatDisplayDate(field.value)}
-                    onChange={(e) => {
-                      const d = parseInput(e.target.value);
-                      if (d) field.onChange(d);
-                    }}
-                    className="h-7 !bg-background !opacity-100  text-center rounded-l-none border-none shadow-none"
-                    placeholder="DD/MM/AAAA"
-                  />
+                  {!isMobile && (
+                    <Input
+                      disabled
+                      value={formatDisplayDate(field.value)}
+                      onChange={(e) => {
+                        const d = parseInput(e.target.value);
+                        if (d) field.onChange(d);
+                      }}
+                      className="h-7 !bg-background !opacity-100 text-center rounded-l-none border-none shadow-none"
+                      placeholder="DD/MM/AAAA"
+                    />
                   )}
-                  <div>
-                    <Popover>
-                      <PopoverTrigger asChild className="rounded-l-none md:rounded"> 
-                        <Button variant="outline" className="h-7">
-                          <CalendarIcon />
-                        </Button>
-                      </PopoverTrigger >
-                      <PopoverContent className="p-0">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={(d) => d && field.onChange(d)}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
+                  <Popover>
+                    <PopoverTrigger asChild className="rounded-l-none md:rounded">
+                      <Button variant="outline" className="h-7">
+                        <CalendarIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Calendar mode="single" selected={field.value} onSelect={(d) => d && field.onChange(d)} />
+                    </PopoverContent>
+                  </Popover>
                 </div>
-              
               </div>
             )}
           />
-          {/* ------------------------- Empresa Select ------------------------- */}
+
+          {/* Empresa Select */}
           <Controller
             name="empresas"
             control={control}
             render={({ field }) => {
-              const selectValue = buildEmpresaSelectValue(field.value);
+              const selectValue = buildEmpresaValue(field.value);
               return (
-                <div className="flex mt-auto ">
+                <div className="flex mt-auto">
                   <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
-                    <Label className="pointer-events-none select-none">
-                      Empresa
-                    </Label>
+                    <Label className="pointer-events-none select-none">Empresa</Label>
                   </div>
-
-                  <div></div>
                   <Select
                     value={selectValue}
                     onValueChange={(valor) => {
@@ -273,30 +149,11 @@ export default function ComponentCardHeader({
             }}
           />
 
-
-        {isMobile && (
-          <Button
-              type="submit"
-              className="bg-background hover:bg-background/60 mt-auto"
-            >
+          {/* Botão Submit */}
+          <Button type="submit" className="h-7 bg-background hover:bg-background/60 mt-auto">
             <Search className="mr-1 h-4 w-4 text-foreground" />
             <span className="text-foreground">Buscar</span>
           </Button>
-          )}
-
-
-
-
-          {/* ---------------------------- Botão ----------------------------- */}
-          {!isMobile&& (
-              <Button
-              type="submit"
-              className="h-7 bg-background hover:bg-background/60 mt-auto"
-            >
-              <Search className="mr-1 h-4 w-4 text-foreground" />
-              <span className="text-foreground">Buscar</span>
-            </Button>
-          )}
         </div>
       </CardHeader>
     </form>

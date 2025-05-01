@@ -1,32 +1,51 @@
-import { postHeaderDashboard } from "./services/serviceDashboard";
-import PageDashboardClient from "./ClientComponetDashboard";
-import { TypeFiltroRelatorio } from "./types/typeDashboard";
-import { formatDateToYYYYMMDD } from "@/lib/format/formatDateyyyymmdd";
+"use client";
 
-// Este componente segue como um server component (sem "use client")
-const PageDashboard = async () => {
-  // Obtemos a data de hoje
-  const now = new Date(); // ok
-  const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())); // zera a hora em UTC mesmo
-  
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import ComponentCardHeader from "./components/header/ComponentCardheader";
+import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
+import { usePostDashboard } from "./hooks/useQueryDashboard";
+import { TypeDashboardHeader, TypeFiltroRelatorio } from "./types/typeDashboard";
+import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
+
+export default function PageDashboard() {
+  const today = new Date();
   const defaultPayload: TypeFiltroRelatorio = {
     empresas: ["001"],
     dataInicio: formatDateToYYYYMMDD(today),
     dataFinal: formatDateToYYYYMMDD(today),
   };
-  
 
-  // Busca inicial de dados no servidor
-  const dashboardData = await postHeaderDashboard(defaultPayload);
-  console.log("Payload:",defaultPayload)
+  const [payload, setPayload] = useState<TypeFiltroRelatorio>(defaultPayload);
+  const [dashboardData, setDashboardData] = useState<TypeDashboardHeader | null>(null);
 
-  // Passa o payload e dados para o Client Component
+  const { mutateAsync, isLoading, error } = usePostDashboard();
+
+  useEffect(() => {
+    mutateAsync(payload)
+      .then(setDashboardData)
+      .catch(() => setDashboardData(null));
+  }, [payload]);
+
+  const handleChangePayload = (newPayload: TypeFiltroRelatorio) => {
+    setPayload(newPayload);
+  };
+
   return (
-    <PageDashboardClient
-      defaultPayload={defaultPayload}
-      serverData={dashboardData}
-    />
+    <Card>
+      <CardHeader className="p-0 sticky">
+        <ComponentCardHeader
+          onChangePayload={handleChangePayload}
+          initialPayload={payload}
+        />
+      </CardHeader>
+
+      <CardContent className="p-4">
+        {isLoading && <p>Carregando...</p>}
+        {error && <p>Erro ao buscar dados.</p>}
+        {!isLoading && dashboardData && <DashboardMetricCards data={dashboardData} />}
+        {!isLoading && !dashboardData && !error && <p>Nenhum dado para exibir.</p>}
+      </CardContent>
+    </Card>
   );
 }
-
-export default PageDashboard
