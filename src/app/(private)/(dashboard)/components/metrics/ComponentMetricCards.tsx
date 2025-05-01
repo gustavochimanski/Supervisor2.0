@@ -10,7 +10,6 @@ import {
 import { TypeDashboardResponse } from "../../types/typeDashboard";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Info } from "lucide-react";
-import { TotaisGeraisMeta } from "../../types/typeMetas";
 import { formatCurrency, formatInt } from "@/utils/format/formatNumber";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
@@ -120,7 +119,7 @@ const DashboardMetricCards = ({ data }: Props) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 flex-1">
       {cards.map((item, index) => (
-        <Card key={index} className="relative overflow-hidden hover:scale-105 transition-transform p-2 gap-1">
+        <Card key={index} className="relative overflow-hidden p-2 gap-1">
           <div className={`absolute top-0 left-0 w-full h-1 `} />
           <div className="flex items-center justify-between pr-2">
             <CardTitle className="text-base font-semibold">{item.label}</CardTitle>

@@ -20,6 +20,7 @@ export default auth(async (request: NextRequest) => {
     path === "/sitemap.xml" ||
     path === "/robots.txt" ||
     path.startsWith("/logoNome.jpg") ||
+    path.startsWith("/logo.png") ||
     path.startsWith("/public")
   ) {
     return NextResponse.next();

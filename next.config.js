@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    allowedDevOrigins: ['http://192.168.15.171:3000'], // IP do seu celular
+};
 
 module.exports = nextConfig;
 

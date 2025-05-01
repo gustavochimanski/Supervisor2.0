@@ -53,7 +53,6 @@ import Link from "next/link";
         <Sidebar collapsible="icon" className="z-50">
             <SidebarContent className="justify-between">
                 <SidebarGroup>
-                <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <Image src="/logo.png" alt="Logo" className="mb-3 m-auto" width={20} height={20}/>
                     <SidebarMenu >

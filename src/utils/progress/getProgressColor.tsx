@@ -17,8 +17,7 @@ export const getProgressColorInverted = (percentual: number) => {
 };
 
 export const getProgressColorLucro = (percentual: number) => {
-  console.log(percentual)
-  if (percentual >= 95) return "bg-green-500";
+  if (percentual >= 91) return "bg-green-500";
   if (percentual >= 75) return "bg-blue-500";
   if (percentual >= 60) return "bg-yellow-500";
   return "bg-red-500";

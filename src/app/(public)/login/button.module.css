@@ -5,7 +5,7 @@
   padding: 12px;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(90deg, #2196F3 0%, #9C27B0 100%);
+  background: #4338ca;
   border-radius: 9999px; /* Botão "pill-shaped" */
   text-transform: uppercase;
   text-align: center;
@@ -16,8 +16,8 @@
 }
 
 .button:hover {
-  background: linear-gradient(90deg, #2196F3 0%, #9C27B0 100%);
-  box-shadow: 0 0 30px 5px rgba(33, 150, 243, 0.5);
+  background: #4338ca;
+  box-shadow: 0 0 30px 5px #4438ca48;
   transition: all 0.2s ease-out;
 }
 

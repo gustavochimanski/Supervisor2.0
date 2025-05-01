@@ -43,10 +43,11 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 p-2">
-      <div className="flex flex-col justify-center w-[90%] max-w-md p-6 bg-white rounded-lg shadow h-[90%] md:h-3/4">
+      <div className="flex flex-col justify-center w-[90%] max-w-md px-6 py-24 bg-background rounded-lg shadow">
+
         {/* Cabeçalho com ícone e título */}
-        <div className="flex items-center justify-center w-1/4 my-10 rounded m-auto">
-          <Image src={"/logoNome.jpg"} alt={"logo"} width={100} height={100} />
+        <div className="flex items-center justify-center w-1/4 mb-4 rounded m-auto ">
+          <Image src={"/logo.png"} alt={"logo"} width={50} height={50} />
         </div>
 
         {/* Formulário de login */}
@@ -58,22 +59,22 @@ export default function Login() {
             handleSubmit(onSubmit)();
           }}
         >
-          <div className="w-full m-auto my-4">
+          <div className="w-full m-auto my-2">
             <input
               autoFocus
               type="text"
               placeholder="Usuário"
               {...register("username")}
-              className="mt-4 mb-1 p-3 w-full border-b-2 border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"
+              className="mt-4 mb-1 p-3 w-full border-b-2 border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#4338ca)] bg-[length:0%_2px] bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"
             />
           </div>
 
-          <div className={`relative mb-4 mt-2 ${styles.hideDefaultPasswordIcons}`}>
+          <div className={`relative my-2 ${styles.hideDefaultPasswordIcons}`}>
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Senha"
               {...register("password")}
-              className="mb-4 mt-1 p-3 w-full border-b-2 border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#9C27B0)] bg-[length:0%_2px] bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"
+              className="mb-4 mt-1 p-3 w-full border-b-2 border-slate-200 focus:border-gray-50 border-transparent bg-[linear-gradient(to_right,_#2196F3,_#4338ca)] bg-[length:0%_2px] bg-no-repeat bg-bottom focus:bg-[length:100%_2px] transition-all duration-500 focus:outline-none outline-none"
             />
             <div
               className="absolute inset-y-0 right-0 flex items-center cursor-pointer pr-3"
@@ -87,7 +88,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="flex my-6 justify-center">
+          <div className="flex mt-4 mb-4 justify-center">
             <Button type="submit" disabled={isLoading} className={styles.button}>
               LOGIN
             </Button>
@@ -95,7 +96,7 @@ export default function Login() {
         </form>
 
         {/* Link de Inscrever-se */}
-        <div className="text-center mt-6">
+        <div className="text-center ">
           <p className="text-gray-500">
             Não tem uma conta?{" "}
             <a href="#" className="text-[#2196F3] hover:underline">

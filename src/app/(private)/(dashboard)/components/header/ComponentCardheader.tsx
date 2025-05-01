@@ -14,7 +14,7 @@ import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "@
 import { Input } from "@/components/ui/input";
 import { TypeFiltroDashboard } from "../../types/typeDashboard";
 import { TODAS_EMPRESAS } from "../../schema/schemaFiltroDashboard";
-import { useFiltroDashboard } from "../../hooks/useFiltroDashboard";
+import { useFiltroDashboard } from "../../hooks/useHeaderDashboard";
 import { formatDisplayDate } from "@/utils/format/formatDate";
 
 interface Props {
@@ -34,7 +34,7 @@ export default function ComponentCardHeader({ initialPayload, onChangePayload }:
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardHeader className="flex flex-row justify-between p-1 bg-primary/90 rounded-t-[var(--radius)] font-sans">
+      <CardHeader className={`flex flex-row justify-between p-1 bg-primary/90 font-sans ${isMobile ? "rounded-t-none" : "rounded-t-[var(--radius)]"}`}>
         {!isMobile && <CardTitle className="text-white m-2">Dashboard</CardTitle>}
 
         <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 pb-1 text-sm w-full md:justify-end">

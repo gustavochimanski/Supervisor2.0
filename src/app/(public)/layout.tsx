@@ -9,7 +9,7 @@ export default function PublicLayout({
 }) {
   return (
     <html>
-      <body>
+      <body className="overflow-hidden">
         {children}
         <Toaster />
       </body>
