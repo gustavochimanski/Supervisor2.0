@@ -7,7 +7,7 @@ import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
 import { usePostDashboard } from "./hooks/useQueryDashboard";
 import { TypeDashboardResponse, TypeFiltroDashboard } from "./types/typeDashboard";
 import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
-import { ComponentChartVendas } from "./components/ComponentChartVendas";
+import { ComponentChartVendas } from "./components/vendas/ComponentChartVendas";
 
 export default function PageDashboard() {
   const today = new Date();
@@ -45,9 +45,14 @@ export default function PageDashboard() {
         <CardContent className="p-4 flex-1 overflow-auto gap-4 flex flex-col">
           {isLoading && <p>Carregando...</p>}
           {error && <p>Erro ao buscar dados.</p>}
-          {!isLoading && dashboardData && <DashboardMetricCards data={dashboardData} />}
+          {!isLoading && dashboardData && 
+            <>
+              <DashboardMetricCards data={dashboardData} /> 
+              <ComponentChartVendas vendaDetalhada={dashboardData.vendaDetalhada}/> 
+            </>
+          }
           {!isLoading && !dashboardData && !error && <p>Nenhum dado para exibir.</p>}
-          <ComponentChartVendas/>
+
         </CardContent>
       </Card>
 

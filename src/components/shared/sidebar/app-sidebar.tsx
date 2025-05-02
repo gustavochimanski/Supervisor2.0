@@ -28,6 +28,7 @@ import {
 import { logout } from "@/services/Auth/authenticate";
 import Image from 'next/image';
 import Link from "next/link";
+import { ThemeToggle } from "../themeToggle";
 
 
   // Menu items.
@@ -76,9 +77,14 @@ import Link from "next/link";
                   <SidebarGroupContent>
                     {/* BUTTONS */}
                     <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton tooltip={"Trocar Tema"}>
+                          <ThemeToggle sidebar={true} className="w-full flex"/>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
                       <SidebarMenuItem >
                         <SidebarMenuButton onClick={logout} tooltip={"Sair"}>
-                          <Power/>
+                          <Power/> Sair
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     </SidebarMenu>

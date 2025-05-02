@@ -3,24 +3,24 @@ import { TotaisGeraisMeta } from "@/app/(private)/(dashboard)/types/typeMetas";
 import React from "react";
 
 export const getProgressColor = (percentual: number) => {
-  if (percentual >= 100) return "bg-green-500";
-  if (percentual >= 60) return "bg-blue-500";
+  if (percentual >= 100) return "bg-green-600";
+  if (percentual >= 60) return "bg-indigo-700";
   if (percentual >= 30) return "bg-yellow-500";
-  return "bg-red-500";
+  return "bg-red-700";
 };
 
 export const getProgressColorInverted = (percentual: number) => {
-  if (percentual >= 95) return "bg-red-500";
-  if (percentual >= 70) return "bg-yellow-500";
-  if (percentual >= 40) return "bg-blue-500";
-  return "bg-green-500";
+  if (percentual >= 95) return "bg-red-700";
+  if (percentual >= 70) return "bg-yellow-600";
+  if (percentual >= 40) return "bg-indigo-700";
+  return "bg-green-600";
 };
 
 export const getProgressColorLucro = (percentual: number) => {
-  if (percentual >= 91) return "bg-green-500";
-  if (percentual >= 75) return "bg-blue-500";
+  if (percentual >= 91) return "bg-green-600";
+  if (percentual >= 75) return "bg-indigo-700";
   if (percentual >= 60) return "bg-yellow-500";
-  return "bg-red-500";
+  return "bg-red-700";
 };
 
 export const getProgressBar = (progresso: number, labelProgress: string, invertido = false, lucro = false) => {

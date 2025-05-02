@@ -5,7 +5,13 @@ import { Moon, Sun } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
 
-export const ThemeToggle = () => {
+type ThemeToggleProps = {
+  sidebar?: boolean
+  className?: string
+  label?: string
+}
+
+export const ThemeToggle = ({ className,label, sidebar = false }: ThemeToggleProps) => {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -19,9 +25,23 @@ export const ThemeToggle = () => {
     setTheme(theme === "dark" ? "light" : "dark")
   }
 
+  const icon = theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />
+
+  if (sidebar) {
+    return (
+      <button onClick={toggleTheme} className={className}>
+        {icon} {label}
+      </button>
+    )
+  }
+
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme}>
-      {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggleTheme}
+    >
+      {icon}
     </Button>
   )
 }

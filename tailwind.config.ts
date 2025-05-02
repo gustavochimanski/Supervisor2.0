@@ -9,6 +9,12 @@ const config: Config = {
     './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
     './src/hooks/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'bg-green-600',
+    'bg-indigo-700',
+    'bg-yellow-600',
+    'bg-red-700',
+  ],
   theme: {
   	extend: {
   		fontFamily: {

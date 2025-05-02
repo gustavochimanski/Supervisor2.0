@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { ArrowRight, PanelLeft, XIcon } from "lucide-react"
+import { ArrowRight, CircleArrowRight, PanelLeft, XIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/utils/utils"
@@ -204,7 +204,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            className="w-[--sidebar-width] bg-background p-0 text-sidebar-foreground [&>button]:hidden"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -244,8 +244,8 @@ const Sidebar = React.forwardRef<
         />
         <div
 className={cn(
-  "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex",
-  "border-r border-r-[hsl(var(--border))]", // 👈 borda só do lado direito
+  "fixed inset-y-0 z-50 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex",
+  "border-r border-r-[hsl(var(--border))]", 
   side === "left"
     ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
     : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
@@ -280,9 +280,8 @@ const SidebarTrigger = React.forwardRef<
     <Button
       ref={ref}
       data-sidebar="trigger"
-      variant="sidebarTrigger"
-      size="icon"
-      className={cn("absolute bottom-40 md:bottom-20 pl-6  hover:text-primary w-14 border-0 ml-[-28px] z-0 text-foreground ", className)}
+      variant="default"
+      className={cn("fixed bottom-40 md:bottom-20 hover:text-primary w-10 border-0 rounded-l-none z-40 bg-primary text-foreground ", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
@@ -290,9 +289,10 @@ const SidebarTrigger = React.forwardRef<
       {...props}
     >
             {open ? (
-              <XIcon />
+              <XIcon className="text-muted" />
             ) : (
-              <ArrowRight />
+              
+              <CircleArrowRight  className="text-muted" />
             )}
             <span className="sr-only">Toggle Sidebar</span>
       <span className="sr-only">Toggle Sidebar</span>

@@ -25,6 +25,23 @@ type TypeRelacao = {
   relacaoPorcentagem: number
 }
 
+type TypeVendaDetalhadaByDate = {
+  data: string
+  valor: number
+}
+
+type TypeVendaDetalhadaEmpresas = {
+  empresa: string
+  dates: TypeVendaDetalhadaByDate[]
+}
+
+export type TypeVendaDetalhadaResponse = {
+  empresas: string[]
+  dataInicio: string
+  dataFinal: string
+  vendaEmpresas: TypeVendaDetalhadaEmpresas[]
+}
+
 /**
  * Header do dashboard de vendas
  */
@@ -33,7 +50,8 @@ export type TypeDashboardResponse = {
   total_geral: TotaisGerais;
   metas: TypeDashboardMetaHeader;
   relacao: TypeRelacao
-  compras: TypeComprasGeralResponse; 
+  compras: TypeComprasGeralResponse;
+  vendaDetalhada: TypeVendaDetalhadaResponse;
 };
 
 /**

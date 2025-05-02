@@ -20,7 +20,7 @@ const buttonVariants = cva(
         secondary:
           "bg-background border border-input text-primary shadow-sm hover:bg-foreground/10",
           sidebarTrigger:
-          " bg-sidebar py-[25px] rounded-[50%] border-none border-0 hover:text-accent-foreground text-primary ",
+          " bg-background py-[25px] rounded-[50%] border-none border-0 hover:text-accent-foreground text-primary ",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
