@@ -1,210 +1,107 @@
-// src/components/ComponentChartVendas.tsx
-"use client"
+// ChartComponent.tsx
+"use client";
 
-import * as React from "react"
-import { CartesianGrid, Area, AreaChart, XAxis } from "recharts"
-import { useDraggableScroll } from "@/utils/effects/useDraggableScroll"
-
+import { AreaChart, Area, CartesianGrid, XAxis, Tooltip } from "recharts";
 import {
   Card,
-  CardContent,
   CardHeader,
+  CardContent,
   CardTitle,
+  CardFooter,
   CardDescription,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-import { TypeVendaDetalhadaResponse } from "../../types/typeDashboard"
+  ChartConfig,
+} from "@/components/ui/chart";
+import { TrendingUp } from "lucide-react";
+import { mockVendasPorHora } from "./mockData";
 
-export function ComponentChartVendas({
-  vendaDetalhada,
-}: {
-  vendaDetalhada: TypeVendaDetalhadaResponse
-}) {
-  const { vendaEmpresas, dataInicio, dataFinal } = vendaDetalhada
-  
-  const [activeEmpresa, setActiveEmpresa] = React.useState<string>(
-    vendaEmpresas[0].empresa
-  )
+const data = mockVendasPorHora[0].vendasPorHora.map((item, index) => ({
+  hora: `${item.hora}h`,
+  total_vendas: item.total_vendas,
+  total_cupons: item.total_cupons,
+  ticket_medio: item.ticket_medio,
+}));
 
-  // 1) dados de vendas filtrados pela empresa ativa
-  const vendasData = React.useMemo(() => {
-    const empresa = vendaEmpresas.find((e) => e.empresa === activeEmpresa)
+const chartConfig: ChartConfig = {
+  total_vendas: {
+    label: "Total Vendas",
+    color: "hsl(var(--chart-1))",
+  },
+};
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    const { total_vendas, total_cupons, ticket_medio } = payload[0].payload;
     return (
-      empresa?.dates.map((d) => ({
-        date: d.data,
-        valor: d.valor,
-      })) ?? []
-    )
-  }, [activeEmpresa, vendaEmpresas])
-
-  // 2) mock de compras: mesmíssimas datas, valor aleatório pra demo
-  const comprasData = React.useMemo(() => {
-    return vendasData.map((d) => ({
-      date: d.date,
-      // ex: compras variando entre 30% e 70% do valor de venda
-      compra: Math.round(d.valor * (0.3 + Math.random() * 0.4)),
-    }))
-  }, [vendasData])
-
-
-
-  // 3) mescla num só array (cada item: { date, valor, compra })
-  const chartData = React.useMemo(() => {
-    return vendasData.map((d, i) => ({
-      ...d,
-      compra: comprasData[i].compra,
-    }))
-  }, [vendasData, comprasData])
-
-  // Configuração de cores/labels pras duas séries
-  const chartConfig: ChartConfig = {
-    valor: { label: "Vendas", color: "hsl(var(--chart-1))" },
-    compra: { label: "Compras", color: "hsl(var(--chart-2))" },
+      <div className="rounded-md border bg-background p-2 shadow-sm">
+        <p className="text-sm font-semibold">{label}</p>
+        <p className="text-xs">Cupons: {total_cupons}</p>
+        <p className="text-xs">Vendas: R$ {total_vendas.toFixed(2)}</p>
+        <p className="text-xs">Ticket médio: R$ {ticket_medio.toFixed(2)}</p>
+      </div>
+    );
   }
+  return null;
+};
 
-  const {
-    scrollRef,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-    handleTouchStart,
-    handleTouchMove,
-  } = useDraggableScroll()
-
+export function VendasPorHoraChart() {
   return (
-    <Card className="lg:w-1/2">
-      <CardHeader className="border-b p-0">
-        <div className="flex flex-col justify-between sm:flex-row sm:items-center">
-          <div className="space-y-1 m-4 w-2/3">
-            <CardTitle>Relação compra e venda</CardTitle>
-            <CardDescription>
-              {`${dataInicio} até ${dataFinal}`}
-            </CardDescription>
-          </div>
-          <div
-            ref={scrollRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleMouseUp}
-            className="mt-auto px-4 sm:px-0 flex gap-2 overflow-hidden cursor-grab active:cursor-grabbing select-none"
-          >
-            {vendaEmpresas.map(({ empresa }, idx) => (
-              <button
-                key={idx}
-                data-active={activeEmpresa === empresa}
-                className="rounded-md rounded-b-none hover:bg-muted px-4 py-2 text-sm font-semibold data-[active=true]:bg-muted whitespace-nowrap"
-                onClick={() => setActiveEmpresa(empresa)}
-              >
-                Empresa {empresa}
-              </button>
-            ))}
+    <Card className="md:w-1/2">
+      <CardHeader>
+        <CardTitle>Vendas por Hora</CardTitle>
+        <CardDescription>
+          Comparativo de vendas por hora entre empresas
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <AreaChart data={data} margin={{ left: 12, right: 12 }}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="hora"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+            />
+            <Tooltip content={<CustomTooltip />} cursor={false} />
+            <defs>
+              <linearGradient id="fill001" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-total_vendas)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-total_vendas)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
+            <Area
+              dataKey="total_vendas"
+              type="monotone"
+              stroke="var(--color-total_vendas)"
+              fill="url(#fill001)"
+            />
+          </AreaChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              Crescimento visível nas primeiras horas
+              <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="flex items-center gap-2 leading-none text-muted-foreground">
+              Entre 7h e 21h
+            </div>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="px-4 sm:px-6 flex">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    {/* GRÁFICO */}
-    <ChartContainer config={chartConfig} className="aspect-[16/9]">
-      <AreaChart data={chartData} margin={{ left: 12, right: 12 }}>
-        <defs>
-          <linearGradient id="gradVendas" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="var(--color-valor)" stopOpacity={0.4} />
-            <stop offset="95%" stopColor="var(--color-valor)" stopOpacity={0} />
-          </linearGradient>
-          <linearGradient id="gradCompras" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="var(--color-compra)" stopOpacity={0.4} />
-            <stop offset="95%" stopColor="var(--color-compra)" stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="date"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          minTickGap={32}
-          tickFormatter={(v) =>
-            new Date(v).toLocaleDateString("pt-BR", {
-              day: "numeric",
-              month: "short",
-            })
-          }
-        />
-        <ChartTooltip
-          content={
-            <ChartTooltipContent
-              nameKey="valor"
-              labelFormatter={(v) =>
-                new Date(v).toLocaleDateString("pt-BR", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })
-              }
-            />
-          }
-        />
-        <Area
-          dataKey="valor"
-          type="natural"
-          stroke="var(--color-valor)"
-          fill="url(#gradVendas)"
-          fillOpacity={1}
-          dot={false}
-        />
-        <Area
-          dataKey="compra"
-          type="natural"
-          stroke="var(--color-compra)"
-          fill="url(#gradCompras)"
-          fillOpacity={1}
-          dot={false}
-        />
-      </AreaChart>
-    </ChartContainer>
-
-    {/* TABELA (DataFrame) */}
-    <div className="overflow-auto rounded-md border text-sm">
-      <table className="w-full text-left border-collapse">
-        <thead className="bg-muted font-semibold">
-          <tr>
-            <th className="px-3 py-2">Data</th>
-            <th className="px-3 py-2">Vendas</th>
-            <th className="px-3 py-2">Compras</th>
-            <th className="px-3 py-2">Lucro</th>
-          </tr>
-        </thead>
-        <tbody>
-          {chartData.map((row, idx) => (
-            <tr key={idx} className="even:bg-muted/30">
-              <td className="px-3 py-1">
-                {new Date(row.date).toLocaleDateString("pt-BR", {
-                  day: "2-digit",
-                  month: "2-digit",
-                })}
-              </td>
-              <td className="px-3 py-1">R$ {row.valor.toFixed(2)}</td>
-              <td className="px-3 py-1">R$ {row.compra.toFixed(2)}</td>
-              <td className="px-3 py-1 font-medium">
-                R$ {(row.valor - row.compra).toFixed(2)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</CardContent>
-
+      </CardFooter>
     </Card>
-  )
+  );
 }

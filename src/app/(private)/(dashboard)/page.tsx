@@ -7,7 +7,8 @@ import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
 import { usePostDashboard } from "./hooks/useQueryDashboard";
 import { TypeDashboardResponse, TypeFiltroDashboard } from "./types/typeDashboard";
 import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
-import { ComponentChartVendas } from "./components/vendas/ComponentChartVendas";
+import { VendasPorHoraChart } from "./components/vendas/ComponentChartVendas";
+import { ComponentMeioPagamento } from "./components/meiosPagamento/meioPagamento";
 
 export default function PageDashboard() {
   const today = new Date();
@@ -47,8 +48,14 @@ export default function PageDashboard() {
           {error && <p>Erro ao buscar dados.</p>}
           {!isLoading && dashboardData && 
             <>
-              <DashboardMetricCards data={dashboardData} /> 
-              <ComponentChartVendas vendaDetalhada={dashboardData.vendaDetalhada}/> 
+              <DashboardMetricCards data={dashboardData} />
+              <div className="w-full flex gap-4 h-full">
+                <VendasPorHoraChart />
+                <div className="flex flex-col gap-4 h-full w-1/2 flex-1">
+                  <ComponentMeioPagamento />
+                  <ComponentMeioPagamento />
+                </div>
+              </div>
             </>
           }
           {!isLoading && !dashboardData && !error && <p>Nenhum dado para exibir.</p>}
