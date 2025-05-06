@@ -1,6 +1,6 @@
-import { EmpresaVendasPorHora } from "../../types/typeVendasPorHora";
+import { TypeVendaPorHoraResponse } from "../../types/typeVendasPorHora";
 
-export const mockVendasPorHora: EmpresaVendasPorHora[] = [
+export const mockVendasPorHora: TypeVendaPorHoraResponse[] = [
     {
       empresa: "001",
       vendasPorHora: [

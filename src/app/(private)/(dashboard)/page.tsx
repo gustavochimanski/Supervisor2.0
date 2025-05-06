@@ -1,19 +1,25 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent} from "@/components/ui/card";
 import ComponentCardHeader from "./components/header/ComponentCardheader";
-import DashboardMetricCards from "./components/metrics/ComponentMetricCards";
 import { usePostDashboard } from "./hooks/useQueryDashboard";
 import { TypeDashboardResponse, TypeFiltroDashboard } from "./types/typeDashboard";
 import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
-import { VendasPorHoraChart } from "./components/vendas/ComponentChartVendas";
-import { ComponentMeioPagamento } from "./components/meiosPagamento/meioPagamento";
+
+import TabComponentDashboardEmpresaGeral from "./components/TabComponentEmpresaGeral";
+import TabComponentDashboardByEmp from "./components/TabComponentDashboardByEmp";
+import TabsWrapper from "@/components/shared/tabsWrapper";
+import { useGetEmpresas } from "@/hooks/useQuery/useGetEmpresas";
 
 export default function PageDashboard() {
   const today = new Date();
+  const { data: dataEmpresas } = useGetEmpresas()
+
+  console.log(dataEmpresas)
+  
   const defaultPayload: TypeFiltroDashboard = {
-    empresas: ["001"],
+    empresas: dataEmpresas?.map((e) => e.empr_codigo) ?? [],
     dataInicio: formatDateToYYYYMMDD(today),
     dataFinal: formatDateToYYYYMMDD(today),
   };
@@ -33,36 +39,39 @@ export default function PageDashboard() {
     setPayload(newPayload);
   };
 
+
+  if (isLoading) return <p>Carregando...</p>;
+  if (error)     return <p>Deu ruim ao buscar dados.</p>;
+  if (!dashboardData) return <p>Nenhum dado.</p>;
+
+  // Cria uma tab “Geral” + uma por empresa que veio no dados totais_por_empresa
+  const tabs = [
+    {
+      value: "geral",
+      label: "Geral",
+      Component: <TabComponentDashboardEmpresaGeral data={dashboardData} />
+    },
+    ...dashboardData.totais_por_empresa.map((e) => ({
+      value: e.lcpr_codempresa,
+      label: e.lcpr_codempresa,
+      Component: (
+        <TabComponentDashboardByEmp
+          codEmpresa={e.lcpr_codempresa}
+          dashboardData={dashboardData}
+        />
+      )
+    }))
+  ];
+
   return (
-    <div>
-      <Card className="rounded-t-none h-full flex flex-col">
-        <div className="sticky top-0 z-10">
-          <ComponentCardHeader
-            onChangePayload={handleChangePayload}
-            initialPayload={payload}
-          />
-        </div>
-
-        <CardContent className="p-4 flex-1 overflow-auto gap-4 flex flex-col">
-          {isLoading && <p>Carregando...</p>}
-          {error && <p>Erro ao buscar dados.</p>}
-          {!isLoading && dashboardData && 
-            <>
-              <DashboardMetricCards data={dashboardData} />
-              <div className="w-full flex gap-4 h-full">
-                <VendasPorHoraChart />
-                <div className="flex flex-col gap-4 h-full w-1/2 flex-1">
-                  <ComponentMeioPagamento />
-                  <ComponentMeioPagamento />
-                </div>
-              </div>
-            </>
-          }
-          {!isLoading && !dashboardData && !error && <p>Nenhum dado para exibir.</p>}
-
-        </CardContent>
-      </Card>
-
-    </div>
+    <Card className="h-full flex flex-col">
+      <ComponentCardHeader
+        initialPayload={payload}
+        onChangePayload={handleChangePayload}
+      />
+      <CardContent className="p-4 flex-1">
+        <TabsWrapper items={tabs} />
+      </CardContent>
+    </Card>
   );
 }

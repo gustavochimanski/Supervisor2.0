@@ -3,7 +3,7 @@
  */
 export type TypeTotalCompraEmpresaResponse = {
     empresa: string
-    valor: number
+    valorTotal: number
   };
   
   /**
