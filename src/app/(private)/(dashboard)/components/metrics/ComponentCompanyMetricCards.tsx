@@ -78,6 +78,28 @@ export default function CompanyMetricCards({ codEmpresa, data }: Props) {
       ],
       explicacao: "Número de cupons emitidos e valor médio por cupom.",
     },
+    {
+      label: "Pdvs",
+      explicacao:
+        "⚠️ Atenção: Se algum PDV estiver offline, as vendas registradas nele não serão enviadas para o sistema até que a conexão seja restabelecida.",
+      subvalores: [
+        {
+          label: "Conectado",
+          value1: 25,
+          value2: <span className="inline-block w-3 h-3 rounded-full bg-green-700" />,
+        },
+        {
+          label: "Operando",
+          value1: 15,
+          value2: <span className="inline-block w-3 h-3 rounded-full bg-indigo-700" />,
+        },
+        {
+          label: "Offline",
+          value1: 2,
+          value2: <span className="inline-block w-3 h-3 rounded-full bg-red-700" />,
+        },
+      ],
+    },
   ];
 
   return (

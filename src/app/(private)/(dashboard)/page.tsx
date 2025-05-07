@@ -1,25 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardContent} from "@/components/ui/card";
+import { useMemo, useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import ComponentCardHeader from "./components/header/ComponentCardheader";
 import { usePostDashboard } from "./hooks/useQueryDashboard";
 import { TypeDashboardResponse, TypeFiltroDashboard } from "./types/typeDashboard";
 import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
-
 import TabComponentDashboardEmpresaGeral from "./components/TabComponentEmpresaGeral";
 import TabComponentDashboardByEmp from "./components/TabComponentDashboardByEmp";
 import TabsWrapper from "@/components/shared/tabsWrapper";
 import { useGetEmpresas } from "@/hooks/useQuery/useGetEmpresas";
+import { TypeEmpresas } from "@/types/empresas/TypeEmpresas";
 
 export default function PageDashboard() {
   const today = new Date();
-  const { data: dataEmpresas } = useGetEmpresas()
 
-  console.log(dataEmpresas)
-  
   const defaultPayload: TypeFiltroDashboard = {
-    empresas: dataEmpresas?.map((e) => e.empr_codigo) ?? [],
+    empresas: [""],
     dataInicio: formatDateToYYYYMMDD(today),
     dataFinal: formatDateToYYYYMMDD(today),
   };
@@ -27,6 +24,7 @@ export default function PageDashboard() {
   const [payload, setPayload] = useState<TypeFiltroDashboard>(defaultPayload);
   const [dashboardData, setDashboardData] = useState<TypeDashboardResponse | null>(null);
 
+  const { data: dataEmpresas = [] } = useGetEmpresas(); // já evita undefined
   const { mutateAsync, isLoading, error } = usePostDashboard();
 
   useEffect(() => {
@@ -39,39 +37,45 @@ export default function PageDashboard() {
     setPayload(newPayload);
   };
 
+  // ✅ Mapear código da empresa para nome reduzido
+  const mapaCodigosNomes: Record<string, string> = useMemo(() => {
+    return dataEmpresas.reduce((acc: Record<string, string>, empresa: TypeEmpresas) => {
+      acc[empresa.empr_codigo] = empresa.empr_nomereduzido?.trim() || "Sem nome";
+      return acc;
+    }, {});
+  }, [dataEmpresas]);
 
   if (isLoading) return <p>Carregando...</p>;
-  if (error)     return <p>Deu ruim ao buscar dados.</p>;
+  if (error) return <p>Deu ruim ao buscar dados.</p>;
   if (!dashboardData) return <p>Nenhum dado.</p>;
 
-  // Cria uma tab “Geral” + uma por empresa que veio no dados totais_por_empresa
   const tabs = [
     {
       value: "geral",
       label: "Geral",
-      Component: <TabComponentDashboardEmpresaGeral data={dashboardData} />
+      Component: <TabComponentDashboardEmpresaGeral data={dashboardData} />,
     },
     ...dashboardData.totais_por_empresa.map((e) => ({
       value: e.lcpr_codempresa,
-      label: e.lcpr_codempresa,
+      label: `${e.lcpr_codempresa} - ${mapaCodigosNomes[e.lcpr_codempresa] || "Sem nome"}`,
       Component: (
         <TabComponentDashboardByEmp
           codEmpresa={e.lcpr_codempresa}
           dashboardData={dashboardData}
         />
-      )
-    }))
+      ),
+    })),
   ];
 
   return (
-    <Card className="h-full flex flex-col">
+    <div>
       <ComponentCardHeader
         initialPayload={payload}
         onChangePayload={handleChangePayload}
       />
-      <CardContent className="p-4 flex-1">
+      <CardContent className="flex-1">
         <TabsWrapper items={tabs} />
       </CardContent>
-    </Card>
+    </div>
   );
 }

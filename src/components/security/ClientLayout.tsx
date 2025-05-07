@@ -44,8 +44,8 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
           <main className="flex h-screen w-full overflow-hidden">
             <SidebarTrigger variant="sidebarTrigger" />
             <div className="flex-1 flex flex-col overflow-hidden w-full">
-              {!isMobile && (<TopBarComponent />)}
-              <div className={`flex-1 overflow-auto w-full ${isMobile ? "p-0" : "p-4 pt-[3.5rem]"}`}>
+              {/* {!isMobile && (<TopBarComponent />)} */}
+              <div className={`flex-1 overflow-auto w-full ${isMobile ? "p-0" : "p-2"}`}>
                 {children}
               </div>
             </div>

@@ -1,11 +1,11 @@
-import axios from "axios";
+import apiMensura from "@/app/api/apiMensura";
+import { TypeEmpresas } from "@/types/empresas/TypeEmpresas";
 
 export const getEmpresas = async (
-  ): Promise<string[]> => {
+  ): Promise<TypeEmpresas[]> => {
     try {
-      const { data } = await axios.get(
-        " http://192.168.15.161:8000/empresas",
-      );
+      const { data } = await apiMensura.get("/empresas",);
+
       return data;
     } catch (err: any) {
       if (err.response) {

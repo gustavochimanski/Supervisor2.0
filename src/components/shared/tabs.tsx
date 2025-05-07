@@ -59,7 +59,7 @@ const Tabs: React.FC<TabsProps> = ({
             key={item.value}
             value={item.value}
             className={cn(
-              "hover:bg-background h-10 rounded-t-xl px-5 text-xs font-bold whitespace-nowrap text-center", // 👈 mantido
+              "hover:bg-background h-10 rounded-t-xl px-5 text-xs font-bold whitespace-nowrap text-center ", // 👈 mantido
               "data-[state=active]:text-primary data-[state=active]:bg-card data-[state=active]:border-b-2 border-none"
             )}
           >

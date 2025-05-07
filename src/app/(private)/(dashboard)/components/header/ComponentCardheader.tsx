@@ -34,10 +34,10 @@ export default function ComponentCardHeader({ initialPayload, onChangePayload }:
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardHeader className={`flex flex-row justify-between p-1 bg-primary/90 font-sans ${isMobile ? "rounded-t-none" : "rounded-t-[var(--radius)]"}`}>
+      <CardHeader className={`flex flex-row justify-between p-2 pb-3 bg-primary/90 gap-2 font-sans ${isMobile ? "rounded-t-none" : "rounded-t-[var(--radius)]"}`}>
         {!isMobile && <CardTitle className="text-white m-2">Dashboard</CardTitle>}
 
-        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2 pb-1 text-sm w-full md:justify-end">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2  text-sm w-full md:justify-end">
           {/* Data Inicial */}
           <Controller
             name="dataInicial"
@@ -112,49 +112,14 @@ export default function ComponentCardHeader({ initialPayload, onChangePayload }:
             )}
           />
 
-          {/* Empresa Select */}
-          <Controller
-            name="empresas"
-            control={control}
-            render={({ field }) => {
-              const selectValue = buildEmpresaValue(field.value);
-              return (
-                <div className="flex mt-auto">
-                  <div className="flex items-center bg-border rounded-l h-7 text-xs font-semibold px-3">
-                    <Label className="pointer-events-none select-none">Empresa</Label>
-                  </div>
-                  <Select
-                    value={selectValue}
-                    onValueChange={(valor) => {
-                      if (valor === "Todas") field.onChange([...TODAS_EMPRESAS]);
-                      else if (valor === "__vazio__") field.onChange([]);
-                      else field.onChange([valor]);
-                    }}
-                  >
-                    <SelectTrigger className="h-7 bg-background text-center rounded-l-none border-none shadow-none">
-                      <SelectValue placeholder="Selecione…" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__vazio__">Selecione…</SelectItem>
-                      <SelectItem value="Todas">Todas</SelectItem>
-                      {TODAS_EMPRESAS.map((cod) => (
-                        <SelectItem key={cod} value={cod}>
-                          {cod}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              );
-            }}
-          />
 
-          {/* Botão Submit */}
-          <Button type="submit" className="h-7 bg-background hover:bg-background/60 mt-auto">
-            <Search className="mr-1 h-4 w-4 text-foreground" />
-            <span className="text-foreground">Buscar</span>
-          </Button>
+
         </div>
+          {/* Botão Submit */}
+          <Button type="submit" className="bg-background hover:bg-background/60">
+            <Search className="w-4 text-primary" />
+            <span className="text-primary">Buscar</span>
+          </Button>
       </CardHeader>
     </form>
   );

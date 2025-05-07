@@ -30,8 +30,6 @@ type CardProps = {
   value?: string | number;
   barra?: React.ReactNode;
   explicacao: string;
-  gradientFrom: string;
-  gradientTo: string;
   subvalores?: Subvalor[];
 };
 
@@ -55,16 +53,14 @@ const DashboardMetricCards = ({ data }: Props) => {
       value: formatCurrency(total.total_vendas),
       barra: getProgressBar(progressoMetaVenda, `Meta: ${formatCurrency(metaVendaValor)}`),
       explicacao: "Soma total das vendas realizadas em relação à meta.",
-      gradientFrom: "from-indigo-700",
-      gradientTo: "to-indigo-300",
+
     },
     {
       label: "Total de Compras",
       value: formatCurrency(compras.total_geral),
       barra: getProgressBar(progressoMetaCompra, `Limite: ${formatCurrency(limiteCompraValor)}`, true),
       explicacao: "Valor total gasto com compras no período em relação ao limite permitido.",
-      gradientFrom: "from-indigo-700",
-      gradientTo: "to-indigo-300",
+
     },
     {
       label: "Lucro Bruto",
@@ -76,8 +72,7 @@ const DashboardMetricCards = ({ data }: Props) => {
         false,
         true
       ),
-      gradientFrom: "from-indigo-700",
-      gradientTo: "to-indigo-300",
+
     },    
     {
       label: "Cupons",
@@ -87,8 +82,7 @@ const DashboardMetricCards = ({ data }: Props) => {
         { label: "Ticket Médio", value1: formatCurrency(total.ticket_medio) },
         { label: "Ticket Máximo", value1: 649.99 },
       ],
-      gradientFrom: "from-indigo-700",
-      gradientTo: "to-indigo-300",
+
     },
     {
       label: "Pdvs",
@@ -111,8 +105,7 @@ const DashboardMetricCards = ({ data }: Props) => {
           value2: <span className="inline-block w-3 h-3 rounded-full bg-red-700" />,
         },
       ],
-      gradientFrom: "from-indigo-700",
-      gradientTo: "to-indigo-300",
+
     },
   ];
 

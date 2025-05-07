@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
-import styles from "./button.module.css";
 import { loginService } from "@/services/Auth/authenticate";
 import "@/app/(private)/globals.css";
 import Image from "next/image";
@@ -69,7 +68,7 @@ export default function Login() {
             />
           </div>
 
-          <div className={`relative my-2 ${styles.hideDefaultPasswordIcons}`}>
+          <div className={`relative my-2 `}>
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Senha"
@@ -89,7 +88,7 @@ export default function Login() {
           </div>
 
           <div className="flex mt-4 mb-4 justify-center">
-            <Button type="submit" disabled={isLoading} className={styles.button}>
+            <Button  type="submit" disabled={isLoading} className="w-full h-10">
               LOGIN
             </Button>
           </div>
