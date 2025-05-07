@@ -1,4 +1,5 @@
 import { Monitor } from "lucide-react";
+
 import Tabs from "@/components/shared/tabs";
 
 const ComponentRelatorios: React.FC = async () => {

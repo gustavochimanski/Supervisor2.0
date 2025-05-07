@@ -1,3 +1,5 @@
+"use client"
+
 import { useDraggableScroll } from "@/utils/effects/useDraggableScroll"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 import React from "react"

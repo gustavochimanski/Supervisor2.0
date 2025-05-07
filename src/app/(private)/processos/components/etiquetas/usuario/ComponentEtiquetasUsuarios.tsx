@@ -186,9 +186,11 @@ const ComponentEtiquetasUsuarios = () => {
             <div className="grid grid-cols-3 gap-4 p-4 ">
               {etiquetas.map((etiqueta, index) => (
                 <div key={index} className="flex flex-col items-center border p-2 rounded">
-                  <img
-                    src={etiqueta.base64}
+                  <Image
+                    src={`data:image/png;base64,${etiqueta.base64}`}
                     alt={`Código ${etiqueta.codigo}`}
+                    width={300}
+                    height={300}
                     className="w-full object-contain"
                   />
                   <p className="mt-2 text-sm font-medium text-center">{etiqueta.nome}</p>
