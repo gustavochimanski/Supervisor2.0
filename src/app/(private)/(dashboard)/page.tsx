@@ -53,7 +53,7 @@ export default function PageDashboard() {
     {
       value: "geral",
       label: "Geral",
-      Component: <TabComponentDashboardEmpresaGeral data={dashboardData} />,
+      Component: <TabComponentDashboardEmpresaGeral dashboardData={dashboardData} />,
     },
     ...dashboardData.totais_por_empresa.map((e) => ({
       value: e.lcpr_codempresa,

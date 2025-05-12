@@ -34,7 +34,7 @@ export default function ComponentCardHeader({ initialPayload, onChangePayload }:
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardHeader className={`flex flex-row justify-between p-2 pb-3 bg-primary/90 gap-2 font-sans ${isMobile ? "rounded-t-none" : "rounded-t-[var(--radius)]"}`}>
+      <CardHeader className={`flex flex-row justify-between p-2 pb-3 bg-primary gap-2 font-sans ${isMobile ? "rounded-t-none" : "rounded-t-[var(--radius)]"}`}>
         {!isMobile && <CardTitle className="text-white m-2">Dashboard</CardTitle>}
 
         <div className="grid grid-cols-2 md:flex md:flex-row md:flex-wrap gap-2  text-sm w-full md:justify-end">

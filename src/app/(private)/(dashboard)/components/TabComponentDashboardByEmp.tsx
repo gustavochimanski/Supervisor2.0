@@ -2,9 +2,10 @@
 
 import { TypeDashboardResponse } from "../types/typeDashboard";
 import { VendasPorHoraChart } from "./vendas/ComponentChartVendasbyHour";
-import { ComponentMeioPagamento } from "./meiosPagamento/meioPagamento";
 import CompanyMetricCards from "./metrics/ComponentCompanyMetricCards";
 import { dashboardMock } from "./meiosPagamento/mock";
+import { ComponentMeioPagamento } from "./meiosPagamento/meioPagamento";
+
 
 interface Props {
   codEmpresa: string;
@@ -41,11 +42,11 @@ export default function TabComponentDashboardByEmp({
         />
 
         <div className="lg:grid lg:grid-cols-2 gap-4 md:w-1/2">
-          <ComponentMeioPagamento data={meiosPagamentoData} />
-          <ComponentMeioPagamento data={meiosPagamentoData} />
           <div className="col-span-2">
             <ComponentMeioPagamento data={meiosPagamentoData} />
           </div>
+          <ComponentMeioPagamento data={meiosPagamentoData} />
+          <ComponentMeioPagamento data={meiosPagamentoData} />
         </div>
       </div>
 

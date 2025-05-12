@@ -53,7 +53,7 @@ export type TypeDashboardResponse = {
   relacao: TypeRelacao;
   compras: TypeComprasGeralResponse;
   vendaDetalhada: TypeVendaDetalhadaResponse;
-  vendaPorHora: TypeVendaPorHoraResponse[];  // <— aqui!
+  vendaPorHora: TypeVendaPorHoraResponse;  
 };
 
 

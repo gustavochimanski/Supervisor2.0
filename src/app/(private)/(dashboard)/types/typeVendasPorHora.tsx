@@ -6,6 +6,12 @@ export type TypeVendasPorHora = {
   };
   
   export interface TypeVendaPorHoraResponse {
-    empresa: string;                         
-    vendasPorHora: TypeVendasPorHora[];       
+      totalGeral: TypeVendasPorHora[]
+      porEmpresa: TypeVendaPorHoraEmpresa[]
   }
+
+  export interface TypeVendaPorHoraEmpresa {
+    empresa: string;                         
+    vendasPorHora: TypeVendasPorHora[];      
+  }
+  

@@ -28,36 +28,52 @@ import {
 import { TypeVendaPorHoraResponse } from "../../types/typeVendasPorHora";
 
 interface Props {
-  data: TypeVendaPorHoraResponse[];
+  data: TypeVendaPorHoraResponse;
   empresaSelecionada: string;
 }
 
 export function VendasPorHoraChart({ data, empresaSelecionada }: Props) {
-  const empresaData = data.find(
-    (e) => String(e.empresa) === String(empresaSelecionada)
-  );
+  // Se empresaSelecionada estiver definida, vamos buscar os dados da empresa
+  const porEmpresa = data.porEmpresa;
 
-  if (!empresaData) {
-    return <p>Nenhum dado encontrado para a empresa {empresaSelecionada}.</p>;
+  let chartData;
+
+  // Caso tenha empresaSelecionada, mostramos dados da empresa
+  if (empresaSelecionada) {
+    const empresaData = porEmpresa.find(
+      (e) => String(e.empresa) === String(empresaSelecionada)
+    );
+
+    if (!empresaData) {
+      return <p>Nenhum dado encontrado para a empresa {empresaSelecionada}.</p>;
+    }
+
+    // Mapeia os dados da empresa selecionada
+    chartData = empresaData.vendasPorHora.map((v) => ({
+      hora: `${v.hora.toString().padStart(2, "0")}:00`,
+      total_vendas: v.total_vendas,
+    }));
+  } else {
+    // Se não tiver empresaSelecionada, mostramos os dados gerais
+    const totalGeral = data.totalGeral;
+
+    chartData = totalGeral.map((v) => ({
+      hora: `${v.hora.toString().padStart(2, "0")}:00`,
+      total_vendas: v.total_vendas,
+    }));
   }
-
-  const chartData = empresaData.vendasPorHora.map((v) => ({
-    hora: `${v.hora.toString().padStart(2, "0")}:00`,
-    total_vendas: v.total_vendas,
-  }));
 
   const chartConfig = {
     total_vendas: {
       label: "Total de Vendas",
-      color: "hsl(var(--chart-1))",
+      color: "var(--chart-1)",
     },
   };
 
   return (
-    <Card className="md:w-1/2 ">
+    <Card className="font-sans ">
       <CardHeader>
-        <CardTitle>Total de Vendas por Hora</CardTitle>
-        <CardDescription>Empresa: {empresaSelecionada}</CardDescription>
+        <h6 className="font-sans font-semibold text-muted-foreground">Vendas por Hora </h6>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -101,18 +117,6 @@ export function VendasPorHoraChart({ data, empresaSelecionada }: Props) {
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Tendência horária <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="text-muted-foreground">
-              {chartData[0]?.hora} até {chartData.at(-1)?.hora}
-            </div>
-          </div>
-        </div>
-      </CardFooter>
     </Card>
   );
 }
