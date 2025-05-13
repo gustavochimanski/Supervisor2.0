@@ -19,7 +19,7 @@ interface Props {
   data: TotaisPorDepartamento[];
 }
 
-export function ComponentParticipacaoDepartamentos({ data }: Props) {
+export default function ComponentParticipacaoDepartamentos({ data }: Props) {
   const [typeChartSelected, setTypeChartSelected] = useState("Pizza");
 
   const isColunas = typeChartSelected === "Colunas";

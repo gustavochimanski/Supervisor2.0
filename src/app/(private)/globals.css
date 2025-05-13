@@ -58,30 +58,27 @@
   --ring: 221.2 83.2% 53.3%;
   --radius: 0.5rem;
 
---chart-1:  #3730a3;   /* azul elegante */
---chart-2:  #ff7f0e;   /* laranja vivo */
---chart-3:  #8537ce;   /* roxo vibrante */
---chart-4:  #2ca02c;   /* verde vivo */
---chart-5:  #d62728;   /* vermelho vivo */
---chart-6:  #17becf;   /* ciano */
---chart-7:  #fa1690;   /* rosa claro */
---chart-8:  #bcbd22;   /* amarelo esverdeado */
---chart-9:  #984ea3;   /* roxo escuro */
---chart-10: #fca651;   /* laranja escuro */
+  --chart-1:  #6366f1;   /* Azul suave */
+  --chart-2:  #81c784;   /* Verde claro */
+  --chart-4:  #f9a825;   /* Laranja queimado */
+  --chart-3:  #ab7df6;   /* Roxo lavanda */
+  --chart-5:  #ef5350;   /* Vermelho suave */
+  --chart-6:  #4dd0e1;   /* Ciano pastel */
+  --chart-7:  #f48fb1;   /* Rosa bebê */
+  --chart-8:  #dce775;   /* Verde-limão claro */
+  --chart-9:  #b39ddb;   /* Roxo acinzentado */
+  --chart-10: #ffcc80;   /* Laranja claro */
 
---chart-11: #66c2a5;   /* verde água */
---chart-12: #991818;   /* vermelho forte */
---chart-13: #002747;   /* azul profundo */
---chart-14: #a65628;   /* marrom escuro */
---chart-15: #8c564b;   /* marrom médio */
---chart-16: #e377c2;   /* rosa vibrante */
---chart-17: #166810;   /* verde escuro */
---chart-18: #ffff33;   /* amarelo limão */
---chart-19: #7f7f7f;   /* cinza médio */
---chart-20: #999999;   /* cinza claro */
-
-
-
+  --chart-11: #a5d6a7;   /* Verde-menta */
+  --chart-12: #e57373;   /* Vermelho moderado */
+  --chart-13: #37474f;   /* Azul petróleo escuro */
+  --chart-14: #a1887f;   /* Marrom claro */
+  --chart-15: #bcaaa4;   /* Bege acinzentado */
+  --chart-16: #f8bbd0;   /* Rosa pastel */
+  --chart-17: #81c784;   /* Verde reconfortante */
+  --chart-18: #fff176;   /* Amarelo suave */
+  --chart-19: #cfd8dc;   /* Cinza azulado claro */
+  --chart-20: #e0e0e0;   /* Cinza neutro claro */
 }
 
 /* ======== DARK MODE ======== */

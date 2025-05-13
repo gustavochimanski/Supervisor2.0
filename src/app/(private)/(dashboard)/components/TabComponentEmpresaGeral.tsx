@@ -1,11 +1,11 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { TypeDashboardResponse } from "../types/typeDashboard";
-import DashboardMetricCards from "./metrics/ComponentMetricCards";
-import { VendasPorHoraChart } from "./vendas/ComponentChartVendasbyHour";
-import { ComponentParticipacaoEmpresas } from "./participacaoEmpresas/ComponentParticipacaoEmpresas";
+import DashboardMetricCards from "./metrics/DashCardMetricCards";
 import { useGetEmpresas } from "@/hooks/useQuery/useGetEmpresas";
-import { ComponentMeioPagamento } from "./meiosPagamento/meioPagamento";
-import { ComponentParticipacaoDepartamentos, TotaisPorDepartamento } from "./departamento/ComponentParticipacaoDepartamento";
+import ComponentParticipacaoEmpresas from "./participacaoEmpresas/DashCardParticipacaoEmpresas";
+import VendasPorHoraChart from "./vendasPorHora/ComponentChartVendasbyHour";
+import DashCardClientesPorHoraChart from "./clientesPorHora/DashCardClientePorHora";
+import ComponentParticipacaoDepartamentos, { TotaisPorDepartamento } from "./departamento/DashCardParticipacaoDepartamento";
 
 interface Props { dashboardData: TypeDashboardResponse }
 
@@ -26,9 +26,10 @@ export default function TabComponentDashboardEmpresaGeral({ dashboardData }: Pro
   
 return (
   <div className="flex flex-col gap-4">
+    {/* PRIMEIRA LINHA: MÉTRICAS GERAIS */}
     <DashboardMetricCards data={dashboardData} />
 
-    {/* Linha de cima: Empresas e VendasPorHora lado a lado */}
+    {/* SEGUNDA LINHA */}
     <div className="flex md:flex-row flex-col gap-4 h-full">
       <div className="gap-2 flex flex-col w-full md:w-1/2">
         <ComponentParticipacaoEmpresas
@@ -37,19 +38,17 @@ return (
         />
       </div>
 
-      <div className="w-full md:w-1/2 flex flex-row  gap-4">
+      <div className="w-full md:w-1/2 flex flex-1 md:flex-row flex-col gap-4">
         <VendasPorHoraChart
           data={dashboardData.vendaPorHora}
           empresaSelecionada={""}
         />
-        <VendasPorHoraChart
-          data={dashboardData.vendaPorHora}
-          empresaSelecionada={""}
-        />
+       <DashCardClientesPorHoraChart data={dashboardData.vendaPorHora} empresaSelecionada={""} />
       </div>
     </div>
 
-    <div className="w-1/2 ml-auto">
+    {/* TERCEIRA LINHA */}
+    <div className="md:w-1/2 md:ml-auto flex-1">
       <ComponentParticipacaoDepartamentos data={mockDepartamentos} />
     </div>
   </div>

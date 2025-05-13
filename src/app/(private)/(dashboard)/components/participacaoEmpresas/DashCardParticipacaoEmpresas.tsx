@@ -16,13 +16,16 @@ interface Props {
   empresas: any[] | undefined;
 }
 
-export function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
+export default function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
   const [typeChartSelected, setTypeChartSelected] = useState("Pizza");
   const [expanded, setExpanded] = useState(false);  // Novo estado para controlar a expansão da tabela
 
   const isColunas = typeChartSelected === "Colunas";
 
   const labels = data.map((empresa) => empresa.lcpr_codempresa);
+  // Ordena os dados por total de vendas (decrescente)
+  const dataOrdenada = [...data].sort((a, b) => b.total_vendas - a.total_vendas);
+
   const vendas = data.map((empresa) => empresa.total_vendas);
 
   const chartBarData = [
@@ -57,7 +60,7 @@ export function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
 
   const totalVendas = data.reduce((acc, empresa) => acc + empresa.total_vendas, 0);
 
-  const chartPieData: PieValueType[] = data.map((empresa, idx) => {
+  const chartPieData: PieValueType[] = dataOrdenada.map((empresa, idx) => {
     const nome = findLabelEmp(empresa.lcpr_codempresa);
     const percentual = ((empresa.total_vendas / totalVendas) * 100).toFixed(1);
 
@@ -86,7 +89,6 @@ export function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
       </Select>
 
       <CardTitle className="mx-4">Participação por Empresa</CardTitle>
-      <CardDescription>Adcoionar Coluna Margem para participacao da margem por empresa</CardDescription>
 
       <CardContent className="flex-1">
         <div className="flex flex-col md:flex-row justify-center">
@@ -108,7 +110,7 @@ export function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
               />
             ) : (
               <PieChart
-                height={200}
+                height={170}
                 series={[
                   {
                     data: chartPieData,
@@ -146,7 +148,7 @@ export function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
                     <TableHead>Cor</TableHead>
                     <TableHead>Empresa</TableHead>
                     <TableHead className="text-right">Vendas</TableHead>
-                    <TableHead className="text-right">Part %</TableHead>
+                    <TableHead className="text-right">Margem%</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -169,14 +171,13 @@ export function ComponentParticipacaoEmpresas({ data, empresas }: Props) {
                             style={{ backgroundColor: item.color }}
                             />
                         </TableCell>
-                        <TableCell>{nome}</TableCell>
+                        <TableCell>{`${nome} ${percentual}%`}</TableCell>
                         <TableCell className="text-right">
                           {item.value.toLocaleString("pt-BR", {
                             style: "currency",
                             currency: "BRL",
                           })}
                         </TableCell>
-                        <TableCell className="text-right">{percentual}%</TableCell>
                       </TableRow>
                     );
                   })}

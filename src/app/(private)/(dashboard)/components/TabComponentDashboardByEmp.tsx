@@ -1,10 +1,11 @@
 "use client";
 
 import { TypeDashboardResponse } from "../types/typeDashboard";
-import { VendasPorHoraChart } from "./vendas/ComponentChartVendasbyHour";
-import CompanyMetricCards from "./metrics/ComponentCompanyMetricCards";
+import CompanyMetricCards from "./metrics/DashCardCompanyMetricCards";
 import { dashboardMock } from "./meiosPagamento/mock";
-import { ComponentMeioPagamento } from "./meiosPagamento/meioPagamento";
+import { ComponentMeioPagamento } from "./meiosPagamento/DashCardMeioPagamento";
+import VendasPorHoraChart from "./vendasPorHora/ComponentChartVendasbyHour";
+import DashCardClientesPorHoraChart from "./clientesPorHora/DashCardClientePorHora";
 
 
 interface Props {
@@ -33,23 +34,35 @@ export default function TabComponentDashboardByEmp({
 
   return (
     <div className="flex flex-col gap-4">
+      {/* PRIMEIRA LINHA: MÉTRICAS GERAIS */}
       <CompanyMetricCards codEmpresa={codEmpresa} data={dashboardData} />
 
+      {/* SEGUNDA LINHA */}
       <div className="flex md:flex-row flex-col gap-4 h-full">
-        <VendasPorHoraChart
-          data={dashboardData.vendaPorHora}
-          empresaSelecionada={codEmpresa}
-        />
+        {/* Gráficos de vendas e clientes por hora */}
+        <div className="w-full md:w-1/2 flex md:flex-row  flex-col gap-4">
+        </div>
 
-        <div className="lg:grid lg:grid-cols-2 gap-4 md:w-1/2">
-          <div className="col-span-2">
-            <ComponentMeioPagamento data={meiosPagamentoData} />
-          </div>
-          <ComponentMeioPagamento data={meiosPagamentoData} />
-          <ComponentMeioPagamento data={meiosPagamentoData} />
+        {/* Componentes de meios de pagamento */}
+        <div className="w-full md:w-1/2 flex md:flex-row flex-col gap-4">
+
+          <VendasPorHoraChart
+            data={dashboardData.vendaPorHora}
+            empresaSelecionada={codEmpresa}
+          />
+          <DashCardClientesPorHoraChart
+            data={dashboardData.vendaPorHora}
+            empresaSelecionada={codEmpresa}
+          />
         </div>
       </div>
 
+      {/* TERCEIRA LINHA */}
+      <div className="md:w-1/2 md:ml-auto flex-1">
+        <ComponentMeioPagamento data={meiosPagamentoData} />
+      </div> 
+    
     </div>
+
   );
 }

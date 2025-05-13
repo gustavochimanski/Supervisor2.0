@@ -9,15 +9,11 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { TrendingUp } from "lucide-react";
 
 import {
   Card,
   CardHeader,
-  CardTitle,
-  CardDescription,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 
 import {
@@ -32,13 +28,11 @@ interface Props {
   empresaSelecionada: string;
 }
 
-export function VendasPorHoraChart({ data, empresaSelecionada }: Props) {
-  // Se empresaSelecionada estiver definida, vamos buscar os dados da empresa
+export default function DashCardClientesPorHoraChart({ data, empresaSelecionada }: Props) {
   const porEmpresa = data.porEmpresa;
 
   let chartData;
 
-  // Caso tenha empresaSelecionada, mostramos dados da empresa
   if (empresaSelecionada) {
     const empresaData = porEmpresa.find(
       (e) => String(e.empresa) === String(empresaSelecionada)
@@ -48,37 +42,37 @@ export function VendasPorHoraChart({ data, empresaSelecionada }: Props) {
       return <p>Nenhum dado encontrado para a empresa {empresaSelecionada}.</p>;
     }
 
-    // Mapeia os dados da empresa selecionada
     chartData = empresaData.vendasPorHora.map((v) => ({
       hora: `${v.hora.toString().padStart(2, "0")}:00`,
-      total_vendas: v.total_vendas,
+      total_clientes: v.total_cupons
     }));
   } else {
-    // Se não tiver empresaSelecionada, mostramos os dados gerais
     const totalGeral = data.totalGeral;
 
     chartData = totalGeral.map((v) => ({
       hora: `${v.hora.toString().padStart(2, "0")}:00`,
-      total_vendas: v.total_vendas,
+      total_clientes: v.total_cupons,
     }));
   }
 
   const chartConfig = {
-    total_vendas: {
-      label: "Total de Vendas",
-      color: "var(--chart-1)",
+    total_clientes: {
+      label: "Total de Clientes",
+      color: "var(--chart-1)", // Pode criar essa cor no seu tema se quiser
     },
   };
 
   return (
-    <Card className="font-sans ">
+    <Card className="font-sans p-0">
       <CardHeader>
-        <h6 className="font-sans font-semibold text-muted-foreground">Vendas por Hora </h6>
+        <h6 className="font-sans font-semibold text-muted-foreground">
+          Clientes por Hora
+        </h6>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="p-0">
+        <ChartContainer className="m-0!" config={chartConfig}>
           <ResponsiveContainer width="100%" height={160}>
-            <AreaChart data={chartData} margin={{ left: 12, right: 12 }}>
+            <AreaChart data={chartData} margin={{ left: 0, right: 0}}>
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
               <XAxis
                 dataKey="hora"
@@ -86,32 +80,29 @@ export function VendasPorHoraChart({ data, empresaSelecionada }: Props) {
                 axisLine={false}
                 tickMargin={8}
               />
-              <YAxis />
-              <Tooltip
-                cursor={false}
-                content={<ChartTooltipContent />}
-              />
+              <YAxis tickLine={false}   />
+              <Tooltip cursor={true} content={<ChartTooltipContent />} />
 
               <defs>
-                <linearGradient id="fillTotalVendas" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="fillTotalClientes" x1="0" y1="0" x2="0" y2="1">
                   <stop
                     offset="5%"
-                    stopColor="var(--color-total_vendas)"
+                    stopColor="var(--color-total_clientes)"
                     stopOpacity={0.8}
                   />
                   <stop
                     offset="95%"
-                    stopColor="var(--color-total_vendas)"
+                    stopColor="var(--color-total_clientes)"
                     stopOpacity={0.1}
                   />
                 </linearGradient>
               </defs>
               <Area
-                dataKey="total_vendas"
+                dataKey="total_clientes"
                 type="monotone"
-                stroke="var(--color-total_vendas)"
-                fill="url(#fillTotalVendas)"
-                name="Total de Vendas"
+                stroke="var(--color-total_clientes)"
+                fill="url(#fillTotalClientes)"
+                name="Total de Clientes"
               />
             </AreaChart>
           </ResponsiveContainer>
