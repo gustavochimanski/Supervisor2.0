@@ -10,10 +10,8 @@ import { CalendarIcon, Search } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { TypeFiltroDashboard } from "../../types/typeDashboard";
-import { TODAS_EMPRESAS } from "../../schema/schemaFiltroDashboard";
 import { useFiltroDashboard } from "../../hooks/useHeaderDashboard";
 import { formatDisplayDate } from "@/utils/format/formatDate";
 

@@ -14,7 +14,7 @@ export const fetchByIdMeioPgto = async (id: string) => {
 //======== BUSCA TODOS OS MEIOS DE PAGAMENTO =========
 //====================================================
 export const fetchAllMeioPgto = async () => {
-  const response = await api.get<MeioPgto[]>("config/meiospgto/")
+  const response = await api.get<MeioPgto[]>("config/meiospgto")
   return response.data
 }
 
@@ -39,9 +39,8 @@ export const atualizarConfigMeioPgto = async (payload: ConfiguracaoMeioPag[]): P
 //====================================================
 //============ INCLUI MEIO DE PAGAMENTO ==============
 //====================================================
-export const incluiMeioPgtoById = async (codigo: string, descricao: string, tipoMeioPgto: string): Promise<MeioPgto> => {
+export const incluiMeioPgtoById = async (descricao: string, tipoMeioPgto: string): Promise<MeioPgto> => {
   const payload = {
-    codigo,
     descricao,
     tipoMeioPgto,
   };

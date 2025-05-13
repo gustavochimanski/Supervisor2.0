@@ -142,7 +142,7 @@ export default function ComponentParticipacaoEmpresas({ data, empresas }: Props)
 
             {(expanded || !isMobile) && (
 
-              <Table className="opacity-100 bg-white z-50!" >
+              <Table className="opacity-100 bg-background z-50!" >
                 <TableHeader>
                   <TableRow>
                     <TableHead>Cor</TableHead>

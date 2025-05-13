@@ -6,10 +6,10 @@ import { ConfiguracaoMeioPag } from "@/app/(private)/cadastros/types/typesMeioPa
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import ConfigsMeioPagamento from "./config/MAIN";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SearchComponent } from "@/components/shared/searchComponent";
-import { useFetchByIdMeioPgto, useIncluiMeioPgto } from "../../../hooks/useMeioPag";
-import {  ArrowRightCircle, Barcode, CirclePlus, CircleX, EllipsisVertical, RefreshCcw, Save, Trash2 } from "lucide-react";
+import { useFetchAllMeiosPgto, useFetchByIdMeioPgto, useIncluiMeioPgto } from "../../../hooks/useMeioPag";
+import {  ArrowRightCircle, Barcode, CircleCheck, CirclePlus, CircleX, EllipsisVertical, RefreshCcw,  Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import DataTableComponentMui from "@/components/shared/table/mui-data-table";
 import ConfirmModal from "@/components/shared/modals/modalConfirm";
@@ -30,7 +30,6 @@ export default function TabComponentMeioPagamento() {
 
   // Estados para o formulário de inclusão
   const [incluirFormData, setIncluirFormData] = useState<FormData>({
-    codigo: "",
     descricao: "",
     tipoMeioPgto: "",
   });
@@ -40,8 +39,10 @@ export default function TabComponentMeioPagamento() {
 
   // DATAS
   const { data: dataByIdMeiopgto, isLoading, refetch: refetchByIdMeioPgto } = useFetchByIdMeioPgto(idSelected);
+  const {data: dataAllMeioPgto} = useFetchAllMeiosPgto()
+
   // MUTATES
-  const { mutateAsync: mutateAsyncIncluiMeioPgto } = useIncluiMeioPgto();
+  const { mutateAsync } = useIncluiMeioPgto();
 
   const columns: GridColDef[] = [
     {field: 'id', headerName: 'ID', width: 50},
@@ -83,7 +84,7 @@ export default function TabComponentMeioPagamento() {
   const handleIncluiPerfil = async () => {
     try {
       setError(false);
-      await mutateAsyncIncluiMeioPgto(incluirFormData);
+      await mutateAsync(incluirFormData);
     
       toast.success("Meio de pagamento incluído com sucesso!");
     } catch (error) {
@@ -137,7 +138,7 @@ export default function TabComponentMeioPagamento() {
       {/* ====================== TABELA ===================== */}
       {/* =================================================== */}
       <DataTableComponentMui 
-        rows={dataByIdMeiopgto ? [dataByIdMeiopgto!]: []} 
+        rows={dataAllMeioPgto || []} 
         columns={columns}
         onRowClick={(rowData: any) => handleVerConfig(rowData)}
       />
@@ -165,7 +166,7 @@ export default function TabComponentMeioPagamento() {
           {/* ===================== RODAPÉ ====================== */}
           {/* =================================================== */}
           <CardFooter className="justify-center gap-4">
-            <Button type="submit" onClick={handleSave} ><Save/>Salvar</Button>
+            <Button type="submit" onClick={handleSave} ><CircleCheck/>Salvar</Button>
             <Button onClick={() => setShowModalById(false)} variant="outline"><CircleX/>Fechar</Button>
             <Button onClick={() => handleDeletePerfil()} variant="destructive"><Trash2/> Apagar</Button>
           </CardFooter>

@@ -50,9 +50,6 @@ export function ComponentMeioPagamento({ data }: Props) {
 
       <CardHeader className="pb-0">
         <CardTitle className="mx-4">Meio de Pagamento</CardTitle>
-        <CardDescription className="mx-4">
-          Relação entre os meios de pagamento
-        </CardDescription>
       </CardHeader>
 
       <CardContent className="md:p-2 p-3 flex-1">

@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 
 export interface FormData {
-  codigo: string;
   descricao: string;
   tipoMeioPgto: string;
 }
@@ -39,16 +38,6 @@ const FormIncluirMeioPgto: React.FC<FormIncluirMeioPgtoProps> = ({
         <CardTitle>Incluir Novo Perfil</CardTitle>
       </CardHeader>
       <CardContent className="p-10 gap-4 flex flex-col">
-        {/* Campo Código */}
-        <div>
-          <Label htmlFor="codigo">Código</Label>
-          <InputLeftZero
-            name="codigo"   
-            value={formData.codigo}
-            onFormattedChange={(value: string) => onChange("codigo", value)} 
-
-          />
-        </div>
         {/* Campo Descrição */}
         <div>
           <Label htmlFor="descricao">Descrição</Label>
