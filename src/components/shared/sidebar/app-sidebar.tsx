@@ -23,6 +23,9 @@ import {
     CircleUser,
     Atom,
     Target,
+    Bot,
+    FileText,
+    Utensils,
   } from "lucide-react";
 
 import { logout } from "@/services/Auth/authenticate";
@@ -35,15 +38,13 @@ import { ThemeToggle } from "../themeToggle";
   const items = [
     { title: "Home", url: "/home", icon: Home },
     { title: "Dashboard", url: "/", icon: PieChart },
+    { title: "ChatBot", url: "/chatbot", icon: Bot },
+    { title: "Cardápio", url: "/cardapio", icon: Utensils },
+    { title: "Relatórios", url: "/relatorios", icon: FileText },
     { title: "Metas", url: "/metas", icon: Target },
-    { title: "Vendas", url: "/vendas", icon: ShoppingCart },
     { title: "Cadastros", url: "/cadastros", icon: CircleUser },
     { title: "Processos", url: "/processos", icon: Atom },
-    { title: "Compras", url: "/compras", icon: ShoppingBag },
-    { title: "Estoque", url: "/estoque", icon: Package },
-    { title: "Financeiro", url: "/financeiro", icon: DollarSign },
-    { title: "Frente Caixa", url: "/frenteCaixa", icon: MonitorUpIcon },
-    { title: "Configuração", url: "/configuracoes", icon: Settings },
+    { title: "Configurações", url: "/configuracoes", icon: Settings },
   ];
 
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 
 interface IntegerInputProps extends Omit<React.ComponentProps<"input">, "value" | "onChange"> {
   value: number;

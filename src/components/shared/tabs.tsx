@@ -3,7 +3,7 @@
 import { useDraggableScroll } from "@/utils/effects/useDraggableScroll"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 import React from "react"
-import { cn } from "@/utils/utils"
+import { cn } from "@/lib/utils"
 
 interface TabItem {
   value: string
@@ -39,7 +39,7 @@ const Tabs: React.FC<TabsProps> = ({
   return (
     <TabsPrimitive.Root
       defaultValue={defaultValue || items[0].value}
-      className={cn("flex flex-col border border-input", containerClassName)}
+      className={cn("flex flex-col h-full w-full border border-input", containerClassName)}
     >
       <TabsPrimitive.List
         ref={scrollRef}
@@ -70,15 +70,18 @@ const Tabs: React.FC<TabsProps> = ({
         ))}
       </TabsPrimitive.List>
 
+    <div className="flex-1 overflow-hidden">
       {items.map((item) => (
         <TabsPrimitive.Content
           key={item.value}
           value={item.value}
-          className={cn("p-4 bg-background", contentClassName)}
+          className={cn("h-full w-full overflow-auto p-4 bg-background", contentClassName)}
         >
           {item.Component}
         </TabsPrimitive.Content>
       ))}
+    </div>
+
     </TabsPrimitive.Root>
   )
 }

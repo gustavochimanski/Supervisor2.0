@@ -1,7 +1,8 @@
 
 import api from '@/app/api/api';
-import apiSSR from '@/app/api/apiSSR';
 import { PatchConfPerfilPayload, TypePerfilPdv } from '../types/typesPDVS';
+import { getApiSSR } from '@/app/api/apiSSR';
+import { ssrApiFetch } from '@/lib/ssrApiFetch';
 
 
 // ======================================================================================
@@ -63,8 +64,6 @@ export const patchAlteraDescricaoById = async (idPerfil: string, descricao: stri
 // ======================================================================================
 
 export const fetchAllPerfisSSR = async (): Promise<TypePerfilPdv[]> => {
-  const api = await apiSSR(); // token já incluso
-  const response = await api.get('config/perfilpdv');
-  return response.data;
+  return ssrApiFetch(api => api.get("config/perfilpdv").then(res => res.data));
 };
 

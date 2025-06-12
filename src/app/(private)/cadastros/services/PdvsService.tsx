@@ -1,7 +1,7 @@
 // services/CaixasService.ts
 import api from "@/app/api/api";
 import { TypeCaixas } from "../types/typesPDVS";
-import apiSSR from "@/app/api/apiSSR";
+import { ssrApiFetch } from "@/lib/ssrApiFetch";
 
 // ================================ CLIENT ==============================================
 // ======================================================================================
@@ -19,8 +19,6 @@ export const fetchByIdCaixas = async (id: string): Promise<TypeCaixas> => {
 
 // =================================== SSR ==============================================
 // ======================================================================================
-export const fetchAllCaixasSSR = async () => {
-  const api = await apiSSR(); // token já incluso
-  const response = await api.get("config/pdv");
-  return response.data;
+export const fetchAllCaixasSSR = async (): Promise<TypeCaixas[]> => {
+  return ssrApiFetch(api => api.get("config/pdv").then(res => res.data));
 };

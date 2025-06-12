@@ -1,4 +1,4 @@
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+
 import { TypeDashboardResponse } from "../types/typeDashboard";
 import DashboardMetricCards from "./metrics/DashCardMetricCards";
 import { useGetEmpresas } from "@/hooks/useQuery/useGetEmpresas";
@@ -6,6 +6,7 @@ import ComponentParticipacaoEmpresas from "./participacaoEmpresas/DashCardPartic
 import VendasPorHoraChart from "./vendasPorHora/ComponentChartVendasbyHour";
 import DashCardClientesPorHoraChart from "./clientesPorHora/DashCardClientePorHora";
 import ComponentParticipacaoDepartamentos, { TotaisPorDepartamento } from "./departamento/DashCardParticipacaoDepartamento";
+import { Button } from "@/components/ui/button";
 
 interface Props { dashboardData: TypeDashboardResponse }
 
@@ -18,6 +19,7 @@ const mockDepartamentos: TotaisPorDepartamento[] = [
   { depto_codigo: "5", depto_nome: "Congelados", total_vendas: 15000 },
   { depto_codigo: "5", depto_nome: "Bomboniere", total_vendas: 10000 },
 ];
+
 
 
 

@@ -7,6 +7,7 @@ import { BarChart, legendClasses } from "@mui/x-charts";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
+import TabelaParticipacaoDepartamentos from "./TabelaParticipacaoDepartamento";
 
 // Definindo o tipo dos dados para o componente de departamentos
 export interface TotaisPorDepartamento {
@@ -24,9 +25,11 @@ export default function ComponentParticipacaoDepartamentos({ data }: Props) {
 
   const isColunas = typeChartSelected === "Colunas";
 
+  // Labels e dados de vendas
   const labels = data.map((departamento) => departamento.depto_nome);
   const vendas = data.map((departamento) => departamento.total_vendas);
 
+  // Dados para o gráfico de barras
   const chartBarData = [
     {
       id: "Vendas",
@@ -34,27 +37,18 @@ export default function ComponentParticipacaoDepartamentos({ data }: Props) {
     },
   ];
 
+  // Definindo cores dos departamentos para os gráficos
   const coresDepartamentos: string[] = [
-    "var(--chart-1)",
-    "var(--chart-2)",
-    "var(--chart-3)",
-    "var(--chart-4)",
-    "var(--chart-5)",
-    "var(--chart-6)",
-    "var(--chart-7)",
-    "var(--chart-8)",
-    "var(--chart-9)",
-    "var(--chart-10)",
-    "var(--chart-11)",
-    "var(--chart-12)",
-    "var(--chart-13)",
-    "var(--chart-14)",
-    "var(--chart-15)",
-    "var(--chart-16)",
+    "var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)",
+    "var(--chart-5)", "var(--chart-6)", "var(--chart-7)", "var(--chart-8)",
+    "var(--chart-9)", "var(--chart-10)", "var(--chart-11)", "var(--chart-12)",
+    "var(--chart-13)", "var(--chart-14)", "var(--chart-15)", "var(--chart-16)",
   ];
 
+  // Calculando o total de vendas para calcular os percentuais
   const totalVendas = data.reduce((acc, departamento) => acc + departamento.total_vendas, 0);
 
+  // Dados para o gráfico de pizza
   const chartPieData: PieValueType[] = data.map((departamento, idx) => {
     const percentual = ((departamento.total_vendas / totalVendas) * 100).toFixed(1);
 
@@ -89,29 +83,23 @@ export default function ComponentParticipacaoDepartamentos({ data }: Props) {
           {isColunas ? (
             <BarChart
               xAxis={[{ data: labels }]}
-              series={[
-                {
-                  id: "Vendas",
-                  data: vendas,
-                  color: "var(--chart-1)", // ou 'indigo-800' se o Tailwind estiver configurado corretamente
-                },
-              ]}
+              series={[{
+                id: "Vendas",
+                data: vendas,
+                color: "var(--chart-1)", // cor fixa para barras
+              }]}
               height={250}
               borderRadius={5}
-              sx={{
-                width: "100%",
-              }}
+              sx={{ width: "100%" }}
             />
           ) : (
             <PieChart
               height={200}
-              series={[
-                {
-                  data: chartPieData,
-                  cornerRadius: 3,
-                  highlightScope: { fade: "global", highlight: "item" },
-                },
-              ]}
+              series={[{
+                data: chartPieData,
+                cornerRadius: 3,
+                highlightScope: { fade: "global", highlight: "item" },
+              }]}
               slotProps={{
                 legend: { direction: "vertical", markType: "circle" },
               }}
@@ -119,11 +107,7 @@ export default function ComponentParticipacaoDepartamentos({ data }: Props) {
                 width: "100%",
                 margin: 3,
                 [`& .${legendClasses.root}`]: {
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "12px 24px", // espaçamento entre os itens
-                  maxHeight: 150, // evita quebrar layout
-                  flexDirection: isMobile ? "row" : "column", // Se for mobile, a legenda vai ficar em linha (horizontal)
+                  display: "none"
                 },
                 [`& .${legendClasses.mark}`]: {
                   width: 16,
@@ -132,6 +116,7 @@ export default function ComponentParticipacaoDepartamentos({ data }: Props) {
               }}
             />
           )}
+        <TabelaParticipacaoDepartamentos data={data} cores={coresDepartamentos}/>
         </div>
       </CardContent>
     </Card>

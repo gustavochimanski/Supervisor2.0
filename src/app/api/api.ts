@@ -14,19 +14,15 @@ let cachedSession: any = null;
 // Interceptor de request com inclusão do JWT
 api.interceptors.request.use(
   async (config) => {
-    // Usa cache se já tiver
-    if (!cachedSession) {
-      cachedSession = await getSession();
+    const session = await getSession();
+    if (session?.accessToken) {
+      config.headers.Authorization = `Bearer ${session.accessToken}`;
     }
-
-    if (cachedSession?.accessToken) {
-      config.headers.Authorization = `Bearer ${cachedSession.accessToken}`;
-    }
-
     return config;
   },
   (error) => Promise.reject(error)
 );
+
 
 // Interceptor de response
 api.interceptors.response.use(

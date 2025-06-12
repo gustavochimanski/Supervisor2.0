@@ -1,7 +1,6 @@
 import { BanknoteIcon, Building, CircleUser, HandCoins, LucideShoppingCart, Menu, Monitor, Mouse, Network } from "lucide-react";
 
 import { TabComponentPerifericos } from "./components/tabs/perifericos/TabComponentPerifericos";
-import TabComponentMeioPagamento from "./components/tabs/meioPagamento/TabComponentMeioPag";
 import TabComponentEmpresas from "./components/tabs/empresas/TabComponentEmpresas";
 import TabComponentFiscal from "./components/tabs/fiscal/TabComponentFiscal";
 import TabComponentMainCaixas from "./components/tabs/caixas/TabComponentMainCaixas";
@@ -9,6 +8,7 @@ import TabComponentProdutos from "./components/tabs/produtos/TabComponentProduto
 import TabComponentPerfilPdv from "./components/tabs/PerfilPdv/TabComponentPerfilPdv";
 import TabComponentUsuarios from "./components/tabs/usuarios/TabComponentMainUsuarios";
 
+import TabComponentMeioPagamento from "./components/tabs/meioPagamento/TabComponentMeioPag";
 import TabsWrapper from "@/components/shared/tabsWrapper";
 
 import { fetchAllCaixasSSR } from "./services/PdvsService";
@@ -72,7 +72,9 @@ const PageCadastros = async () => {
             <BanknoteIcon size={15} /> Meios de Pagamento
           </span>
         ),
-        Component: <TabComponentMeioPagamento/>
+        Component: (
+        <TabComponentMeioPagamento  />
+      ),
       },
       {
         value: "perifericos",

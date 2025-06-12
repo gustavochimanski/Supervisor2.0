@@ -20,6 +20,7 @@ import {
   useAtualizarDescricaoMeioPgto, 
   useFetchByIdMeioPgto 
 } from "@/app/(private)/cadastros/hooks/useMeioPag";
+import { Button } from "@/components/ui/button";
 
 interface ConfigsMeioPagamentoHandles {
   handleSubmit: () => Promise<void>;
@@ -71,7 +72,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles, Props>(({ i
     setLoading(true);
 
     try {
-      // Atualiza descrição, se tiver alterada
+      // Atualiza descrição, se mudou
       if (dadosMeioPgto.descricao) {
         await atualizaDescricao.mutateAsync({
           id: dadosMeioPgto.id.toString(),
@@ -79,16 +80,16 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles, Props>(({ i
         });
       }
 
-      // Atualiza configs se houve alteração
+      // Atualiza configs se houve alteração (atenção à ordem do array)
       if (
         JSON.stringify(configDadosMeioPgto) !==
         JSON.stringify(originalConfigDadosMeioPgto)
       ) {
         await atualizaConfigMpgto.mutateAsync(configDadosMeioPgto);
+        setOriginalConfigDadosMeioPgto(configDadosMeioPgto); // Atualiza original pra evitar múltiplos saves
       }
 
     } catch (error) {
-      // Erros já são tratados no próprio hook via toast
       console.error("Erro ao salvar configurações:", error);
     } finally {
       setLoading(false);
@@ -104,7 +105,13 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles, Props>(({ i
   }
 
   return (
-    <form className="p-4 flex flex-col">
+    <form
+      className="p-4 flex flex-col h-full"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
       <CardDescription>
         <Separator className="my-3" />
         <InfoSection
@@ -118,7 +125,7 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles, Props>(({ i
         />
       </CardDescription>
 
-      <CardContent>
+      <CardContent className="flex-1 overflow-auto">
         <Separator className="my-5" />
         <GeneralSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
         <Separator className="my-5" />
@@ -139,7 +146,10 @@ const ConfigsMeioPagamento = forwardRef<ConfigsMeioPagamentoHandles, Props>(({ i
         <OtherSettings configDadosMeioPgto={configDadosMeioPgto} handleChange={handleChange} />
         <Separator className="my-5" />
       </CardContent>
+
+ 
     </form>
+
   );
 });
 

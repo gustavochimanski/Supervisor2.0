@@ -29,7 +29,7 @@ import { TipoMeta } from "../types/typeConfigMetas";
 import { useToast } from "@/hooks/use-toast";
 import { formatDateToYYYYMMDD } from "@/utils/format/formatDate";
 import { CalendarIcon, CircleCheck } from "lucide-react";
-import { cn } from "@/utils/utils";
+import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 
 const EMPRESAS = [
