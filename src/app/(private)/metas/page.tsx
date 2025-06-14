@@ -1,4 +1,4 @@
-import TabsWrapper from "@/components/shared/tabsWrapper"
+import TabsWrapper from "@/components/shared/tabs/tabsWrapper"
 import { BarChart, LucideShoppingCart, Pencil, Target } from "lucide-react"
 import TabComponentConfigMetas from "./components/TabComponentConfigMetas"
 

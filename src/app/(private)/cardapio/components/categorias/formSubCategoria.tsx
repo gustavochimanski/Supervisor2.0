@@ -1,3 +1,5 @@
+// components/formSubCategoria.tsx
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -19,46 +21,49 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useMutateCategoria } from "../../hooks/useMutateCategoria";
 
+// Validação de esquema com Zod
 const schema = z.object({
-  nome: z.string().min(2),
+  nome: z.string().min(2), // nome mínimo 2 caracteres
   slug: z.string().optional(),
   imagem: z
     .instanceof(File)
     .optional()
-    .refine((f) => !f || f.size <= 2 * 1024 * 1024, "Máx. 2 MB"),
+    .refine((f) => !f || f.size <= 2 * 1024 * 1024, "Máx. 2 MB"), // limite 2MB
 });
 type FormData = z.infer<typeof schema>;
 
 interface Props {
-  parentSlug: string | null;
-  onClose: () => void;
+  parentSlug: string | null; // slug do nó pai (ou null se raiz)
+  onClose: () => void;       // função para fechar o diálogo
 }
 
 export default function FormSubcategoria({ parentSlug, onClose }: Props) {
+  // Inicializa React Hook Form com validação Zod
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { nome: "", slug: "" },
   });
 
+  // Hook para criar a subcategoria
   const { createSub } = useMutateCategoria(parentSlug);
 
-  /* preview da imagem */
+  // Estado e preview da imagem selecionada
   const file = form.watch("imagem");
   const [preview, setPreview] = useState<string | null>(null);
   if (file instanceof File && !preview) {
     setPreview(URL.createObjectURL(file));
   }
 
-
-
+  // Função chamada ao submeter o formulário
   async function onSubmit(data: FormData) {
     await createSub.mutateAsync({
       nome: data.nome.trim(),
+      // se slug não informado, gera via slugify
       slug: data.slug || slugify(data.nome, { lower: true }),
       imagem: data.imagem,
     });
-    form.reset();
-    onClose();
+    form.reset();  // limpa formulário
+    onClose();     // fecha diálogo
   }
 
   return (
@@ -66,9 +71,9 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid gap-4"
-        encType="multipart/form-data"
+        encType="multipart/form-data" // necessário para file upload
       >
-        {/* NOME */}
+        {/* Campo NOME */}
         <FormField
           control={form.control}
           name="nome"
@@ -80,7 +85,8 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
             </FormItem>
           )}
         />
-        {/* IMAGEM */}
+
+        {/* Campo IMAGEM */}
         <FormField
           control={form.control}
           name="imagem"
@@ -96,6 +102,7 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
                   if (arquivo) setPreview(URL.createObjectURL(arquivo));
                 }}
               />
+              {/* Pré-visualização */}
               {preview && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -109,7 +116,7 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
           )}
         />
 
-        {/* BOTÕES */}
+        {/* Botões de Cancelar e Salvar */}
         <DialogFooter>
           <Button type="button" variant="secondary" onClick={onClose}>
             Cancelar

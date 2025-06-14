@@ -1,4 +1,4 @@
-import Tabs from "@/components/shared/tabs";
+import Tabs from "@/components/shared/tabs/tabs";
 import { Keyboard, Monitor, Printer } from "lucide-react";
 
 const TabComponentFiscal = () => {

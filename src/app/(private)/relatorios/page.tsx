@@ -1,6 +1,6 @@
 import { Monitor } from "lucide-react";
 
-import Tabs from "@/components/shared/tabs";
+import Tabs from "@/components/shared/tabs/tabs";
 
 const ComponentRelatorios: React.FC = async () => {
     const nestedTabItems = [

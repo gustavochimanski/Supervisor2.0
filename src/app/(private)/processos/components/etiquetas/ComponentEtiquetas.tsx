@@ -1,4 +1,4 @@
-import TabsWrapper from "@/components/shared/tabsWrapper"
+import TabsWrapper from "@/components/shared/tabs/tabsWrapper"
 import { Barcode, IdCard, User } from "lucide-react"
 import ComponentEtiquetasUsuarios from "./usuario/ComponentEtiquetasUsuarios"
 import ComponentEtiquetasPreco from "./preco/ComponentEtiquetasPreco"

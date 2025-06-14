@@ -1,7 +1,7 @@
 
 
 import { User, Users } from "lucide-react";
-import TabsWrapper from "@/components/shared/tabsWrapper";
+import TabsWrapper from "@/components/shared/tabs/tabsWrapper";
 import ComponentUsuarios from "./usuarios/ComponentUsuarios";
 
 const TabComponentUsuarios: React.FC = () => {

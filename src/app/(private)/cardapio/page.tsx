@@ -1,7 +1,7 @@
 import { Apple } from "lucide-react"
-import TabsWrapper from "@/components/shared/tabsWrapper"
+import TabsWrapper from "@/components/shared/tabs/tabsWrapper"
 import TabComponentProdutosCardapio from "./components/produtos/TabComponentProdutosCardapio"
-import TabCategorias from "./components/categorias/page"
+import TabCategorias from "./components/categorias/TabComponentCategoria"
 
 interface Props {
     

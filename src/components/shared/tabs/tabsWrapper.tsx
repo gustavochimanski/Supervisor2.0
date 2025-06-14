@@ -1,7 +1,7 @@
 // components/shared/TabsWrapper.tsx
 'use client';
 
-import Tabs from "@/components/shared/tabs";
+import Tabs from "@/components/shared/tabs/tabs";
 
 interface TabsWrapperProps {
   items: any[];

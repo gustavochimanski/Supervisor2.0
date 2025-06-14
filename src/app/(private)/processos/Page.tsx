@@ -3,7 +3,7 @@ import { Barcode, Network, RefreshCcwDot, Waypoints } from "lucide-react";
 import ComponentComunicacao from "./components/comunicacao/ComponentComunicacao";
 import ComponentProcessamentos from "./components/processamentos/ComponentProcessamentos";
 import ComponentCentralNFCE from "./components/centralNFCE/ComponentCentralNFCE";
-import TabsWrapper from "@/components/shared/tabsWrapper";
+import TabsWrapper from "@/components/shared/tabs/tabsWrapper";
 import { fetchDadosCentralNFCE } from "./hooks/fetchCentralNFCE";
 import ComponentEtiquetas from "./components/etiquetas/ComponentEtiquetas";
 

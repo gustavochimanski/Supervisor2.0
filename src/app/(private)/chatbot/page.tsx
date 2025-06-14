@@ -1,4 +1,4 @@
-import TabsWrapper from "@/components/shared/tabsWrapper"
+import TabsWrapper from "@/components/shared/tabs/tabsWrapper"
 import { Settings } from "lucide-react"
 import TabComponentConfigChatBot from "./components/config/TabComponentConfigChatBot"
 import TabComponentBotFlowAdmin from "./components/flow/TabComponentFlowChatBot"
