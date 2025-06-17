@@ -1,13 +1,14 @@
 // src/services/serviceDashboard.ts
 import axios from "axios";
 import { TypeDashboardResponse, TypeFiltroDashboard } from "../types/typeDashboard";
+import apiMensura from "@/app/api/apiMensura";
 
 export const postHeaderDashboard = async (
   payload: TypeFiltroDashboard
 ): Promise<TypeDashboardResponse> => {
   try {
-    const { data } = await axios.post<TypeDashboardResponse>(
-      " http://69.62.93.161:8000/dashboard/periodo",
+    const { data } = await apiMensura.post<TypeDashboardResponse>(
+      "/dashboard/periodo",
       payload
     );
     return data;
