@@ -17,7 +17,7 @@ type FlowPayload = {
   versao: number;
 };
 
-const urlApi = "http://localhost:8000/flow"
+const urlApi = "http://69.62.93.161:8000/flow"
 
 export const fetchNodes = async (payload: FlowPayload): Promise<Node[]> => {
   const { data } = await axios.post(`${urlApi}/nodes`, payload, {

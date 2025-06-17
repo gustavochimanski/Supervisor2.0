@@ -1,6 +1,6 @@
 // useSaveChatbotConfig.ts
 
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "react-query";
 import { saveChatbotConfig } from "../services/chatBotService";
 
 interface ConfigChatbotPayload {
