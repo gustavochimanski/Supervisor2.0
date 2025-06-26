@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
-import { loginService } from "@/services/Auth/authenticate";
+
 import "@/app/(private)/globals.css";
 import Image from "next/image";
 import { toast } from "sonner";
+import { loginService } from "@/services/Auth/authenticate";
 
 type FormValues = {
   username: string;
@@ -36,9 +37,15 @@ export default function Login() {
   
   const onSubmit = async (props: FormValues) => {
     setIsLoading(true);
-    await loginService(props.username, props.password); // redireciona automaticamente
-    setIsLoading(false);
+    try {
+      await loginService(props.username, props.password); // redireciona dentro do service
+    } catch (err) {
+      toast.error("Usuário ou senha inválidos.");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 p-2">

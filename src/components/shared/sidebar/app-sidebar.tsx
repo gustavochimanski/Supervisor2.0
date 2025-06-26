@@ -28,10 +28,11 @@ import {
     Utensils,
   } from "lucide-react";
 
-import { logout } from "@/services/Auth/authenticate";
+
 import Image from 'next/image';
 import Link from "next/link";
 import { ThemeToggle } from "../themeToggle";
+import { logout } from "@/services/Auth/logout";
 
 
   // Menu items.

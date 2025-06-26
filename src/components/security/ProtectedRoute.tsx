@@ -1,23 +1,26 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/login");
-    }
-  }, [status, router]);
+    const token = localStorage.getItem("token");
 
-  if (status === "loading") {
+    if (!token) {
+      router.replace("/login");
+    } else {
+      setChecking(false); // liberado para renderizar o conteúdo
+    }
+  }, [router]);
+
+  if (checking) {
     return (
       <div className="w-full h-screen flex items-center justify-center text-muted-foreground">
-        Carregando sessão...
+        Verificando sessão...
       </div>
     );
   }
