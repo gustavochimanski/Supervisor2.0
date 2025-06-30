@@ -1,11 +1,8 @@
-import { Apple } from "lucide-react"
+import { Apple, Workflow } from "lucide-react"
 import TabsWrapper from "@/components/shared/tabs/tabsWrapper"
-import TabComponentProdutosCardapio from "./components/produtos/TabComponentProdutosCardapio"
 import TabCategorias from "./components/categorias/TabComponentCategoria"
+import TabComponentProdutosCardapio from "./components/produtos/TabComponentProdutosCardapio"
 
-interface Props {
-    
-}
 const PageCardapio = () => {
 
     const nestedTabItems = [
@@ -22,7 +19,7 @@ const PageCardapio = () => {
       value: "Categorias",
       label: (
         <span className="flex items-center gap-2">
-          <Apple size={14} /> Categorias
+          <Workflow size={14} /> Categorias
         </span>
       ),
       Component: <TabCategorias/>,

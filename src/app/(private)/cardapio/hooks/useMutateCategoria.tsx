@@ -3,7 +3,7 @@ import apiMensura from "@/app/api/apiMensura";
 import { useMutation, useQueryClient } from "react-query"; // ou @tanstack/react-query
 
 interface NovoBody {
-  nome: string;
+  descricao: string;
   slug?: string;
   imagem?: File; // File nativo do browser
 }
@@ -12,9 +12,9 @@ export function useMutateCategoria(parentSlug: string | null) {
   const qc = useQueryClient();
 
   /** Constrói multipart/form-data */
-  function buildFormData({ nome, slug, imagem }: NovoBody) {
+  function buildFormData({ descricao, slug, imagem }: NovoBody) {
     const fd = new FormData();
-    fd.append("nome", nome.trim());
+    fd.append("descricao", descricao.trim());
     if (slug) fd.append("slug", slug);          // opcional
     if (parentSlug) fd.append("slug_pai", parentSlug);
     if (imagem) fd.append("imagem", imagem);    // só se tiver arquivo
@@ -24,7 +24,7 @@ export function useMutateCategoria(parentSlug: string | null) {
   const createSub = useMutation({
     mutationFn: (body: NovoBody) =>
       apiMensura.post(
-        "/categorias/delivery/",
+        "/mensura/categorias/delivery/",
         buildFormData(body) // 🚀 agora é FormData
         // não defina Content-Type manualmente!
       ),
@@ -33,7 +33,7 @@ export function useMutateCategoria(parentSlug: string | null) {
 
   const remove = useMutation({
     mutationFn: (id: number) =>
-      apiMensura.delete(`/categorias/delivery/${id}`),
+      apiMensura.delete(`/mensura/categorias/delivery/${id}`),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["categorias"] }),
   });
 

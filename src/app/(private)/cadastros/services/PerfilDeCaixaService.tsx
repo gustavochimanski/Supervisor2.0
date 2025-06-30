@@ -1,7 +1,6 @@
 
 import api from '@/app/api/api';
 import { PatchConfPerfilPayload, TypePerfilPdv } from '../types/typesPDVS';
-import { getApiSSR } from '@/app/api/apiSSR';
 import { ssrApiFetch } from '@/lib/ssrApiFetch';
 
 

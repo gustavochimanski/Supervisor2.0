@@ -23,7 +23,7 @@ import { useMutateCategoria } from "../../hooks/useMutateCategoria";
 
 // Validação de esquema com Zod
 const schema = z.object({
-  nome: z.string().min(2), // nome mínimo 2 caracteres
+  descricao: z.string().min(2), // nome mínimo 2 caracteres
   slug: z.string().optional(),
   imagem: z
     .instanceof(File)
@@ -41,7 +41,7 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
   // Inicializa React Hook Form com validação Zod
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { nome: "", slug: "" },
+    defaultValues: { descricao: "", slug: "" },
   });
 
   // Hook para criar a subcategoria
@@ -57,9 +57,9 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
   // Função chamada ao submeter o formulário
   async function onSubmit(data: FormData) {
     await createSub.mutateAsync({
-      nome: data.nome.trim(),
+      descricao: data.descricao.trim(),
       // se slug não informado, gera via slugify
-      slug: data.slug || slugify(data.nome, { lower: true }),
+      slug: data.slug || slugify(data.descricao, { lower: true }),
       imagem: data.imagem,
     });
     form.reset();  // limpa formulário
@@ -76,7 +76,7 @@ export default function FormSubcategoria({ parentSlug, onClose }: Props) {
         {/* Campo NOME */}
         <FormField
           control={form.control}
-          name="nome"
+          name="descricao"
           render={({ field }) => (
             <FormItem>
               <Label>Nome</Label>

@@ -9,7 +9,6 @@ import { Card, CardContent } from "@/components/ui/card";
 const TabComponentPerfilPdv = () => {
   const [rowSelected, setRowSelected] = useState<any>();
   const [modoEdicao, setModoEdicao] = useState(false);
-  console.log(rowSelected)
 
   const { data: dataAllperfil } = useFetchAllPerfil();
 

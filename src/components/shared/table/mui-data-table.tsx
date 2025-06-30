@@ -32,10 +32,6 @@ const defaultLocaleText: DataGridProps["localeText"] = {
   columnMenuShowColumns: "Mostrar Colunas",
   columnMenuManageColumns: "Definir Colunas",
   footerTotalRows: "Total de linhas:",
-  MuiTablePagination: {
-    labelRowsPerPage: "Linhas por página",
-    labelDisplayedRows: ({ from, to, count }) => `${from}–${to} de ${count}`,
-  },
 };
 
 const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
@@ -96,7 +92,6 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
       }}
     >
       <DataGrid
-        apiRef={apiRef}
         rows={rows}
         columns={orderedColumns}
         rowHeight={35}
@@ -108,6 +103,8 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
         onRowSelectionModelChange={onRowSelectionModelChange}
         onCellEditStop={handleCellEditStop}
         processRowUpdate={handleProcessRowUpdate}
+        paginationModel={{ pageSize: 20, page: 0 }}
+        pageSizeOptions={[20]}
         sx={{
           flex: 1,
           minHeight: 0,
@@ -123,7 +120,7 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
           "& .MuiDataGrid-columnSeparator": {
             color: "hsl(var(--border))",
             visibility: "visible",
-            width: "1px",
+            width: "10px",
             opacity: 0.2,
           },
           "& .MuiDataGrid-columnHeader": {

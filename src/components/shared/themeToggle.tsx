@@ -29,19 +29,17 @@ export const ThemeToggle = ({ className,label, sidebar = false }: ThemeTogglePro
 
   if (sidebar) {
     return (
-      <button onClick={toggleTheme} className={className}>
+      <div onClick={toggleTheme} className={className}>
         {icon} {label}
-      </button>
+      </div>
     )
   }
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
+    <div
       onClick={toggleTheme}
     >
       {icon}
-    </Button>
+    </div>
   )
 }

@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function getApiSSR() {
-  const cookieStore = cookies(); // já é síncrono!
+  const cookieStore = cookies(); 
   const token = (await cookieStore).get("token")?.value;
 
   if (!token) {

@@ -1,6 +1,3 @@
-// ⚠️ "use client" não é necessário aqui pois o componente é assíncrono (Server Component no Next 13+)
-// Só coloque se for migrar para client component depois
-// "use client";
 
 import {
   BanknoteIcon,
@@ -19,31 +16,21 @@ import { TabComponentPerifericos } from "./components/tabs/perifericos/TabCompon
 import TabComponentEmpresas from "./components/tabs/empresas/TabComponentEmpresas";
 import TabComponentFiscal from "./components/tabs/fiscal/TabComponentFiscal";
 import TabComponentMainCaixas from "./components/tabs/caixas/TabComponentMainCaixas";
-import TabComponentProdutos from "./components/tabs/produtos/TabComponentProdutos";
 import TabComponentPerfilPdv from "./components/tabs/PerfilPdv/TabComponentPerfilPdv";
 import TabComponentUsuarios from "./components/tabs/usuarios/TabComponentMainUsuarios";
 import TabComponentMeioPagamento from "./components/tabs/meioPagamento/TabComponentMeioPag";
 
 import TabsWrapper from "@/components/shared/tabs/tabsWrapper"; // Componente genérico que renderiza tabs
-import { fetchAllCaixasSSR } from "./services/PdvsService"; // Função que busca dados de caixas no lado servidor (SSR)
+import { fetchAllCaixas } from "./services/PdvsService"; // Função que busca dados de caixas no lado servidor (SSR)
 
 
-// 🧠 Componente principal da página de cadastros
+// Componente principal da página de cadastros
 const PageCadastros = async () => {
-  // 🔁 Faz uma requisição SSR para buscar os dados dos caixas (evita flash na tela com CSR)
-  const caixasSSR = await fetchAllCaixasSSR();
+  // Faz uma requisição SSR para buscar os dados dos caixas (evita flash na tela com CSR)
+  const caixasSSR = await fetchAllCaixas();
 
-  // 🗂️ Lista de abas que serão renderizadas no TabsWrapper
+  // Lista de abas que serão renderizadas no TabsWrapper
   const nestedTabItems = [
-    {
-      value: "produtos",
-      label: (
-        <span className="flex items-center gap-2">
-          <LucideShoppingCart size={15} /> Produtos
-        </span>
-      ),
-      Component: <TabComponentProdutos />,
-    },
     {
       value: "caixas",
       label: (

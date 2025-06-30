@@ -63,10 +63,6 @@ function Nodo({ node }: { node: CategoryNode }) {
   const [dialog, setDialog] = useState(false);
   // Hook para remover categoria (usa node.id)
   const { remove } = useMutateCategoria(null);
-  // Monta URL completa da imagem (exemplo local)
-  if (!node.imagem) return <div></div>
-  const im = `http://69.62.93.161:1001${node.imagem.replace('/minio/categorias/', '/categorias/')}`;
-  console.log(im);
 
 
   return (
@@ -94,7 +90,7 @@ function Nodo({ node }: { node: CategoryNode }) {
         {node.imagem && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={im}
+            src={node.imagem || "/placeholder.png"}
             alt={node.label}
             className="w-5 h-5 rounded-full object-cover"
           />

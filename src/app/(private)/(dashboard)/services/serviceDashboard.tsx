@@ -1,5 +1,4 @@
 // src/services/serviceDashboard.ts
-import axios from "axios";
 import { TypeDashboardResponse, TypeFiltroDashboard } from "../types/typeDashboard";
 import apiMensura from "@/app/api/apiMensura";
 
@@ -8,7 +7,7 @@ export const postHeaderDashboard = async (
 ): Promise<TypeDashboardResponse> => {
   try {
     const { data } = await apiMensura.post<TypeDashboardResponse>(
-      "/dashboard/periodo",
+      "/bi/dashboard/periodo",
       payload
     );
     return data;
