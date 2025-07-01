@@ -26,7 +26,7 @@ export function useMutateProduto() {
 
   return useMutation({
     mutationFn: async (formData: FormData) => {
-      const { data } = await apiMensura.post("/mensura/produtos/delivery/", formData, {
+      const { data } = await apiMensura.post("/mensura/produtos/delivery", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
