@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 
 // 🔑 Instância Axios só para login/logout (sem interceptor de request)
 const authApi = axios.create({
-  baseURL: "http://51.38.190.174:8087",
+  baseURL: "https://51.38.190.174:8087",
 });
 
 // 1️⃣ — Interceptor de resposta: trata 401 durante o processo de login (caso o refresh também quebre)

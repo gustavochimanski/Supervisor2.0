@@ -6,7 +6,6 @@ import { decodeJwt } from "jose";
 const PUBLIC_FILE = /\.(.*)$/;
 
 export async function middleware(request: NextRequest) {
-  console.log("🔥 middleware rodou em:", request.nextUrl.pathname, "cookie:", request.cookies.get("token")?.value);
   const { pathname } = request.nextUrl;
 
 
