@@ -6,7 +6,6 @@ import ComponentParticipacaoEmpresas from "./participacaoEmpresas/DashCardPartic
 import VendasPorHoraChart from "./vendasPorHora/ComponentChartVendasbyHour";
 import DashCardClientesPorHoraChart from "./clientesPorHora/DashCardClientePorHora";
 import ComponentParticipacaoDepartamentos, { TotaisPorDepartamento } from "./departamento/DashCardParticipacaoDepartamento";
-import { Button } from "@/components/ui/button";
 
 interface Props { dashboardData: TypeDashboardResponse }
 

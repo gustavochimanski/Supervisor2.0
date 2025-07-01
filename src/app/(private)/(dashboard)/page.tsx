@@ -1,7 +1,7 @@
 "use client"; 
 
 
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {  CardContent } from "@/components/ui/card"; 
 import ComponentCardHeader from "./components/header/ComponentCardheader"; // Header com filtros (ex: datas e empresas)
 import { usePostDashboard } from "./hooks/useQueryDashboard"; // Hook para enviar o payload e receber os dados do dashboard
