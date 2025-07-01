@@ -1,13 +1,12 @@
 // src/hooks/useEmpresas.ts
 "use client";
 
-import { getEmpresas } from "@/services/global/serviceGetEmpresas";
 import { useQuery } from "react-query";
+import { fetchEmpresasDetalhes } from "./serviceGetEmpresas";
 
-export function useGetEmpresas() {
+export function useEmpresasDetalhes() {
   return useQuery({
-    queryKey: ["empresas"],
-    queryFn: getEmpresas,
-    staleTime: 1000 * 60 * 5, // cache por 5 min
+    queryKey: ["empresas_detalhes"],
+    queryFn: fetchEmpresasDetalhes,
   });
 }

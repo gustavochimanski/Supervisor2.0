@@ -10,8 +10,6 @@ import { formatDateToYYYYMMDD } from "@/utils/format/formatDate"; // Função pa
 import TabComponentDashboardEmpresaGeral from "./components/TabComponentEmpresaGeral"; // Aba com dados gerais
 import TabComponentDashboardByEmp from "./components/TabComponentDashboardByEmp"; // Aba com dados por empresa
 import TabsWrapper from "@/components/shared/tabs/tabsWrapper"; // Componente de abas/tabulação
-import { useGetEmpresas } from "@/services/global/useGetEmpresas"; // Hook que busca as empresas no backend
-import { TypeEmpresas } from "@/types/empresas/TypeEmpresas"; // Tipagem da empresa
 
 export default function PageDashboard() {
   const today = new Date();

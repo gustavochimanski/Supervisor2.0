@@ -1,10 +1,10 @@
 import apiMensura from "@/app/api/apiMensura";
 import { TypeEmpresas } from "@/types/empresas/TypeEmpresas";
 
-export const getEmpresas = async (
-  ): Promise<TypeEmpresas[]> => {
+
+export async function fetchEmpresasDetalhes(): Promise<TypeEmpresas[]> {
     try {
-      const { data } = await apiMensura.get("/pu/empresas",);
+      const { data } = await apiMensura.get("/public/empresas/detalhes");
 
       return data;
     } catch (err: any) {
@@ -14,5 +14,5 @@ export const getEmpresas = async (
         throw new Error("Erro de rede ou API está fora");
       }
     }
-  };
+}
   

@@ -1,7 +1,7 @@
 
 import { TypeDashboardResponse } from "../types/typeDashboard";
 import DashboardMetricCards from "./metrics/DashCardMetricCards";
-import { useGetEmpresas } from "@/services/global/useGetEmpresas";
+import { useEmpresasDetalhes } from "@/services/global/useGetEmpresas";
 import ComponentParticipacaoEmpresas from "./participacaoEmpresas/DashCardParticipacaoEmpresas";
 import VendasPorHoraChart from "./vendasPorHora/ComponentChartVendasbyHour";
 import DashCardClientesPorHoraChart from "./clientesPorHora/DashCardClientePorHora";
@@ -24,7 +24,7 @@ const mockDepartamentos: TotaisPorDepartamento[] = [
 
 
 export default function TabComponentDashboardEmpresaGeral({ dashboardData }: Props) {
-  const {data: empresasData} = useGetEmpresas();
+  const {data: empresasData} = useEmpresasDetalhes();
   
 return (
   <div className="flex flex-col gap-4">
