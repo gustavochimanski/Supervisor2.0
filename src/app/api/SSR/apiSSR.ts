@@ -1,23 +1,23 @@
-// app/api/apiSSR.ts
 import axios, { AxiosInstance } from "axios";
 import { cookies } from "next/headers";
 
 export async function getApiServer(): Promise<AxiosInstance> {
-  // 1️⃣ aguarda o cookie store
   const cookieStore = await cookies();
-
-  // 2️⃣ lê o token
   const token = cookieStore.get("token")?.value;
 
-  // 3️⃣ monta headers
-  const headers: Record<string,string> = {};
+  const headers: Record<string, string> = {};
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  // 4️⃣ retorna instância já configurada
+  const baseURL = process.env.NEXT_PUBLIC_API_BASE; // ✅ Use URL real
+
+  if (!baseURL) {
+    throw new Error("NEXT_PUBLIC_API_BASE não definido no .env");
+  }
+
   return axios.create({
-    baseURL: "http://51.38.190.174:8087",
+    baseURL, // ✅ agora funciona no server
     headers,
   });
 }
