@@ -1,7 +1,7 @@
 "use client"; 
 
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {  CardContent } from "@/components/ui/card"; 
 import ComponentCardHeader from "./components/header/ComponentCardheader"; // Header com filtros (ex: datas e empresas)
 import { usePostDashboard } from "./hooks/useQueryDashboard"; // Hook para enviar o payload e receber os dados do dashboard
@@ -10,6 +10,8 @@ import { formatDateToYYYYMMDD } from "@/utils/format/formatDate"; // Função pa
 import TabComponentDashboardEmpresaGeral from "./components/TabComponentEmpresaGeral"; // Aba com dados gerais
 import TabComponentDashboardByEmp from "./components/TabComponentDashboardByEmp"; // Aba com dados por empresa
 import TabsWrapper from "@/components/shared/tabs/tabsWrapper"; // Componente de abas/tabulação
+import { useEmpresasDetalhes } from "@/services/global/useGetEmpresas"; // Hook que busca as empresas no backend
+import { TypeEmpresas } from "@/types/empresas/TypeEmpresas"; // Tipagem da empresa
 
 export default function PageDashboard() {
   const today = new Date();
@@ -25,6 +27,8 @@ export default function PageDashboard() {
   const [payload, setPayload] = useState<TypeFiltroDashboard>(defaultPayload); // Filtros atuais
   const [dashboardData, setDashboardData] = useState<TypeDashboardResponse | null>(null); // Resposta da API
 
+  // 🏢 Busca empresas (já com fallback para array vazio)
+  const { data: dataEmpresas = [] } = useEmpresasDetalhes();
 
   // 🚀 Hook para enviar o filtro e buscar dados do dashboard
   const { mutateAsync, isLoading, error } = usePostDashboard();
@@ -42,7 +46,12 @@ export default function PageDashboard() {
   };
 
   // 🧠 Cria um mapa do código da empresa para o nome reduzido (otimizado com useMemo para não recalcular sempre)
-
+  const mapaCodigosNomes: Record<string, string> = useMemo(() => {
+    return dataEmpresas.reduce((acc: Record<string, string>, empresa: TypeEmpresas) => {
+      acc[empresa.empr_codigo] = empresa.empr_nomereduzido?.trim() || "Sem nome";
+      return acc;
+    }, {});
+  }, [dataEmpresas]);
 
   // 💬 Estados de carregamento, erro ou sem dados
   if (isLoading) return <p>Carregando...</p>;
@@ -58,7 +67,7 @@ export default function PageDashboard() {
     },
     ...dashboardData.totais_por_empresa.map((e) => ({
       value: e.lcpr_codempresa,
-      label: `${e.lcpr_codempresa} - ${defaultPayload.empresas || "Sem nome"}`, // Nome da aba com código e nome da empresa
+      label: `${e.lcpr_codempresa} - ${mapaCodigosNomes[e.lcpr_codempresa] || "Sem nome"}`, // Nome da aba com código e nome da empresa
       Component: (
         <TabComponentDashboardByEmp
           codEmpresa={e.lcpr_codempresa}
