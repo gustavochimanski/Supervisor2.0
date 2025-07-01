@@ -27,8 +27,6 @@ export default function PageDashboard() {
   const [payload, setPayload] = useState<TypeFiltroDashboard>(defaultPayload); // Filtros atuais
   const [dashboardData, setDashboardData] = useState<TypeDashboardResponse | null>(null); // Resposta da API
 
-  // 🏢 Busca empresas (já com fallback para array vazio)
-  const { data: dataEmpresas = [] } = useGetEmpresas();
 
   // 🚀 Hook para enviar o filtro e buscar dados do dashboard
   const { mutateAsync, isLoading, error } = usePostDashboard();
@@ -46,12 +44,7 @@ export default function PageDashboard() {
   };
 
   // 🧠 Cria um mapa do código da empresa para o nome reduzido (otimizado com useMemo para não recalcular sempre)
-  const mapaCodigosNomes: Record<string, string> = useMemo(() => {
-    return dataEmpresas.reduce((acc: Record<string, string>, empresa: TypeEmpresas) => {
-      acc[empresa.empr_codigo] = empresa.empr_nomereduzido?.trim() || "Sem nome";
-      return acc;
-    }, {});
-  }, [dataEmpresas]);
+
 
   // 💬 Estados de carregamento, erro ou sem dados
   if (isLoading) return <p>Carregando...</p>;
@@ -67,7 +60,7 @@ export default function PageDashboard() {
     },
     ...dashboardData.totais_por_empresa.map((e) => ({
       value: e.lcpr_codempresa,
-      label: `${e.lcpr_codempresa} - ${mapaCodigosNomes[e.lcpr_codempresa] || "Sem nome"}`, // Nome da aba com código e nome da empresa
+      label: `${e.lcpr_codempresa} - ${defaultPayload.empresas || "Sem nome"}`, // Nome da aba com código e nome da empresa
       Component: (
         <TabComponentDashboardByEmp
           codEmpresa={e.lcpr_codempresa}

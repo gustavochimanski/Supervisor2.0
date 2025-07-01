@@ -13,15 +13,16 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*", // Backend principal
-        destination: "http://51.38.190.174:8087/:path*",
-      },
-      {
-        source: "/api/mensura/:path*", // Mensura
+        source: "/api/mensura/:path*", // Coloque esse primeiro!
         destination: "http://69.62.93.161:1000/:path*",
       },
+      {
+        source: "/api/:path*", // Esse vem depois
+        destination: "http://51.38.190.174:8087/:path*",
+      },
     ];
-  },
+  }
+
 };
 
 module.exports = withPWA(nextConfig);
