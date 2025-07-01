@@ -10,9 +10,7 @@ export async function getApiServer(): Promise<AxiosInstance> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  console.log("🌐 Base URL:", process.env.NEXT_PUBLIC_API_BASE);
-
-  const baseURL = process.env.NEXT_PUBLIC_API_BASE; // ✅ Use URL real
+  const baseURL = "http://51.38.190.174:8087"; // ✅ Use URL real
 
   if (!baseURL) {
     throw new Error("NEXT_PUBLIC_API_BASE não definido no .env");
