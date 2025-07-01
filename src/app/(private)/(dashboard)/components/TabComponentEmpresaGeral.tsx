@@ -1,7 +1,7 @@
 
 import { TypeDashboardResponse } from "../types/typeDashboard";
 import DashboardMetricCards from "./metrics/DashCardMetricCards";
-import { useGetEmpresas } from "@/hooks/useQuery/useGetEmpresas";
+import { useGetEmpresas } from "@/services/global/useGetEmpresas";
 import ComponentParticipacaoEmpresas from "./participacaoEmpresas/DashCardParticipacaoEmpresas";
 import VendasPorHoraChart from "./vendasPorHora/ComponentChartVendasbyHour";
 import DashCardClientesPorHoraChart from "./clientesPorHora/DashCardClientePorHora";

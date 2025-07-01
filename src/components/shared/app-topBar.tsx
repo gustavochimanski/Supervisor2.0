@@ -9,10 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { logout } from "@/services/Auth/authenticate";
 import { useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 import { ThemeToggle } from "./themeToggle";
+import { logoutService } from "@/services/Auth/authenticate";
 
 const TopBarComponent = () => {
   const theme = useTheme();
@@ -48,7 +48,7 @@ const TopBarComponent = () => {
               <User />
               Conta
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={logout}>
+            <DropdownMenuItem onClick={logoutService}>
               <Power />
               Logout{" "}
             </DropdownMenuItem>

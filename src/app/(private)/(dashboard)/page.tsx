@@ -10,7 +10,7 @@ import { formatDateToYYYYMMDD } from "@/utils/format/formatDate"; // Função pa
 import TabComponentDashboardEmpresaGeral from "./components/TabComponentEmpresaGeral"; // Aba com dados gerais
 import TabComponentDashboardByEmp from "./components/TabComponentDashboardByEmp"; // Aba com dados por empresa
 import TabsWrapper from "@/components/shared/tabs/tabsWrapper"; // Componente de abas/tabulação
-import { useGetEmpresas } from "@/hooks/useQuery/useGetEmpresas"; // Hook que busca as empresas no backend
+import { useGetEmpresas } from "@/services/global/useGetEmpresas"; // Hook que busca as empresas no backend
 import { TypeEmpresas } from "@/types/empresas/TypeEmpresas"; // Tipagem da empresa
 
 export default function PageDashboard() {
@@ -38,7 +38,7 @@ export default function PageDashboard() {
     mutateAsync(payload)
       .then(setDashboardData) // Se der certo, atualiza os dados
       .catch(() => setDashboardData(null)); // Se der erro, zera
-  }, [payload]);
+  }, [payload, mutateAsync]);
 
   // 📥 Atualiza o payload a partir do componente de filtros (header)
   const handleChangePayload = (newPayload: TypeFiltroDashboard) => {

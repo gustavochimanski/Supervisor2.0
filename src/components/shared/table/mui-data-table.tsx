@@ -4,7 +4,6 @@ import {
   GridColDef,
   DataGridProps,
   GridRowParams,
-  useGridApiRef,
   GridRowSelectionModel,
   GridCellEditStopParams,
   GridRowModel,
@@ -12,16 +11,19 @@ import {
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 
+import { useGridApiRef, GridApi } from "@mui/x-data-grid";
+
 export interface DataTableComponentProps
   extends Omit<DataGridProps, "rows" | "columns" | "localeText"> {
-  rows: any[] | undefined;
+  rows?: any[];
   columns: GridColDef[];
   columnOrder?: string[];
   onRowClick?: (rowData: any) => void;
   onRowSelectionModelChange?: (ids: GridRowSelectionModel) => void;
   onRowEditConfirm?: (newRow: GridRowModel, foiComEnter: boolean) => void;
-  apiRef?: ReturnType<typeof useGridApiRef>;
+  apiRef?: React.MutableRefObject<GridApi | null>;
 }
+
 
 const defaultLocaleText: DataGridProps["localeText"] = {
   columnMenuLabel: "Menu da Coluna",
@@ -93,6 +95,7 @@ const DataTableComponentMui: React.FC<DataTableComponentProps> = ({
     >
       <DataGrid
         rows={rows}
+        apiRef={apiRef}
         columns={orderedColumns}
         rowHeight={35}
         checkboxSelection

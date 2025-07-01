@@ -4,7 +4,6 @@ import {
   Building,
   CircleUser,
   HandCoins,
-  LucideShoppingCart,
   Menu,
   Monitor,
   Mouse,
@@ -21,13 +20,13 @@ import TabComponentUsuarios from "./components/tabs/usuarios/TabComponentMainUsu
 import TabComponentMeioPagamento from "./components/tabs/meioPagamento/TabComponentMeioPag";
 
 import TabsWrapper from "@/components/shared/tabs/tabsWrapper"; // Componente genérico que renderiza tabs
-import { fetchAllCaixas } from "./services/PdvsService"; // Função que busca dados de caixas no lado servidor (SSR)
+import { fetchAllCaixasSSR } from "./services/PdvsService"; // Função que busca dados de caixas no lado servidor (SSR)
 
 
 // Componente principal da página de cadastros
 const PageCadastros = async () => {
   // Faz uma requisição SSR para buscar os dados dos caixas (evita flash na tela com CSR)
-  const caixasSSR = await fetchAllCaixas();
+  const caixasSSR = await fetchAllCaixasSSR();
 
   // Lista de abas que serão renderizadas no TabsWrapper
   const nestedTabItems = [

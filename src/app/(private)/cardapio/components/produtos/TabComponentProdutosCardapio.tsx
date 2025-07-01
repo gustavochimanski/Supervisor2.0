@@ -11,6 +11,8 @@ import { useFetchCadProdDelivery, useMutateProduto } from "../../services/useQue
 import { TypeCadProdDelivery } from "../../types/cadProdDeliveryType"
 import { Input } from "@/components/ui/input"
 
+import Image from "next/image"; // ← tem que ser ESSA exata
+
 import {
   Select,
   SelectTrigger,
@@ -21,7 +23,6 @@ import {
 
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -166,10 +167,13 @@ const TabComponentProdutos = () => {
             {dataProdutos?.data.map((prod: TypeCadProdDelivery) => (
               <Card key={prod.cod_barras} className="shadow-sm border border-muted p-0 overflow-hidden flex flex-col">
                 {prod.imagem ? (
-                  <img
+                  <Image
                     src={prod.imagem}
                     alt={prod.descricao ?? "Imagem do produto"}
+                    width={300} 
+                    height={300} 
                     className="w-full h-40 object-cover"
+                    style={{ objectFit: "cover" }}
                   />
                 ) : (
                   <div className="w-full h-40 bg-muted flex items-center justify-center text-sm text-muted-foreground">

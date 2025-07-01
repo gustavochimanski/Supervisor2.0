@@ -6,7 +6,7 @@ import { ConfiguracaoMeioPag, MeioPgto } from "../types/typesMeioPag";
 //=========== BUSCA MEIO DE PAGAMENTO POR ID =========
 //====================================================
 export const fetchByIdMeioPgto = async (id: string) => {
-  const response = await api.get<MeioPgto>(`config/meiospgto/${id}`)
+  const response = await api.get<MeioPgto>(`/v1/config/meiospgto/${id}`)
   return response.data
 }
 
@@ -14,7 +14,7 @@ export const fetchByIdMeioPgto = async (id: string) => {
 //======== BUSCA TODOS OS MEIOS DE PAGAMENTO =========
 //====================================================
 export const fetchAllMeioPgto = async () => {
-  const response = await api.get<MeioPgto[]>("config/meiospgto")
+  const response = await api.get<MeioPgto[]>("/v1/config/meiospgto")
   return response.data
 }
 
@@ -22,7 +22,7 @@ export const fetchAllMeioPgto = async () => {
 //======== ATUALIZA DESCRICAO MEIO PAGAMENTO =========
 //====================================================
 export const atualizarDescricaoMeioPgto = async (id: string, novaDescricao: string ): Promise<MeioPgto> => {
-  const response = await api.patch<MeioPgto>(`config/meiospgto/${id}`, {
+  const response = await api.patch<MeioPgto>(`/v1/config/meiospgto/${id}`, {
     descricao: novaDescricao,
   });
   return response.data;
@@ -32,7 +32,7 @@ export const atualizarDescricaoMeioPgto = async (id: string, novaDescricao: stri
 //======== ATUALIZA CONFIGS MEIO DE PAGAMENTO ========
 //====================================================
 export const atualizarConfigMeioPgto = async (payload: ConfiguracaoMeioPag[]): Promise<ConfiguracaoMeioPag[]> => {
-  const response = await api.put<ConfiguracaoMeioPag[]>('config/confmeiospgto', payload)
+  const response = await api.put<ConfiguracaoMeioPag[]>('/v1/config/confmeiospgto', payload)
   return response.data
 }
 
@@ -45,6 +45,6 @@ export const incluiMeioPgtoById = async (descricao: string, tipoMeioPgto: string
     tipoMeioPgto,
   };
   
-  const response = await api.post(`config/meiospgto`, payload);
+  const response = await api.post(`/v1/config/meiospgto`, payload);
   return response.data;
 };

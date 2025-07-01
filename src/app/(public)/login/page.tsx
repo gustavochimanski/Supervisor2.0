@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import "@/app/(private)/globals.css";
 import Image from "next/image";
 import { toast } from "sonner";
-import { loginService } from "@/services/Auth/authenticate";
+import { useAuth } from "@/services/Auth/useAuth"; // ✅ hook com React Query
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   username: string;
@@ -18,34 +19,17 @@ type FormValues = {
 export default function Login() {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { login, isLoggingIn } = useAuth();
+  const router = useRouter();
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const errorParam = params.get("error");
-  
-    if (errorParam === "CredentialsSignin") {
-      // Aguarda o Toaster montar de fato
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          toast.error("Usuário ou senha inválidos.");
-          console.log("Toast disparado após montagem.");
-        }, 50); // delay mínimo para garantir render
-      });
-    }
-  }, []);
-  
-  const onSubmit = async (props: FormValues) => {
-    setIsLoading(true);
+  const onSubmit = async (form: FormValues) => {
     try {
-      await loginService(props.username, props.password); // redireciona dentro do service
-    } catch (err) {
+      await login(form);
+      router.replace("/");  
+    } catch {
       toast.error("Usuário ou senha inválidos.");
-    } finally {
-      setIsLoading(false);
     }
   };
-
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 p-2">
@@ -59,12 +43,9 @@ export default function Login() {
         {/* Formulário de login */}
         <form
           noValidate
-          className="flex flex-col md:mx-12 justify-between"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(onSubmit)();
-          }}
+          onSubmit={handleSubmit(onSubmit)}
         >
+
           <div className="w-full m-auto my-2">
             <input
               autoFocus
@@ -75,7 +56,7 @@ export default function Login() {
             />
           </div>
 
-          <div className={`relative my-2 `}>
+          <div className="relative my-2">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Senha"
@@ -95,8 +76,8 @@ export default function Login() {
           </div>
 
           <div className="flex mt-4 mb-4 justify-center">
-            <Button  type="submit" disabled={isLoading} className="w-full h-10">
-              LOGIN
+            <Button type="submit" disabled={isLoggingIn} className="w-full h-10">
+              {isLoggingIn ? "Entrando..." : "LOGIN"}
             </Button>
           </div>
         </form>

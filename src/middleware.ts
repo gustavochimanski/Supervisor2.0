@@ -1,33 +1,46 @@
+// middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
+import { decodeJwt } from "jose";
 
-// Define a chave secreta igual à usada para gerar o token (coloque no .env)
-const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET!);
-
-// Define as rotas que precisam de autenticação
-const PROTECTED_PATHS = ["/dashboard", "/admin", "/produtos", "/clientes"];
+// Regex para arquivos estáticos
+const PUBLIC_FILE = /\.(.*)$/;
 
 export async function middleware(request: NextRequest) {
+  console.log("🔥 middleware rodou em:", request.nextUrl.pathname, "cookie:", request.cookies.get("token")?.value);
+  const { pathname } = request.nextUrl;
+
+
+  // Rotas públicas
+  if (
+    pathname === "/login" ||
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    PUBLIC_FILE.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+
   const token = request.cookies.get("token")?.value;
-
-  const isProtected = PROTECTED_PATHS.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
-
-  if (!isProtected) return NextResponse.next();
-
   if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   try {
-    await jwtVerify(token, secret); // valida assinatura e expiração
+    // Decodifica sem verificar assinatura
+    const payload = decodeJwt(token);
+    const exp = payload.exp;
+    if (typeof exp !== "number" || Date.now() >= exp * 1000) {
+      // token vencido
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+    // token válido (pelo menos não expirou)
     return NextResponse.next();
   } catch (err) {
+    // token mal-formado
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*", "/produtos/:path*", "/clientes/:path*"], // ou use: ["/((?!api|_next|.*\\..*).*)"]
+  matcher: ["/((?!_next|api|login|.*\\..*).*)"],
 };

@@ -1,6 +1,7 @@
 // src/app/login/layout.tsx
 
 import { Toaster } from "@/components/ui/toaster";
+import { ReactQueryProvider } from "@/providers/QueryClientProvider";
 
 export default function PublicLayout({
   children,
@@ -10,7 +11,9 @@ export default function PublicLayout({
   return (
     <html>
       <body className="overflow-hidden">
-        {children}
+        <ReactQueryProvider>
+          {children}
+        </ReactQueryProvider>
         <Toaster />
       </body>
     </html>

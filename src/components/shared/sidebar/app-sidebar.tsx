@@ -32,7 +32,7 @@ import {
 import Image from 'next/image';
 import Link from "next/link";
 import { ThemeToggle } from "../themeToggle";
-import { logout } from "@/services/Auth/logout";
+import { logoutService } from "@/services/Auth/authenticate";
 
 
   // Menu items.
@@ -85,7 +85,7 @@ import { logout } from "@/services/Auth/logout";
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem >
-                        <SidebarMenuButton onClick={logout} tooltip={"Sair"}>
+                        <SidebarMenuButton onClick={logoutService} tooltip={"Sair"}>
                           <Power/> Sair
                         </SidebarMenuButton>
                       </SidebarMenuItem>
