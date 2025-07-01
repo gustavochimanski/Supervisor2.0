@@ -17,7 +17,7 @@ export async function getApiServer(): Promise<AxiosInstance> {
 
   // 4️⃣ retorna instância já configurada
   return axios.create({
-    baseURL: "http://51.38.190.174:8087",
+    baseURL: "/api",
     headers,
   });
 }

@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 
 const api = axios.create({
-  baseURL: "http://51.38.190.174:8087",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
