@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import FormSubcategoria from "./formSubCategoria";
+import { getImagemProxyUrl } from "@/utils/url";
 
 /**
  * Componente que renderiza toda a árvore de categorias
@@ -64,7 +65,6 @@ function Nodo({ node }: { node: CategoryNode }) {
   // Hook para remover categoria (usa node.id)
   const { remove } = useMutateCategoria(null);
 
-
   return (
     <li>
       <div className="flex items-center gap-1">
@@ -87,14 +87,14 @@ function Nodo({ node }: { node: CategoryNode }) {
         </Button>
 
         {/* Exibe avatar/imagem da categoria, se existir */}
-        {node.imagem && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={node.imagem || "/placeholder.png"}
-            alt={node.label}
-            className="w-5 h-5 rounded-full object-cover"
-          />
-        )}
+          {node.imagem && (
+            <img
+              src={getImagemProxyUrl(node.imagem)}
+              alt={node.label}
+              className="w-5 h-5 rounded-full object-cover"
+            />
+          )}
+
 
         {/* Texto do nome da categoria */}
         <span className="flex-1">{node.label}</span>

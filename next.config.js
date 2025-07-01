@@ -20,6 +20,10 @@ const nextConfig = {
         source: "/api/:path*", // Esse vem depois
         destination: "http://51.38.190.174:8087/:path*",
       },
+      {
+        source: "/imagens/:path*", // Novo caminho público
+        destination: "http://69.62.93.161:1001/:path*", // Origem real
+      },
     ];
   }
 
