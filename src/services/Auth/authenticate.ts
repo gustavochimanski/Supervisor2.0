@@ -27,7 +27,13 @@ export async function loginService(username: string, password: string): Promise<
   const { data } = await authApi.post("/auth/token", body);
 
   if (!data.token) throw new Error("Token ausente");
-  Cookies.set("token", data.token, { path: "/", expires: 7 });
+  Cookies.set("token", data.token, {
+    path: "/",
+    expires: 7,
+    secure: true,       // necessário em produção HTTPS
+    sameSite: "None",   // permite uso entre domínios (frontend <-> backend)
+  });
+
   return data.token;   // string pura
 }
 
