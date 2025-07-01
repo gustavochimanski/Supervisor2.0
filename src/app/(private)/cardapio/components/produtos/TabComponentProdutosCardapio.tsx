@@ -33,6 +33,7 @@ import {
 import { useCategorias } from "../../hooks/useCategorias"
 import { Label } from "@/components/ui/label"
 import { CategoryNode } from "../categorias/buildCategoryTree"
+import { getImagemProxyUrl } from "@/utils/url"
 
 // 🧠 Função para renderizar opções de categoria (recursiva)
 function renderCategoryOption(cat: CategoryNode, prefix = ""): JSX.Element[] {
@@ -168,7 +169,7 @@ const TabComponentProdutos = () => {
               <Card key={prod.cod_barras} className="shadow-sm border border-muted p-0 overflow-hidden flex flex-col">
                 {prod.imagem ? (
                   <Image
-                    src={prod.imagem}
+                    src={getImagemProxyUrl(prod.imagem)}
                     alt={prod.descricao ?? "Imagem do produto"}
                     width={300} 
                     height={300} 
