@@ -9,12 +9,16 @@ const withPWA = require("next-pwa")({
 const nextConfig = {
   reactStrictMode: true,
 
-  // 🚀 Aqui definimos o rewrite
+  // 🚀 Rewrites para diferentes APIs
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
-        destination: "http://51.38.190.174:8087/:path*", // ou https://seu-dominio.com se tiver
+        source: "/api/:path*", // Backend principal
+        destination: "http://51.38.190.174:8087/:path*",
+      },
+      {
+        source: "/api/mensura/:path*", // Mensura
+        destination: "http://69.62.93.161:1000/:path*",
       },
     ];
   },
