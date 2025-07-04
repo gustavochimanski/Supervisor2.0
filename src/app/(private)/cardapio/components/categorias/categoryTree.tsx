@@ -89,7 +89,7 @@ function Nodo({ node }: { node: CategoryNode }) {
         {/* Exibe avatar/imagem da categoria, se existir */}
           {node.imagem && (
             <img
-              src={getImagemProxyUrl(node.imagem)}
+              src={node.imagem}
               alt={node.label}
               className="w-5 h-5 rounded-full object-cover"
             />

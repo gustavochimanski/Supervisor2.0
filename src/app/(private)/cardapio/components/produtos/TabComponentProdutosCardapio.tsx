@@ -169,7 +169,7 @@ const TabComponentProdutos = () => {
               <Card key={prod.cod_barras} className="shadow-sm border border-muted p-0 overflow-hidden flex flex-col">
                 {prod.imagem ? (
                   <Image
-                    src={getImagemProxyUrl(prod.imagem)}
+                    src={prod.imagem}
                     alt={prod.descricao ?? "Imagem do produto"}
                     width={300} 
                     height={300} 

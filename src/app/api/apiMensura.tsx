@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const apiMensura = axios.create({
-  baseURL: "/api/mensura",
+  baseURL: "http://mensuraapi.com.br",
 });
 
 
