@@ -13,7 +13,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import FormSubcategoria from "./formSubCategoria";
-import { getImagemProxyUrl } from "@/utils/url";
 
 /**
  * Componente que renderiza toda a árvore de categorias
