@@ -32,7 +32,7 @@ import {
 
 import { useCategorias } from "../../hooks/useCategorias"
 import { Label } from "@/components/ui/label"
-import { CategoryNode } from "../categorias/buildCategoryTree"
+import { CategoryNode } from "../categorias/oldTree/buildCategoryTree"
 
 // 🧠 Função para renderizar opções de categoria (recursiva)
 function renderCategoryOption(cat: CategoryNode, prefix = ""): JSX.Element[] {

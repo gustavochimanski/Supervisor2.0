@@ -1,26 +1,54 @@
-// src/app/admin/categorias/page.tsx
-
 "use client";
 
+import { CategoriaCard } from "./CategoriaCard";
+import { BotaoNovaCategoria } from "./BotaoNovaCateg";
 import { useCategorias } from "../../hooks/useCategorias";
-import CategoryTree from "./categoryTree";
 
-/**
- * Componente de página que renderiza a aba de Categorias.
- * Faz a requisição e exibe estados de loading/erro.
- */
-export default function TabCategorias() {
-  // Hook que busca a lista de CategoryNode do backend
-  const { data = [], isLoading, error } = useCategorias();
+export default function PageCategorias() {
+  const { data = [], isLoading } = useCategorias();
 
-  if (isLoading) return <p>Carregando…</p>;
-  if (error) return <p>Erro ao carregar categorias</p>;
+  if (isLoading) return <p>Carregando...</p>;
 
-  // Renderiza título e árvore de categorias
+  const raiz = data.filter((cat) => !cat.slug_pai);
+  const filhosPorPai = (slugPai: string) =>
+    data.filter((cat) => cat.slug_pai === slugPai);
+
   return (
-    <main className="max-w-3xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Categorias</h1>
-      <CategoryTree nodes={data} />
+    <main className="p-6 min-h-screen flex gap-6">
+      {/* Coluna da administração */}
+      <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold">Categorias</h1>
+          <BotaoNovaCategoria />
+        </div>
+
+        <div className="rounded-xl border shadow-md bg-white p-6 w-full overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {raiz.map((cat) => (
+              <div
+                key={cat.slug}
+                className="rounded-lg border p-4 shadow-sm bg-gray-50"
+              >
+                <CategoriaCard
+                  categoria={cat}
+                  subcategorias={filhosPorPai(cat.slug)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Coluna do preview */}
+      <div className="w-[400px] border rounded-xl overflow-hidden shadow-md bg-white">
+        <div className="bg-gray-100 p-2 text-sm font-medium text-center">
+          Preview do cardápio
+        </div>
+        <iframe
+          src="https://cardapiosupermercado.vercel.app/" // troca pela URL real do seu front de delivery
+          className="w-full h-[88%]"
+        />
+      </div>
     </main>
   );
 }

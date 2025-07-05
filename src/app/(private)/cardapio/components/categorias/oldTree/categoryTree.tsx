@@ -4,15 +4,15 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Plus, Trash2 } from "lucide-react";
-import { CategoryNode } from "./buildCategoryTree";       // Tipagem de cada nó
-import { useMutateCategoria } from "../../hooks/useMutateCategoria";
+import { useMutateCategoria } from "../../../hooks/useMutateCategoria";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import FormSubcategoria from "./formSubCategoria";
+import FormSubcategoria from "../formSubCategoria";
+import { CategoryNode } from "../../../types/categoriasDeliveryType";
 
 /**
  * Componente que renderiza toda a árvore de categorias

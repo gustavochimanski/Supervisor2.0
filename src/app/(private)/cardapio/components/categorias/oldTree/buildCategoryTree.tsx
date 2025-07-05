@@ -1,23 +1,8 @@
 // utils/buildCategoryTree.ts
 
-// Define o formato dos dados de entrada (vindo da API)
-export interface CategoryApi {
-  id: number;
-  label: string;            // Nome legível da categoria
-  slug: string;             // Identificador único para URL
-  slug_pai: string | null;  // Slug do pai (ou null se for raiz)
-  imagem?: string;          // URL da imagem da categoria (opcional)
-  href?: string;            // Link customizado (opcional)
-}
+import { CategoryApi, CategoryNode } from "../../../types/categoriasDeliveryType";
 
-// Define o formato da árvore gerada
-export interface CategoryNode {
-  id: number;               // Mesmo ID do CategoryApi
-  label: string;            // Nome legível (reaproveitando label)
-  slug: string;             // Mesmo slug do CategoryApi
-  imagem?: string;          // URL da imagem (opcional)
-  children: CategoryNode[]; // Lista de nós filhos
-}
+// Define o formato dos dados de entrada (vindo da API)
 
 /**
  * Constrói uma estrutura de árvore a partir de uma lista plana de categorias.
