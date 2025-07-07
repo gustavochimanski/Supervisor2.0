@@ -262,7 +262,7 @@ const ComponentProdutos = () => {
       </CardHeader>
 
       <CardContent className="p-0 flex-1 overflow-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-4">
+        <div className="grid grid-cols-3 gap-4 p-4">
           {dataProdutos?.data.map(
             (prod: TypeCadProdDelivery) => (
               <Card
@@ -286,7 +286,7 @@ const ComponentProdutos = () => {
 
                 <div className="p-4 flex flex-col justify-between flex-grow">
                   <div className="mb-2">
-                    <h2 className="text-base font-semibold leading-tight">
+                    <h2 className="text-base font-semibold leading-tight truncate">
                       {prod.descricao}
                     </h2>
                     <p className="text-xs text-muted-foreground">
@@ -320,7 +320,7 @@ const ComponentProdutos = () => {
         </div>
       </CardContent>
 
-      <CardFooter className="gap-4">
+      <CardFooter className="gap-4 mb-10">
         <Button onClick={() => setShowModalConfig(true)}>
           <CircleCheck className="mr-2 h-4 w-4" />
           Incluir
