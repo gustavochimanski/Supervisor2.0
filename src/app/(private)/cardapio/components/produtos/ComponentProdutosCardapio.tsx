@@ -32,7 +32,7 @@ import {
 
 import { useCategorias } from "../../hooks/useCategorias"
 import { Label } from "@/components/ui/label"
-import { CategoryNode } from "../categorias/oldTree/buildCategoryTree"
+import { CategoryNode } from "../../types/categoriasDeliveryType"
 
 // 🧠 Função para renderizar opções de categoria (recursiva)
 function renderCategoryOption(cat: CategoryNode, prefix = ""): JSX.Element[] {
@@ -102,7 +102,7 @@ function FormNovoProduto({ form, setForm, handleInputChange, handleFileChange, h
 }
 
 // 🌟 Componente principal
-const TabComponentProdutos = () => {
+const ComponentProdutos = () => {
   const [showModalConfig, setShowModalConfig] = useState(false)
   const [pageProduto, setPageProduto] = useState<number>(1)
   const [loadCategorias, setLoadCategorias] = useState(false)
@@ -236,4 +236,4 @@ const TabComponentProdutos = () => {
   )
 }
 
-export default TabComponentProdutos
+export default ComponentProdutos
