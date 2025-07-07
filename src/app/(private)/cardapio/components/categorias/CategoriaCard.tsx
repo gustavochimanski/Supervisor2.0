@@ -36,7 +36,7 @@ export function CategoriaCard({ categoria, subcategorias }: Props) {
         {subcategorias.map((sub) => (
           <div
             key={sub.slug}
-            className="rounded-md border p-2 bg-gray-50 text-sm"
+            className="rounded-md border p-2  text-sm"
           >
             <strong>{sub.label}</strong>
             <p className="text-muted-foreground text-xs">Produto (placeholder)</p>

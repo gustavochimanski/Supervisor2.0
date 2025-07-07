@@ -38,12 +38,10 @@ export type TypeCriarNovoProduto = {
   cod_barras: string;
   descricao: string;
   cod_categoria: number;
+  subcategoria_id: number;
   imagem?: File | string;
-  data_cadastro?: string; // formato ISO: '2025-06-28T12:34:56'
+  data_cadastro?: string;
   preco_venda: number;
   custo?: number;
-  destaque_categoria_1?: string
-  destaque_categoria_2: string
-  destaque_categoria_3?: string
 };
 

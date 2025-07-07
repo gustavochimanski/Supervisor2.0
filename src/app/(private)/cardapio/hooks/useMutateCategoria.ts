@@ -11,31 +11,41 @@ interface NovoBody {
 export function useMutateCategoria(parentSlug: string | null) {
   const qc = useQueryClient();
 
-  /** Constrói multipart/form-data */
   function buildFormData({ descricao, slug, imagem }: NovoBody) {
     const fd = new FormData();
     fd.append("descricao", descricao.trim());
     if (slug) fd.append("slug", slug);
-    // ✅ envia "" se for null — backend deve tratar como None/null
-    fd.append("slug_pai", parentSlug === null ? "" : parentSlug);
+    fd.append("slug_pai", parentSlug ?? "");
     if (imagem) fd.append("imagem", imagem);
     return fd;
   }
 
-  const createSub = useMutation({
-    mutationFn: (body: NovoBody) =>
+  const createSub = useMutation(
+    (body: NovoBody) =>
       apiMensura.post(
         "/mensura/categorias/delivery",
-        buildFormData(body) // 🚀 usa FormData, não seta Content-Type manual
+        buildFormData(body)
       ),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["categorias"] }),
-  });
+    {
+      onSuccess: () => {
+        // invalida a lista “plana”
+        qc.invalidateQueries(["categorias_planas"]);
+        // (opcional) invalida também a árvore, se estiver usando
+        qc.invalidateQueries(["categorias"]);
+      },
+    }
+  );
 
-  const remove = useMutation({
-    mutationFn: (id: number) =>
-      apiMensura.delete(`/mensura/categorias/delivery${id}`),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["categorias"] }),
-  });
+  const remove = useMutation(
+    (id: number) =>
+      apiMensura.delete(`/mensura/categorias/delivery/${id}`),
+    {
+      onSuccess: () => {
+        qc.invalidateQueries(["categorias_planas"]);
+        qc.invalidateQueries(["categorias"]);
+      },
+    }
+  );
 
   return { createSub, remove };
 }

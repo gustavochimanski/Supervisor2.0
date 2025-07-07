@@ -6,23 +6,32 @@ const withPWA = require("next-pwa")({
   skipWaiting: true,
 });
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  // Permite usar <Image src="http://mensuraapi.com.br:1001/…" />
+  images: {
+    domains: ["mensuraapi.com.br"],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "mensuraapi.com.br",
+        port: "1001",
+        pathname: "/**",
+      },
+    ],
+  },
 
   // 🚀 Rewrites para diferentes APIs
   async rewrites() {
     return [
       {
-        source: "/api/:path*", // Esse vem depois
+        source: "/api/:path*",
         destination: "http://51.38.190.174:8087/:path*",
       },
-      {
-        source: "/imagens/:path*", // Novo caminho público
-        destination: "http://69.62.93.161:1001/:path*", // Origem real
-      },
     ];
-  }
-
+  },
 };
 
 module.exports = withPWA(nextConfig);
