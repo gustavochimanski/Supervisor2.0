@@ -4,7 +4,6 @@ import axios, { AxiosError } from "axios";
 
 const apiMensura = axios.create({
   baseURL: "https://mensuraapi.com.br",
-  withCredentials: true,
 });
 
 // apiMensura.interceptors.response.use(
