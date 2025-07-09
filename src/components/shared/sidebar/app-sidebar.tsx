@@ -31,6 +31,7 @@ import {
 import Image from 'next/image';
 import Link from "next/link";
 import { ThemeToggle } from "../themeToggle";
+import { logoutService } from "@/services/Auth/authenticate";
 
 
   // Menu items.
@@ -83,7 +84,7 @@ import { ThemeToggle } from "../themeToggle";
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem >
-                        <SidebarMenuButton onClick={() => ("Sair")} tooltip={"Sair"}>
+                        <SidebarMenuButton onClick={() => logoutService()} tooltip={"Sair"}>
                           <Power/> Sair
                         </SidebarMenuButton>
                       </SidebarMenuItem>

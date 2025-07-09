@@ -1,7 +1,7 @@
 // src/services/Auth/authenticate.ts
 
 import axios from "axios";
-import { setCookie } from "cookies-next"; // ✅ funciona no client e server
+import { deleteCookie, setCookie } from "cookies-next"; // ✅ funciona no client e server
 
 
 export type LoginResponse = {
@@ -34,4 +34,15 @@ export async function loginService(
   });
 
   return data;
+}
+
+export function logoutService(redirectToLogin = true) {
+  // 1) Remove o cookie
+  deleteCookie("access_token", { path: "/" });
+
+  // 2) Se quiser, faça um full reload para forçar limpeza de estado e middleware
+  if (redirectToLogin) {
+    // Você pode redirecionar para '/login' ou apenas recarregar na raiz
+    window.location.href = "/login";
+  }
 }

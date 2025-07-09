@@ -12,6 +12,7 @@ import {
 import { useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 import { ThemeToggle } from "./themeToggle";
+import { logoutService } from "@/services/Auth/authenticate";
 
 const TopBarComponent = () => {
   const theme = useTheme();
@@ -47,7 +48,7 @@ const TopBarComponent = () => {
               <User />
               Conta
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => ("")}>
+            <DropdownMenuItem onClick={() => logoutService()}>
               <Power />
               Logout{" "}
             </DropdownMenuItem>

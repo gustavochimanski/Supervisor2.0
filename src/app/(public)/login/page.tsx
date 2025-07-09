@@ -21,7 +21,7 @@ export default function Login() {
 
   const onSubmit = async (form: FormValues) => {
     try {
-      await login(form);    // dispara o login e redireciona na sequência
+      await login(form);  
     } catch {
       toast.error("Usuário ou senha inválidos.");
     }
