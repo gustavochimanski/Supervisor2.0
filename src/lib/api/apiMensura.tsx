@@ -1,20 +1,17 @@
-"use client";
+// api.ts
 
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 const apiMensura = axios.create({
   baseURL: "https://mensuraapi.com.br",
 });
 
-// apiMensura.interceptors.response.use(
-//   res => res,
-//   (err: AxiosError) => {
-//     if (err.response?.status === 401) {
-//       // se quiser, redirecione pra /login
-//       window.location.href = "/login";
-//     }
-//     return Promise.reject(err);
-//   }
-// );
+apiMensura.interceptors.request.use((config) => {
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export default apiMensura;

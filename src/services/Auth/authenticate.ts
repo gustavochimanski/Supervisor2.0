@@ -6,6 +6,7 @@ import api from "@/lib/api/apiClient";
 export type LoginResponse = {
   token_type: string;
   type_user: string;
+  acess_token: string
 };
 
 export async function loginService(
@@ -16,5 +17,7 @@ export async function loginService(
     "/mensura/auth/token",        
     { username, password }
   );
+
+  localStorage.setItem("access_token", data.acess_token);
   return data;
 }
