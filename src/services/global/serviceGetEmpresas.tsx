@@ -1,4 +1,4 @@
-import apiMensura from "@/app/api/apiMensura";
+import apiMensura from "@/lib/api/apiMensura";
 import { TypeEmpresas } from "@/types/empresas/TypeEmpresas";
 
 

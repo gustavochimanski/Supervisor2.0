@@ -1,6 +1,6 @@
 // src/services/serviceDashboard.ts
 import { TypeDashboardResponse, TypeFiltroDashboard } from "../types/typeDashboard";
-import apiMensura from "@/app/api/apiMensura";
+import apiMensura from "@/lib/api/apiMensura";
 
 export const postHeaderDashboard = async (
   payload: TypeFiltroDashboard

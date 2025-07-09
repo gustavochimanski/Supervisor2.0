@@ -1,6 +1,7 @@
 //============= BUSCA TODOS OS USUARIOS ==============
 
-import api from "@/app/api/api";
+import api from "@/lib/api/apiClient";
+
 import { TypeUsuario, TypeUsuariosResponse } from "../types/typesUsuarios";
 
 //====================================================

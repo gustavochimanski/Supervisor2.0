@@ -2,42 +2,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeJwt } from "jose";
 
-// Regex para arquivos estáticos
-const PUBLIC_FILE = /\.(.*)$/;
-
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-
-  // Rotas públicas
+  // rotas públicas
   if (
     pathname === "/login" ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
-    PUBLIC_FILE.test(pathname)
+    pathname.match(/\..+$/)
   ) {
     return NextResponse.next();
   }
 
-  const token = request.cookies.get("token")?.value;
+  const token = request.cookies.get("access_token")?.value;
   if (!token) {
+    // redireciona de verdade para /login
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   try {
-    // Decodifica sem verificar assinatura
-    const payload = decodeJwt(token);
-    const exp = payload.exp;
-    if (typeof exp !== "number" || Date.now() >= exp * 1000) {
-      // token vencido
+    const { exp } = decodeJwt(token);
+    if (!exp || Date.now() >= exp * 1000) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    // token válido (pelo menos não expirou)
-    return NextResponse.next();
-  } catch (err) {
-    // token mal-formado
+  } catch {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  return NextResponse.next();
 }
 
 export const config = {

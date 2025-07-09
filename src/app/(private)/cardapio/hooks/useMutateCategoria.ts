@@ -1,5 +1,5 @@
 // src/hooks/useMutateCategoria.ts
-import apiMensura from "@/app/api/apiMensura";
+import apiMensura from "@/lib/api/apiMensura";
 import { useMutation, useQueryClient } from "react-query"; // ou @tanstack/react-query
 
 interface NovoBody {

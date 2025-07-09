@@ -1,7 +1,7 @@
 // services/CaixasService.ts
-import api from "@/app/api/api";
+import api from "@/lib/api/apiClient";
 import { TypeCaixas } from "../types/typesPDVS";
-import { ssrApiFetch } from "@/app/api/SSR/ssrApiFetch";
+import { ssrApiFetch } from "@/lib/api/SSR/ssrApiFetch";
 
 // ================================ CLIENT ==============================================
 // ======================================================================================

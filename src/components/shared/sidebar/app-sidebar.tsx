@@ -12,7 +12,6 @@ import {
   } from "@/components/ui/sidebar"
   import {
     Home,
-    ShoppingCart,
     Package,
     DollarSign,
     Settings,
@@ -32,7 +31,6 @@ import {
 import Image from 'next/image';
 import Link from "next/link";
 import { ThemeToggle } from "../themeToggle";
-import { logoutService } from "@/services/Auth/authenticate";
 
 
   // Menu items.
@@ -85,7 +83,7 @@ import { logoutService } from "@/services/Auth/authenticate";
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem >
-                        <SidebarMenuButton onClick={logoutService} tooltip={"Sair"}>
+                        <SidebarMenuButton onClick={() => ("Sair")} tooltip={"Sair"}>
                           <Power/> Sair
                         </SidebarMenuButton>
                       </SidebarMenuItem>

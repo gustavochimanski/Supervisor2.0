@@ -5,7 +5,7 @@ import {
   TypeCadProdDeliveryResponse,
   TypeCriarNovoProduto,
 } from "../types/cadProdDeliveryType";
-import apiMensura from "@/app/api/apiMensura";
+import apiMensura from "@/lib/api/apiMensura";
 
 // === FETCH LISTAGEM DE PRODUTOS POR EMPRESA ===
 export function useFetchCadProdDelivery(cod_empresa: number, page: number, limit = 30) {

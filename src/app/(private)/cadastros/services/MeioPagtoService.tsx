@@ -1,5 +1,5 @@
 // services/meioPagamentoService.ts
-import api from "@/app/api/api";
+import api from "@/lib/api/apiClient";
 import { ConfiguracaoMeioPag, MeioPgto } from "../types/typesMeioPag";
 
 //====================================================

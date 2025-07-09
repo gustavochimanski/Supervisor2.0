@@ -1,6 +1,6 @@
 
-import api from '@/app/api/api';
 import { PatchConfPerfilPayload, TypePerfilPdv } from '../types/typesPDVS';
+import api from "@/lib/api/apiClient";
 
 
 // ======================================================================================

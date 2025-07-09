@@ -9,6 +9,6 @@ export interface Usuario {
 
 /** Resposta da autenticação (login / refresh) */
 export interface AuthResponse {
-  token: string;
-  refresh_token: string;
+  token_type: string;
+  type_user: string;
 }

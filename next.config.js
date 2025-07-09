@@ -28,7 +28,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://51.38.190.174:8087/:path*",
+        destination: "https://mensuraapi.com.br/:path*",
       },
     ];
   },

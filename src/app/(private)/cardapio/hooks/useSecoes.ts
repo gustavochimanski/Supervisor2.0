@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { CreateSecaoDTO, SecaoDelivery } from "../types/subCategSecoesType";
-import apiMensura from "@/app/api/apiMensura";
+import apiMensura from "@/lib/api/apiMensura";
 
 // ✅ GET
 export function useSubcategorias(empresaId: number, codCategoria?: number) {
