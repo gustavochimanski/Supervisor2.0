@@ -1,6 +1,6 @@
 // src/services/Auth/authenticate.ts
 
-import api from "@/lib/api/apiClient";
+import axios from "axios";
 import { setCookie } from "cookies-next"; // ✅ funciona no client e server
 
 
@@ -9,6 +9,10 @@ export type LoginResponse = {
   type_user: string;
   access_token: string
 };
+
+const api = axios.create({
+  baseURL: "https://mensuraapi.com.br",       // proxy em next.config.js → VPS/mensura
+});
 
 
 export async function loginService(
@@ -19,13 +23,14 @@ export async function loginService(
     "/mensura/auth/token",
     { username, password }
   );
+  
 
   // 🔐 Armazena em cookie para acesso universal (SSR + client)
   setCookie("access_token", data.access_token, {
     path: "/",            // acessível em todas as rotas
     maxAge: 60 * 30,      // 30 minutos
     sameSite: "lax",
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
   });
 
   return data;
