@@ -3,7 +3,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api",       // proxy em next.config.js → VPS/mensura
+  baseURL: "https://mensuraapi.com.br",       // proxy em next.config.js → VPS/mensura
   withCredentials: true, // inclui cookies HttpOnly
 });
 

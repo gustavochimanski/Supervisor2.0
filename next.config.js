@@ -23,33 +23,7 @@ const nextConfig = {
     ],
   },
 
-  // 🚀 Rewrites para diferentes APIs
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "https://mensuraapi.com.br/:path*",
-      },
-    ];
-  },
-
-  async headers() {
-    return [
-      {
-        source: "/api/:path*",
-        headers: [
-          {
-            key: "Access-Control-Allow-Credentials",
-            value: "true",
-          },
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "https://app.mensura.com.br", // ou seu frontend
-          },
-        ],
-      },
-    ];
-  },
+  
 };
 
 module.exports = withPWA(nextConfig);
