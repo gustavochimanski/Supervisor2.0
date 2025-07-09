@@ -26,7 +26,7 @@ import ComponentSecoes from "./components/secoes/ComponentSecoes";
 export default function PageCardapio() {
   // "produtos" | "promocoes" | "categorias" | "secoes" | null
   const [openSheet, setOpenSheet] = useState<"produtos" | "promocoes" | "categorias" | "secoes" | null>(null);
-
+  const supervisor_token = "TESTEE"
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -75,7 +75,7 @@ export default function PageCardapio() {
                 Preview do cardápio
               </div>
               <iframe
-                src="https://cardapiosupermercado.vercel.app/"
+                src={`https://cardapiosupermercado.vercel.app/?supervisor_token=${supervisor_token}`}
                 className="w-full flex-1"
               />
             </div>
