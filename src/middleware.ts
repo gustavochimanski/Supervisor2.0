@@ -1,6 +1,5 @@
 // middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import { decodeJwt } from "jose";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -17,19 +16,12 @@ export function middleware(request: NextRequest) {
 
   const token = request.cookies.get("access_token")?.value;
   if (!token) {
-    // redireciona de verdade para /login
+    // sem cookie, manda pro login
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  try {
-    const { exp } = decodeJwt(token);
-    if (!exp || Date.now() >= exp * 1000) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-  } catch {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
+  // se tiver cookie (mesmo expirado), deixa passar:
+  // o backend FastAPI é que vai retornar 401 quando expirar ou for inválido
   return NextResponse.next();
 }
 
