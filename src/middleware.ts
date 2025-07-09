@@ -5,11 +5,6 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   console.log(`[Middleware] Caminho acessado: ${pathname}`);
-  console.log("[Middleware] Todos os cookies disponíveis:");
-  request.cookies.getAll().forEach((cookie) => {
-    console.log(`[Middleware] Cookie: ${cookie.name} = ${cookie.value}`);
-  });
-
 
   // Ignorar caminhos públicos
   const publicPaths = ["/login", "/_next", "/api", "/favicon.ico"];
