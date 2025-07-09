@@ -17,8 +17,7 @@ type FormValues = {
 export default function Login() {
   const { register, handleSubmit } = useForm<FormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const { login, isLoggingIn } = useAuth();    // <— pega login e estado
-  // const router = useRouter();                // não é mais necessário aqui
+  const { login, isLoggingIn } = useAuth();  
 
   const onSubmit = async (form: FormValues) => {
     try {

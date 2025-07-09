@@ -2,25 +2,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useMutation } from "react-query";
 import { getCookie } from "cookies-next";
 import { loginService } from "@/services/Auth/authenticate";
 
-interface Credentials {
-  username: string;
-  password: string;
-}
+interface Credentials { username: string; password: string; }
 
 export function useAuth() {
-  const router = useRouter();
   const [typeUser, setTypeUser] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checked, setChecked] = useState(false); //  ← novo!
 
-  // ✅ Quando recarrega, verifica se há token no cookie
+  // 1) checa cookie só uma vez
   useEffect(() => {
     const token = getCookie("access_token");
     setIsAuthenticated(!!token);
+    setChecked(true);  // sinaliza que a checagem acabou
   }, []);
 
   const { mutateAsync: login, isLoading: isLoggingIn } = useMutation(
@@ -28,10 +25,8 @@ export function useAuth() {
     {
       onSuccess: (data) => {
         setTypeUser(data.type_user);
-        setIsAuthenticated(true);
-          setTimeout(() => {
-            router.push("/");
-          }, 100); // 100ms já resolve
+        // full reload para garantir middleware
+        window.location.href = "/";
       },
     }
   );
@@ -41,5 +36,6 @@ export function useAuth() {
     isLoggingIn,
     typeUser,
     isAuthenticated,
+    checked,   // expose para o componente
   };
 }

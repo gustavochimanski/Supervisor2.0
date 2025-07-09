@@ -11,7 +11,7 @@ export type LoginResponse = {
 };
 
 const api = axios.create({
-  baseURL: "https://mensuraapi.com.br",       // proxy em next.config.js → VPS/mensura
+  baseURL: "https://mensuraapi.com.br",      
 });
 
 
@@ -28,7 +28,7 @@ export async function loginService(
   // 🔐 Armazena em cookie para acesso universal (SSR + client)
   setCookie("access_token", data.access_token, {
     path: "/",            // acessível em todas as rotas
-    maxAge: 60 * 30,      // 30 minutos
+    maxAge: 60 * 25,      
     sameSite: "lax",
     secure: false,
   });

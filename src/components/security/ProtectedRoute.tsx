@@ -1,20 +1,25 @@
+// src/components/ProtectedRoute.tsx
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";  // ← importe js-cookie
+import Cookies from "js-cookie";  // continua usando js-cookie no client
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function ProtectedRoute({ children }: Props) {
   const router = useRouter();
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const token = Cookies.get("token");  // ← pegue do cookie, não do localStorage
+    const token = Cookies.get("access_token");  // <— aqui ajustado
 
     if (!token) {
       router.replace("/login");
     } else {
-      setChecking(false); // liberado para renderizar o conteúdo
+      setChecking(false); // encontrou o token, libera o conteúdo
     }
   }, [router]);
 
