@@ -38,6 +38,7 @@
     "bwip-js": "^4.5.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cookies-next": "^6.0.0",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
     "file-saver": "^2.0.5",
