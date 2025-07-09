@@ -30,7 +30,7 @@ export async function loginService(
     path: "/",            // acessível em todas as rotas
     maxAge: 60 * 30,      // 30 minutos
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: false,
   });
 
   return data;
