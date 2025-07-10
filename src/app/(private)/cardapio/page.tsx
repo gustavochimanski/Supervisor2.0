@@ -30,7 +30,7 @@ export default function PageCardapio() {
 
   useEffect(() => {
     // aqui lemos o cookie que o TokenHandler gravou
-    const t = getCookie("supervisor_token");
+    const t = getCookie("access_token");
     if (typeof t === "string") setSupervisorToken(t);
   }, []);
   return (
