@@ -5,7 +5,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 
 const api = axios.create({
-  baseURL: "/api,
+  baseURL: "/api",
 });
 
 api.interceptors.request.use((config) => {
