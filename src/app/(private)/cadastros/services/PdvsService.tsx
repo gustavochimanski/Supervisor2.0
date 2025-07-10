@@ -1,5 +1,5 @@
 // services/CaixasService.ts
-import api from "@/lib/api/apiClient";
+import api from "@/lib/api/apiOrizon";
 import { TypeCaixas } from "../types/typesPDVS";
 import { ssrApiFetch } from "@/lib/api/SSR/ssrApiFetch";
 

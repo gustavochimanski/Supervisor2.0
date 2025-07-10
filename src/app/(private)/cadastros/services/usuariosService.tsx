@@ -1,6 +1,6 @@
 //============= BUSCA TODOS OS USUARIOS ==============
+import api from "@/lib/api/apiOrizon";
 
-import api from "@/lib/api/apiClient";
 
 import { TypeUsuario, TypeUsuariosResponse } from "../types/typesUsuarios";
 
