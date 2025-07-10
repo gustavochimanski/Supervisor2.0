@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Apple, Tag, List, Grid } from "lucide-react";
 
 import {
@@ -14,19 +14,25 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 
 import ComponentProdutos from "./components/produtos/ComponentProdutosCardapio";
 import ComponentCategorias from "./components/categorias/ComponentCategoria";
 import ComponentSecoes from "./components/secoes/ComponentSecoes";
+import { getCookie } from "cookies-next";
 
 export default function PageCardapio() {
   // "produtos" | "promocoes" | "categorias" | "secoes" | null
   const [openSheet, setOpenSheet] = useState<"produtos" | "promocoes" | "categorias" | "secoes" | null>(null);
-  const supervisor_token = "TESTEE"
+  
+  // 2) estado para o token
+  const [supervisorToken, setSupervisorToken] = useState<string>("");
+
+  useEffect(() => {
+    // aqui lemos o cookie que o TokenHandler gravou
+    const t = getCookie("supervisor_token");
+    if (typeof t === "string") setSupervisorToken(t);
+  }, []);
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -75,7 +81,7 @@ export default function PageCardapio() {
                 Preview do cardápio
               </div>
               <iframe
-                src={`https://cardapiosupermercado.vercel.app/?supervisor_token=${supervisor_token}`}
+                src={`https://cardapiosupermercado.vercel.app/?supervisor_token=${supervisorToken}`}
                 className="w-full flex-1"
               />
             </div>
