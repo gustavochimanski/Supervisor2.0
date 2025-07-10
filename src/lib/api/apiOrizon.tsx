@@ -8,7 +8,7 @@ const api = axios.create({
   baseURL: "/api,
 });
 
-apiMensura.interceptors.request.use((config) => {
+api.interceptors.request.use((config) => {
   // pega o token do cookie (funciona no client)
   const token = getCookie("access_token");
   if (token && typeof token === "string") {
